@@ -1,0 +1,62 @@
+2006-11-12 Thomas McColgan
+    * Specto now runs locally. This breaks setup.py and the ability to install Specto system-wide.
+
+2006-10-26 Wout Clymans
+    * Added SSL support for pop3/imap email watches
+
+2006-10-24 Giulio lotti, Jean-François Fortin & Thomas McColgan
+    * gettext support, finally Specto can be translated into different languages !
+    * new and better (translatable) quicktips
+    * small bug fixes
+    * added French translation
+    * added Romanian translation, thanks to Adrian Petrescu
+    * generic stuff for the 0.1 release (cleanup, roadmap, todos, etc)
+    
+2006-10-21 Jean-François Fortin
+    * (bug #65931) removing a watch did not remove "updated = False", which caused crashes and corruption
+
+2006-10-19 Wout Clymans
+    * code cleanup and documentation for the functions added
+
+2006-10-15 Giulio Lotti
+    * proper libnotify support. The dependency on libnotify-bin is now deprecated for a dependency on python-notify
+
+2006-09-27 Wout Clymans
+    * (bug #60261) mime is used when you open a file watch
+    * play sound when an error or an update occur
+
+2006-09-26 Jean-François Fortin
+    * (bug #49811) when the website you are watching is a syndication feed, specto will point to the correct 'real' URL when you open the page.
+    * (bug #55324) display the toolbar by default
+
+2006-09-13 Jean-François Fortin
+    * (bug #60261) no action associated with file watch - it now opens the parent directory containing the file
+
+2006-09-13 Jean-François Fortin
+    * gmail watches now clear themselves when your unread message count reaches zero
+    * this introduces bug #60279
+
+2006-09-13 Wout Clymans
+    * added file watch support (alpha)
+
+2006-09-08 Jean-François Fortin
+    * fixed how the gmail unread messages were counted
+    * killed the IM watch. It never existed anyway.
+
+2006-09-07 Jean-François Fortin
+    * (bug #54275) better gmail unread message counting
+    * display the number of unread gmail messages
+    * (bug #54463) truncate the URLs if they are too long to be displayed in notifier
+    * (bug #49616) by displaying a warning dialog if you try to quit specto before it has finished checking watches for the first time
+    * various small enhancements
+
+2006-08-30  Wout Clymans
+	* error icon is shown when there was an error in the update
+
+2006-08-19  Wout Clymans	
+	* added icon to the about dialog
+	* when you add a web watch,"http://" is added if necessary
+	* watches are always updated top-down
+	* sorting choice is stored in a gconf key
+	* checkbox is checked before the update from the watch when you activate it
+	* log file can be opened and cleared from the preferences dialog

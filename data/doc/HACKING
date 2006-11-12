@@ -1,0 +1,26 @@
+Basic rules:
+============
+When editing files, please set your favorite editor to use SPACES instead of tabs.
+Please set it so that it uses exactly 4 spaces. This is a coding convention to
+prevent python from messing up with our indentation.
+
+If you are not sure of something, experiment, or ask on the channel. Have fun !
+
+
+
+Some file definitions :
+=======================
+  ./setup.py : The file used to install the program in the system. It can be compared to a ./configure; make; sudo make install, but for python.
+  ./specto : The base executable. It should be really simple, and contains imports of modules (trayicon for the moment), command line usage, argument parsing.
+  ./src/specto/ : The modules sources. All the functionality code should be here.
+            .../__init__.py : to comply with setup.py, the directory needs an __init__.py. We leave it empty for the moment.
+            .../main.py : the core of specto. All other modules communicate MUST communicate with this one.
+            .../notifier.py : The source code of the main notifying window.
+            .../preferences.py : The source code of the preferences window.
+            .../trayicon.py : The trayicon is the icon shown in the panel notification area.
+            .../traypopup.py : The traypopup shows a popup when right clicked.
+            .../util.py : Every utility function should be written here.
+            .../iniparser.py : a module that reads and writes to configuration files
+            .../specto_gconf.py : the gconf binding for specto that allows managing simple preferences
+            etc
+  ./TODO : result of : $ grep TODO * -Rn > TODO; grep FIXME * -Rn >> TODO

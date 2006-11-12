@@ -1,0 +1,427 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: Tue Oct 24 23:17:18 2006\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.4\n"
+
+
+#: src/specto/add_watch.py:160
+msgid "file"
+msgstr ""
+
+#: src/specto/add_watch.py:162
+msgid "folder"
+msgstr ""
+
+#: src/specto/add_watch.py:277 src/specto/edit_watch.py:199
+msgid "URL:"
+msgstr ""
+
+#: src/specto/add_watch.py:291 src/specto/edit_watch.py:210
+msgid "Error Margin (%):"
+msgstr ""
+
+#: src/specto/add_watch.py:312 src/specto/edit_watch.py:235
+msgid "Protocol:"
+msgstr ""
+
+#: src/specto/add_watch.py:321
+msgid "POP3"
+msgstr ""
+
+#: src/specto/add_watch.py:327
+msgid "IMAP"
+msgstr ""
+
+#: src/specto/add_watch.py:332 src/specto/edit_watch.py:288
+msgid "Gmail"
+msgstr ""
+
+#: src/specto/add_watch.py:338
+msgid "User:"
+msgstr ""
+
+#: src/specto/add_watch.py:348 src/specto/edit_watch.py:257
+msgid "Password:"
+msgstr ""
+
+#: src/specto/add_watch.py:359 src/specto/edit_watch.py:269
+msgid "Host:"
+msgstr ""
+
+#: src/specto/add_watch.py:374 src/specto/edit_watch.py:300
+msgid "File/folder:"
+msgstr ""
+
+#: src/specto/add_watch.py:384 src/specto/edit_watch.py:310
+msgid "File"
+msgstr ""
+
+#: src/specto/add_watch.py:390 src/specto/edit_watch.py:315
+msgid "Folder"
+msgstr ""
+
+#: src/specto/add_watch.py:396 src/specto/edit_watch.py:321
+msgid "Choose a file or folder"
+msgstr ""
+
+#: src/specto/edit_watch.py:67
+msgid "Edit watch: "
+msgstr ""
+
+#: src/specto/edit_watch.py:162
+msgid "Watch : \"%s\" edited."
+msgstr ""
+
+#: src/specto/edit_watch.py:174
+msgid "removed logs from watch: \"%s\""
+msgstr ""
+
+#: src/specto/edit_watch.py:246
+msgid "Username:"
+msgstr ""
+
+#: src/specto/edit_watch.py:277
+msgid "Pop3"
+msgstr ""
+
+#: src/specto/edit_watch.py:283
+msgid "Imap"
+msgstr ""
+
+#: src/specto/logger.py:100
+msgid "\\w\\s*- DEBUG -\\s*\\w"
+msgstr ""
+
+#: src/specto/logger.py:102
+msgid "\\w\\s*- INFO -\\s*\\w"
+msgstr ""
+
+#: src/specto/logger.py:104
+msgid "\\w\\s*- WARNING -\\s*\\w"
+msgstr ""
+
+#: src/specto/logger.py:106
+msgid "\\w\\s*- ERROR -\\s*\\w"
+msgstr ""
+
+#: src/specto/logger.py:108
+msgid "\\w\\s*- CRITICAL -\\s*\\w"
+msgstr ""
+
+#: src/specto/main.py:56
+msgid "no GTK, activating console mode"
+msgstr ""
+
+#: src/specto/main.py:138
+msgid "Specto is already running!"
+msgstr ""
+
+#: src/specto/main.py:208 src/specto/watch.py:215
+msgid "No updates yet."
+msgstr ""
+
+#: src/specto/main.py:259
+msgid "watch \"%s\" started"
+msgstr ""
+
+#: src/specto/main.py:264
+msgid "watch \"%s\" stopped"
+msgstr ""
+
+#: src/specto/main.py:435 src/specto/main.py:444
+msgid "notifier: reappear"
+msgstr ""
+
+#: src/specto/main.py:440
+msgid "notifier: hide"
+msgstr ""
+
+#: src/specto/main.py:454
+msgid "preferences: create"
+msgstr ""
+
+#: src/specto/main.py:457
+msgid "preferences: reappear"
+msgstr ""
+
+#: src/specto/main.py:464
+msgid "error log: create"
+msgstr ""
+
+#: src/specto/main.py:466
+msgid "error log: already visible"
+msgstr ""
+
+#: src/specto/main.py:469
+msgid "error log: recreate"
+msgstr ""
+
+#: src/specto/main.py:475
+msgid "add watch: create"
+msgstr ""
+
+#: src/specto/main.py:477
+msgid "add watch: already visible"
+msgstr ""
+
+#: src/specto/main.py:480
+msgid "add watch: recreate"
+msgstr ""
+
+#: src/specto/main.py:494
+msgid "edit watch: create"
+msgstr ""
+
+#: src/specto/main.py:496
+msgid "edit watch: already visible"
+msgstr ""
+
+#: src/specto/main.py:499
+msgid "edit watch: recreate"
+msgstr ""
+
+#: src/specto/main.py:522
+msgid "Specto is currently checking a watch for updates. When it has finished checking, try quitting Specto again."
+msgstr ""
+
+#: src/specto/notifier.py:343
+msgid "gmail <i>(%s unread)</i>"
+msgstr ""
+
+#: src/specto/notifier.py:372
+msgid "watch \"%s\" opened"
+msgstr ""
+
+#: src/specto/notifier.py:404
+msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
+msgstr ""
+
+#: src/specto/notifier.py:405
+msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
+msgstr ""
+
+#: src/specto/notifier.py:406
+msgid "Single-click an existing watch to display information, and double-click it to open the content."
+msgstr ""
+
+#: src/specto/notifier.py:407
+msgid "Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers."
+msgstr ""
+
+#: src/specto/notifier.py:466
+msgid "notifier: size set"
+msgstr ""
+
+#: src/specto/notifier.py:468
+msgid "notifier: size not set"
+msgstr ""
+
+#: src/specto/notifier.py:472
+msgid "notifier: position set"
+msgstr ""
+
+#: src/specto/notifier.py:474
+msgid "notifier: position not set"
+msgstr ""
+
+#: src/specto/notifier.py:530
+msgid "Active"
+msgstr ""
+
+#: src/specto/notifier.py:538
+msgid "Type"
+msgstr ""
+
+#: src/specto/notifier.py:547
+msgid "Name"
+msgstr ""
+
+#: src/specto/notifier.py:556
+msgid "ID"
+msgstr ""
+
+#: src/specto/notifier.py:563
+msgid "TYPE"
+msgstr ""
+
+#: src/specto/notifier.py:585
+msgid "Tip of the Day:"
+msgstr ""
+
+#: src/specto/notifier.py:605 src/specto/notifier.py:660
+#: src/specto/notifier.py:715
+msgid "<b>Name:</b>"
+msgstr ""
+
+#: src/specto/notifier.py:617 src/specto/notifier.py:672
+#: src/specto/notifier.py:727
+msgid "<b>Last Updated:</b>"
+msgstr ""
+
+#: src/specto/notifier.py:629
+msgid "<b>Location:</b>"
+msgstr ""
+
+#: src/specto/notifier.py:641
+msgid "<b>Error Margin:</b>"
+msgstr ""
+
+#: src/specto/notifier.py:684
+msgid "<b>Host:</b>"
+msgstr ""
+
+#: src/specto/notifier.py:696
+msgid "<b>Username:</b>"
+msgstr ""
+
+#: src/specto/notifier.py:739
+msgid "<b>File/folder:</b>"
+msgstr ""
+
+#: src/specto/preferences.py:92
+msgid "Preferences saved."
+msgstr ""
+
+#: src/specto/trayicon.py:84
+msgid "Hide window"
+msgstr ""
+
+#: src/specto/trayicon.py:86
+msgid "Show window"
+msgstr ""
+
+#: src/specto/trayicon.py:99
+msgid "No updated watches."
+msgstr ""
+
+#: src/specto/trayicon.py:101
+msgid ""
+"Updated watches:\n"
+msgstr ""
+
+#: src/specto/trayicon.py:105
+msgid " website"
+msgstr ""
+
+#: src/specto/trayicon.py:105
+msgid " websites"
+msgstr ""
+
+#: src/specto/trayicon.py:114
+msgid " mail"
+msgstr ""
+
+#: src/specto/trayicon.py:114
+msgid " mails"
+msgstr ""
+
+#: src/specto/trayicon.py:125
+msgid " file/folders"
+msgstr ""
+
+#: src/specto/trayicon.py:125
+msgid " files/folders"
+msgstr ""
+
+#: src/specto/watch.py:73
+msgid "Watch \"%s\" updated!"
+msgstr ""
+
+#: src/specto/watch.py:89
+msgid "The website, <b>%s</b>, has been updated."
+msgstr ""
+
+#: src/specto/watch.py:93
+msgid "Your email account, <b>%s</b>, has new mail."
+msgstr ""
+
+#: src/specto/watch.py:99
+msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
+msgstr ""
+
+#: src/specto/watch.py:101
+msgid "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s"
+msgstr ""
+
+#: src/specto/watch.py:116
+msgid "The file/folder, <b>%s</b>, has been updated."
+msgstr ""
+
+#: src/specto/watch.py:118
+msgid "Not implemented yet"
+msgstr ""
+
+#: src/specto/watch_file.py:43
+msgid "Unknown File Watch"
+msgstr ""
+
+#: src/specto/watch_file.py:61 src/specto/watch_mail_gmail.py:63
+#: src/specto/watch_mail_imap.py:58 src/specto/watch_mail_pop3.py:67
+#: src/specto/watch_web_static.py:74
+msgid "Updating watch: \"%s\""
+msgstr ""
+
+#: src/specto/watch_file.py:84
+msgid "Watch: \"%s\" has an error"
+msgstr ""
+
+#: src/specto/watch_file.py:98
+msgid "update: %s was modified"
+msgstr ""
+
+#: src/specto/watch_file.py:103
+msgid "update: %s was created"
+msgstr ""
+
+#: src/specto/watch_file.py:117
+msgid "Skipping %s"
+msgstr ""
+
+#: src/specto/watch_file.py:126
+msgid "update: %s removed"
+msgstr ""
+
+#: src/specto/watch_mail_gmail.py:42 src/specto/watch_mail_imap.py:40
+#: src/specto/watch_mail_pop3.py:43
+msgid "Unknown Mail Watch"
+msgstr ""
+
+#: src/specto/watch_mail_gmail.py:83
+msgid "Watch: \"%s\" has error: wrong username/password"
+msgstr ""
+
+#: src/specto/watch_mail_imap.py:64 src/specto/watch_mail_imap.py:87
+msgid "Watch: \"%s\" has error: %s"
+msgstr ""
+
+#: src/specto/watch_mail_imap.py:77
+msgid "Mailbox does not exist"
+msgstr ""
+
+#: src/specto/watch_mail_pop3.py:73
+msgid "Watch: \"%s has error: "
+msgstr ""
+
+#: src/specto/watch_mail_pop3.py:87 src/specto/watch_web_static.py:94
+msgid "Watch: \"%s\" has error: "
+msgstr ""
+
+#: src/specto/watch_web_static.py:61
+msgid "Watch: \"%s\" has error: empty url"
+msgstr ""
+
+#: src/specto/watch_web_static.py:153
+msgid "Difference percentage:%s (Watch: \"%s\")"
+msgstr ""
+

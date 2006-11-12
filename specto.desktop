@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Specto
+Comment=Be notified of everything
+Comment[fr]=Soyez alerte
+Categories=GNOME;Application;Utility;
+Encoding=UTF-8
+Exec=specto
+Icon=specto
+StartupNotify=true
+Terminal=false
+Type=Application

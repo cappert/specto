@@ -1,0 +1,440 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: specto\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-10-25 01:34-0500\n"
+"Last-Translator: Adrian Petrescu\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Romanian\n"
+
+#: src/specto/add_watch.py:160
+msgid "file"
+msgstr "fișier"
+
+#: src/specto/add_watch.py:162
+msgid "folder"
+msgstr "dosar"
+
+#: src/specto/add_watch.py:277
+#: src/specto/edit_watch.py:199
+msgid "URL:"
+msgstr "URL:"
+
+#: src/specto/add_watch.py:291
+#: src/specto/edit_watch.py:210
+msgid "Error Margin (%):"
+msgstr "Marja de eroare (%)"
+
+#: src/specto/add_watch.py:312
+#: src/specto/edit_watch.py:235
+msgid "Protocol:"
+msgstr "Protocol:"
+
+#: src/specto/add_watch.py:321
+msgid "POP3"
+msgstr "POP3"
+
+#: src/specto/add_watch.py:327
+msgid "IMAP"
+msgstr "IMAP"
+
+#: src/specto/add_watch.py:332
+#: src/specto/edit_watch.py:288
+msgid "Gmail"
+msgstr "Gmail"
+
+#: src/specto/add_watch.py:338
+msgid "User:"
+msgstr "Utilizator:"
+
+#: src/specto/add_watch.py:348
+#: src/specto/edit_watch.py:257
+msgid "Password:"
+msgstr "Parola:"
+
+#: src/specto/add_watch.py:359
+#: src/specto/edit_watch.py:269
+msgid "Host:"
+msgstr "Host:"
+
+#: src/specto/add_watch.py:374
+#: src/specto/edit_watch.py:300
+msgid "File/folder:"
+msgstr "Fișier/dosar:"
+
+#: src/specto/add_watch.py:384
+#: src/specto/edit_watch.py:310
+msgid "File"
+msgstr "Fișier"
+
+#: src/specto/add_watch.py:390
+#: src/specto/edit_watch.py:315
+msgid "Folder"
+msgstr "Dosar"
+
+#: src/specto/add_watch.py:396
+#: src/specto/edit_watch.py:321
+msgid "Choose a file or folder"
+msgstr "Alegeți un fișier sau dosar"
+
+#: src/specto/edit_watch.py:67
+msgid "Edit watch: "
+msgstr "Editează o urmăreală:"
+
+#: src/specto/edit_watch.py:162
+msgid "Watch : \"%s\" edited."
+msgstr "Urmăreala \"%s\" a fost editată."
+
+#: src/specto/edit_watch.py:174
+msgid "removed logs from watch: \"%s\""
+msgstr "recordurile \"%s\" șterse"
+
+#: src/specto/edit_watch.py:246
+msgid "Username:"
+msgstr "Nume de utilizator:"
+
+#: src/specto/edit_watch.py:277
+msgid "Pop3"
+msgstr "Pop3"
+
+#: src/specto/edit_watch.py:283
+msgid "Imap"
+msgstr "Imap"
+
+#: src/specto/logger.py:100
+msgid "\\w\\s*- DEBUG -\\s*\\w"
+msgstr "\\w\\s*- DEBUG -\\s*\\w"
+
+#: src/specto/logger.py:102
+msgid "\\w\\s*- INFO -\\s*\\w"
+msgstr "\\w\\s*- INFORMATIE -\\s*\\w"
+
+#: src/specto/logger.py:104
+msgid "\\w\\s*- WARNING -\\s*\\w"
+msgstr "\\w\\s*- AVERTIZARE -\\s*\\w"
+
+#: src/specto/logger.py:106
+msgid "\\w\\s*- ERROR -\\s*\\w"
+msgstr "\\w\\s*- EROARE -\\s*\\w"
+
+#: src/specto/logger.py:108
+msgid "\\w\\s*- CRITICAL -\\s*\\w"
+msgstr "\\w\\s*- CRITIC -\\s*\\w"
+
+#: src/specto/main.py:56
+msgid "no GTK, activating console mode"
+msgstr "fără GTK, activez in mod consol"
+
+#: src/specto/main.py:138
+msgid "Specto is already running!"
+msgstr "Specto e deja lansat!"
+
+#: src/specto/main.py:208
+#: src/specto/watch.py:215
+msgid "No updates yet."
+msgstr "Nici un update."
+
+#: src/specto/main.py:259
+msgid "watch \"%s\" started"
+msgstr "Urmăreala \"%s\" pornit"
+
+#: src/specto/main.py:264
+msgid "watch \"%s\" stopped"
+msgstr "Urmăreala \"%s\" oprită"
+
+#: src/specto/main.py:435
+#: src/specto/main.py:444
+msgid "notifier: reappear"
+msgstr "notificator: redeschide"
+
+#: src/specto/main.py:440
+msgid "notifier: hide"
+msgstr "notificator: ascunde"
+
+#: src/specto/main.py:454
+msgid "preferences: create"
+msgstr "preferințe: crează"
+
+#: src/specto/main.py:457
+msgid "preferences: reappear"
+msgstr "preferințe: redeschide"
+
+#: src/specto/main.py:464
+msgid "error log: create"
+msgstr "record de eroare: crează"
+
+#: src/specto/main.py:466
+msgid "error log: already visible"
+msgstr "record de eroare: deja visibil"
+
+#: src/specto/main.py:469
+msgid "error log: recreate"
+msgstr "record de eroare: recrează"
+
+#: src/specto/main.py:475
+msgid "add watch: create"
+msgstr "adaugă o urmăreală: crează"
+
+#: src/specto/main.py:477
+msgid "add watch: already visible"
+msgstr "adaugă o urmăreală: visibil deja"
+
+#: src/specto/main.py:480
+msgid "add watch: recreate"
+msgstr "adaugă o urmăreală: recrează"
+
+#: src/specto/main.py:494
+msgid "edit watch: create"
+msgstr "editează o urmăreală: crează"
+
+#: src/specto/main.py:496
+msgid "edit watch: already visible"
+msgstr "editează o urmăreală: deja visibil"
+
+#: src/specto/main.py:499
+msgid "edit watch: recreate"
+msgstr "editează o urmăreală: recrează"
+
+#: src/specto/main.py:522
+msgid "Specto is currently checking a watch for updates. When it has finished checking, try quitting Specto again."
+msgstr "Specto este in proces de a verefica o urmăreală pentru noutați. Cănd e terminat, incercați incă o dată sa inchideți Specto."
+
+#: src/specto/notifier.py:343
+msgid "gmail <i>(%s unread)</i>"
+msgstr "gmail <i>(%s necitit)</i>"
+
+#: src/specto/notifier.py:372
+msgid "watch \"%s\" opened"
+msgstr "urmăreala \"%s\" deschisă"
+
+#: src/specto/notifier.py:404
+msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
+msgstr "Puteți adauga multe feluri de website-uri ca urmăreli. Pagini statici, șiruri RSS sau Atom, etc., vor fi manajate de Specto automat."
+
+#: src/specto/notifier.py:405
+msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
+msgstr "Urmăreli de website pot avea marje de eroare care vă lasă să setați un procentaj de diferența minimă. Asta vă lasă să adaptați la website-uri care se schimb constant, sau care au multe reclame."
+
+#: src/specto/notifier.py:406
+msgid "Single-click an existing watch to display information, and double-click it to open the content."
+msgstr "Clicați odată pe o urmăreală pentru a verifica informația, sau de doua ori pentru a deschide conținutul."
+
+#: src/specto/notifier.py:407
+msgid "Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers."
+msgstr "Vă rog să setați o intervală de refresh resonabila, ca să salvăm bandwidth si ca să nu fiim blocați de la content."
+
+#: src/specto/notifier.py:466
+msgid "notifier: size set"
+msgstr "notificator: mărime setat"
+
+#: src/specto/notifier.py:468
+msgid "notifier: size not set"
+msgstr "notificator: mărime nu e setată"
+
+#: src/specto/notifier.py:472
+msgid "notifier: position set"
+msgstr "notificator: posiție setat"
+
+#: src/specto/notifier.py:474
+msgid "notifier: position not set"
+msgstr "notificator: posiția nu e setată"
+
+#: src/specto/notifier.py:530
+msgid "Active"
+msgstr "Activ"
+
+#: src/specto/notifier.py:538
+msgid "Type"
+msgstr "Tip"
+
+#: src/specto/notifier.py:547
+msgid "Name"
+msgstr "Nume"
+
+#: src/specto/notifier.py:556
+msgid "ID"
+msgstr "ID"
+
+#: src/specto/notifier.py:563
+msgid "TYPE"
+msgstr "TIP"
+
+#: src/specto/notifier.py:585
+msgid "Tip of the Day:"
+msgstr "Tipul zilei"
+
+#: src/specto/notifier.py:605
+#: src/specto/notifier.py:660
+#: src/specto/notifier.py:715
+msgid "<b>Name:</b>"
+msgstr "<b>Nume:</b>"
+
+#: src/specto/notifier.py:617
+#: src/specto/notifier.py:672
+#: src/specto/notifier.py:727
+msgid "<b>Last Updated:</b>"
+msgstr "</b>Ultima schimbare:</b>"
+
+#: src/specto/notifier.py:629
+msgid "<b>Location:</b>"
+msgstr "<b>Locație:</b>"
+
+#: src/specto/notifier.py:641
+msgid "<b>Error Margin:</b>"
+msgstr "<b>Marja de Eroare:</b>"
+
+#: src/specto/notifier.py:684
+msgid "<b>Host:</b>"
+msgstr "<b>Host:</b>"
+
+#: src/specto/notifier.py:696
+msgid "<b>Username:</b>"
+msgstr "<b>Nume de Utilizator:</b>"
+
+#: src/specto/notifier.py:739
+msgid "<b>File/folder:</b>"
+msgstr "<b>Fișier/dosar:</b>"
+
+#: src/specto/preferences.py:92
+msgid "Preferences saved."
+msgstr "Preferințe salvate."
+
+#: src/specto/trayicon.py:84
+msgid "Hide window"
+msgstr "Ascunde jeamul"
+
+#: src/specto/trayicon.py:86
+msgid "Show window"
+msgstr "Arată jeamul"
+
+#: src/specto/trayicon.py:99
+msgid "No updated watches."
+msgstr "Nici o noutate."
+
+#: src/specto/trayicon.py:101
+msgid "Updated watches:\n"
+msgstr "Noutăți:\n"
+
+#: src/specto/trayicon.py:105
+msgid " website"
+msgstr " website"
+
+#: src/specto/trayicon.py:105
+msgid " websites"
+msgstr " website-uri"
+
+#: src/specto/trayicon.py:114
+msgid " mail"
+msgstr " poștă"
+
+#: src/specto/trayicon.py:114
+msgid " mails"
+msgstr " poște"
+
+#: src/specto/trayicon.py:125
+msgid " file/folders"
+msgstr " Fișier/Dosare:"
+
+#: src/specto/trayicon.py:125
+msgid " files/folders"
+msgstr " Fișiere/Dosare:"
+
+#: src/specto/watch.py:73
+msgid "Watch \"%s\" updated!"
+msgstr "Urmăreala \"%s\" updatată!"
+
+#: src/specto/watch.py:89
+msgid "The website, <b>%s</b>, has been updated."
+msgstr "Website-ul <b>%s</b> a fost updatat."
+
+#: src/specto/watch.py:93
+msgid "Your email account, <b>%s</b>, has new mail."
+msgstr "Aveți mesaje noi pe contul <b>%s</b>."
+
+#: src/specto/watch.py:99
+msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
+msgstr "Contul <b>%s</b> are <b>%d</b> mesaje noi."
+
+#: src/specto/watch.py:101
+msgid "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s"
+msgstr "Contul <b>%s</b> are <b>%d</b> mesaje noi, cu un total de %s"
+
+#: src/specto/watch.py:116
+msgid "The file/folder, <b>%s</b>, has been updated."
+msgstr "Fișierul/Dosar <b>%s</b> a fost updatat."
+
+#: src/specto/watch.py:118
+msgid "Not implemented yet"
+msgstr "Ne-implementat"
+
+#: src/specto/watch_file.py:43
+msgid "Unknown File Watch"
+msgstr "Urmăreală de fișier necunoscut."
+
+#: src/specto/watch_file.py:61
+#: src/specto/watch_mail_gmail.py:63
+#: src/specto/watch_mail_imap.py:58
+#: src/specto/watch_mail_pop3.py:67
+#: src/specto/watch_web_static.py:74
+msgid "Updating watch: \"%s\""
+msgstr "Updatez Urmăreala: \"%s\""
+
+#: src/specto/watch_file.py:84
+msgid "Watch: \"%s\" has an error"
+msgstr "Urmăreala \"%s\" are o eroare"
+
+#: src/specto/watch_file.py:98
+msgid "update: %s was modified"
+msgstr "Urmăreala %s a fost modificată"
+
+#: src/specto/watch_file.py:103
+msgid "update: %s was created"
+msgstr "update: %s a fost creat"
+
+#: src/specto/watch_file.py:117
+msgid "Skipping %s"
+msgstr "Sar %s"
+
+#: src/specto/watch_file.py:126
+msgid "update: %s removed"
+msgstr "update: %s șters"
+
+#: src/specto/watch_mail_gmail.py:42
+#: src/specto/watch_mail_imap.py:40
+#: src/specto/watch_mail_pop3.py:43
+msgid "Unknown Mail Watch"
+msgstr "Urmăreală de poștă necunoscută"
+
+#: src/specto/watch_mail_gmail.py:83
+msgid "Watch: \"%s\" has error: wrong username/password"
+msgstr "Urmăreala: \"%s\" are o eroare: utilizator/parola incorectă"
+
+#: src/specto/watch_mail_imap.py:64
+#: src/specto/watch_mail_imap.py:87
+msgid "Watch: \"%s\" has error: %s"
+msgstr "Urmăreala: \"%s\" are o eroare: %s"
+
+#: src/specto/watch_mail_imap.py:77
+msgid "Mailbox does not exist"
+msgstr "Cutia de poștă nu există"
+
+#: src/specto/watch_mail_pop3.py:73
+msgid "Watch: \"%s has error: "
+msgstr "Urmăreala: \"%s\" are o eroare: "
+
+#: src/specto/watch_mail_pop3.py:87
+#: src/specto/watch_web_static.py:94
+msgid "Watch: \"%s\" has error: "
+msgstr "Urmăreala: \"%s\" are o eroare: "
+
+#: src/specto/watch_web_static.py:61
+msgid "Watch: \"%s\" has error: empty url"
+msgstr "Urmăreala: \"%s\" are o eroare: url gol"
+
+#: src/specto/watch_web_static.py:153
+msgid "Difference percentage:%s (Watch: \"%s\")"
+msgstr "Procentaj de diferență:%s (Urmăreala: \"%s\")"
+
