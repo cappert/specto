@@ -70,6 +70,7 @@ class Watch:
         """
         Notify the user when a watch was updated.
         """
+        global _
         if self.specto.DEBUG or not self.specto.GTK:
             self.specto.logger.log(_("Watch \"%s\" updated!") % self.name, "info", self.__class__)
 

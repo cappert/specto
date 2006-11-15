@@ -325,7 +325,7 @@ class Specto:
             self.stop_watch(id)
         except:
             pass
-        self.watch_db[id].updated = False
+        del self.watch_db[id]
         self.count_updated_watches()
         self.watch_io.remove_watch(name)#do not clear the watch after removing it or it will mess up the watches.list
         self.notifier.model.remove(self.notifier.iter[id])
