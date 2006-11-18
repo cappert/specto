@@ -3,7 +3,7 @@ import sys
 import os
 from distutils.core import setup
 
-f=open('VERSION', 'r') # Open the VERSION file for reading.
+f=open('data/doc/VERSION', 'r') # Open the VERSION file for reading.
 version_string = f.readline()[:-1] # "[:-1]" means we omit the last character, which is "\n".
 f.close
 
@@ -34,14 +34,14 @@ def give_mo_tuples(langs):
     return mo_tuple_list
 
 temp_files = [#The path are relatives to sys.prefix
-    ('share/doc/specto', ['COPYING', 'VERSION', 'ChangeLog', 'README']),
+    ('share/doc/specto', give_files('data/doc/', '')),
     ('share/pixmaps', ['specto.png']),
     ('share/applications', ['specto.desktop']),
-    ('share/specto/icons', give_files('icons/', '.png')),
-    ('share/specto/icons/notifier', give_files('icons/notifier/', '.png')),
-    ('share/specto/icons/notifier/faded', give_files('icons/notifier/faded/', '.png')),
-    ('share/specto/icons/notifier/big', give_files('icons/notifier/big/', '.png', '.svg')),
-    ('share/specto/glade', give_files('glade/', '.glade'))
+    ('share/specto/icons', give_files('data/icons/', '.png')),
+    ('share/specto/icons/notifier', give_files('data/icons/notifier/', '.png')),
+    ('share/specto/icons/notifier/faded', give_files('data/icons/notifier/faded/', '.png')),
+    ('share/specto/icons/notifier/big', give_files('data/icons/notifier/big/', '.png', '.svg')),
+    ('share/specto/glade', give_files('data/glade/', '.glade'))
     ]
 
 for lang_tuple in give_mo_tuples(i18n_languages):
@@ -56,6 +56,6 @@ setup(name = "specto",
     packages = ['specto'],
     package_dir = {'': 'src'},
     #package_data = {'specto': ['preferences.glade','notify.glade']},
-    scripts = ['specto'],
+    #scripts = ['specto'],
     data_files = temp_files
     )
