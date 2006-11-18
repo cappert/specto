@@ -1,4 +1,6 @@
 2006-11-18 Jean-François Fortin
+    * Feature added: checks for network connectivity before starting by trying to open google.com. If it fails, it sleeps for 10 seconds.
+    * Fix a few path bugs
     * Fix a traceback that happened when you edited a gmail watch because main.py tried to grab the Host
 2006-11-15 Jean-François Fortin
     * Fix issue #2 where the watches.list would mess up if you cleared all watches after removing one, or if you removed a watch during the first update process.
