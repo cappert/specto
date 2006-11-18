@@ -304,11 +304,10 @@ class Specto:
             new_values['error_margin'] = values['error_margin']
 
         elif int(values['type']) == 1: #mail
-            if int(values['prot']) == 0 or int(values['prot']) == 1:
+            if int(values['prot']) != 2: #gmail doesn't need a host and SSL it seems, so this is updated only of it's another kind of mail watch
                 new_values['host'] = values['host']
                 new_values['ssl'] = values['ssl']
                 
-            new_values['host'] = values['host']
             new_values['username'] = values['username']
             new_values['password'] = values['password']
             new_values['prot'] = values['prot']
