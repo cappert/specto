@@ -45,14 +45,17 @@ def open_file_watch(f):
     application = gnomevfs.mime_get_default_application(mime_type)
     os.system(application[2] + " " + f + " &")
 
-def get_path(*doc):
+def get_path(category=None):
     """ Return the correct path. """
     if not os.path.exists('../data'):
-        if doc:
-            PATH = "%s/share/" % sys.prefix
-        else:
+        if not category:
             PATH = "%s/share/specto/" % sys.prefix
+        elif category=="doc":
+            PATH = "%s/share/doc/specto/" % sys.prefix
     else:
-        PATH = '../data/'
+        if not category:
+            PATH = '../data/'
+        elif category=="doc":
+            PATH = '../data/doc/'
     return PATH
 
