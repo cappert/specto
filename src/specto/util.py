@@ -23,7 +23,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import os
+import os, sys
 from specto.specto_gconf import GConfClient
 import gnomevfs
 
@@ -44,3 +44,15 @@ def open_file_watch(f):
     mime_type = gnomevfs.get_mime_type(f)
     application = gnomevfs.mime_get_default_application(mime_type)
     os.system(application[2] + " " + f + " &")
+
+def get_path(*doc):
+    """ Return the correct path. """
+    if not os.path.exists('../data'):
+        if doc:
+            PATH = "%s/share/" % sys.prefix
+        else:
+            PATH = "%s/share/specto/" % sys.prefix
+    else:
+        PATH = '../data/'
+    return PATH
+

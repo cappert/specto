@@ -46,7 +46,7 @@ class Edit_watch:
         self.watch = watch
         self.specto = specto
         #create tree
-        gladefile= '../data/glade/edit_watch.glade' 
+        gladefile= self.specto.PATH + 'glade/edit_watch.glade' 
         windowname= "edit_watch"
         self.wTree=gtk.glade.XML(gladefile,windowname)
 
@@ -66,7 +66,7 @@ class Edit_watch:
         self.edit_watch=self.wTree.get_widget("edit_watch")
         self.edit_watch.set_title(_("Edit watch: ") + self.watch.name)
         self.wTree.get_widget("name").set_text(self.watch.name)
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.edit_watch.set_icon(icon)
         self.edit_watch.set_resizable( False )
 
@@ -371,7 +371,7 @@ class Save_dialog:
         self.specto = specto
         self.text = args[0]
         #create tree
-        gladefile= '../data/glade/edit_watch.glade' 
+        gladefile= self.specto.PATH + 'glade/edit_watch.glade' 
         windowname= "file_chooser"
         self.wTree=gtk.glade.XML(gladefile,windowname)        
         self.save_dialog = self.wTree.get_widget("file_chooser")
@@ -383,7 +383,7 @@ class Save_dialog:
         #attach the events
         self.wTree.signal_autoconnect(dic)        
             
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.save_dialog.set_icon(icon)
         self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
         

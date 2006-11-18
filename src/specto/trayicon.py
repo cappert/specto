@@ -29,8 +29,9 @@ import specto.traypopup
 from specto import i18n
 from specto.i18n import _
 
-ICON_PATH = "../data/icons/specto_tray_1.png"
-ICON2_PATH = "../data/icons/specto_tray_2.png"
+PATH = specto.util.get_path()
+ICON_PATH = PATH + "icons/specto_tray_1.png"
+ICON2_PATH = PATH + "icons/specto_tray_2.png"
 
 
 def gettext_noop(s):

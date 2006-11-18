@@ -26,18 +26,20 @@ import sys
 import pygtk
 pygtk.require("2.0")
 import gtk
+import specto.util
 
 class About:
     """
     Class to create a window with the credits and licensing information about Specto.
     """
     
-    def __init__(self):
-        version_file_path = ('../data/doc/VERSION')
+    def __init__(self, specto):
+        self.specto = specto
+        version_file_path = (specto.util.get_path(True) + 'doc/specto/VERSION')
         version_file=open(version_file_path, 'r')
         version = str(version_file.readline()[:-1]) # "[:-1]" means we omit the last character, which is "\n".
         version_file.close
-        license_file_path = ('../data/doc/COPYING')
+        license_file_path = (specto.util.get_path(True) + 'doc/specto/COPYING')
         license_file = open(license_file_path, "r")
         license = license_file.read()
         license_file.close()
@@ -48,7 +50,7 @@ class About:
                     "Giulio 'Dullboy' lotti\n\t<dullgiulio AT gmail DOT com>\n",
                     "Thomas McColgan\n\t<thomas DOT mccolgan AT gmx DOT de>\n",
                     "Conor 'majikstreet' Callahan\n\t<majikstreet AT gmail DOT com>\n"]
-        logo = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_about.png' )
+        logo = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_about.png' )
 
         translator_credits = """
 FR - French
@@ -78,7 +80,7 @@ Adrian Petrescu
         self.about.set_translator_credits(translator_credits)
         self.about.set_logo(logo)
         
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.about.set_icon(icon)
         #self.wTree.set_logo_icon_name(icon_name)
 

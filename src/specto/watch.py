@@ -87,7 +87,7 @@ class Watch:
             from specto.balloons import NotificationToast
 
             if self.type==0:#web
-                NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), "../data/icons/notifier/big/web.png" )
+                NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.PATH + "icons/notifier/big/web.png" )
             elif self.type==1:#email
 
                 if self.prot!=2:#other account than gmail
@@ -111,10 +111,10 @@ class Watch:
                         notification_toast = None#nothing to notify the user about.
 
                 if notification_toast:
-                    NotificationToast(self.specto, notification_toast, "../data/icons/notifier/big/mail.png" )
+                    NotificationToast(self.specto, notification_toast, self.specto.PATH + "icons/notifier/big/mail.png" )
 
             elif self.type==2:#folder
-                NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, "../data/icons/notifier/big/folder.png" )
+                NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, self.specto.PATH + "icons/notifier/big/folder.png" )
             else:
                 self.specto.logger.log(_("Not implemented yet"), "warning", self.__class__)#TODO: implement other notifications
             #end of the libnotify madness

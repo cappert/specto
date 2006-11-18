@@ -54,7 +54,7 @@ class Notifier:
         self.iter = {}
         self.watches = 0
         #create tree
-        gladefile= '../data/glade/notifier.glade' 
+        gladefile= self.specto.PATH + 'glade/notifier.glade' 
         windowname= "notifier"
         self.wTree=gtk.glade.XML(gladefile,windowname)
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_INT)
@@ -86,7 +86,7 @@ class Notifier:
         self.wTree.signal_autoconnect(dic)
 
         self.notifier=self.wTree.get_widget("notifier")
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.notifier.set_icon(icon)
         
         #create the gui
@@ -115,13 +115,13 @@ class Notifier:
         self.specto.clear_watch(id)
         self.model.set_value(self.iter[id], 2, self.specto.watch_db[id].name)
         
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/error.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
         if type == 0:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/web.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
         elif type == 1:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/mail.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
         elif type == 2:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/folder.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
         self.model.set_value(self.iter[id], 1, icon)
         
         if self.specto.watch_db[id].updated == False:
@@ -136,17 +136,17 @@ class Notifier:
         self.wTree.get_widget("button_clear_all").set_sensitive(False)
         self.wTree.get_widget("clear_all1").set_sensitive(False)
         
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/error.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
         for i in self.specto.watch_db:
             self.model.set_value(self.iter[i], 2, "%s" % self.specto.watch_db[i].name)
             type = self.specto.watch_db[i].type
 
             if type == 0:
-                icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/web.png' )
+                icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
             elif type == 1:
-                icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/mail.png' )
+                icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
             elif type == 2:
-                icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/folder.png' )
+                icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
     
             self.model.set_value(self.iter[i], 1, icon)
 
@@ -193,13 +193,13 @@ class Notifier:
         self.wTree.get_widget("clear_all1").set_sensitive(True)
 
         type = self.specto.watch_db[id].type
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/error.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
         if type == 0:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/web.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/web.png' )
         elif type == 1:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/mail.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + '.icons/notifier/mail.png' )
         elif type == 2:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/folder.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/folder.png' )
 
         self.model.set_value(self.iter[id], 1, icon)
         
@@ -213,23 +213,23 @@ class Notifier:
                     
     def toggle_updating(self,progress, id):
         """ If progress is True, a refresh icon is shown, else the type icon is shown. """ 
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/error.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
         if progress == True:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/refresh.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/refresh.png' )
             self.model.set_value(self.iter[id], 1, icon)
             if self.specto.GTK:
                 while gtk.events_pending():#this is to refresh the UI and display the "refresh" icon properly. It works! :)
                     gtk.main_iteration_do(False)
         else:
             if self.specto.watch_db[id].error == True:
-                icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/error.png' )
+                icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/error.png' )
             else:
                 type = self.specto.watch_db[id].type
                 
                 if self.specto.watch_db[id].updated == True:
-                    dir = '../data/icons/notifier/' 
+                    dir = self.specto.PATH + 'icons/notifier/' 
                 else:
-                    dir = '../data/icons/notifier/faded/' 
+                    dir = self.specto.PATH + 'icons/notifier/faded/' 
         
                 if type == 0:
                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'web.png')
@@ -247,13 +247,13 @@ class Notifier:
     def add_notifier_entry(self, name, type, id):
         """ Add an entry to the notifier list. """
         i = id
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/error.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
         if type == 0:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/web.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
         elif type == 1:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/mail.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
         elif type == 2:
-            icon = gtk.gdk.pixbuf_new_from_file('../data/icons/notifier/faded/folder.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
 
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 1)
@@ -332,7 +332,7 @@ class Notifier:
             self.web_info_table.show()
 
             #show the image
-            self.wTree.get_widget("imgWatch").set_from_file('../data/icons/notifier/big/web.png' )
+            self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/web.png' )
 
         elif selected.type == 1:
             #get the info
@@ -352,14 +352,14 @@ class Notifier:
             self.mail_info_table.show()
 
             #show the image
-            self.wTree.get_widget("imgWatch").set_from_file('../data/icons/notifier/big/mail.png' )
+            self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/mail.png' )
             
         elif selected.type == 2:
             self.lblFileNameText.set_label(selected.name)
             self.lblFileName.set_label(selected.file)
             self.lblFileLastUpdateText.set_label(selected.last_updated)
             self.file_info_table.show()
-            self.wTree.get_widget("imgWatch").set_from_file('../data/icons/notifier/big/folder.png' )
+            self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/folder.png' )
         self.resize_info_pane()
         
     def open_watch(self, *args):
@@ -587,7 +587,7 @@ class Notifier:
         self.lblTip.set_use_markup(True)
         self.lblTip.show()
         vbox_info.pack_start(self.lblTip, False, False, 0)
-        self.wTree.get_widget("imgWatch").set_from_file('../data/icons/notifier/big/tip.png' )
+        self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/tip.png' )
 
         #hide the buttons
         self.wTree.get_widget("vbox_panel_buttons").hide()

@@ -44,7 +44,7 @@ class Preferences:
     
     def __init__(self, specto):
         self.specto = specto
-        gladefile= '../data/glade/preferences.glade'
+        gladefile= self.specto.PATH + 'glade/preferences.glade'
         windowname= "preferences"
         self.wTree=gtk.glade.XML(gladefile,windowname)
         

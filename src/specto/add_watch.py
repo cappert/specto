@@ -45,7 +45,7 @@ class Add_watch:
     def __init__(self, specto):
         self.specto = specto
         #create tree
-        gladefile= '../data/glade/add_watch.glade' 
+        gladefile= self.specto.PATH + 'glade/add_watch.glade' 
         windowname= "add_watch"
         self.wTree=gtk.glade.XML(gladefile,windowname)
         
@@ -65,7 +65,7 @@ class Add_watch:
         self.wTree.signal_autoconnect(dic)
 
         self.add_watch=self.wTree.get_widget("add_watch")
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.add_watch.set_icon(icon)
         self.add_watch.set_resizable( False )
         
@@ -425,7 +425,7 @@ class Unique_Dialog:
     """
     
     def __init__(self):
-        self.gladefile= '../data/glade/add_watch.glade' 
+        self.gladefile= self.specto.PATH + 'glade/add_watch.glade' 
         self.dialogname = "dialog"    
         
     def run(self):
@@ -433,7 +433,7 @@ class Unique_Dialog:
         self.wTree=gtk.glade.XML(self.gladefile, self.dialogname) 
         self.unique_dialog=self.wTree.get_widget("dialog")
 
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.unique_dialog.set_icon(icon)
         self.unique_dialog.set_resizable( False )
         self.result = self.unique_dialog.run()

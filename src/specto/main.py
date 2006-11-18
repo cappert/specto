@@ -83,6 +83,7 @@ class Specto:
         self.watch_db = {}
         self.watch_io = Watch_io()
         watch_value_db = self.watch_io.read_options() 
+        self.PATH = util.get_path()
         self.preferences_initialized = False
         self.notifier_initialized = False
         self.GConfClient = GConfClient
@@ -502,7 +503,7 @@ class Specto:
     def show_about(self, *args):
         """ Show the about window. """
         if self.about == "":
-            self.about = About()
+            self.about = About(self)
         elif self.about.about.flags() & gtk.MAPPED:
             pass
         else:

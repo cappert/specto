@@ -47,7 +47,7 @@ class Log_dialog:
     def __init__(self, specto):
         self.specto = specto
         #create tree
-        gladefile= '../data/glade/log_dialog.glade'
+        gladefile= self.specto.PATH + 'glade/log_dialog.glade'
         windowname= "log_dialog"
         self.wTree=gtk.glade.XML(gladefile,windowname)
         
@@ -62,7 +62,7 @@ class Log_dialog:
         self.wTree.signal_autoconnect(dic)
         
         self.log_dialog=self.wTree.get_widget("log_dialog")
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.log_dialog.set_icon(icon)
         
         self.wTree.get_widget("combo_level").set_active(0)
@@ -145,7 +145,7 @@ class Save_dialog:
     def __init__(self, specto, *args):
         self.specto = specto
         #create tree
-        gladefile= '../data/glade/log_dialog.glade' 
+        gladefile= self.specto.PATH + 'glade/log_dialog.glade' 
         windowname= "file_chooser"
         self.wTree=gtk.glade.XML(gladefile,windowname)        
         self.save_dialog = self.wTree.get_widget("file_chooser")
@@ -157,7 +157,7 @@ class Save_dialog:
         #attach the events
         self.wTree.signal_autoconnect(dic)
             
-        icon = gtk.gdk.pixbuf_new_from_file('../data/icons/specto_window_icon.png')
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.save_dialog.set_icon(icon)
         self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
         
