@@ -197,7 +197,7 @@ class Notifier:
         if type == 0:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/web.png' )
         elif type == 1:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + '.icons/notifier/mail.png' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/mail.png' )
         elif type == 2:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/folder.png' )
 
