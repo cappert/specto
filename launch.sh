@@ -1,3 +1,3 @@
 #!/bin/sh
-cd `dirname $0`/src
-exec python specto.py $@
+cd `dirname $0`
+PYTHONPATH=$PYTHONPATH:src ./specto $@

@@ -41,7 +41,8 @@ temp_files = [#The path are relatives to sys.prefix
     ('share/specto/icons/notifier', give_files('data/icons/notifier/', '.png')),
     ('share/specto/icons/notifier/faded', give_files('data/icons/notifier/faded/', '.png')),
     ('share/specto/icons/notifier/big', give_files('data/icons/notifier/big/', '.png', '.svg')),
-    ('share/specto/glade', give_files('data/glade/', '.glade'))
+    ('share/specto/glade', give_files('data/glade/', '.glade')),
+    ('bin/', ['specto'])
     ]
 
 for lang_tuple in give_mo_tuples(i18n_languages):
