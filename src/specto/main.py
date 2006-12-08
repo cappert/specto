@@ -153,7 +153,8 @@ class Specto:
         f.close()
         if pid:    
             p=os.system("ps --no-heading --pid " + pid)
-            if p == 0:
+            p_name=os.popen("ps -f --pid " + pid).read()
+            if p == 0 and "specto" in p_name:
                 self.logger.log(_("Specto is already running!"), "critical", self.__class__)
                 sys.exit(0)
             

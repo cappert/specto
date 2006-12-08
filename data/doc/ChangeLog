@@ -1,3 +1,6 @@
+2006-12-09 Jean-François Fortin
+    * Fix issue #23 (hopefully) where specto thought it was already running if another app stole its process ID
+
 2006-11-18 Jean-François Fortin
     * Feature added: checks for network connectivity before starting by trying to open google.com. If it fails, it sleeps for 10 seconds.
     * Fix a few path bugs
