@@ -20,7 +20,7 @@ def give_files(dir, *extension):
 
     return files
 
-i18n_languages = "fr ro de"#list all the languages, separated by one whitespace
+i18n_languages = "fr ro de sv"#list all the languages, separated by one whitespace
 def give_mo_file(lang):
     return "po/" + str(lang) + "/specto.mo"
 
