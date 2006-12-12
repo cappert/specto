@@ -63,7 +63,7 @@ class Watch:
             gnome.sound_play(problem_sound)
             pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")        
             if (pop_toast == True) and (self.specto.GTK):
-                NotificationToast(self.specto, _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % str(self.name), self.specto.PATH + "icons/notifier/big/error.png")
+                NotificationToast(self.specto, _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % str(self.name), self.specto.PATH + "icons/notifier/big/error.png", 0, 0, 5000, urgency="critical")
         
         #call update function if watch was updated
         if self.updated == True:
