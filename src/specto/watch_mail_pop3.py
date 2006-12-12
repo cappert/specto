@@ -68,7 +68,7 @@ class Mail_watch(Watch):
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
         
         try:
-            if self.ssl == True:
+            if str(self.ssl) == 'True':
                 s = poplib.POP3_SSL(self.host)
             else:
                 s = poplib.POP3(self.host)

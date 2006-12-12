@@ -26,6 +26,7 @@
 from specto.watch import Watch
 
 import imaplib
+import string
 from socket import error
 from specto.i18n import _
 
@@ -59,7 +60,7 @@ class Mail_watch(Watch):
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
            
         try:
-            if self.ssl == True:
+            if str(self.ssl) == 'True':
                 server = imaplib.IMAP4_SSL(self.host)
             else:
                 server = imaplib.IMAP4(self.host)
@@ -80,9 +81,10 @@ class Mail_watch(Watch):
          
                     if totalMsgs.startswith(_("Mailbox does not exist")): 
                         continue 
-                    newMsgs = server.recent()[1][0] 
-                  
-                    if int(newMsgs) > 0:
+                    r, data = server.search(None, "(NEW)")
+                    newMsgs = data[0] #server.recent()[1][0] 
+                    
+                    if newMsgs != "":
                         self.updated = True            
                 server.logout()
             

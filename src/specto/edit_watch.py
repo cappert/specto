@@ -289,7 +289,7 @@ class Edit_watch:
                 self.txtHost.show()
                 lblSsl.show()
                 self.chkSsl.show()
-                if self.watch.ssl == 'True':
+                if str(self.watch.ssl) == 'True':
                     self.chkSsl.set_active(True)
                 else:
                     self.chkSsl.set_active(False)
@@ -301,7 +301,7 @@ class Edit_watch:
                 self.txtHost.show()
                 lblSsl.show()
                 self.chkSsl.show()
-                if self.watch.ssl == 'True':
+                if str(self.watch.ssl) == 'True':
                     self.chkSsl.set_active(True)
                 else:
                     self.chkSsl.set_active(False) 
