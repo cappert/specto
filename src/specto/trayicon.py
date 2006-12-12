@@ -22,17 +22,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import egg.trayicon
 import gtk
 import os, sys
-import specto.traypopup
 from specto import i18n
 from specto.i18n import _
-
-PATH = specto.util.get_path()
-ICON_PATH = PATH + "icons/specto_tray_1.png"
-ICON2_PATH = PATH + "icons/specto_tray_2.png"
-
 
 def gettext_noop(s):
     return s
@@ -41,56 +34,38 @@ class Tray:
     """
     Display a tray icon in the notification area.    
     """
-    
     def __init__(self, specto):
-        # Create the tray icon object
         self.specto = specto
-        self.tray = egg.trayicon.TrayIcon("SpectoTrayIcon")
-        self.eventbox = gtk.EventBox()
-        self.tray.add(self.eventbox)
-        self.eventbox.connect("button_press_event", self.tray_icon_clicked)
-        self.eventbox.connect("destroy", self.specto.recreate_tray)
-        
-        # Create the tooltip for the tray icon
-        self.tooltip = gtk.Tooltips()
-        
-        # Set the image for the tray icon
-        self.imageicon = gtk.Image()
-        pixbuf = gtk.gdk.pixbuf_new_from_file( ICON_PATH )
-        self.imageicon.set_from_pixbuf(pixbuf)
-        self.eventbox.add(self.imageicon)
-        
-        # Show the tray icon
-        self.tray.show_all()
-        self.show_tooltip({0:0,1:0,2:0})
-                
+        self.ICON_PATH = self.specto.PATH + "icons/specto_tray_1.png"
+        self.ICON2_PATH = self.specto.PATH + "icons/specto_tray_2.png"
+        # Create the tray icon object
+        self.tray=None
+        if not self.tray: self.tray = gtk.StatusIcon()
+        self.tray.set_from_file(self.ICON_PATH)
+        self.tray.connect("activate", self.show_notifier)
+        self.tray.connect("popup-menu", self.show_popup)
+        if self.specto.conf_pref.get_entry("/always_show_icon", "boolean") == True:
+            self.tray.set_visible(True)
+        else:
+            self.tray.set_visible(False)      
+
         while gtk.events_pending():
             gtk.main_iteration(True)
 
     def set_icon_state_excited(self):
         """ Change the tray icon to updated. """
-        pixbuf = gtk.gdk.pixbuf_new_from_file( ICON2_PATH )
-        self.imageicon.set_from_pixbuf(pixbuf)
+        if self.specto.conf_pref.get_entry("/always_show_icon", "boolean") == False:
+            self.tray.set_from_file( self.ICON2_PATH )
+            self.tray.set_visible(True)#we need to show the tray again
+        else:
+            self.tray.set_from_file( self.ICON2_PATH )
         
     def set_icon_state_normal(self):
-        """ Change the tray icon to not updated. """
-        pixbuf = gtk.gdk.pixbuf_new_from_file( ICON_PATH )
-        self.imageicon.set_from_pixbuf(pixbuf)
-                
-    def tray_icon_clicked(self,signal,event):
-        """
-        Create the popupmenu or call show_notifier to hide/show the notifier.
-        """
-        if event.button == 3:
-            if self.specto.notifier.get_state() == True:
-                text = _("Hide window")
-            else:
-                text = _("Show window")
-            popup = specto.traypopup.TrayPopupMenu(self, text)
-            popup.show_menu(event)
-            
-        elif event.button == 1:
-            self.show_notifier(event)
+        """ Change the tray icon to not updated. If the user requested to always show the tray, it will change its icon but not disappear. Otherwise, it will be removed."""
+        if self.specto.conf_pref.get_entry("/always_show_icon", "boolean") == False:
+            self.tray.set_visible(False)
+        else:
+            self.tray.set_from_file( self.ICON_PATH )
 
     def show_tooltip(self, updated_messages):
         """ Create the tooltip message and show the tooltip. """
@@ -113,7 +88,7 @@ class Tray:
             if updated_messages[1] > 0:
                 gettext = _        
                 _ = gettext_noop
-                type = i18n._translation.ungettext(_(" mail"), _(" mails"), updated_messages[1])#FIXME: gettext does not work here
+                type = i18n._translation.ungettext(_(" mail account"), _(" mail accounts"), updated_messages[1])#FIXME: gettext does not work here
                 _ = gettext
 
                 if show_return:
@@ -124,13 +99,13 @@ class Tray:
             if updated_messages[2] > 0:
                 gettext = _
                 _ = gettext_noop
-                type = i18n._translation.ungettext(_(" file/folders"), _(" files/folders"), updated_messages[2])#FIXME: gettext does not work here
+                type = i18n._translation.ungettext(_(" file/folder"), _(" files/folders"), updated_messages[2])#FIXME: gettext does not work here
                 _ = gettext
 
                 if show_return:
                     message = message + "\n"
                 message = message + "\t" + str(updated_messages[2]) + str(type)
-        self.tooltip.set_tip(self.tray,message)
+        self.tray.set_tooltip(message)
             
     def show_preferences(self, widget):
         """ Call the main function to show the preferences window. """
@@ -147,6 +122,62 @@ class Tray:
     def show_notifier(self, widget):
         """ Call the main function to show the notifier window. """
         self.specto.toggle_notifier()
+
+    def show_popup(self, status_icon, button, activate_time):
+        """
+        Create the popupmenu
+        """
+        ## From the PyGTK 2.10 documentation
+        # status_icon :	the object which received the signal
+        # button :	the button that was pressed, or 0 if the signal is not emitted in response to a button press event
+        # activate_time :	the timestamp of the event that triggered the signal emission
+        if self.specto.notifier.get_state() == True:
+            text = _("Hide window")
+        else:
+            text = _("Show window")
+
+        # Create menu items
+        self.item_show = gtk.MenuItem( text, True)
+        self.item_pref = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
+        self.item_help = gtk.ImageMenuItem(gtk.STOCK_HELP)
+        self.item_about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+        self.item_quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+
+        # Connect the events
+        self.item_show.connect( 'activate', self.show_notifier)
+        self.item_pref.connect( 'activate', self.show_preferences)
+        self.item_help.connect( 'activate', self.show_help)
+        self.item_about.connect( 'activate', self.show_about)
+        self.item_quit.connect( 'activate', self.quit)
+        
+        # Create the menu
+        self.menu = gtk.Menu()
+        
+        # Append menu items to the menu
+        self.menu.append( self.item_show)
+        self.menu.append( gtk.SeparatorMenuItem())
+        self.menu.append( self.item_pref)
+        self.menu.append( self.item_help)
+        self.menu.append( self.item_about)
+        self.menu.append( gtk.SeparatorMenuItem())
+        self.menu.append( self.item_quit)
+        self.menu.show_all()
+        self.menu.popup(None, None, gtk.status_icon_position_menu, button, activate_time, self.tray)#the last argument is to tell gtk.status_icon_position_menu where to grab the coordinates to position the popup menu correctly
+
+    #grab the x and y position of the tray icon and make the balloon emerge from it
+    def get_x(self):
+        x = self.tray.get_geometry()[1][0]
+        if self.tray.get_visible()==True:
+            x += int(self.tray.get_size() / 2) #add half the icon's width
+        else:
+            x -= int(self.tray.get_size() / 2) #remove half the icon's width
+            #FIXME: I don't know why that one does not work
+        return x
+    def get_y(self):
+        return self.tray.get_geometry()[1][2]
+
+    def destroy(self):
+        self.tray.set_visible(False)
         
     def quit(self, widget):
         """ Call the main function to quit specto. """

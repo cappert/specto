@@ -41,7 +41,7 @@ class NotificationToast:
         }
 
     # I'd love to have a default icon.
-    def __init__(self, specto, body, icon=None, timeout=2000, urgency="low", summary=_notifyRealm):
+    def __init__(self, specto, body, icon=None, x=0, y=0, timeout=2000, urgency="low", summary=_notifyRealm):
         global notifyInitialized
 
         if not notifyInitialized:
@@ -53,6 +53,10 @@ class NotificationToast:
         self.toast.set_urgency(self._Urgencies[urgency])
         if icon:
             self.toast.set_property('icon-name', icon)
+            
+        if x!=0 and y!=0:#grab the x and y position of the tray icon and make the balloon emerge from it
+            self.toast.set_hint("x", x)
+            self.toast.set_hint("y", y)
         
         if not self.toast.show():
             specto.logger.log("Can't send Notification message. Check your DBUS!", "error", self.__class__)

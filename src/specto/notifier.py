@@ -447,10 +447,12 @@ class Notifier:
         Return True to stop destroying the main window.
         """
         self.save_size_and_position()
-        self.notifier.hide()
-        self.specto.conf_ui.set_entry("/notifier_state", 0, "boolean")#save the window state for the next time specto starts
-
-        return True
+        if self.specto.conf_pref.get_entry("/always_show_icon", "boolean") == True:
+            self.notifier.hide()
+            self.specto.conf_ui.set_entry("/notifier_state", 0, "boolean")#save the window state for the next time specto starts
+            return True
+        else:
+            self.specto.quit()
 
     def restore_size_and_position(self):
         """

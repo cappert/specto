@@ -54,8 +54,8 @@ def get_path(category=None):
             PATH = "%s/share/doc/specto/" % sys.prefix
     else:
         if not category:
-            PATH = 'data/'
+            PATH =os.path.join(os.getcwd(), "data/")
         elif category=="doc":
-            PATH = 'data/doc/'
+            PATH = os.path.join(os.getcwd(), "data/doc/")
     return PATH
 

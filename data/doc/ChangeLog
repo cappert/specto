@@ -1,3 +1,16 @@
+2006-12-12 Jean-Francois Fortin
+    * Finally killed libegg and use PyGTK's gtk.StatusIcon instead (fixes issue #8, requires pygtk 2.10)
+    * The tray icon is not persistent as a default: you have to enable it in the preferences now. This is for HIG purposes.
+    * Killed the traypopup module, it really was useless, I merged it in trayicon
+    * Libnotify balloons are finally attached to the tray icon!
+    * Make the utils module return absolute paths
+    * Fix issue #16: icons do not show in balloons
+    * Code cleanup
+
+2006-12-12 Wout Clymans
+    * Fix issue #3 a dialog is shown with the question to kill specto
+    * Fix issue #22 (hopefully) for mail SSL support
+
 2006-12-09 Jean-François Fortin
     * Fix issue #23 (hopefully) where specto thought it was already running if another app stole its process ID
     * Fix issue #26 (partly) by adding the executable bit to the file "specto"

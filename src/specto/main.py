@@ -80,20 +80,19 @@ class Specto:
         self.DEBUG = DEBUG
         self.logger = Logger(self)
         self.check_instance() #see if specto is already running
-        self.GTK = GTK
-        if GTK:
-            self.tray = Tray(self)
         self.util = util
-        self.watch_db = {}
-        self.watch_io = Watch_io()
-        watch_value_db = self.watch_io.read_options() 
-        self.PATH = util.get_path()
-        self.preferences_initialized = False
-        self.notifier_initialized = False
+        self.PATH = self.util.get_path()
         self.GConfClient = GConfClient
         self.conf_ui = self.GConfClient("/apps/specto/ui")
         self.conf_pref = self.GConfClient("/apps/specto/preferences")
-        
+        self.GTK = GTK
+        if GTK:
+            self.tray = Tray(self)
+        self.watch_db = {}
+        self.watch_io = Watch_io()
+        watch_value_db = self.watch_io.read_options() 
+        self.preferences_initialized = False
+        self.notifier_initialized = False        
         #listen for gconf keys
         self.conf_pref.notify_entry("/debug_mode", self.key_changed, "debug")
 
@@ -112,7 +111,11 @@ class Specto:
                 break
 
         if GTK:
-            if self.conf_ui.get_entry("/notifier_state", "boolean")==True:
+            if self.conf_pref.get_entry("/always_show_icon", "boolean") == False:
+                #if the user has not requested the tray icon to be shown at all times, it's impossible that the notifier is hidden on startup, so we must show it.
+                self.notifier_keep_hidden = False
+                self.toggle_notifier()
+            elif self.conf_ui.get_entry("/notifier_state", "boolean")==True:
                 self.notifier_keep_hidden = False
                 self.toggle_notifier()
             elif self.conf_ui.get_entry("/notifier_state", "boolean")==False:
@@ -167,6 +170,8 @@ class Specto:
         """
         Recreate a tray icon if the notification area unexpectedly quits.
         """
+        try:self.tray.destroy()
+        except:pass
         self.tray = ""
         self.tray = Tray(self)
         self.count_updated_watches()
@@ -450,6 +455,7 @@ class Specto:
         elif not self.notifier_initialized and not self.notifier_keep_hidden:
             self.notifier = Notifier(self)
             self.notifier.restore_size_and_position()
+            self.notifier.notifier.show()
 
         elif self.notifier_initialized:
             if self.notifier.get_state()==True and self.notifier_keep_hidden:

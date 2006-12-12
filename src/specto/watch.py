@@ -62,8 +62,8 @@ class Watch:
         
         #call update function if watch was updated
         if self.updated == True:
-            self.notify()
             self.specto.toggle_updated(self.id) #call the main function to update the notifier entrie
+            self.notify()
         self.timer_id = gobject.timeout_add(self.refresh, self.update)
 
     def notify(self):
@@ -84,10 +84,12 @@ class Watch:
             gnome.sound_play(update_sound)
         
         if (pop_toast == True) and (self.specto.GTK):
+            self.tray_x = self.specto.tray.get_x()
+            self.tray_y = self.specto.tray.get_y()
             from specto.balloons import NotificationToast
 
             if self.type==0:#web
-                NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.PATH + "icons/notifier/big/web.png" )
+                NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.PATH + "icons/notifier/big/web.png", self.tray_x, self.tray_y)
             elif self.type==1:#email
 
                 if self.prot!=2:#other account than gmail
@@ -111,10 +113,10 @@ class Watch:
                         notification_toast = None#nothing to notify the user about.
 
                 if notification_toast:
-                    NotificationToast(self.specto, notification_toast, self.specto.PATH + "icons/notifier/big/mail.png" )
+                    NotificationToast(self.specto, notification_toast, self.specto.PATH + "icons/notifier/big/mail.png", self.tray_x, self.tray_y)
 
             elif self.type==2:#folder
-                NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, self.specto.PATH + "icons/notifier/big/folder.png" )
+                NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, self.specto.PATH + "icons/notifier/big/folder.png", self.tray_x, self.tray_y)
             else:
                 self.specto.logger.log(_("Not implemented yet"), "warning", self.__class__)#TODO: implement other notifications
             #end of the libnotify madness

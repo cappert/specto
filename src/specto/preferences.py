@@ -119,6 +119,13 @@ class Preferences:
         else:
             client.set_entry("/windowlist", 0, "boolean")
 
+        #see if tray has to be saved
+        if self.wTree.get_widget("chk_tray").get_active():
+            client.set_entry("/always_show_icon", 1, "boolean")
+        else:
+            client.set_entry("/always_show_icon", 0, "boolean")
+        self.specto.recreate_tray()
+
         #see if debug mode has to be saved
         if self.wTree.get_widget("chk_debug").get_active():
             client.set_entry("/debug_mode",1, "boolean")
@@ -142,6 +149,12 @@ class Preferences:
         else:
             self.wTree.get_widget("chk_windowlist").set_active(False)
 
+        #check tray
+        if client.get_entry("/always_show_icon", "boolean") == True:
+            self.wTree.get_widget("chk_tray").set_active(True)
+        else:
+            self.wTree.get_widget("chk_tray").set_active(False)
+        
         #check update sound
         if client.get_entry("/use_update_sound", "boolean"):
             self.wTree.get_widget("chkSoundUpdate").set_active(True)
