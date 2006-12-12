@@ -5,6 +5,7 @@
     * Libnotify balloons are finally attached to the tray icon!
     * Make the utils module return absolute paths
     * Fix issue #16: icons do not show in balloons
+    * Display a minimal libnotify balloon when something goes wrong with a watch
     * Code cleanup
 
 2006-12-12 Wout Clymans
