@@ -540,5 +540,21 @@ class Specto:
             gtk.main_quit()
         except:
             self.notifier.stop_refresh = True
-            error_string = _('Specto is currently checking a watch for updates. When it has finished checking, try quitting Specto again.')
-            os.system("zenity --info --title='Cannot quit' --text='%s' &" % error_string) #FIXME: allow emergency quitting anyway? Create a "real" gtk dialog that offers the choice between "wait" (do nothing), "retry" (self.quit) and "emergency exit" (killall specto).
+            #create a close dialog
+            dialog = gtk.Dialog("Error quitting specto", None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+            dialog.add_button(gtk.STOCK_CANCEL, -1)
+            dialog.add_button("Murder specto", 3)            
+            label = gtk.Label(_('Specto is currently busy and cannot quit yet.\n\nThis may be because it is checking for watch updates.\nHowever, you can try forcing it to quit by clicking the murder button.'))
+            dialog.vbox.pack_start(label, True, True, 20)
+            label.show()
+            icon = gtk.gdk.pixbuf_new_from_file(self.PATH + 'icons/specto_window_icon.png' )
+            dialog.set_icon(icon)
+            answer = dialog.run()
+            if answer == 3:
+                try:
+                    sys.exit(0)
+                except:
+                    #kill the specto process with killall
+                    os.system('killall specto')
+            else:
+                dialog.destroy()
