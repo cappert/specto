@@ -121,7 +121,10 @@ class Tray:
         
     def show_notifier(self, widget):
         """ Call the main function to show the notifier window. """
-        self.specto.toggle_notifier()
+        if self.specto.conf_pref.get_entry("/always_show_icon", "boolean") == True:
+            self.specto.toggle_notifier()
+        else:
+            self.specto.notifier.notifier.present()
 
     def show_popup(self, status_icon, button, activate_time):
         """
@@ -131,7 +134,7 @@ class Tray:
         # status_icon :	the object which received the signal
         # button :	the button that was pressed, or 0 if the signal is not emitted in response to a button press event
         # activate_time :	the timestamp of the event that triggered the signal emission
-        if self.specto.notifier.get_state() == True:
+        if self.specto.conf_pref.get_entry("/always_show_icon", "boolean") == True and self.specto.notifier.get_state() == True:
             text = _("Hide window")
         else:
             text = _("Show window")
