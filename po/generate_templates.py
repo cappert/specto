@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+#this script is for translators. It is used to regenerate the translations template file (po/specto.pot) when strings in specto have changed.
+
+print "Specto's custom string extractor script\n"
+
+import os, glob
+paths = ["../src/specto", "../data/glade"]
+extensions = [".py", ".h"]
+arguments = ""
+
+#this is to extract the strings from the glade files before passing them to pygettext
+#intltool-extract --type=gettext/glade pywine.glade
+print "Parsing glade files..."
+for x in glob.glob("../data/glade/*.glade"): 
+    glade_file_to_parse = "intltool-extract --type=gettext/glade " + x
+    os.system(glade_file_to_parse)
+print "\tDone.\n"
+
+#use pygettext to transform strings in the .glade.h files and strings in .py files into a specto.pot template file
+for path in paths:
+    for extension in extensions:
+        foo = path + "/*" + extension
+        for x in glob.glob(foo):
+            arguments += x
+            arguments += " "
+print "Will analyze these files:\n\n", arguments
+
+command = "python pygettext.py --keyword=N_ --output=specto.pot " + arguments
+os.system(command)
+print "\n\nSTRINGS EXTRACTED. They have been saved as the template file 'specto.pot'"

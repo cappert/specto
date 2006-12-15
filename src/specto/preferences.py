@@ -46,7 +46,7 @@ class Preferences:
         self.specto = specto
         gladefile= self.specto.PATH + 'glade/preferences.glade'
         windowname= "preferences"
-        self.wTree=gtk.glade.XML(gladefile,windowname)
+        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
         
         #catch some events
         dic= { "on_cancel_clicked": self.delete_event,

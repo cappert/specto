@@ -47,7 +47,7 @@ class Add_watch:
         #create tree
         gladefile= self.specto.PATH + 'glade/add_watch.glade' 
         windowname= "add_watch"
-        self.wTree=gtk.glade.XML(gladefile,windowname)
+        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
         
         #save the option for hiding the table
         self.option_visible = -1

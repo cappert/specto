@@ -80,6 +80,8 @@ class Specto:
 
     def __init__(self):
         self.DEBUG = DEBUG
+        import gettext #this is for the glade files
+        self.glade_gettext = gettext.textdomain("specto")
         self.logger = Logger(self)
         self.check_instance() #see if specto is already running
         self.util = util

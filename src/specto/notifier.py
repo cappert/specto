@@ -56,7 +56,7 @@ class Notifier:
         #create tree
         gladefile= self.specto.PATH + 'glade/notifier.glade' 
         windowname= "notifier"
-        self.wTree=gtk.glade.XML(gladefile,windowname)
+        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_INT)
 
         #catch some events

@@ -48,7 +48,7 @@ class Edit_watch:
         #create tree
         gladefile= self.specto.PATH + 'glade/edit_watch.glade' 
         windowname= "edit_watch"
-        self.wTree=gtk.glade.XML(gladefile,windowname)
+        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
 
         #catch some events
         dic= { "on_button_cancel_clicked": self.cancel_clicked,

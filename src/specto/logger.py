@@ -49,7 +49,7 @@ class Log_dialog:
         #create tree
         gladefile= self.specto.PATH + 'glade/log_dialog.glade'
         windowname= "log_dialog"
-        self.wTree=gtk.glade.XML(gladefile,windowname)
+        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
         
         dic={
         "on_button_help_clicked": self.show_help,
