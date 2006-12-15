@@ -28,6 +28,8 @@ from specto.watch import Watch
 import os, re
 from stat import *
 from specto.i18n import _
+import thread
+import gtk, time
 
 cacheSubDir__ = os.environ['HOME'] + "/.specto/cache/"
 if not os.path.exists(cacheSubDir__):
@@ -52,9 +54,20 @@ class File_watch(Watch):
        
     def start_watch(self):
         """ Start the watch. """
-        self.update()
+        self.thread_update()
+        
+    def thread_update(self):
+        lock = thread.allocate_lock()
+        lock.acquire()
+        t=thread.start_new_thread(self.update,(lock,))
+        while lock.locked():
+            while gtk.events_pending():
+                gtk.main_iteration()
+            time.sleep(0.05)
+        while gtk.events_pending():
+            gtk.main_iteration()  
                 
-    def update(self):
+    def update(self, lock):
         """ See if a file was modified or created. """
         self.error = False
         self.specto.update_watch(True, self.id)
@@ -84,6 +97,7 @@ class File_watch(Watch):
             self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
         
         self.specto.update_watch(False, self.id)
+        lock.release()
         Watch.update(self)
                 
     def get_file(self, file_):

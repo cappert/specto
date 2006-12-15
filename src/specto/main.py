@@ -42,6 +42,8 @@ from specto.i18n import _
 #for the initial ping test
 from urllib2 import urlopen
 from time import sleep
+import time
+import thread
 
 #create a gconf object
 debug_gconf_client = GConfClient("/apps/specto/preferences")
@@ -193,10 +195,11 @@ class Specto:
         #start the active watches
         if self.notifier_initialized:            
             self.notifier.refresh()
-                    
+            
     def create_watch(self, values):
         """ Add a watch to the watches repository. """
         id = len(self.watch_db)
+        
         if values['type'] == 0: #add a website
             from specto.watch_web_static import Web_watch
             self.watch_db[id] = Web_watch(self, values['name'], values['refresh'], values['uri'], id, values['error_margin']) #TODO: Authentication

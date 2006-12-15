@@ -29,6 +29,8 @@ import poplib
 import os
 from socket import error
 from specto.i18n import _
+import thread
+import gtk, time
 
 class Mail_watch(Watch):
     """ 
@@ -59,9 +61,20 @@ class Mail_watch(Watch):
         
     def start_watch(self):
         """ Start the watch. """
-        self.update()
+        self.thread_update()
         
-    def update(self):
+    def thread_update(self):
+        lock = thread.allocate_lock()
+        lock.acquire()
+        t=thread.start_new_thread(self.update,(lock,))
+        while lock.locked():
+            while gtk.events_pending():
+                gtk.main_iteration()
+            time.sleep(0.05)
+        while gtk.events_pending():
+            gtk.main_iteration()  
+        
+    def update(self, lock):
         """ Check for new mails on your pop3 account. """
         self.error = False
         self.specto.update_watch(True, self.id)
@@ -91,6 +104,7 @@ class Mail_watch(Watch):
                 self.specto.logger.log(_("Watch: \"%s\" has error: ") % self.name + str(e), "error", self.__class__)
 
         self.specto.update_watch(False, self.id)
+        lock.release()
         Watch.update(self)
         
     def check_old(self):

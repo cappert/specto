@@ -31,6 +31,8 @@ from httplib import HTTPMessage
 from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
 from specto.i18n import _
+import thread
+import gtk, time
 
 cacheSubDir__ = os.environ['HOME'] + "/.specto/cache/"
 if not os.path.exists(cacheSubDir__):
@@ -65,9 +67,20 @@ class Web_watch(Watch):
         
     def start_watch(self):
         """ Start the watch. """
-        self.update()
+        self.thread_update()
+        
+    def thread_update(self):
+        lock = thread.allocate_lock()
+        lock.acquire()
+        t=thread.start_new_thread(self.update,(lock,))
+        while lock.locked():
+            while gtk.events_pending():
+                gtk.main_iteration()
+            time.sleep(0.05)
+        while gtk.events_pending():
+            gtk.main_iteration()  
 
-    def update(self):
+    def update(self, lock):
         """ See if a http or rss page changed. """
         self.error = False
         self.specto.update_watch(True, self.id)
@@ -183,6 +196,7 @@ class Web_watch(Watch):
             self.write_filesize()
             
         self.specto.update_watch(False, self.id)
+        lock.release()
         Watch.update(self)
 
     def content(self):

@@ -69,7 +69,7 @@ class Watch:
         if self.updated == True:
             self.specto.toggle_updated(self.id) #call the main function to update the notifier entrie
             self.notify()
-        self.timer_id = gobject.timeout_add(self.refresh, self.update)
+        self.timer_id = gobject.timeout_add(self.refresh, self.thread_update)
 
     def notify(self):
         """
