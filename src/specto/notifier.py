@@ -806,7 +806,7 @@ class Notifier:
         
     def sort_name(self, *args):
         """ Sort by watch name. """
-        self.model.set_sort_column_id(2, not self.get_gconf_sort_order() )
+        self.model.set_sort_column_id(2, self.get_gconf_sort_order() )
         self.specto.conf_ui.set_entry("/sort_function", "name", "string")
         self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(self.columnTitel.get_sort_order()) ,"string")
     
@@ -817,7 +817,7 @@ class Notifier:
         
     def sort_type(self, *args):
         """ Sort by watch type. """
-        self.model.set_sort_column_id(4,not self.get_gconf_sort_order())
+        self.model.set_sort_column_id(4, self.get_gconf_sort_order())
         self.specto.conf_ui.set_entry("/sort_function", "type", "string")
         self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(self.columnType.get_sort_order()) ,"string")
     
@@ -828,7 +828,7 @@ class Notifier:
         
     def sort_active(self, *args):
         """ Sort by active watches. """
-        self.model.set_sort_column_id(0, not self.get_gconf_sort_order())
+        self.model.set_sort_column_id(0, self.get_gconf_sort_order())
         self.specto.conf_ui.set_entry("/sort_function", "active", "string")
         self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(self.columnCheck.get_sort_order()) ,"string")
 

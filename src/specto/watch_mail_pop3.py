@@ -87,7 +87,7 @@ class Mail_watch(Watch):
                 s = poplib.POP3(self.host)
         except error, e:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s has error: ") % self.name + str(e), "error", self.__class__)
+            self.specto.logger.log(_("Watch: \"%s\" has error: ") % self.name + str(e), "error", self.__class__)
         else:
             try:
                 s.user(self.user)

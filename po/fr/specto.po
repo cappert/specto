@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Specto\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-12-15 19:00-0500\n"
+"PO-Revision-Date: 2006-12-16 16:21-0500\n"
 "Last-Translator: Jean-François Fortin Tam\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -39,17 +39,17 @@ msgstr ""
 "existant"
 
 #: ../data/glade/add_watch.glade.h:8
-#: ../data/glade/edit_watch.glade.h:3
+#: ../data/glade/edit_watch.glade.h:2
 msgid "Name:"
 msgstr "Nom :"
 
 #: ../data/glade/add_watch.glade.h:9
-#: ../data/glade/edit_watch.glade.h:4
+#: ../data/glade/edit_watch.glade.h:3
 msgid "Refresh Interval:"
 msgstr "Intervalle de mise à jour :"
 
 #: ../data/glade/add_watch.glade.h:10
-#: ../data/glade/edit_watch.glade.h:6
+#: ../data/glade/edit_watch.glade.h:5
 msgid ""
 "Seconds\n"
 "Minutes\n"
@@ -90,19 +90,15 @@ msgstr ""
 "Fichiers ou dossiers"
 
 #: ../data/glade/edit_watch.glade.h:1
-msgid "Edit Watch $WATCH_NAME"
-msgstr "Modifier l'observateur $WATCH_NAME"
-
-#: ../data/glade/edit_watch.glade.h:2
 msgid "Error Log"
 msgstr "Journal d'erreurs"
 
-#: ../data/glade/edit_watch.glade.h:5
+#: ../data/glade/edit_watch.glade.h:4
 #: ../data/glade/log_dialog.glade.h:9
 msgid "Save As"
 msgstr "Enregistrer sous"
 
-#: ../data/glade/edit_watch.glade.h:10
+#: ../data/glade/edit_watch.glade.h:9
 msgid "Watch Settings"
 msgstr "Paramètres de l'observateur"
 
@@ -323,7 +319,7 @@ msgstr "Choisissez un fichier ou un dossier"
 
 #: ../src/specto/edit_watch.py:67
 msgid "Edit watch: "
-msgstr "Modifier l'observateur :"
+msgstr "Modifier l'observateur : "
 
 #: ../src/specto/edit_watch.py:163
 msgid "Watch : \"%s\" edited."
@@ -499,39 +495,39 @@ msgstr "ID"
 msgid "TYPE"
 msgstr "TYPE"
 
-#: ../src/specto/notifier.py:587
+#: ../src/specto/notifier.py:588
 msgid "Tip of the Day:"
 msgstr "Astuce du jour :"
 
-#: ../src/specto/notifier.py:607
-#: ../src/specto/notifier.py:662
-#: ../src/specto/notifier.py:717
+#: ../src/specto/notifier.py:608
+#: ../src/specto/notifier.py:663
+#: ../src/specto/notifier.py:718
 msgid "<b>Name:</b>"
 msgstr "<b>Nom :</b>"
 
-#: ../src/specto/notifier.py:619
-#: ../src/specto/notifier.py:674
-#: ../src/specto/notifier.py:729
+#: ../src/specto/notifier.py:620
+#: ../src/specto/notifier.py:675
+#: ../src/specto/notifier.py:730
 msgid "<b>Last Updated:</b>"
 msgstr "<b>Dernière mise à jour :</b>"
 
-#: ../src/specto/notifier.py:631
+#: ../src/specto/notifier.py:632
 msgid "<b>Location:</b>"
 msgstr "<b>Emplacement :</b>"
 
-#: ../src/specto/notifier.py:643
+#: ../src/specto/notifier.py:644
 msgid "<b>Error Margin:</b>"
 msgstr "<b>Marge d'erreur :</b>"
 
-#: ../src/specto/notifier.py:686
+#: ../src/specto/notifier.py:687
 msgid "<b>Host:</b>"
 msgstr "<b>Hôte :</b>"
 
-#: ../src/specto/notifier.py:698
+#: ../src/specto/notifier.py:699
 msgid "<b>Username:</b>"
 msgstr "<b>Utilisateur :</b>"
 
-#: ../src/specto/notifier.py:741
+#: ../src/specto/notifier.py:742
 msgid "<b>File/folder:</b>"
 msgstr "<b>Fichier/dossier :</b>"
 
@@ -663,9 +659,6 @@ msgid "Mailbox does not exist"
 msgstr "Le compte de courriel n'existe pas"
 
 #: ../src/specto/watch_mail_pop3.py:90
-msgid "Watch: \"%s has error: "
-msgstr "Observateur : \"%s a causé une erreur : "
-
 #: ../src/specto/watch_mail_pop3.py:104
 #: ../src/specto/watch_web_static.py:107
 msgid "Watch: \"%s\" has error: "

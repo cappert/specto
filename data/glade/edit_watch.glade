@@ -5,7 +5,7 @@
   <widget class="GtkWindow" id="edit_watch">
     <property name="visible">True</property>
     <property name="border_width">12</property>
-    <property name="title" translatable="yes">Edit Watch $WATCH_NAME</property>
+    <property name="title">Edit Watch $WATCH_NAME</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
     <child>
       <widget class="GtkNotebook" id="notebook1">
