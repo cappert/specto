@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: Fri Dec 15 14:07:43 2006\n"
+"POT-Creation-Date: Fri Dec 15 19:00:08 2006\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -315,26 +315,6 @@ msgstr ""
 msgid "Imap"
 msgstr ""
 
-#: ../src/specto/logger.py:100
-msgid "\\w\\s*- DEBUG -\\s*\\w"
-msgstr ""
-
-#: ../src/specto/logger.py:102
-msgid "\\w\\s*- INFO -\\s*\\w"
-msgstr ""
-
-#: ../src/specto/logger.py:104
-msgid "\\w\\s*- WARNING -\\s*\\w"
-msgstr ""
-
-#: ../src/specto/logger.py:106
-msgid "\\w\\s*- ERROR -\\s*\\w"
-msgstr ""
-
-#: ../src/specto/logger.py:108
-msgid "\\w\\s*- CRITICAL -\\s*\\w"
-msgstr ""
-
 #: ../src/specto/main.py:62
 msgid "no GTK, activating console mode"
 msgstr ""
@@ -347,7 +327,7 @@ msgstr ""
 msgid "Specto is already running!"
 msgstr ""
 
-#: ../src/specto/main.py:238 ../src/specto/watch.py:221
+#: ../src/specto/main.py:238 ../src/specto/watch.py:218
 msgid "No updates yet."
 msgstr ""
 
@@ -409,6 +389,10 @@ msgstr ""
 
 #: ../src/specto/main.py:531
 msgid "edit watch: recreate"
+msgstr ""
+
+#: ../src/specto/main.py:557
+msgid "Murder!"
 msgstr ""
 
 #: ../src/specto/main.py:558
@@ -526,35 +510,35 @@ msgid ""
 "Updated watches:\n"
 msgstr ""
 
-#: ../src/specto/trayicon.py:82
-msgid " website"
+#: ../src/specto/trayicon.py:80
+msgid "website"
 msgstr ""
 
-#: ../src/specto/trayicon.py:82
-msgid " websites"
+#: ../src/specto/trayicon.py:80
+msgid "websites"
 msgstr ""
 
-#: ../src/specto/trayicon.py:91
-msgid " mail account"
+#: ../src/specto/trayicon.py:86
+msgid "mail account"
 msgstr ""
 
-#: ../src/specto/trayicon.py:91
-msgid " mail accounts"
+#: ../src/specto/trayicon.py:86
+msgid "mail accounts"
 msgstr ""
 
-#: ../src/specto/trayicon.py:102
-msgid " file/folder"
+#: ../src/specto/trayicon.py:94
+msgid "file/folder"
 msgstr ""
 
-#: ../src/specto/trayicon.py:102
-msgid " files/folders"
+#: ../src/specto/trayicon.py:94
+msgid "files/folders"
 msgstr ""
 
-#: ../src/specto/trayicon.py:138
+#: ../src/specto/trayicon.py:129
 msgid "Hide window"
 msgstr ""
 
-#: ../src/specto/trayicon.py:140
+#: ../src/specto/trayicon.py:131
 msgid "Show window"
 msgstr ""
 
@@ -574,19 +558,19 @@ msgstr ""
 msgid "Your email account, <b>%s</b>, has new mail."
 msgstr ""
 
-#: ../src/specto/watch.py:104
+#: ../src/specto/watch.py:102
 msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
 msgstr ""
 
-#: ../src/specto/watch.py:106
+#: ../src/specto/watch.py:104
 msgid "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s"
 msgstr ""
 
-#: ../src/specto/watch.py:121
+#: ../src/specto/watch.py:118
 msgid "The file/folder, <b>%s</b>, has been updated."
 msgstr ""
 
-#: ../src/specto/watch.py:123
+#: ../src/specto/watch.py:120
 msgid "Not implemented yet"
 msgstr ""
 

@@ -97,15 +97,15 @@ class Log_dialog:
             self.logwindow.set_text(self.log)
         else:
             if level == 1:
-                pattern = _("\w\s*- DEBUG -\s*\w")
+                pattern = ("\w\s*- DEBUG -\s*\w")
             elif level == 2:
-                pattern = _("\w\s*- INFO -\s*\w")
+                pattern = ("\w\s*- INFO -\s*\w")
             elif level == 3:
-                pattern = _("\w\s*- WARNING -\s*\w")
+                pattern = ("\w\s*- WARNING -\s*\w")
             elif level == 4:
-                pattern = _("\w\s*- ERROR -\s*\w")
+                pattern = ("\w\s*- ERROR -\s*\w")
             elif level == 5:
-                pattern = _("\w\s*- CRITICAL -\s*\w")
+                pattern = ("\w\s*- CRITICAL -\s*\w")
             elif level == -1:
                 pattern = self.wTree.get_widget("combo_level").child.get_text()
                 

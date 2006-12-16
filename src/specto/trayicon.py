@@ -77,34 +77,25 @@ class Tray:
         else:
             message = _('Updated watches:\n')
             if updated_messages[0] > 0:
-                gettext = _
-                _ = gettext_noop
-                type = i18n._translation.ungettext(_(" website"), _(" websites"), updated_messages[0])#FIXME: gettext does not work here
-                _ = gettext
+                type = i18n._translation.ungettext(_("website"), _("websites"), updated_messages[0])
 
-                message = message + "\t" + str(updated_messages[0]) + str(type)
+                message = message + "\t" + str(updated_messages[0]) + " " + type
                 show_return = True
             #mail tooltip
             if updated_messages[1] > 0:
-                gettext = _        
-                _ = gettext_noop
-                type = i18n._translation.ungettext(_(" mail account"), _(" mail accounts"), updated_messages[1])#FIXME: gettext does not work here
-                _ = gettext
+                type = i18n._translation.ungettext(_("mail account"), _("mail accounts"), updated_messages[1])
 
                 if show_return:
                     message = message + "\n"
-                message = message + "\t" + str(updated_messages[1]) + str(type)
+                message = message + "\t" + str(updated_messages[1]) + " " + type
                 show_return = True
             #file tooltip
             if updated_messages[2] > 0:
-                gettext = _
-                _ = gettext_noop
-                type = i18n._translation.ungettext(_(" file/folder"), _(" files/folders"), updated_messages[2])#FIXME: gettext does not work here
-                _ = gettext
+                type = i18n._translation.ungettext(_("file/folder"), _("files/folders"), updated_messages[2])
 
                 if show_return:
                     message = message + "\n"
-                message = message + "\t" + str(updated_messages[2]) + str(type)
+                message = message + "\t" + str(updated_messages[2]) + " " + type
         self.tray.set_tooltip(message)
             
     def show_preferences(self, widget):

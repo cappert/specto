@@ -97,15 +97,12 @@ class Watch:
                 if self.prot!=2:#other account than gmail
                     notification_toast = _("Your email account, <b>%s</b>, has new mail.") % str(self.name)
                 elif self.prot==2:#gmail
-                    gettext = _
-                    _ = gettext_noop
                     notification_toast = i18n._translation.ungettext(\
                         # English singular form:
-                        _("Your email account, <b>%s</b>, has <b>%d</b> new mail.") % (self.name, self.newMsg-self.oldMsg),\
+                        (_("Your email account, <b>%s</b>, has <b>%d</b> new mail.") % (self.name, self.newMsg-self.oldMsg)),\
                         # English plural form:
-                        _("Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s") % (self.name, self.newMsg-self.oldMsg, self.newMsg),\
+                        (_("Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s") % (self.name, self.newMsg-self.oldMsg, self.newMsg)),\
                         self.newMsg-self.oldMsg)
-                    _ = gettext
                     
                     if (self.newMsg - self.oldMsg >1):
                         self.oldMsg = self.newMsg#store temporarily the number of old messages to prevent false alerts

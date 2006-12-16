@@ -1,5 +1,8 @@
 2006-12-15 Jean-Francois Fortin
     * Fixed issue #9, Specto can now be fully translated. Yes, that means glade files too! Go ahead and make Specto beautiful in your native language!
+    * Updated translations template
+    * Updated translations: fr, de (thanks Tobias)
+    * Fixed translations that use plurals in our code
 
 2006-12-15 Wout Clymans
     * Fixed issue #10 specto uses threads to update watches

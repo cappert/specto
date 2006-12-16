@@ -554,7 +554,7 @@ class Specto:
             #create a close dialog
             dialog = gtk.Dialog("Error quitting specto", None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, None)
             dialog.add_button(gtk.STOCK_CANCEL, -1)
-            dialog.add_button("Murder specto", 3)            
+            dialog.add_button(_("Murder!"), 3)            
             label = gtk.Label(_('Specto is currently busy and cannot quit yet.\n\nThis may be because it is checking for watch updates.\nHowever, you can try forcing it to quit by clicking the murder button.'))
             dialog.vbox.pack_start(label, True, True, 20)
             label.show()
