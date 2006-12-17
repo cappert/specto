@@ -1,3 +1,6 @@
+2006-12-17 Chris Halse Rogers
+    * Merge the reorganization branch into trunk, get rid of launch.sh
+
 2006-12-15 Jean-Francois Fortin
     * Partially fix issue #30 that made the sorting order change on startup, this also fixes a gmail watch bug at the same time
     * Remove some useless translated strings, update de, fr, sv (thanks Daniel Nylander), it (thanks Giulio lotti) translations
