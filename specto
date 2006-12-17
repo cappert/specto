@@ -34,5 +34,5 @@ cacheSubDir__ = spectoDirectory__ + "/cache/"
 if not os.path.exists(cacheSubDir__):
     os.mkdir(cacheSubDir__)    
 
-from specto.main import Specto
+from spectlib.main import Specto
 specto = Specto()

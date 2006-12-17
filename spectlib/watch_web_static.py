@@ -23,14 +23,14 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from specto.watch import Watch
+from spectlib.watch import Watch
 
 import StringIO, gzip
 import os, md5, urllib2
 from httplib import HTTPMessage
 from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
-from specto.i18n import _
+from spectlib.i18n import _
 import thread
 import gtk, time
 

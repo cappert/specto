@@ -33,11 +33,11 @@ import gobject
 import os, sys
 from datetime import datetime
 
-import specto.util as util
-from specto.watch import Watch_io
-from specto.logger import Logger
-from specto.specto_gconf import GConfClient
-from specto.i18n import _
+import spectlib.util as util
+from spectlib.watch import Watch_io
+from spectlib.logger import Logger
+from spectlib.specto_gconf import GConfClient
+from spectlib.i18n import _
 
 #for the initial ping test
 from urllib2 import urlopen
@@ -63,13 +63,13 @@ except:
     GTK = False
 else:
     GTK = True
-    from specto.trayicon import Tray
-    from specto.notifier import Notifier
-    from specto.preferences import Preferences
-    from specto.add_watch import Add_watch
-    from specto.about import About
-    from specto.edit_watch import Edit_watch
-    from specto.logger import Log_dialog
+    from spectlib.trayicon import Tray
+    from spectlib.notifier import Notifier
+    from spectlib.preferences import Preferences
+    from spectlib.add_watch import Add_watch
+    from spectlib.about import About
+    from spectlib.edit_watch import Edit_watch
+    from spectlib.logger import Log_dialog
     
 class Specto:
     """ The main Specto class. """
@@ -203,23 +203,23 @@ class Specto:
         id = len(self.watch_db)
         
         if values['type'] == 0: #add a website
-            from specto.watch_web_static import Web_watch
+            from spectlib.watch_web_static import Web_watch
             self.watch_db[id] = Web_watch(self, values['name'], values['refresh'], values['uri'], id, values['error_margin']) #TODO: Authentication
 
         elif values['type'] == 1: #add an email
             if int(values['prot']) == 0: #check if pop3, imap or gmail is used
-                import specto.watch_mail_pop3
-                self.watch_db[id] = specto.watch_mail_pop3.Mail_watch(values['refresh'], values['host'], values['username'], values['password'], values['ssl'], self, id, values['name'])
+                import spectlib.watch_mail_pop3
+                self.watch_db[id] = spectlib.watch_mail_pop3.Mail_watch(values['refresh'], values['host'], values['username'], values['password'], values['ssl'], self, id, values['name'])
 
             elif int(values['prot']) == 1:
-                import specto.watch_mail_imap
-                self.watch_db[id] = specto.watch_mail_imap.Mail_watch(values['refresh'], values['host'], values['username'], values['password'], values['ssl'], self, id, values['name'])
+                import spectlib.watch_mail_imap
+                self.watch_db[id] = spectlib.watch_mail_imap.Mail_watch(values['refresh'], values['host'], values['username'], values['password'], values['ssl'], self, id, values['name'])
             else:
-                import specto.watch_mail_gmail
-                self.watch_db[id] = specto.watch_mail_gmail.Mail_watch(values['refresh'], values['username'], values['password'], self, id, values['name'])
+                import spectlib.watch_mail_gmail
+                self.watch_db[id] = spectlib.watch_mail_gmail.Mail_watch(values['refresh'], values['username'], values['password'], self, id, values['name'])
 
         elif values['type'] == 2: #add a file
-            from specto.watch_file import File_watch
+            from spectlib.watch_file import File_watch
             self.watch_db[id] = File_watch(values['refresh'], values['file'], values['mode'], self, id, values['name'])
         
         try:

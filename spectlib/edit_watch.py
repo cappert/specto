@@ -23,7 +23,7 @@
 # Boston, MA 02111-1307, USA.
 
 import sys, os
-from specto.i18n import _
+from spectlib.i18n import _
 try:
     import pygtk
     pygtk.require("2.0")

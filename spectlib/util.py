@@ -24,7 +24,7 @@
 # Boston, MA 02111-1307, USA.
 
 import os, sys
-from specto.specto_gconf import GConfClient
+from spectlib.specto_gconf import GConfClient
 import gnomevfs
 
 def show_webpage(webpage):

@@ -23,24 +23,26 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from specto.watch import Watch
+from spectlib.watch import Watch
 
-import imaplib
-import string
+import poplib
+import os
 from socket import error
-from specto.i18n import _
+from spectlib.i18n import _
 import thread
 import gtk, time
 
 class Mail_watch(Watch):
     """ 
-    Watch class that will check if you recevied a new mail on your imap account. 
+    Watch class that will check if you recevied a new mail on your pop3 account. 
     """
     updated = False
+    oldMsg = 0
+    newMsg = 0
     type = 1
-    prot = 1
+    prot = 0
     
-    def __init__(self, refresh, host, username, password, ssl, specto, id, name = _("Unknown Mail Watch")):
+    def __init__(self, refresh, host, username, password, ssl, specto, id,  name = _("Unknown Mail Watch")):
         Watch.__init__(self, specto)
         self.name = name
         self.refresh = refresh
@@ -50,6 +52,12 @@ class Mail_watch(Watch):
         self.id = id
         self.error = False
         self.ssl = ssl
+                
+        cacheSubDir__ = os.environ['HOME'] + "/.specto/cache/"
+        if not os.path.exists(cacheSubDir__):
+            os.mkdir(cacheSubDir__)
+        cacheFileName = "pop" + name + ".cache"
+        self.cacheFullPath_ = os.path.join(cacheSubDir__, cacheFileName)
         
     def start_watch(self):
         """ Start the watch. """
@@ -65,60 +73,67 @@ class Mail_watch(Watch):
             time.sleep(0.05)
         while gtk.events_pending():
             gtk.main_iteration()  
-                
+        
     def update(self, lock):
-        """ Check for new mails on your imap account. """
+        """ Check for new mails on your pop3 account. """
         self.error = False
         self.specto.update_watch(True, self.id)
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
-           
+        
         try:
             if str(self.ssl) == 'True':
-                server = imaplib.IMAP4_SSL(self.host)
+                s = poplib.POP3_SSL(self.host)
             else:
-                server = imaplib.IMAP4(self.host)
+                s = poplib.POP3(self.host)
         except error, e:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has error: %s") % (self.name, str(e)), "error", self.__class__)
+            self.specto.logger.log(_("Watch: \"%s\" has error: ") % self.name + str(e), "error", self.__class__)
         else:
             try:
-                server.login(self.user, self.password)
-                folders = server.list()[1] 
-                folders.append('(HasChildren) "." "INBOX"')
-                for folder in folders: 
-                    folderName = folder.split()[2] 
-        
-                    if folderName == '"."': 
-                        continue 
-                    totalMsgs = server.select(folderName)[1][0]
-         
-                    if totalMsgs.startswith(_("Mailbox does not exist")): 
-                        continue 
-                    r, data = server.search(None, "(NEW)")
-                    newMsgs = data[0] #server.recent()[1][0] 
-                    
-                    if newMsgs != "":
-                        self.updated = True            
-                server.logout()
-            
-            except imaplib.IMAP4.error, e:
+                s.user(self.user)
+                s.pass_(self.password)
+                self.newMsg = len(s.list()[1])
+                s.quit()
+                        
+                if self.newMsg > int(self.check_old()):
+                    self.updated = True
+                self.write_new()
+                
+            except poplib.error_proto, e:
                 self.error = True
-                self.specto.logger.log(_("Watch: \"%s\" has error: %s") % (self.name, str(e)), "error", self.__class__)
-            
+                self.specto.logger.log(_("Watch: \"%s\" has error: ") % self.name + str(e), "error", self.__class__)
+
         self.specto.update_watch(False, self.id)
         lock.release()
         Watch.update(self)
-                    
+        
+    def check_old(self):
+        """ Check how many messages there were last time. """
+        if (os.path.exists(self.cacheFullPath_)):
+            f = file(self.cacheFullPath_, "r")
+            oldMsg = f.read()
+            f.close()
+        else:
+            oldMsg = 0
+        
+        return oldMsg
+    
+    def write_new(self):
+        """ Write the new number of messages in the cache file. """
+        f = file(self.cacheFullPath_, "w")
+        f.write(str(self.newMsg))
+        f.close()
+        
     def set_username(self, username):
-        """ Set the username. """
+        """ Set the username for the watch. """
         self.user = username
         
     def set_password(self, password):
-        """ Set the password. """
+        """ Set the password for the watch. """
         self.password = password
         
     def set_host(self, host):
-        """ Set the host. """
+        """ Set the host for the watch. """
         self.host = host
         
     def set_ssl(self, ssl):

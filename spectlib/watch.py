@@ -29,10 +29,10 @@ import gobject
 import gnome
 
 #specto imports
-from specto.iniparser import ini_namespace
+from spectlib.iniparser import ini_namespace
 from ConfigParser import ConfigParser
-from specto import i18n
-from specto.i18n import _
+from spectlib import i18n
+from spectlib.i18n import _
 
 def gettext_noop(s):
    return s
@@ -51,7 +51,7 @@ class Watch:
         pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")
         if (pop_toast == True) and (self.specto.GTK): 
             global NotificationToast
-            from specto.balloons import NotificationToast
+            from spectlib.balloons import NotificationToast
         
     def update(self):
         """

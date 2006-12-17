@@ -19,7 +19,7 @@ import time
 import gettext
 from types import StringType, UnicodeType
 
-from specto.i18n_safedict import SafeDict
+from spectlib.i18n_safedict import SafeDict
 
 _translation = None
 

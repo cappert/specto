@@ -23,11 +23,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from specto.watch import Watch
+from spectlib.watch import Watch
 
 import os, re
 from stat import *
-from specto.i18n import _
+from spectlib.i18n import _
 import thread
 import gtk, time
 

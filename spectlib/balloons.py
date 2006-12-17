@@ -28,7 +28,7 @@ pygtk.require('2.0')
 import pynotify
 import sys
 
-from specto import logger
+from spectlib import logger
 
 notifyInitialized = False
 

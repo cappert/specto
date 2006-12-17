@@ -24,8 +24,8 @@
 
 import gtk
 import os, sys
-from specto import i18n
-from specto.i18n import _
+from spectlib import i18n
+from spectlib.i18n import _
 
 def gettext_noop(s):
     return s

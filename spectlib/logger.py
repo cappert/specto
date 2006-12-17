@@ -25,7 +25,7 @@
 import logging
 import sys, os
 import re
-from specto.i18n import _
+from spectlib.i18n import _
 
 try:
     import pygtk

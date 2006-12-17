@@ -26,7 +26,7 @@ import sys
 import pygtk
 pygtk.require("2.0")
 import gtk
-import specto.util
+import spectlib.util
 
 class About:
     """
@@ -35,11 +35,11 @@ class About:
     
     def __init__(self, specto):
         self.specto = specto
-        version_file_path = (specto.util.get_path(category="doc") + 'VERSION')
+        version_file_path = (spectlib.util.get_path(category="doc") + 'VERSION')
         version_file=open(version_file_path, 'r')
         version = str(version_file.readline()[:-1]) # "[:-1]" means we omit the last character, which is "\n".
         version_file.close
-        license_file_path = (specto.util.get_path(category="doc") + 'COPYING')
+        license_file_path = (spectlib.util.get_path(category="doc") + 'COPYING')
         license_file = open(license_file_path, "r")
         license = license_file.read()
         license_file.close()
