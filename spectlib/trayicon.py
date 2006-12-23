@@ -168,7 +168,13 @@ class Tray:
             #FIXME: I don't know why that one does not work
         return x
     def get_y(self):
-        return self.tray.get_geometry()[1][2]
+        y = self.tray.get_geometry()[1][1]
+        if self.tray.get_visible()==True:
+            y += int(self.tray.get_size() / 2) #add half the icon's height
+        else:
+            y -= int(self.tray.get_size() / 2) #remove half the icon's height
+            #FIXME: I don't know why that one does not work
+        return y
 
     def destroy(self):
         self.tray.set_visible(False)

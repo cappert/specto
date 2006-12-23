@@ -89,6 +89,7 @@ class Watch:
         if (pop_toast == True) and (self.specto.GTK):
             self.tray_x = self.specto.tray.get_x()
             self.tray_y = self.specto.tray.get_y()
+            print "bubble position", self.tray_x, self.tray_y
 
             if self.type==0:#web
                 NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.PATH + "icons/notifier/big/web.png", self.tray_x, self.tray_y)

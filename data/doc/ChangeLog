@@ -1,3 +1,6 @@
+2006-12-23 Jean-Francois Fortin
+    * Fix the y position of the balloons appearing from the tray
+
 2006-12-17 Chris Halse Rogers
     * Merge the reorganization branch into trunk, get rid of launch.sh
 
