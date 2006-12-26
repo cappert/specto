@@ -53,6 +53,9 @@ class Mail_watch(Watch):
         self.id = id
         self.error = False
         
+    def dict_values(self):
+        return { 'name': self.name, 'refresh': self.refresh, 'username': self.user, 'password':self.password, 'type':1, 'prot':2 }
+        
     def start_watch(self):
         """ Start the watch. """
         self.thread_update()

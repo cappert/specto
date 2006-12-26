@@ -51,6 +51,9 @@ class Mail_watch(Watch):
         self.error = False
         self.ssl = ssl
         
+    def dict_values(self):
+        return { 'name': self.name, 'refresh': self.refresh, 'username': self.user, 'password':self.password, 'host':self.host, 'ssl':self.ssl, 'type':1, 'prot':1 }
+        
     def start_watch(self):
         """ Start the watch. """
         self.thread_update()

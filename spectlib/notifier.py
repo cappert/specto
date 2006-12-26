@@ -68,7 +68,7 @@ class Notifier:
         "on_refresh_activate": self.refresh,
         "on_close_activate": self.delete_event,
         "on_import_watches_activate": self.import_watches,
-        "on_export_activate": self.export_watches,
+        "on_export_watches_activate": self.export_watches,
         "on_error_log_activate": self.show_error_log,
         "on_display_all_watches_activate": self.toggle_display_all_watches,
         "on_display_toolbar_activate": self.toggle_display_toolbar,
@@ -181,10 +181,10 @@ class Notifier:
             self.stop_refresh = True    
                 
     def import_watches(self, *widget):
-        pass
+        self.specto.import_export_watches(True)
         
     def export_watches(self, *widget):
-        pass
+        self.specto.import_export_watches(False)
 
     def toggle_updated(self, id):
         """ Change the name and icon from the watch in the notifier window. """

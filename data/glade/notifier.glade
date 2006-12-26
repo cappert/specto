@@ -1,450 +1,573 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--*- mode: xml -*-->
+<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
+<!DOCTYPE glade-interface SYSTEM "http://glade.gnome.org/glade-2.0.dtd">
+
 <glade-interface>
-  <widget class="GtkWindow" id="notifier">
-    <property name="title" translatable="yes">Notifications</property>
-    <property name="icon_name">gtk-dialog-info</property>
-    <signal name="delete_event" handler="on_close_activate"/>
-    <child>
-      <widget class="GtkVBox" id="vbox">
-        <property name="visible">True</property>
-        <child>
-          <widget class="GtkMenuBar" id="menubar1">
-            <property name="visible">True</property>
-            <child>
-              <widget class="GtkMenuItem" id="menu_file">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">_File</property>
-                <property name="use_underline">True</property>
-                <child>
-                  <widget class="GtkMenu" id="menu_file_menu">
-                    <child>
-                      <widget class="GtkImageMenuItem" id="import_watches">
-                        <property name="visible">True</property>
-                        <property name="sensitive">False</property>
-                        <property name="label" translatable="yes">_Import Watches</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_import_watches_activate"/>
-                        <child internal-child="image">
-                          <widget class="GtkImage" id="image117">
-                            <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
-                            <property name="stock">gtk-open</property>
-                            <property name="icon_size">1</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkImageMenuItem" id="export_watches">
-                        <property name="visible">True</property>
-                        <property name="sensitive">False</property>
-                        <property name="label" translatable="yes">_Export Watches</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_export_watches_activate"/>
-                        <child internal-child="image">
-                          <widget class="GtkImage" id="image118">
-                            <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
-                            <property name="stock">gtk-save-as</property>
-                            <property name="icon_size">1</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
-                        <property name="visible">True</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkImageMenuItem" id="close">
-                        <property name="visible">True</property>
-                        <property name="label">gtk-close</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_close_activate"/>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="GtkMenuItem" id="menu_edit">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">_Edit</property>
-                <property name="use_underline">True</property>
-                <child>
-                  <widget class="GtkMenu" id="menu_edit_menu">
-                    <child>
-                      <widget class="GtkImageMenuItem" id="add">
-                        <property name="visible">True</property>
-                        <property name="label">gtk-add</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_add_activate"/>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkImageMenuItem" id="edit">
-                        <property name="visible">True</property>
-                        <property name="label">gtk-edit</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_edit_activate"/>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkSeparatorMenuItem" id="separator3">
-                        <property name="visible">True</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkImageMenuItem" id="preferences">
-                        <property name="visible">True</property>
-                        <property name="label">gtk-preferences</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_preferences_activate"/>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="GtkMenuItem" id="menu_view">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">_View</property>
-                <property name="use_underline">True</property>
-                <child>
-                  <widget class="GtkMenu" id="menu_view_menu">
-                    <child>
-                      <widget class="GtkImageMenuItem" id="refresh">
-                        <property name="visible">True</property>
-                        <property name="label">gtk-refresh</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_refresh_activate"/>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkImageMenuItem" id="clear_all1">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">_Clear All</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_clear_all_activate"/>
-                        <child internal-child="image">
-                          <widget class="GtkImage" id="image119">
-                            <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
-                            <property name="stock">gtk-clear</property>
-                            <property name="icon_size">1</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkSeparatorMenuItem" id="separator1">
-                        <property name="visible">True</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkMenuItem" id="error_log">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">_Error Log</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_error_log_activate"/>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkSeparatorMenuItem" id="separator4">
-                        <property name="visible">True</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkImageMenuItem" id="sorting">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Sorting</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_sorting_activate"/>
-                        <child>
-                          <widget class="GtkMenu" id="sorting_menu">
-                            <child>
-                              <widget class="GtkRadioMenuItem" id="by_watch_type">
-                                <property name="visible">True</property>
-                                <property name="active">True</property>
-                                <property name="label" translatable="yes">By Watch Type</property>
-                                <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_by_watch_type_activate"/>
-                              </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkRadioMenuItem" id="by_name">
-                                <property name="visible">True</property>
-                                <property name="group">by_watch_type</property>
-                                <property name="label" translatable="yes">By Name</property>
-                                <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_by_name_activate"/>
-                              </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkRadioMenuItem" id="by_watch_active">
-                                <property name="visible">True</property>
-                                <property name="group">by_watch_type</property>
-                                <property name="label" translatable="yes">By Active</property>
-                                <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_by_watch_active_activate"/>
-                              </widget>
-                            </child>
-                          </widget>
-                        </child>
-                        <child internal-child="image">
-                          <widget class="GtkImage" id="image120">
-                            <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
-                            <property name="stock">gtk-sort-ascending</property>
-                            <property name="icon_size">1</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkSeparatorMenuItem" id="separator2">
-                        <property name="visible">True</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkCheckMenuItem" id="display_all_watches">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Display _All Watches</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_display_all_watches_activate"/>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkCheckMenuItem" id="display_toolbar">
-                        <property name="visible">True</property>
-                        <property name="active">True</property>
-                        <property name="label" translatable="yes">Display _Toolbar</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_display_toolbar_activate"/>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="GtkMenuItem" id="menu_help">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">_Help</property>
-                <property name="use_underline">True</property>
-                <child>
-                  <widget class="GtkMenu" id="menu_help_menu">
-                    <child>
-                      <widget class="GtkImageMenuItem" id="help">
-                        <property name="visible">True</property>
-                        <property name="label">gtk-help</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_help_activate"/>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkImageMenuItem" id="about">
-                        <property name="visible">True</property>
-                        <property name="label">gtk-about</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_about_activate"/>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-          </widget>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="GtkToolbar" id="toolbar">
-            <property name="visible">True</property>
-            <property name="toolbar_style">GTK_TOOLBAR_BOTH_HORIZ</property>
-            <child>
-              <widget class="GtkToolButton" id="button_refresh">
-                <property name="visible">True</property>
-                <property name="is_important">True</property>
-                <property name="stock_id">gtk-refresh</property>
-                <signal name="clicked" handler="on_refresh_activate"/>
-              </widget>
-            </child>
-            <child>
-              <widget class="GtkToolButton" id="button_add">
-                <property name="visible">True</property>
-                <property name="is_important">True</property>
-                <property name="stock_id">gtk-add</property>
-                <signal name="clicked" handler="on_add_activate"/>
-              </widget>
-            </child>
-            <child>
-              <widget class="GtkToolButton" id="button_clear_all">
-                <property name="visible">True</property>
-                <property name="is_important">True</property>
-                <property name="label" translatable="yes">Clear All</property>
-                <property name="use_underline">True</property>
-                <property name="stock_id">gtk-clear</property>
-                <signal name="clicked" handler="on_clear_all_activate"/>
-              </widget>
-            </child>
-          </widget>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="GtkVPaned" id="vpaned1">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="position">319</property>
-            <child>
-              <widget class="GtkScrolledWindow" id="scrolledwindow">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
-                <child>
-                  <widget class="GtkViewport" id="viewport">
-                    <property name="visible">True</property>
-                    <child>
-                      <widget class="GtkTreeView" id="treeview">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="rules_hint">True</property>
-                        <property name="enable_search">False</property>
-                        <signal name="row_activated" handler="on_treeview_row_activated"/>
-                        <signal name="cursor_changed" handler="on_treeview_cursor_changed"/>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="resize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkHBox" id="hbox1">
-                <property name="visible">True</property>
-                <property name="spacing">6</property>
-                <child>
-                  <widget class="GtkImage" id="imgWatch">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
-                    <property name="stock">gtk-help</property>
-                    <property name="icon_size">6</property>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkVBox" id="vbox_info">
-                    <property name="visible">True</property>
-                    <property name="border_width">10</property>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkVButtonBox" id="vbox_panel_buttons">
-                    <property name="visible">True</property>
-                    <property name="spacing">6</property>
-                    <property name="layout_style">GTK_BUTTONBOX_START</property>
-                    <child>
-                      <widget class="GtkButton" id="btnOpen">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="can_default">True</property>
-                        <property name="label">gtk-jump-to</property>
-                        <property name="use_stock">True</property>
-                        <signal name="clicked" handler="on_btnOpen_clicked"/>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkButton" id="btnClear">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="can_default">True</property>
-                        <property name="label">gtk-clear</property>
-                        <property name="use_stock">True</property>
-                        <signal name="clicked" handler="on_btnClear_clicked"/>
-                      </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkButton" id="btnEdit">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="can_default">True</property>
-                        <property name="label">gtk-edit</property>
-                        <property name="use_stock">True</property>
-                        <signal name="clicked" handler="on_btnEdit_clicked"/>
-                      </widget>
-                      <packing>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="resize">False</property>
-                <property name="shrink">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="position">2</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-  </widget>
+
+<widget class="GtkWindow" id="notifier">
+  <property name="title" translatable="yes">Notifications</property>
+  <property name="type">GTK_WINDOW_TOPLEVEL</property>
+  <property name="window_position">GTK_WIN_POS_NONE</property>
+  <property name="modal">False</property>
+  <property name="resizable">True</property>
+  <property name="destroy_with_parent">False</property>
+  <property name="icon_name">gtk-dialog-info</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
+  <signal name="delete_event" handler="on_close_activate"/>
+
+  <child>
+    <widget class="GtkVBox" id="vbox">
+      <property name="visible">True</property>
+      <property name="homogeneous">False</property>
+      <property name="spacing">0</property>
+
+      <child>
+	<widget class="GtkMenuBar" id="menubar1">
+	  <property name="visible">True</property>
+	  <property name="pack_direction">GTK_PACK_DIRECTION_LTR</property>
+	  <property name="child_pack_direction">GTK_PACK_DIRECTION_LTR</property>
+
+	  <child>
+	    <widget class="GtkMenuItem" id="menu_file">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">_File</property>
+	      <property name="use_underline">True</property>
+
+	      <child>
+		<widget class="GtkMenu" id="menu_file_menu">
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="import_watches">
+		      <property name="visible">True</property>
+		      <property name="sensitive">False</property>
+		      <property name="label" translatable="yes">_Import Watches</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_import_watches_activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image117">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-open</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0</property>
+			  <property name="yalign">0</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="export_watches">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Export Watches</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_export_watches_activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image118">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-save-as</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0</property>
+			  <property name="yalign">0</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="close">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-close</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_close_activate"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	  </child>
+
+	  <child>
+	    <widget class="GtkMenuItem" id="menu_edit">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">_Edit</property>
+	      <property name="use_underline">True</property>
+
+	      <child>
+		<widget class="GtkMenu" id="menu_edit_menu">
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="add">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-add</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_add_activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="edit">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-edit</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_edit_activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="separator3">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="preferences">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-preferences</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_preferences_activate"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	  </child>
+
+	  <child>
+	    <widget class="GtkMenuItem" id="menu_view">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">_View</property>
+	      <property name="use_underline">True</property>
+
+	      <child>
+		<widget class="GtkMenu" id="menu_view_menu">
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="refresh">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-refresh</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_refresh_activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="clear_all1">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Clear All</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_clear_all_activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image119">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-clear</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0</property>
+			  <property name="yalign">0</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="separator1">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="error_log">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Error Log</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_error_log_activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="separator4">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="sorting">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Sorting</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_sorting_activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image120">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-sort-ascending</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0</property>
+			  <property name="yalign">0</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenu" id="sorting_menu">
+
+			  <child>
+			    <widget class="GtkRadioMenuItem" id="by_watch_type">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">By Watch Type</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">True</property>
+			      <signal name="activate" handler="on_by_watch_type_activate"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkRadioMenuItem" id="by_name">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">By Name</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">False</property>
+			      <property name="group">by_watch_type</property>
+			      <signal name="activate" handler="on_by_name_activate"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkRadioMenuItem" id="by_watch_active">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">By Active</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">False</property>
+			      <property name="group">by_watch_type</property>
+			      <signal name="activate" handler="on_by_watch_active_activate"/>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="separator2">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkCheckMenuItem" id="display_all_watches">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Display _All Watches</property>
+		      <property name="use_underline">True</property>
+		      <property name="active">False</property>
+		      <signal name="activate" handler="on_display_all_watches_activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkCheckMenuItem" id="display_toolbar">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Display _Toolbar</property>
+		      <property name="use_underline">True</property>
+		      <property name="active">True</property>
+		      <signal name="activate" handler="on_display_toolbar_activate"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	  </child>
+
+	  <child>
+	    <widget class="GtkMenuItem" id="menu_help">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">_Help</property>
+	      <property name="use_underline">True</property>
+
+	      <child>
+		<widget class="GtkMenu" id="menu_help_menu">
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="help">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-help</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_help_activate"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="about">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-about</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_about_activate"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">False</property>
+	  <property name="fill">False</property>
+	</packing>
+      </child>
+
+      <child>
+	<widget class="GtkToolbar" id="toolbar">
+	  <property name="visible">True</property>
+	  <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
+	  <property name="toolbar_style">GTK_TOOLBAR_BOTH_HORIZ</property>
+	  <property name="tooltips">True</property>
+	  <property name="show_arrow">True</property>
+
+	  <child>
+	    <widget class="GtkToolButton" id="button_refresh">
+	      <property name="visible">True</property>
+	      <property name="stock_id">gtk-refresh</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">True</property>
+	      <signal name="clicked" handler="on_refresh_activate"/>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkToolButton" id="button_add">
+	      <property name="visible">True</property>
+	      <property name="stock_id">gtk-add</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">True</property>
+	      <signal name="clicked" handler="on_add_activate"/>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkToolButton" id="button_clear_all">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Clear All</property>
+	      <property name="use_underline">True</property>
+	      <property name="stock_id">gtk-clear</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">True</property>
+	      <signal name="clicked" handler="on_clear_all_activate"/>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">True</property>
+	    </packing>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">False</property>
+	  <property name="fill">False</property>
+	</packing>
+      </child>
+
+      <child>
+	<widget class="GtkVPaned" id="vpaned1">
+	  <property name="visible">True</property>
+	  <property name="can_focus">True</property>
+	  <property name="position">319</property>
+
+	  <child>
+	    <widget class="GtkScrolledWindow" id="scrolledwindow">
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
+	      <property name="vscrollbar_policy">GTK_POLICY_ALWAYS</property>
+	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+	      <child>
+		<widget class="GtkViewport" id="viewport">
+		  <property name="visible">True</property>
+		  <property name="shadow_type">GTK_SHADOW_IN</property>
+
+		  <child>
+		    <widget class="GtkTreeView" id="treeview">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="headers_visible">True</property>
+		      <property name="rules_hint">True</property>
+		      <property name="reorderable">False</property>
+		      <property name="enable_search">False</property>
+		      <property name="fixed_height_mode">False</property>
+		      <property name="hover_selection">False</property>
+		      <property name="hover_expand">False</property>
+		      <signal name="row_activated" handler="on_treeview_row_activated"/>
+		      <signal name="cursor_changed" handler="on_treeview_cursor_changed"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="shrink">True</property>
+	      <property name="resize">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkHBox" id="hbox1">
+	      <property name="visible">True</property>
+	      <property name="homogeneous">False</property>
+	      <property name="spacing">6</property>
+
+	      <child>
+		<widget class="GtkImage" id="imgWatch">
+		  <property name="visible">True</property>
+		  <property name="stock">gtk-help</property>
+		  <property name="icon_size">6</property>
+		  <property name="xalign">0</property>
+		  <property name="yalign">0</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">False</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkVBox" id="vbox_info">
+		  <property name="border_width">10</property>
+		  <property name="visible">True</property>
+		  <property name="homogeneous">False</property>
+		  <property name="spacing">0</property>
+
+		  <child>
+		    <placeholder/>
+		  </child>
+
+		  <child>
+		    <placeholder/>
+		  </child>
+
+		  <child>
+		    <placeholder/>
+		  </child>
+
+		  <child>
+		    <placeholder/>
+		  </child>
+
+		  <child>
+		    <placeholder/>
+		  </child>
+
+		  <child>
+		    <placeholder/>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkVButtonBox" id="vbox_panel_buttons">
+		  <property name="visible">True</property>
+		  <property name="layout_style">GTK_BUTTONBOX_START</property>
+		  <property name="spacing">6</property>
+
+		  <child>
+		    <widget class="GtkButton" id="btnOpen">
+		      <property name="visible">True</property>
+		      <property name="can_default">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label">gtk-jump-to</property>
+		      <property name="use_stock">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <signal name="clicked" handler="on_btnOpen_clicked"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkButton" id="btnClear">
+		      <property name="visible">True</property>
+		      <property name="can_default">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label">gtk-clear</property>
+		      <property name="use_stock">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <signal name="clicked" handler="on_btnClear_clicked"/>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkButton" id="btnEdit">
+		      <property name="visible">True</property>
+		      <property name="can_default">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label">gtk-edit</property>
+		      <property name="use_stock">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <signal name="clicked" handler="on_btnEdit_clicked"/>
+		    </widget>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">False</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="shrink">False</property>
+	      <property name="resize">False</property>
+	    </packing>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">True</property>
+	  <property name="fill">True</property>
+	</packing>
+      </child>
+    </widget>
+  </child>
+</widget>
+
 </glade-interface>

@@ -51,6 +51,9 @@ class File_watch(Watch):
         self.id = id
         self.error = False
         self.first_time = False
+
+    def dict_values(self):
+        return { 'name': self.name, 'refresh': self.refresh, 'file': self.file, 'mode':self.mode, 'type':2 }
        
     def start_watch(self):
         """ Start the watch. """

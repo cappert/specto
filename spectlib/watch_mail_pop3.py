@@ -59,6 +59,9 @@ class Mail_watch(Watch):
         cacheFileName = "pop" + name + ".cache"
         self.cacheFullPath_ = os.path.join(cacheSubDir__, cacheFileName)
         
+    def dict_values(self):
+        return { 'name': self.name, 'refresh': self.refresh, 'username': self.user, 'password':self.password, 'host':self.host, 'ssl':self.ssl, 'type':1, 'prot':0 }
+        
     def start_watch(self):
         """ Start the watch. """
         self.thread_update()

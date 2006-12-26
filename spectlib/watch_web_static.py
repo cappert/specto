@@ -65,6 +65,10 @@ class Web_watch(Watch):
         self.error_margin = error_margin#the amount in percent (as a float) of what the filesize must change to consider the page changed
         self.error = False
         
+    def dict_values(self):
+        return { 'name': self.name, 'refresh': self.refresh, 'uri': self.url_, 'error_margin':self.error_margin, 'type':0 }
+    
+        
     def start_watch(self):
         """ Start the watch. """
         self.thread_update()

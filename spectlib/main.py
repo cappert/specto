@@ -38,6 +38,7 @@ from spectlib.watch import Watch_io
 from spectlib.logger import Logger
 from spectlib.specto_gconf import GConfClient
 from spectlib.i18n import _
+from spectlib.import_export import Import_watch
 
 #for the initial ping test
 from urllib2 import urlopen
@@ -77,6 +78,7 @@ class Specto:
     edit_w = ""
     error_l = ""
     about = ""
+    export = ""
 
     def __init__(self):
         self.DEBUG = DEBUG
@@ -537,12 +539,21 @@ class Specto:
         elif self.about.about.flags() & gtk.MAPPED:
             pass
         else:
-            self.about = About()
+            self.about = About(self)
             
     def show_help(self, *args):
         """ Show the help web page. """
         self.util.show_webpage("http://specto.ecchi.ca")
         
+    def import_export_watches(self, action):
+        """ Show the import/export window. """
+        if self.export == "":
+            self.export = Import_watch(self, action)
+        elif self.export.import_watch.flags() & gtk.MAPPED:
+            pass
+        else:
+            self.export = Import_watch(self, action)        
+       
     def quit(self, *args):
         """ Save the save and position from the notifier and quit Specto. """
         if self.notifier.get_state()==True and not self.notifier_keep_hidden:
