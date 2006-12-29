@@ -38,7 +38,7 @@ from spectlib.watch import Watch_io
 from spectlib.logger import Logger
 from spectlib.specto_gconf import GConfClient
 from spectlib.i18n import _
-#from spectlib.import_export import Import_watch #FIXME: Wout, you forgot to commit that module! Uncomment that line when it's done.
+from spectlib.import_export import Import_watch
 
 #for the initial ping test
 from urllib2 import urlopen
