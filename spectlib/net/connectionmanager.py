@@ -26,19 +26,30 @@ class NMListener(CallbackRunner):
     
     def __init__(self, bus):
         super(NMListener, self).__init__()
-        self.nmProxy = bus.get_object('org.freedesktop.NetworkManager',
+        nmProxy = bus.get_object('org.freedesktop.NetworkManager',
                                       '/org/freedesktop/NetworkManager')
-        self.nmIface = dbus.Interface(self.nmProxy,
+        self.nmIface = dbus.Interface(nmProxy,
                                       'org.freedesktop.NetworkManager')
-    
+        self.nmIface.connect_to_signal('DeviceNoLongerActive', self.on_nm_event,
+                                       self.nmIface)
+        self.nmIface.connect_to_signal('DeviceNowActive', self.on_nm_event,
+                                       self.nmIface)
+        self.lastStatus = self.nmIface.state()
+
+    def on_nm_event(self) :
+        wasConnected = self.connected()
+        self.lastStatus = self.nmIface.state()
+        if (not wasConnected) and self.connected() :
+            self._run_callbacks()            
+
     def connected(self):
-        return self.nmIface.state() == 3
+        return self.lastStatus == 3
 
     def has_networkmanager(self):
         ### It seems that the only way of being sure the service exists
         ### is to actually try to use it!      
         try:
-            self.connected()
+            self.nmIface.state()
         except dbus.dbus_bindings.DBusException:
             return False
         return True

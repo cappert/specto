@@ -7,16 +7,34 @@ import urllib2
 class MockNetworkManager(object):
     def __init__(self):
         self.status = 0
+        self.callbacks = {'DeviceNoLongerActive' : [],
+                          'DeviceNowActive' : []}
 
     def state(self):
         return self.status
 
     def setConnected(self):
         self.status = 3
+        for callback in self.callbacks['DeviceNowActive'] :
+            callback()
 
     def setDisconnected(self):
         self.status = 4
+        for callback in self.callbacks['DeviceNoLongerActive'] :
+            callback()
+
+    def connect_to_signal(self, signal_name, handler_function, dbus_interface):
+        if signal_name not in self.callbacks :
+            self.callbacks[signal_name] = []
+        self.callbacks[signal_name].append(handler_function)
+
+    def get_object(self, *args, **kwargs):
+        return self
+
+    def Interface(self, *args, **kwargs):
+        return self
         
+            
 class MockFailNetworkManager(object):
     excepitonMessage='The name org.freedesktop.NetworkManager was not provided\
     by any .service files'
@@ -107,10 +125,13 @@ class TestCallbackRunner(unittest.TestCase):
 
 class TestNMConnectionListener(unittest.TestCase) :
     def setUp(self):
-        bus = dbus.SystemBus()
+        self._oldDBUSInterface = dbus.Interface
+        dbus.Interface = MockNetworkManager.Interface
         self.mockNM = MockNetworkManager()
-        self.nmListener = NMListener(bus)
-        self.nmListener.nmIface = self.mockNM
+        self.nmListener = NMListener(self.mockNM)
+
+    def tearDown(self) :
+        dbus.Interface = self._oldDBUSInterface
         
     def test_connected(self):
         self.mockNM.setConnected()
@@ -127,6 +148,28 @@ class TestNMConnectionListener(unittest.TestCase) :
     def test_hasNetworkManager(self):
         self.assertTrue(self.nmListener.has_networkmanager())
 
+    def test_cachesNetworkStatus(self):
+        """
+        The listener should cache the connection status, and should not
+        use DBUS each call to connected()
+        """
+        self.mockNM.setConnected()
+        #Ensure the status is cached
+        self.nmListener.connected()
+        #Now, ensure we can't get status from DBUS
+        self.nmListener.nmIface = None
+        self.assertTrue(self.nmListener.connected())
+
+    def test_callbackOnStateChange(self):
+        """
+        All the callbacks should be run on change of state from disconnected
+        -> connected
+        """
+        self.mockNM.setDisconnected()
+        cb = LogingCallback()
+        self.nmListener.add_callback(cb)
+        self.mockNM.setConnected()
+        self.assertEqual([(tuple(), dict())], cb.log)
 
 
 def mockFailingUrlOpen(url) :
