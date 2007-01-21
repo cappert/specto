@@ -1,3 +1,11 @@
+2007-01-20 Jean-Francois Fortin
+    * use pango to ellipsize (truncate) the webpage URIs shown in the notifier window. Better results and less hacks.
+
+2007-01-05 Jean-Francois Fortin
+    * late happy new year, folks :)
+    * added back the launch.sh script. This is used only for those who do not want to install Specto and who face gnome's stupid launchers. Starting 
+"specto" directly still works though.
+
 2006-12-26 Wout Clymans
     * Export watches implemented
 

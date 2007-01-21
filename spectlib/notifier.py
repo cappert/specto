@@ -37,6 +37,7 @@ try:
     import gtk
     import gtk.glade
     import gobject
+    import pango
 except:
     pass
     
@@ -307,21 +308,9 @@ class Notifier:
         if selected.type == 0:
             #get the info
             self.lblNameText.set_label(selected.name)
-
-            #Strip down the URI lenght to prevent messing up the user interface width
-            if len(selected.url_) >=45:
-                if "https://" in selected.url_:
-                    strippedurl = selected.url_[8:]
-                elif "http://" in selected.url_:
-                    strippedurl = selected.url_[7:]
-                elif "ftp://" in selected.url_:
-                    strippedurl = selected.url_[6:]
-                
-                #We want maximum 45 characters, so let's just keep 20 from the start and end.
-                strippedurl = ( strippedurl[:15] + " ... " + strippedurl[-15:] )
-                self.lblLocationText.set_label(strippedurl)
-            else:#The URL is short enough, we keep it as is.
-                self.lblLocationText.set_label(selected.url_)
+            
+            self.lblLocationText.set_label(selected.url_)
+            self.lblLocationText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if the URI is too long
 
             margin = float(selected.error_margin) * 100
             self.lblErrorMarginText.set_label(str(margin) + " %")
