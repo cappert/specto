@@ -1,3 +1,9 @@
+2007-01-23 Wout Clymans, Jean-Francois Fortin
+    * Fix issue #4: content is left aligned
+    * Fix issue #30: sort order is correctly saved
+    * Fix issue #34: "display all watches" is checked at startup
+    * extend the pango ellipsize behavior to a few other labels in the notifier window
+
 2007-01-20 Jean-Francois Fortin
     * use pango to ellipsize (truncate) the webpage URIs shown in the notifier window. Better results and less hacks.
 

@@ -310,9 +310,10 @@ class Notifier:
         if selected.type == 0:
             #get the info
             self.lblNameText.set_label(selected.name)
+            self.lblNameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
             
             self.lblLocationText.set_label(selected.url_)
-            self.lblLocationText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if the URI is too long
+            self.lblLocationText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
 
             margin = float(selected.error_margin) * 100
             self.lblErrorMarginText.set_label(str(margin) + " %")
@@ -328,6 +329,7 @@ class Notifier:
         elif selected.type == 1:
             #get the info
             self.lblMailNameText.set_label(selected.name)
+            self.lblMailNameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
             self.lblMailHostText.set_use_markup(True)#Use pango markup such as <i> and <b>
 
             if selected.prot == 2:
@@ -336,6 +338,7 @@ class Notifier:
                 self.lblMailHostText.set_label(selected.host)
 
             self.lblMailUsernameText.set_label(selected.user)
+            self.lblMailUsernameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
             
             self.lblMailLastUpdateText.set_label(selected.last_updated)
 
@@ -348,6 +351,7 @@ class Notifier:
         elif selected.type == 2:
             self.lblFileNameText.set_label(selected.name)
             self.lblFileName.set_label(selected.file)
+            self.lblFileName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
             self.lblFileLastUpdateText.set_label(selected.last_updated)
             self.file_info_table.show()
             self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/folder.png' )
