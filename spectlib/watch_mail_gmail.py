@@ -3,7 +3,7 @@
 
 # Specto , Unobtrusive event notifier
 #
-#       watch_mail_imap.py
+#       watch_mail_gmail.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
 # This module code is maintained by : Wout Clymans and Jean-François Fortin Tam

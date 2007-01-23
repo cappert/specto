@@ -479,7 +479,6 @@ class Specto:
                 self.conf_ui.set_entry("/notifier_state", True, "boolean")
                 self.notifier.restore_size_and_position()
                 self.notifier.notifier.show()
-        self.notifier.resize_info_pane()
         self.notifier_initialized = True
 
     def show_preferences(self, *args):

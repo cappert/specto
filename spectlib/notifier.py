@@ -139,17 +139,18 @@ class Notifier:
         
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
         for i in self.specto.watch_db:
-            self.model.set_value(self.iter[i], 2, "%s" % self.specto.watch_db[i].name)
-            type = self.specto.watch_db[i].type
+            if self.model.iter_is_valid(self.iter[i]):
+                self.model.set_value(self.iter[i], 2, "%s" % self.specto.watch_db[i].name)
+                type = self.specto.watch_db[i].type
 
-            if type == 0:
-                icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
-            elif type == 1:
-                icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
-            elif type == 2:
-                icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
-    
-            self.model.set_value(self.iter[i], 1, icon)
+                if type == 0:
+                    icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
+                elif type == 1:
+                    icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
+                elif type == 2:
+                    icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
+        
+                self.model.set_value(self.iter[i], 1, icon)
 
     def refresh(self, *widget):
         """ Call the main funcion to refresh all active watches and change refresh icon to stop. """
@@ -162,8 +163,9 @@ class Notifier:
                 
                 try:
                     iter = self.model.get_iter(i)
-                    model = self.model
-                    id = int(model.get_value(iter, 3))
+                    if self.model.iter_is_valid(iter):
+                        model = self.model
+                        id = int(model.get_value(iter, 3))
                 except:
                     break
 
@@ -349,7 +351,6 @@ class Notifier:
             self.lblFileLastUpdateText.set_label(selected.last_updated)
             self.file_info_table.show()
             self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/folder.png' )
-        self.resize_info_pane()
         
     def open_watch(self, *args):
         """ 
@@ -397,10 +398,6 @@ class Notifier:
                     ]
         chosen_tip = tips[randrange(len(tips))]
         return chosen_tip
-
-    def resize_info_pane(self):
-        """ Resize the info panel. """
-        self.infopane.set_position(self.infopane.get_property("max-position"))
         
     def toggle_display_toolbar(self, *args):
         """ Show or hide the toolbar. """
@@ -496,7 +493,6 @@ class Notifier:
         self.treeview=self.wTree.get_widget("treeview")
         self.treeview.set_model(self.model)
         self.treeview.set_flags(gtk.TREE_MODEL_ITERS_PERSIST)
-        self.infopane=self.wTree.get_widget("vpaned1")
         self.wTree.get_widget("button_clear_all").set_sensitive(False)
         self.wTree.get_widget("clear_all1").set_sensitive(False)
 
@@ -510,6 +506,12 @@ class Notifier:
         else:
             self.wTree.get_widget("display_toolbar").set_active(False)
             self.toggle_display_toolbar()
+            
+        self.show_all_watches = self.specto.conf_ui.get_entry("/display_all", "boolean")
+        if  self.show_all_watches == False:
+            self.wTree.get_widget("display_all_watches").set_active(False)
+        else:
+            self.wTree.get_widget("display_all_watches").set_active(True)
     
         if self.specto.conf_ui.get_entry("/notifier_state", "boolean") == True:
             self.notifier.show()
@@ -556,16 +558,7 @@ class Notifier:
         self.columnType.set_sort_column_id(4)
         self.treeview.append_column(self.columnType)
         
-        self.sort_function = self.specto.conf_ui.get_entry("/sort_function", "string")
-        if  self.sort_function == "name":
-            self.wTree.get_widget("by_name").set_active(True)
-            self.sort_name()
-        elif self.sort_function == "type":
-            self.wTree.get_widget("by_watch_type").set_active(True)
-            self.sort_type()
-        elif self.sort_function == "active":
-            self.wTree.get_widget("by_watch_active").set_active(True)
-            self.sort_active()
+        self.get_startup_sort_order()
             
 
         ###Create info-panel
@@ -582,13 +575,11 @@ class Notifier:
 
         #hide the buttons
         self.wTree.get_widget("vbox_panel_buttons").hide()
-        self.resize_info_pane()
         
         self.wTree.get_widget("edit").set_sensitive(False)
-        self.wTree.get_widget("display_all_watches").set_active(True)
 
         ###create web info
-        self.web_info_table = gtk.Table(rows=3, columns=2, homogeneous=False)
+        self.web_info_table = gtk.Table(rows=3, columns=2, homogeneous=True)
         self.web_info_table.set_row_spacings(6)
         self.web_info_table.set_col_spacings(6)
 
@@ -643,7 +634,7 @@ class Notifier:
         vbox_info.pack_start(self.web_info_table, False, False, 0)
 
         ###create mail info
-        self.mail_info_table = gtk.Table(rows=4, columns=2, homogeneous=False)
+        self.mail_info_table = gtk.Table(rows=4, columns=2, homogeneous=True)
         self.mail_info_table.set_col_spacings(6)
         self.mail_info_table.set_row_spacings(6)
 
@@ -769,6 +760,17 @@ class Notifier:
         
 ### Sort functions ###
 
+    def get_startup_sort_order(self):
+        order = self.get_gconf_sort_order()
+        sort_function = self.specto.conf_ui.get_entry("/sort_function", "string")
+        if  sort_function == "name":
+            self.model.set_sort_column_id(2, order)
+        elif sort_function == "type":
+            self.model.set_sort_column_id(4, order)
+            #self.sort_column_type()
+        elif sort_function == "active":
+            self.model.set_sort_column_id(0, order)
+            
     def get_gconf_sort_order(self):
         """ Get the order (asc, desc) from a gconf key. """
         order = self.specto.conf_ui.get_entry("/sort_order", "string")
@@ -788,38 +790,36 @@ class Notifier:
             
         return sort_order
         
-    def sort_column_name(self, widget):
+    def sort_column_name(self, *widget):
         """ Call the sort_name function and set the sort_name menu item to active. """
         self.wTree.get_widget("by_name").set_active(True)
-        self.sort_name()
+        self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(not self.columnTitel.get_sort_order()) ,"string")
         
     def sort_name(self, *args):
         """ Sort by watch name. """
-        self.model.set_sort_column_id(2, self.get_gconf_sort_order() )
+        self.model.set_sort_column_id(2, not self.columnTitel.get_sort_order())
         self.specto.conf_ui.set_entry("/sort_function", "name", "string")
-        self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(self.columnTitel.get_sort_order()) ,"string")
-    
-    def sort_column_type(self, widget):
+        
+    def sort_column_type(self, *widget):
         """ Call the sort_type function and set the sort_type menu item to active. """
         self.wTree.get_widget("by_watch_type").set_active(True)
         self.sort_type()
         
     def sort_type(self, *args):
         """ Sort by watch type. """
-        self.model.set_sort_column_id(4, self.get_gconf_sort_order())
+        self.model.set_sort_column_id(4, not self.columnType.get_sort_order())
         self.specto.conf_ui.set_entry("/sort_function", "type", "string")
         self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(self.columnType.get_sort_order()) ,"string")
     
-    def sort_column_active(self, widget):
+    def sort_column_active(self, *widget):
         """ Call the sort_active function and set the sort_active menu item to active. """
         self.wTree.get_widget("by_watch_active").set_active(True)
-        self.sort_active()
+        self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(not self.columnCheck.get_sort_order()) ,"string")
         
     def sort_active(self, *args):
         """ Sort by active watches. """
-        self.model.set_sort_column_id(0, self.get_gconf_sort_order())
+        self.model.set_sort_column_id(0, not self.columnCheck.get_sort_order())
         self.specto.conf_ui.set_entry("/sort_function", "active", "string")
-        self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(self.columnCheck.get_sort_order()) ,"string")
 
 
 
