@@ -223,6 +223,12 @@ class Specto:
         elif values['type'] == 2: #add a file
             from spectlib.watch_file import File_watch
             self.watch_db[id] = File_watch(values['refresh'], values['file'], values['mode'], self, id, values['name'])
+            
+        elif values['type'] == 3: #add a process watch
+            from spectlib.watch_process import Process_watch
+            self.watch_db[id] = Process_watch(values['refresh'], values['process'], self, id, values['name'])
+            
+            
         
         try:
             self.watch_db[id].updated = values['updated']
@@ -277,6 +283,10 @@ class Specto:
         new_values = {}
         new_values['name'] = self.watch_db[id].name
         new_values['active'] = status
+        if status == False:
+            new_values['updated'] = False
+            self.watch_db[id].updated = False
+            self.notifier.clear_watch('',id)
         self.watch_db[id].active = status
         self.watch_io.write_options(new_values)
             
@@ -318,6 +328,9 @@ class Specto:
         elif int(values['type']) == 2: #file
             new_values['file'] = values['file']
             new_values['mode'] = values['mode']
+            
+        elif int(values['type']) == 3: #process
+            new_values['process'] = values['process']
 
         id = self.create_watch(new_values)
         self.start_watch(id)
@@ -370,12 +383,12 @@ class Specto:
         
     def count_updated_watches(self):
         """ Count the number of updated watches for the tooltip. """
-        tooltip_updated_watches = { 0:0,1:0,2:0 }
+        tooltip_updated_watches = { 0:0,1:0,2:0,3:0 }
         for i in self.watch_db:
             if self.watch_db[i].updated == True:
                 self.tray.set_icon_state_excited()#change the tray icon color to orange
                 tooltip_updated_watches[self.watch_db[i].type] = tooltip_updated_watches[self.watch_db[i].type] + 1
-        if tooltip_updated_watches.values() == [0,0,0]:#there are no more watches to clear, reset the tray icon
+        if tooltip_updated_watches.values() == [0,0,0,0]:#there are no more watches to clear, reset the tray icon
             self.tray.set_icon_state_normal()
             self.notifier.wTree.get_widget("button_clear_all").set_sensitive(False)
 

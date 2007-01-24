@@ -83,8 +83,14 @@ Adrian Petrescu
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.about.set_icon(icon)
         #self.wTree.set_logo_icon_name(icon_name)
-
+                
+        self.about.connect("response", lambda d, r: self.close())
+        
         self.about.show_all()
+        
+
+    def close(self):
+        self.about.destroy()
 
 if __name__ == "__main__":
     #run the gui

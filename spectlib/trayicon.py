@@ -72,7 +72,7 @@ class Tray:
         global _
         show_return = False
         
-        if updated_messages.values() == [0,0,0]:
+        if updated_messages.values() == [0,0,0,0]:
             message = _("No updated watches.")
         else:
             message = _('Updated watches:\n')
@@ -96,6 +96,14 @@ class Tray:
                 if show_return:
                     message = message + "\n"
                 message = message + "\t" + str(updated_messages[2]) + " " + type
+            #process tooltip
+            if updated_messages[3] > 0:
+                type = i18n._translation.ungettext(_("process"), _("processes"), updated_messages[3])
+
+                if show_return:
+                    message = message + "\n"
+                message = message + "\t" + str(updated_messages[3]) + " " + type
+                
         self.tray.set_tooltip(message)
             
     def show_preferences(self, widget):

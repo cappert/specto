@@ -194,6 +194,8 @@ class Watch_io:
             elif int(values['type']) == 2:
                 values['file'] = watch_options['file']
                 values['mode'] = watch_options['mode']
+            elif int(values['type']) == 3:
+                values['process'] = watch_options['process']
                 
             try:
                 if watch_options['updated'] == "True":

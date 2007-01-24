@@ -156,6 +156,8 @@ class Notifier:
         """ Call the main funcion to refresh all active watches and change refresh icon to stop. """
         if self.wTree.get_widget("button_refresh").get_stock_id() == "gtk-refresh":
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-stop") #menu item, does not allow changing label
+            self.wTree.get_widget("button_add").set_sensitive(False)
+            self.wTree.get_widget("btnEdit").set_sensitive(False)
             for i in self.iter:
                 if self.stop_refresh == True:
                     self.stop_refresh = False
@@ -180,6 +182,8 @@ class Notifier:
                     while gtk.events_pending():
                         gtk.main_iteration_do(False)
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-refresh") #menu item, does not allow changing label
+            self.wTree.get_widget("button_add").set_sensitive(True) 
+            self.wTree.get_widget("btnEdit").set_sensitive(True)           
         else:
             self.stop_refresh = True    
                 
@@ -204,7 +208,8 @@ class Notifier:
         elif type == 2:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/folder.png' )
 
-        self.model.set_value(self.iter[id], 1, icon)
+        if self.model.iter_is_valid(self.iter[id]):
+            self.model.set_value(self.iter[id], 1, icon)
         
         if self.treeview.get_selection():
             selection = self.treeview.get_selection()
@@ -241,7 +246,8 @@ class Notifier:
                 elif type == 2:
                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'folder.png')
                           
-            self.model.set_value(self.iter[id], 1, icon)
+            if self.model.iter_is_valid(self.iter[id]):
+                self.model.set_value(self.iter[id], 1, icon)
         
     def deactivate(self, id):
         """ Disable the checkbox from the watch. """
@@ -281,80 +287,97 @@ class Notifier:
             model.set_value(iter, 0, 1)
             self.specto.start_watch(i)
             
-        self.specto.set_status(i, model.get_value(iter, 0)) 
+        self.specto.set_status(i, model.get_value(iter, 0))
+        
+        if self.wTree.get_widget("display_all_watches").active == False:
+            model.remove(iter)    
 
     def show_watch_info(self, *args):
         """ Show the watch information in the notifier window. """
-        self.wTree.get_widget("edit").set_sensitive(True)
-
-        #hide the tip of the day and show the buttons
-        self.lblTip.hide()
-        self.wTree.get_widget("vbox_panel_buttons").show()
-
-        #hide all the tables
-        self.web_info_table.hide()
-        self.mail_info_table.hide()
-        self.file_info_table.hide()
-
         model, iter = self.treeview.get_selection().get_selected()
-        id = int(model.get_value(iter, 3))
         
-        selected = self.specto.watch_db[id]
+        if iter != None and self.model.iter_is_valid(iter):
+            self.wTree.get_widget("edit").set_sensitive(True)
+
+            #hide the tip of the day and show the buttons
+            self.lblTip.hide()
+            self.wTree.get_widget("vbox_panel_buttons").show()
+
+            #hide all the tables
+            self.web_info_table.hide()
+            self.mail_info_table.hide()
+            self.file_info_table.hide()
+            
+            id = int(model.get_value(iter, 3))
         
-        if selected.updated == False:
-            self.wTree.get_widget("btnClear").set_sensitive(False)
-        else:
-            self.wTree.get_widget("btnClear").set_sensitive(True)
-
-
-        if selected.type == 0:
-            #get the info
-            self.lblNameText.set_label(selected.name)
-            self.lblNameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
-            
-            self.lblLocationText.set_label(selected.url_)
-            self.lblLocationText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
-
-            margin = float(selected.error_margin) * 100
-            self.lblErrorMarginText.set_label(str(margin) + " %")
-            
-            self.lblLastUpdateText.set_label(selected.last_updated)
-
-            #show the table
-            self.web_info_table.show()
-
-            #show the image
-            self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/web.png' )
-
-        elif selected.type == 1:
-            #get the info
-            self.lblMailNameText.set_label(selected.name)
-            self.lblMailNameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
-            self.lblMailHostText.set_use_markup(True)#Use pango markup such as <i> and <b>
-
-            if selected.prot == 2:
-                self.lblMailHostText.set_label( _("gmail <i>(%s unread)</i>") % selected.newMsg )#FIXME: gettext does not work here
+            selected = self.specto.watch_db[id]
+        
+            if selected.updated == False:
+                self.wTree.get_widget("btnClear").set_sensitive(False)
             else:
-                self.lblMailHostText.set_label(selected.host)
+                self.wTree.get_widget("btnClear").set_sensitive(True)
 
-            self.lblMailUsernameText.set_label(selected.user)
-            self.lblMailUsernameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
-            
-            self.lblMailLastUpdateText.set_label(selected.last_updated)
 
-            #show the table
-            self.mail_info_table.show()
+            if selected.type == 0:
+                #get the info
+                self.lblNameText.set_label(selected.name)
+                self.lblNameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
+                
+                self.lblLocationText.set_label(selected.url_)
+                self.lblLocationText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
 
-            #show the image
-            self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/mail.png' )
-            
-        elif selected.type == 2:
-            self.lblFileNameText.set_label(selected.name)
-            self.lblFileName.set_label(selected.file)
-            self.lblFileName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
-            self.lblFileLastUpdateText.set_label(selected.last_updated)
-            self.file_info_table.show()
-            self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/folder.png' )
+                margin = float(selected.error_margin) * 100
+                self.lblErrorMarginText.set_label(str(margin) + " %")
+                
+                self.lblLastUpdateText.set_label(selected.last_updated)
+
+                #show the table
+                self.web_info_table.show()
+
+                #show the image
+                self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/web.png' )
+
+            elif selected.type == 1:
+                #get the info
+                self.lblMailNameText.set_label(selected.name)
+                self.lblMailNameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
+                self.lblMailHostText.set_use_markup(True)#Use pango markup such as <i> and <b>
+
+                if selected.prot == 2:
+                    self.lblMailHostText.set_label( _("gmail <i>(%s unread)</i>") % selected.newMsg )#FIXME: gettext does not work here
+                else:
+                    self.lblMailHostText.set_label(selected.host)
+
+                self.lblMailUsernameText.set_label(selected.user)
+                self.lblMailUsernameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
+                
+                self.lblMailLastUpdateText.set_label(selected.last_updated)
+
+                #show the table
+                self.mail_info_table.show()
+
+                #show the image
+                self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/mail.png' )
+                
+            elif selected.type == 2:
+                self.lblFileNameText.set_label(selected.name)
+                self.lblFileName.set_label(selected.file)
+                self.lblFileName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
+                self.lblFileLastUpdateText.set_label(selected.last_updated)
+                self.file_info_table.show()
+                self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/folder.png' )
+        else:
+            self.wTree.get_widget("edit").set_sensitive(False)
+
+            #hide the tip of the day and show the buttons
+            self.lblTip.show()
+            self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/tip.png' )
+            self.wTree.get_widget("vbox_panel_buttons").hide()
+
+            #hide all the tables
+            self.web_info_table.hide()
+            self.mail_info_table.hide()
+            self.file_info_table.hide()            
         
     def open_watch(self, *args):
         """ 
@@ -583,7 +606,7 @@ class Notifier:
         self.wTree.get_widget("edit").set_sensitive(False)
 
         ###create web info
-        self.web_info_table = gtk.Table(rows=3, columns=2, homogeneous=True)
+        self.web_info_table = gtk.Table(rows=3, columns=2, homogeneous=False)
         self.web_info_table.set_row_spacings(6)
         self.web_info_table.set_col_spacings(6)
 
@@ -638,7 +661,7 @@ class Notifier:
         vbox_info.pack_start(self.web_info_table, False, False, 0)
 
         ###create mail info
-        self.mail_info_table = gtk.Table(rows=4, columns=2, homogeneous=True)
+        self.mail_info_table = gtk.Table(rows=4, columns=2, homogeneous=False)
         self.mail_info_table.set_col_spacings(6)
         self.mail_info_table.set_row_spacings(6)
 
@@ -742,8 +765,9 @@ class Notifier:
     def show_edit_watch(self, widget):
         """ Call the main function to show the edit watch window. """
         model, iter = self.treeview.get_selection().get_selected()
-        id = int(model.get_value(iter, 3))
-        self.specto.show_edit_watch(id)
+        if model.iter_is_valid(iter):
+            id = int(model.get_value(iter, 3))
+            self.specto.show_edit_watch(id)
 
     def show_preferences(self, widget):
         """ Call the main function to show the preferences window. """
