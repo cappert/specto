@@ -1,3 +1,7 @@
+2007-01-26 Jean-Francois Fortin
+    * Fix issue #28: implement the feature that allows not displaying the notifier in the window list applet in the panel (optional)
+    * Make the blue icon lighter again
+
 2007-01-23 Wout Clymans, Jean-Francois Fortin
     * Fix issue #4: content is left aligned
     * Fix issue #30: sort order is correctly saved

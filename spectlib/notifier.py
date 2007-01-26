@@ -475,6 +475,8 @@ class Notifier:
         saved_window_height = self.specto.conf_ui.get_entry("/window_notifier_height", "integer")
         saved_window_x = self.specto.conf_ui.get_entry("/window_notifier_x", "integer")
         saved_window_y = self.specto.conf_ui.get_entry("/window_notifier_y", "integer")
+        if self.specto.conf_pref.get_entry("/hide_from_windowlist", "boolean")==True:
+            self.notifier.set_skip_taskbar_hint(True) #hide from the window list applet
 
         if saved_window_width != 0 and saved_window_height !=0:#check if the size is not 0
             self.wTree.get_widget("notifier").resize(saved_window_width, saved_window_height)

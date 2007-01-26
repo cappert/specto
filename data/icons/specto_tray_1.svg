@@ -7,18 +7,18 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="270.00000px"
    height="270.00000px"
    id="svg1"
    sodipodi:version="0.32"
-   inkscape:version="0.42"
-   sodipodi:docbase="/home/jeff/cvs/specto/icons"
+   inkscape:version="0.44"
+   sodipodi:docbase="/home/jeff/trunks/specto/data/icons"
    sodipodi:docname="specto_tray_1.svg"
-   inkscape:export-filename="/home/jeff/cvs/specto/icons/specto_tray_1.png"
-   inkscape:export-xdpi="8.0000000"
-   inkscape:export-ydpi="8.0000000">
+   inkscape:export-filename="/home/jeff/trunks/specto/data/icons/specto_tray_1.png"
+   inkscape:export-xdpi="7.9199991"
+   inkscape:export-ydpi="7.9199991">
   <defs
      id="defs3">
     <linearGradient
@@ -35,12 +35,12 @@
     <linearGradient
        id="linearGradient1705">
       <stop
-         style="stop-color:#191977;stop-opacity:1.0000000;"
-         offset="0.0000000"
+         style="stop-color:#0023a8;stop-opacity:1;"
+         offset="0"
          id="stop1706" />
       <stop
-         style="stop-color:#60b4dd;stop-opacity:1.0000000;"
-         offset="1.0000000"
+         style="stop-color:#7dc7eb;stop-opacity:1;"
+         offset="1"
          id="stop1707" />
     </linearGradient>
     <linearGradient
@@ -88,8 +88,8 @@
      inkscape:current-layer="layer1"
      inkscape:window-width="1024"
      inkscape:window-height="677"
-     inkscape:window-x="0"
-     inkscape:window-y="41"
+     inkscape:window-x="109"
+     inkscape:window-y="383"
      showgrid="false"
      inkscape:grid-bbox="false" />
   <metadata

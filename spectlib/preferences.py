@@ -115,9 +115,11 @@ class Preferences:
 
         #see if windowlist has to be saved
         if self.wTree.get_widget("chk_windowlist").get_active():
-            client.set_entry("/windowlist", 1, "boolean")
+            client.set_entry("/hide_from_windowlist", 0, "boolean")
+            self.specto.notifier.notifier.set_skip_taskbar_hint(False)#note, this is set_SKIP! this explains why it's False to skip.
         else:
-            client.set_entry("/windowlist", 0, "boolean")
+            client.set_entry("/hide_from_windowlist", 1, "boolean")
+            self.specto.notifier.notifier.set_skip_taskbar_hint(True)
 
         #see if tray has to be saved
         if self.wTree.get_widget("chk_tray").get_active():
@@ -144,7 +146,7 @@ class Preferences:
             self.wTree.get_widget("chk_libnotify").set_active(False)
 
         #check windowlist
-        if client.get_entry("/windowlist", "boolean") == True:
+        if client.get_entry("/hide_from_windowlist", "boolean") == False:
             self.wTree.get_widget("chk_windowlist").set_active(True)
         else:
             self.wTree.get_widget("chk_windowlist").set_active(False)

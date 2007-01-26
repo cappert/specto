@@ -248,7 +248,7 @@ class Specto:
         if GTK:
             if not self.notifier_initialized:
                 self.notifier = Notifier(self)
-                self.notifier.restore_size_and_position()#fixme: is this necessary? this makes specto output stuff for nothing.
+                #self.notifier.restore_size_and_position()#fixme: is this necessary? this makes specto output stuff for nothing.
             self.notifier.add_notifier_entry(values['name'], values['type'], id)
             try:
                 if values['updated']:
@@ -469,19 +469,19 @@ class Specto:
         #Creating the notifier window, but keeping it hidden
         if not self.notifier_initialized and self.notifier_keep_hidden:
             self.notifier = Notifier(self)
-            self.notifier.restore_size_and_position()
+            #self.notifier.restore_size_and_position()#this is NOT needed here because it already does that on instanciation on the line above -kiddo
             self.notifier.notifier.hide()            
         #Creating the notifier window and displaying it
         elif not self.notifier_initialized and not self.notifier_keep_hidden:
             self.notifier = Notifier(self)
-            self.notifier.restore_size_and_position()
+            #self.notifier.restore_size_and_position()#this is NOT needed here because it already does that on instanciation on the line above -kiddo
             self.notifier.notifier.show()
 
         elif self.notifier_initialized:
             if self.notifier.get_state()==True and self.notifier_keep_hidden:
                 self.logger.log(_("notifier: reappear"), "debug", self.__class__)
                 self.conf_ui.set_entry("/notifier_state", True, "boolean")
-                self.notifier.restore_size_and_position()
+                self.notifier.restore_size_and_position()#to make sure that the x and y positions don't jump around
                 self.notifier.notifier.show()
             elif self.notifier.get_state()==True and not self.notifier_keep_hidden:
                 self.logger.log(_("notifier: hide"), "debug", self.__class__)
@@ -490,7 +490,7 @@ class Specto:
             else:
                 self.logger.log(_("notifier: reappear"), "debug", self.__class__)
                 self.conf_ui.set_entry("/notifier_state", True, "boolean")
-                self.notifier.restore_size_and_position()
+                self.notifier.restore_size_and_position()#to make sure that the x and y positions don't jump around
                 self.notifier.notifier.show()
         self.notifier_initialized = True
 
