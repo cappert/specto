@@ -149,6 +149,10 @@ class Edit_watch:
             values['file'] = self.btnFile.get_filename()
             self.specto.watch_db[self.watch.id].set_file(values['file'])
             
+        elif values['type'] == 3: #add a process
+            values['process'] = self.txtProcess.get_text()
+            self.specto.watch_db[self.watch.id].set_process(values['process'])
+            
         self.edit_watch.destroy()
         
         if self.watch.active == True:
@@ -352,6 +356,26 @@ class Edit_watch:
             self.btnFile.set_filename(self.watch.file)
 
             vbox_options.pack_start(tblFile, False, False, 0)
+        
+        elif self.watch.type == 3: #add a process
+            tblProcess = gtk.Table(rows=2, columns=1, homogeneous=False)
+            tblProcess.set_row_spacings(6)
+            tblProcess.set_col_spacings(6)
+            tblProcess.show()
+            
+            #process
+            lblProcess = gtk.Label(_("Process:"))
+            lblProcess.set_alignment(xalign=0.0, yalign=0.5)
+            lblProcess.show()
+            tblProcess.attach(lblProcess, 0, 1, 0, 1)
+            
+            self.txtProcess = gtk.Entry()
+            self.txtProcess.set_text(self.watch.process)
+            self.txtProcess.show()
+            tblProcess.attach(self.txtProcess, 1, 2, 0, 1)
+            
+            vbox_options.pack_start(tblProcess, False, False, 0)
+
     
     def change_file_type(self, *args):
         """ Change the file chooser action (folder/file) for a file watch. """

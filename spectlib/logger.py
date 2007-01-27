@@ -216,7 +216,7 @@ class Logger:
 
     def log(self, message, level, logger):
         """ Log a message. """
-        log = logging.getLogger(str(logger)[7:])
+        log = logging.getLogger(str(logger)[9:])
         
         if self.specto.DEBUG == True:
             if level == "debug":

@@ -95,3 +95,6 @@ class Process_watch(Watch):
             return True
         else:
             return False
+        
+    def set_process(self, process):
+        self.process = process

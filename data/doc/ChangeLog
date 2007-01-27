@@ -1,3 +1,6 @@
+2007-01-27 Wout Clymans
+    * Added a new watch type: process watch
+
 2007-01-26 Jean-Francois Fortin
     * Fix issue #28: implement the feature that allows not displaying the notifier in the window list applet in the panel (optional)
     * Make the blue icon lighter again

@@ -167,6 +167,8 @@ class Import_watch:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
         elif type == 2:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
+        elif type == 3:
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
 
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 0)

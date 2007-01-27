@@ -123,6 +123,9 @@ class Notifier:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
         elif type == 2:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
+        elif type == 3:
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
+            
         self.model.set_value(self.iter[id], 1, icon)
         
         if self.specto.watch_db[id].updated == False:
@@ -149,6 +152,8 @@ class Notifier:
                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
                 elif type == 2:
                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
+                elif type == 3:
+                    icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
         
                 self.model.set_value(self.iter[i], 1, icon)
 
@@ -207,6 +212,8 @@ class Notifier:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/mail.png' )
         elif type == 2:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/folder.png' )
+        elif type == 3:
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/process.png' )
 
         if self.model.iter_is_valid(self.iter[id]):
             self.model.set_value(self.iter[id], 1, icon)
@@ -245,6 +252,8 @@ class Notifier:
                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'mail.png')
                 elif type == 2:
                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'folder.png')
+                elif type ==3:
+                    icon = gtk.gdk.pixbuf_new_from_file(dir + 'process.png')
                           
             if self.model.iter_is_valid(self.iter[id]):
                 self.model.set_value(self.iter[id], 1, icon)
@@ -263,6 +272,8 @@ class Notifier:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
         elif type == 2:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
+        elif type == 3:
+            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )    
 
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 1)
@@ -307,6 +318,7 @@ class Notifier:
             self.web_info_table.hide()
             self.mail_info_table.hide()
             self.file_info_table.hide()
+            self.process_info_table.hide()
             
             id = int(model.get_value(iter, 3))
         
@@ -366,6 +378,15 @@ class Notifier:
                 self.lblFileLastUpdateText.set_label(selected.last_updated)
                 self.file_info_table.show()
                 self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/folder.png' )
+                
+            elif selected.type == 3:
+                self.lblProcessNameText.set_label(selected.name)
+                self.lblProcessName.set_label(selected.process)
+                self.lblProcessName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
+                self.lblProcessLastUpdateText.set_label(selected.last_updated)
+                self.process_info_table.show()
+                self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/process.png' )
+                
         else:
             self.wTree.get_widget("edit").set_sensitive(False)
 
@@ -377,7 +398,8 @@ class Notifier:
             #hide all the tables
             self.web_info_table.hide()
             self.mail_info_table.hide()
-            self.file_info_table.hide()            
+            self.file_info_table.hide()   
+            self.process_info_table.hide()         
         
     def open_watch(self, *args):
         """ 
@@ -407,7 +429,11 @@ class Notifier:
         #change the name in the treeview
         model, iter = self.treeview.get_selection().get_selected()
         id = int(model.get_value(iter, 3))
-        self.model.set_value(iter, 2, args[2])
+        if self.specto.watch_db[id].updated == True:
+            name = "<b>" + args[2] + "</b>"
+        else:
+            name = args[2]
+        self.model.set_value(iter, 2, name)
         
         #write the new name in watches.list
         self.specto.replace_name(self.specto.watch_db[id].name, args[2])
@@ -758,8 +784,51 @@ class Notifier:
         self.lblFileName.show()
         self.file_info_table.attach(self.lblFileName, 1, 2, 2, 3)
 
-        vbox_info.pack_start(self.file_info_table, False, False, 0)        
+        vbox_info.pack_start(self.file_info_table, False, False, 0)
+        
+        ###create process info        
+        self.process_info_table = gtk.Table(rows=3, columns=2, homogeneous=False)
+        self.process_info_table.set_col_spacings(6)
+        self.process_info_table.set_row_spacings(6)
 
+        #name
+        lblName = gtk.Label(_("<b>Name:</b>"))
+        lblName.set_alignment(xalign=0.0, yalign=0.5)
+        lblName.set_use_markup(True)
+        lblName.show()
+        self.process_info_table.attach(lblName, 0, 1, 0, 1)
+
+        self.lblProcessNameText = gtk.Label()
+        self.lblProcessNameText.set_alignment(xalign=0.0, yalign=0.5)
+        self.lblProcessNameText.show()
+        self.process_info_table.attach(self.lblProcessNameText,1, 2, 0, 1)
+
+        #last updated
+        lblLastUpdate = gtk.Label(_("<b>Last Updated:</b>"))
+        lblLastUpdate.set_alignment(xalign=0.0, yalign=0.5)
+        lblLastUpdate.set_use_markup(True)
+        lblLastUpdate.show()
+        self.process_info_table.attach(lblLastUpdate,0, 1, 1, 2)
+
+        self.lblProcessLastUpdateText = gtk.Label()
+        self.lblProcessLastUpdateText.set_alignment(xalign=0.0, yalign=0.5)
+        self.lblProcessLastUpdateText.show()
+        self.process_info_table.attach(self.lblProcessLastUpdateText,1, 2, 1, 2)
+
+        #process
+        lblProcessName = gtk.Label(_("<b>Process:</b>"))
+        lblProcessName.set_alignment(xalign=0.0, yalign=0.5)
+        lblProcessName.set_use_markup(True)
+        lblProcessName.show()
+        self.process_info_table.attach(lblProcessName, 0, 1, 2, 3)
+
+        self.lblProcessName = gtk.Label()
+        self.lblProcessName.set_alignment(xalign=0.0, yalign=0.5)
+        self.lblProcessName.show()
+        self.process_info_table.attach(self.lblProcessName, 1, 2, 2, 3)
+
+        vbox_info.pack_start(self.process_info_table, False, False, 0)
+        
     def show_add_watch(self, widget):
         """ Call the main function to show the add watch window. """
         self.specto.show_add_watch()
@@ -794,11 +863,13 @@ class Notifier:
         order = self.get_gconf_sort_order()
         sort_function = self.specto.conf_ui.get_entry("/sort_function", "string")
         if  sort_function == "name":
+            self.wTree.get_widget("by_name").set_active(True)
             self.model.set_sort_column_id(2, order)
         elif sort_function == "type":
+            self.wTree.get_widget("by_watch_type").set_active(True)
             self.model.set_sort_column_id(4, order)
-            #self.sort_column_type()
         elif sort_function == "active":
+            self.wTree.get_widget("by_watch_active").set_active(True)
             self.model.set_sort_column_id(0, order)
             
     def get_gconf_sort_order(self):

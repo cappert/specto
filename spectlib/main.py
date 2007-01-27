@@ -228,8 +228,6 @@ class Specto:
             from spectlib.watch_process import Process_watch
             self.watch_db[id] = Process_watch(values['refresh'], values['process'], self, id, values['name'])
             
-            
-        
         try:
             self.watch_db[id].updated = values['updated']
         except:
@@ -359,6 +357,9 @@ class Specto:
         
         elif int(values['type']) == 2: #file
             new_values['file'] = values['file']
+            
+        elif int(values['type']) == 3: #process
+            new_values['process'] = values['process']
 
         self.watch_io.write_options(new_values)
         self.notifier.show_watch_info()

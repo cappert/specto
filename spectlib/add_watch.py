@@ -167,6 +167,9 @@ class Add_watch:
                 else:
                     values['mode'] = _("folder")
                     
+            elif values['type'] == 3: #add ad process
+                values['process'] = self.txtProcess.get_text()
+                    
             self.add_watch.destroy()
             self.specto.add_watch(values) #write the options in the configuration file
             #"del self" would be useful here I think.
@@ -182,9 +185,9 @@ class Add_watch:
             elif self.option_visible == 1:
                 self.tblMail.hide()
             elif self.option_visible == 2:
-                 self.tblFile.hide()
+                self.tblFile.hide()
             elif self.option_visible == 3:
-                pass
+                self.tblProcess.hide()
                 
         if selected_type == 0: #website
             self.tblWeb.show()
@@ -194,6 +197,9 @@ class Add_watch:
 
         if selected_type == 2: #add a file
             self.tblFile.show()
+            
+        if selected_type == 3: #add a process
+            self.tblProcess.show()
 
         self.option_visible = selected_type
                     
@@ -245,6 +251,14 @@ class Add_watch:
                 error = True
             else:
                 self.txtUsername.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+        if selected_type == 3:
+            if self.txtProcess.get_text() == "":
+                self.txtProcess.grab_focus()
+                self.txtProcess.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
+                error = True
+            else:
+                self.txtProcess.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+
         if self.name.get_text() == "":
             self.name.grab_focus()
             self.name.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
@@ -412,11 +426,27 @@ class Add_watch:
         self.btnFile = gtk.FileChooserButton(_("Choose a file or folder"))
         self.btnFile.show()
         self.tblFile.attach(self.btnFile, 0, 2, 1, 2)
+        
+        ###create the process gui
+        self.tblProcess = gtk.Table(rows=2, columns=1, homogeneous=False)
+        self.tblProcess.set_row_spacings(6)
+        self.tblProcess.set_col_spacings(6)
+        
+        #process
+        self.lblProcess = gtk.Label(_("Process:"))
+        self.lblProcess.set_alignment(xalign=0.0, yalign=0.5)
+        self.lblProcess.show()
+        self.tblProcess.attach(self.lblProcess, 0, 1, 0, 1)
+        
+        self.txtProcess = gtk.Entry()
+        self.txtProcess.show()
+        self.tblProcess.attach(self.txtProcess, 1, 2, 0, 1)
 
         vbox = self.wTree.get_widget("vbox_watch_options")
         vbox.pack_start(self.tblWeb, False, False, 0)
         vbox.pack_start(self.tblMail, False, False, 0)
         vbox.pack_start(self.tblFile, False, False, 0)
+        vbox.pack_start(self.tblProcess, False, False, 0)
         
     
 class Unique_Dialog:
