@@ -24,6 +24,7 @@
 # Boston, MA 02111-1307, USA.
 
 import dbus
+import dbus.glib
 import urllib2
 import gobject
 
@@ -32,8 +33,12 @@ def get_net_listener() :
         listener = NMListener(dbus.SystemBus())
         if not listener.has_networkmanager() :
             listener = FallbackListener()
-    except :
+            print "fallback - 1"
+        else :
+            print "nm"
+    except dbus.DBusException:
         listener = FallbackListener()
+        print "fallback - 2"
     return listener
 
 class CallbackRunner(object):
