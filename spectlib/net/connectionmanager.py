@@ -25,8 +25,9 @@
 
 import dbus
 import urllib2
+import gobject
 
-def getNetListener() :
+def get_net_listener() :
     try:
         listener = NMListener(dbus.SystemBus())
         if not listener.has_networkmanager() :

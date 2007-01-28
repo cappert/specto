@@ -39,6 +39,7 @@ from spectlib.logger import Logger
 from spectlib.specto_gconf import GConfClient
 from spectlib.i18n import _
 from spectlib.import_export import Import_watch
+from spectlib.net import connectionmanager as conmgr
 
 #for the initial ping test
 from urllib2 import urlopen
@@ -101,6 +102,8 @@ class Specto:
         self.notifier_initialized = False        
         #listen for gconf keys
         self.conf_pref.notify_entry("/debug_mode", self.key_changed, "debug")
+
+        self.connection_manager = conmgr.get_net_listener()
 
         #basic check for a network connection
         while True:
