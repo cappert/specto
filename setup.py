@@ -20,7 +20,7 @@ def give_files(dir, *extension):
 
     return files
 
-i18n_languages = "fr ro de sv"#list all the languages, separated by one whitespace
+i18n_languages = "fr ro de sv it"#list all the languages, separated by one whitespace
 def give_mo_file(lang):
     return "po/" + str(lang) + "/specto.mo"
 
@@ -35,7 +35,7 @@ def give_mo_tuples(langs):
 
 temp_files = [#The path are relatives to sys.prefix
     ('share/doc/specto', give_files('data/doc/', '')),
-    ('share/pixmaps', ['specto.png']),
+    ('share/icons/hicolor/scalable/apps', ['data/icons/hicolor/scalable/specto.svg']),
     ('share/applications', ['specto.desktop']),
     ('share/specto/icons', give_files('data/icons/', '.png')),
     ('share/specto/icons/notifier', give_files('data/icons/notifier/', '.png')),
@@ -49,9 +49,9 @@ for lang_tuple in give_mo_tuples(i18n_languages):
 
 setup(name = "specto",
     version = version_string,
-    description = "A program to notify the user of almost all events",
-    author = "Jeff Fortin",
-    author_email = "kiddokiddo@users.sourceforge.net",
+    description = "A desktop application that will watch configurable events (website updates, emails, file and folder changes...)",
+    author = "Jean-Francois Fortin Tam",
+    author_email = "kiddokiddo at users dot sourceforge dot net",
     url = "http://specto.sourceforge.net",
     packages = ['spectlib'],
     #package_dir = {'': 'src'},

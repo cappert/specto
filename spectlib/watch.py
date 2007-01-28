@@ -61,14 +61,22 @@ class Watch:
         if self.error == True and self.specto.conf_pref.get_entry("/use_problem_sound", "boolean"):
             problem_sound = self.specto.conf_pref.get_entry("/problem_sound", "string")
             gnome.sound_play(problem_sound)
-            pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")        
+            pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")  
             if (pop_toast == True) and (self.specto.GTK):
                 NotificationToast(self.specto, _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % str(self.name), self.specto.PATH + "icons/notifier/big/error.png", 0, 0, 5000, urgency="critical")
         
         #call update function if watch was updated
-        if self.updated == True:
-            self.specto.toggle_updated(self.id) #call the main function to update the notifier entrie
+        if self.actually_updated:#we want to notify, but ONLY if it has not been marked as updated already
+            print "\tnotification step\t1"
+            try: 
+                self.specto.toggle_updated(self.id) #call the main function to update the notifier entry. We need to use a try statement in case the watch was already toggled in the notifier entry.
+                print "\tnotification step\t2"
+            except: 
+                if self.specto.DEBUG : self.specto.logger.log(_("Watch \"%s\" is already marked as updated in the notifier") % self.name, "info", self.__class__)
+            else: print "\tnotification step\t3"
             self.notify()
+            self.updated = True
+            self.actually_updated = False
         self.timer_id = gobject.timeout_add(self.refresh, self.thread_update)
 
     def notify(self):
@@ -76,22 +84,27 @@ class Watch:
         Notify the user when a watch was updated.
         """
         global _
+        print "\tnotification step\t4"
         if self.specto.DEBUG or not self.specto.GTK:
             self.specto.logger.log(_("Watch \"%s\" updated!") % self.name, "info", self.__class__)
-        
+        print "\tnotification step\t5"
         #play a sound   
         update_sound = self.specto.conf_pref.get_entry("/update_sound", "string")
+        print "\tnotification step\t6"
         if self.specto.conf_pref.get_entry("/use_update_sound", "boolean"):
             gnome.sound_play(update_sound)
-
+        print "\tnotification step\t7"
         #determine if libnotify support is to be used
-        pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")        
+        pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")
         if (pop_toast == True) and (self.specto.GTK):
+            print "\tnotification step\t8"
             self.tray_x = self.specto.tray.get_x()
             self.tray_y = self.specto.tray.get_y()
+            print "\tnotification step\t9"
 
             if self.type==0:#web
                 NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.PATH + "icons/notifier/big/web.png", self.tray_x, self.tray_y)
+                print "\tnotification step\t10"
             elif self.type==1:#email
 
                 if self.prot!=2:#other account than gmail
@@ -116,6 +129,18 @@ class Watch:
 
             elif self.type==2:#folder
                 NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, self.specto.PATH + "icons/notifier/big/folder.png", self.tray_x, self.tray_y)
+            elif self.type==3:#process
+                print "\tnotification step\t10"
+                if self.running==False:
+                    print "\tnotification step\t10.1"
+                    NotificationToast(self.specto, _("The process, <b>%s</b>, has stopped.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
+                    print "\tnotification step\t10.2"
+                elif self.running==True:
+                    print "\tnotification step\t10.1"
+                    NotificationToast(self.specto, _("The process, <b>%s</b>, has started.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
+                    print "\tnotification step\t10.2"
+                else:
+                    print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
             else:
                 self.specto.logger.log(_("Not implemented yet"), "warning", self.__class__)#TODO: implement other notifications
             #end of the libnotify madness

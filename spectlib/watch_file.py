@@ -73,7 +73,7 @@ class File_watch(Watch):
     def update(self, lock):
         """ See if a file was modified or created. """
         self.error = False
-        self.specto.update_watch(True, self.id)
+        self.specto.mark_watch_busy(True, self.id)
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
         
         try:
@@ -99,7 +99,7 @@ class File_watch(Watch):
             self.error = True
             self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
         
-        self.specto.update_watch(False, self.id)
+        self.specto.mark_watch_busy(False, self.id)
         lock.release()
         Watch.update(self)
                 

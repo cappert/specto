@@ -192,9 +192,9 @@ class Specto:
                 while gtk.events_pending():
                     gtk.main_iteration_do(False)
                     
-        if self.conf_ui.get_entry("/display_all", "boolean") == False:
+        if self.conf_ui.get_entry("/hide_deactivated_watches", "boolean") == True:
             self.notifier.wTree.get_widget("display_all_watches").set_active(False)
-            self.notifier.toggle_display_all_watches()
+            self.notifier.toggle_hide_deactivated_watches()
         
         #start the active watches
         if self.notifier_initialized:            
@@ -272,7 +272,7 @@ class Specto:
     
         self.count_updated_watches()
         
-    def update_watch(self, progress, id):
+    def mark_watch_busy(self, progress, id):
         """ Display a refresh icon when updating watches. """
         self.notifier.toggle_updating(progress, id)
 

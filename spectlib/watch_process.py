@@ -45,6 +45,7 @@ class Process_watch(Watch):
         self.process = process
         self.id = id
         self.error = False
+        self.actually_updated=False
         self.running = self.check_process()
 
     def dict_values(self):
@@ -68,22 +69,24 @@ class Process_watch(Watch):
     def update(self, lock):
         """ See if a file was modified or created. """
         self.error = False
-        self.specto.update_watch(True, self.id)
+        self.specto.mark_watch_busy(True, self.id)
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
         
         try:
             process = self.check_process()
             if self.running and process == False:
-                self.updated = True
                 self.running = False
-            elif self.running == False and process == True:
                 self.updated = True
+                self.actually_updated = True
+            elif self.running == False and process == True:
                 self.running = True 
+                self.actually_updated = True
+            else: self.actually_updated=False
         except:
             self.error = True
             self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
         
-        self.specto.update_watch(False, self.id)
+        self.specto.mark_watch_busy(False, self.id)
         lock.release()
         Watch.update(self)
         

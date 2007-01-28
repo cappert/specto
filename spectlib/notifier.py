@@ -71,7 +71,7 @@ class Notifier:
         "on_import_watches_activate": self.import_watches,
         "on_export_watches_activate": self.export_watches,
         "on_error_log_activate": self.show_error_log,
-        "on_display_all_watches_activate": self.toggle_display_all_watches,
+        "on_display_all_watches_activate": self.toggle_hide_deactivated_watches,
         "on_display_toolbar_activate": self.toggle_display_toolbar,
         "on_help_activate": self.show_help,
         "on_about_activate": self.show_about,
@@ -461,14 +461,14 @@ class Notifier:
             self.wTree.get_widget("toolbar").hide()
             self.specto.conf_ui.set_entry("/hide_toolbar", True, "boolean")
             
-    def toggle_display_all_watches(self, *widget):
+    def toggle_hide_deactivated_watches(self, *widget):
         """ Display only active watches or all watches. """
         if self.wTree.get_widget("display_all_watches").active:
             for id in self.specto.watch_db:
                 if self.specto.watch_db[id].active == False:
                     self.add_notifier_entry(self.specto.watch_db[id].name, self.specto.watch_db[id].type, id)
                     self.deactivate(id)
-            self.specto.conf_ui.set_entry("/display_all", True, "boolean")
+            self.specto.conf_ui.set_entry("/hide_deactivated_watches", False, "boolean")
         else:
             for i in self.iter:
                 path = self.model.get_path(self.iter[i])
@@ -478,7 +478,7 @@ class Notifier:
 
                 if self.specto.watch_db[id].active == False:
                     model.remove(iter)
-            self.specto.conf_ui.set_entry("/display_all", False, "boolean")
+            self.specto.conf_ui.set_entry("/hide_deactivated_watches", True, "boolean")
 
     def delete_event(self, *args):
         """
@@ -562,8 +562,7 @@ class Notifier:
             self.wTree.get_widget("display_toolbar").set_active(False)
             self.toggle_display_toolbar()
             
-        self.show_all_watches = self.specto.conf_ui.get_entry("/display_all", "boolean")
-        if  self.show_all_watches == False:
+        if self.specto.conf_ui.get_entry("/hide_deactivated_watches", "boolean") == True:
             self.wTree.get_widget("display_all_watches").set_active(False)
         else:
             self.wTree.get_widget("display_all_watches").set_active(True)

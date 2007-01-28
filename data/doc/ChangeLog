@@ -1,3 +1,16 @@
+2007-01-27 Jean-Francois Fortin
+    * Fix isue #5 sounds keep playing - this was due to the fact that the watches notified on each refresh if they were marked updated, even if they did not change! Therefore, we now use an additional variable: self.actually_updated
+    * Fix issue #7 specify the libnotify balloon delay - you can now set a custom duration for balloons in the preferences
+    * Code cleanup. Lots of little bits fixed.
+    * Why did we have a function called specto.update_watch? That's pretty confusing. Renamed to specto.mark_watch_busy
+    * Found a horrible, fat bug. Filed as issue #40, please help!
+    * Added a lot of print functions in watch.py; these are necessary until we fix issue #40
+    * Committed the italian translations. I forgot to add them!
+    * Updated the french translation and the translations template file
+    * Update the generate_template.py string generation script
+    * Fix issue #25 /usr/share/pixmaps is deprecated. We now install an SVG icon directly into the HighContrast theme. You may need to sudo gtk-update-icon-cache -f /usr/share/icons/hicolor. If you are a package maintainer, please include that post-install task too.
+    * Make all the watches display by default (reverse the display_all gconf key)
+
 2007-01-27 Wout Clymans
     * Added a new watch type: process watch
 

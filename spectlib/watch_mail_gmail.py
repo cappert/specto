@@ -52,6 +52,7 @@ class Mail_watch(Watch):
         self.password = password
         self.id = id
         self.error = False
+        self.actually_updated=False
         
     def dict_values(self):
         return { 'name': self.name, 'refresh': self.refresh, 'username': self.user, 'password':self.password, 'type':1, 'prot':2 }
@@ -75,7 +76,7 @@ class Mail_watch(Watch):
     def update(self, lock):
         """ Check for new mails on your gmail account. """
         self.error = False
-        self.specto.update_watch(True, self.id)
+        self.specto.mark_watch_busy(True, self.id)
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
         
         try:
@@ -83,22 +84,25 @@ class Mail_watch(Watch):
             s.refreshInfo()
             self.newMsg = s.getUnreadMsgCount()
             if not self.oldMsg: self.oldMsg = 0
-            if self.updated==False:#if the watch has been cleared, make the message count will be right next time we check
+            if self.updated==False:#if the watch has been cleared, make the message count be right next time we check
                 self.oldMsg=0
             if self.newMsg == 0:#no unread messages, we need to clear the watch
                 self.oldMsg = 0
+                self.actually_updated=False
                 self.specto.notifier.clear_watch("", self.id)
             elif self.newMsg > self.oldMsg:
                 self.updated = True
+                self.actually_updated=True
             elif self.oldMsg==self.newMsg:
-                pass #no new unread messages.
+                self.actually_updated=False #no new unread messages.
             elif self.oldMsg > self.newMsg:#the unread mail count went down! That means the user most likely deleted some of them, so we have to adjust our count.
                 self.oldMsg = self.newMsg
+                self.actually_updated=False
         except:
             self.error = True
             self.specto.logger.log(_("Watch: \"%s\" has error: wrong username/password") % self.name, "error", self.__class__)
             
-        self.specto.update_watch(False, self.id)
+        self.specto.mark_watch_busy(False, self.id)
         lock.release()
         Watch.update(self)
         

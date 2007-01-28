@@ -1,0 +1,678 @@
+# Something funny here.
+# Copyright (C) KIDDO INTERNATIONAL DRUGS DEALER.
+# Giulio Iotti <dullgiulio@gmail.com>, 2006
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"POT-Creation-Date: Fri Dec 15 16:15:11 2006\n"
+"PO-Revision-Date: 2006-12-16 16:20-0500\n"
+"Last-Translator: Jean-François Fortin Tam\n"
+"Language-Team: Italian Translation Team <it@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.4\n"
+
+#: ../data/glade/add_watch.glade.h:1
+msgid "<b>General settings</b>"
+msgstr "<h>Impostazioni generali</b>"
+
+#: ../data/glade/add_watch.glade.h:2
+msgid "<b>Watch name</b>"
+msgstr "<b>Nome dell'osservatore</b>"
+
+#: ../data/glade/add_watch.glade.h:3
+msgid "Add a Watch"
+msgstr "Aggiungi un osservatore"
+
+#: ../data/glade/add_watch.glade.h:4
+msgid ""
+"Choose \n"
+"an other name"
+msgstr ""
+"Scegli \n"
+"un altro nome"
+
+#: ../data/glade/add_watch.glade.h:6
+msgid ""
+"Edit existing\n"
+"watch"
+msgstr ""
+"Cambia un osservatore\n"
+"esistente"
+
+#: ../data/glade/add_watch.glade.h:8
+#: ../data/glade/edit_watch.glade.h:2
+msgid "Name:"
+msgstr "Nome:"
+
+#: ../data/glade/add_watch.glade.h:9
+#: ../data/glade/edit_watch.glade.h:3
+msgid "Refresh Interval:"
+msgstr "Interallo di aggiornamento:"
+
+#: ../data/glade/add_watch.glade.h:10
+#: ../data/glade/edit_watch.glade.h:5
+msgid ""
+"Seconds\n"
+"Minutes\n"
+"Hours\n"
+"Days"
+msgstr ""
+"Secondi\n"
+"Minuti\n"
+"Ore\n"
+"Giorni"
+
+#: ../data/glade/add_watch.glade.h:14
+msgid "The watch name is already in use"
+msgstr "Il nome dell'osservatore è già in uso"
+
+#: ../data/glade/add_watch.glade.h:15
+msgid ""
+"The watch name you specified already exists! Did you mean to modify that existing watch, or did you really want to create a new one?\n"
+"\n"
+"If you want to create a new one, you need to choose a different name."
+msgstr ""
+"Il nome dell'osservatore che hai specificato esite già Intendevi modificare quell'osservatore esistente, o intendevi forse crearne uno nuovo?\n"
+"\n"
+"Se ne vuoi creare uno novo, devi scegliere un nome diverso."
+
+#: ../data/glade/add_watch.glade.h:18
+msgid "Watch Type:"
+msgstr "Tipo di osservatore:"
+
+#: ../data/glade/add_watch.glade.h:19
+msgid ""
+"Website\n"
+"Email\n"
+"Files or folders"
+msgstr ""
+"Sito\n"
+"Email\n"
+"File o cartella"
+
+#: ../data/glade/edit_watch.glade.h:1
+msgid "Error Log"
+msgstr "Giornale di errore"
+
+#: ../data/glade/edit_watch.glade.h:4
+#: ../data/glade/log_dialog.glade.h:9
+msgid "Save As"
+msgstr "Salva come..."
+
+#: ../data/glade/edit_watch.glade.h:9
+msgid "Watch Settings"
+msgstr "Impostazioni dell'osservatore"
+
+#: ../data/glade/log_dialog.glade.h:1
+msgid ""
+"All\n"
+"Debug\n"
+"Info\n"
+"Warning\n"
+"Error\n"
+"Critical"
+msgstr ""
+"Tutti\n"
+"Debug\n"
+"Info\n"
+"Attenzione\n"
+"Errore\n"
+"Critici"
+
+#: ../data/glade/log_dialog.glade.h:7
+msgid "Filter:"
+msgstr "Filtro:"
+
+#: ../data/glade/log_dialog.glade.h:8
+msgid "Logs"
+msgstr "Giornali"
+
+#: ../data/glade/notifier.glade.h:1
+msgid "By Active"
+msgstr "Per attivit"
+
+#: ../data/glade/notifier.glade.h:2
+msgid "By Name"
+msgstr "Per nome"
+
+#: ../data/glade/notifier.glade.h:3
+msgid "By Watch Type"
+msgstr "Per tipo di osservatore"
+
+#: ../data/glade/notifier.glade.h:4
+msgid "Clear All"
+msgstr "Pulisci tutti"
+
+#: ../data/glade/notifier.glade.h:5
+msgid "Display _All Watches"
+msgstr "Visualizza _tutti gli osservatori"
+
+#: ../data/glade/notifier.glade.h:6
+msgid "Display _Toolbar"
+msgstr "Visualizza _barra degli strumenti"
+
+#: ../data/glade/notifier.glade.h:7
+msgid "Notifications"
+msgstr "Notifiche"
+
+#: ../data/glade/notifier.glade.h:8
+msgid "Sorting"
+msgstr "Ordinamento"
+
+#: ../data/glade/notifier.glade.h:9
+msgid "_Clear All"
+msgstr "_Pulisci tutti"
+
+#: ../data/glade/notifier.glade.h:10
+msgid "_Edit"
+msgstr "_Cambia"
+
+#: ../data/glade/notifier.glade.h:11
+msgid "_Error Log"
+msgstr "_Giornale errori"
+
+#: ../data/glade/notifier.glade.h:12
+msgid "_Export Watches"
+msgstr "_Esporta osservatori"
+
+#: ../data/glade/notifier.glade.h:13
+msgid "_File"
+msgstr "_File"
+
+#: ../data/glade/notifier.glade.h:14
+msgid "_Help"
+msgstr "_Aiuto"
+
+#: ../data/glade/notifier.glade.h:15
+msgid "_Import Watches"
+msgstr "_Importa osservatori"
+
+#: ../data/glade/notifier.glade.h:16
+msgid "_View"
+msgstr "_Visualizza"
+
+#: ../data/glade/preferences.glade.h:1
+msgid "<b>Debugging and Logging</b>"
+msgstr "<b>Debug e giornale</b>"
+
+#: ../data/glade/preferences.glade.h:2
+msgid "<b>Display</b>"
+msgstr "<b>Mostra</b>"
+
+#: ../data/glade/preferences.glade.h:3
+msgid "<b>Sounds</b>"
+msgstr "<b>Suoni</b>"
+
+#: ../data/glade/preferences.glade.h:4
+msgid "A problem occured"
+msgstr "Si è verificato un problema"
+
+#: ../data/glade/preferences.glade.h:5
+msgid "A watch is updated"
+msgstr "Un osservatore è stato aggiornato"
+
+#: ../data/glade/preferences.glade.h:6
+msgid "Always show the icon in the notification area"
+msgstr "Visualizza sempre l'icona nell'area di notifica"
+
+#: ../data/glade/preferences.glade.h:7
+msgid "Display the notification window in the window list"
+msgstr "Mostra la finestra di notifica nella lista finestre"
+
+#: ../data/glade/preferences.glade.h:8
+msgid "Enable debug mode and logging"
+msgstr "Abilita la modalità di debug ed il giornale"
+
+#: ../data/glade/preferences.glade.h:9
+msgid "If activated, you will receive more information when running Specto from a terminal, and more information will be printed to the logs."
+msgstr "Se attivato, riceverai piu` informazioni quando fai partire Specto dal terminale e piu` informazioni saranno scritte nel giornale."
+
+#: ../data/glade/preferences.glade.h:10
+msgid "Pop toasts from the tray icon when a watch is updated"
+msgstr "Visualizza un toast sulla barra delle icone quando un osservatore viene aggiornato"
+
+#: ../data/glade/preferences.glade.h:11
+msgid "Preferences"
+msgstr "Preferenze"
+
+#: ../data/glade/preferences.glade.h:12
+msgid "Select a File"
+msgstr "Seleziona un file"
+
+#: ../data/glade/preferences.glade.h:13
+msgid "While in debug mode, Specto will provide more information in order to help you diagnose problems. Logging will save all this information to a log file. You can use this to help developers improve Specto."
+msgstr "In modalità debug, Specto fornirà piu` informazioni per aiutarti a diagnosticare i problemi."
+
+#: ../src/specto/add_watch.py:166
+msgid "file"
+msgstr "file"
+
+#: ../src/specto/add_watch.py:168
+msgid "folder"
+msgstr "cartella"
+
+#: ../src/specto/add_watch.py:283
+#: ../src/specto/edit_watch.py:200
+msgid "URL:"
+msgstr "URL:"
+
+#: ../src/specto/add_watch.py:297
+#: ../src/specto/edit_watch.py:211
+msgid "Error Margin (%):"
+msgstr "Margine di errore (%):"
+
+#: ../src/specto/add_watch.py:318
+#: ../src/specto/edit_watch.py:236
+msgid "Protocol:"
+msgstr "Protocollo:"
+
+#: ../src/specto/add_watch.py:327
+msgid "POP3"
+msgstr "POP3"
+
+#: ../src/specto/add_watch.py:333
+msgid "IMAP"
+msgstr "IMAP"
+
+#: ../src/specto/add_watch.py:338
+#: ../src/specto/edit_watch.py:310
+msgid "Gmail"
+msgstr "Gmail"
+
+#: ../src/specto/add_watch.py:344
+msgid "User:"
+msgstr "Utente:"
+
+#: ../src/specto/add_watch.py:354
+#: ../src/specto/edit_watch.py:258
+msgid "Password:"
+msgstr "Password:"
+
+#: ../src/specto/add_watch.py:365
+#: ../src/specto/edit_watch.py:270
+msgid "Host:"
+msgstr "Host:"
+
+#: ../src/specto/add_watch.py:375
+#: ../src/specto/edit_watch.py:278
+msgid "Use SSL:"
+msgstr "Usa SSL:"
+
+#: ../src/specto/add_watch.py:390
+#: ../src/specto/edit_watch.py:322
+msgid "File/folder:"
+msgstr "File/Cartella:"
+
+#: ../src/specto/add_watch.py:400
+#: ../src/specto/edit_watch.py:332
+msgid "File"
+msgstr "File"
+
+#: ../src/specto/add_watch.py:406
+#: ../src/specto/edit_watch.py:337
+msgid "Folder"
+msgstr "Cartella"
+
+#: ../src/specto/add_watch.py:412
+#: ../src/specto/edit_watch.py:343
+msgid "Choose a file or folder"
+msgstr "Scegli un file o una cartella"
+
+#: ../src/specto/edit_watch.py:67
+msgid "Edit watch: "
+msgstr "Cambia un osservatore:"
+
+#: ../src/specto/edit_watch.py:163
+msgid "Watch : \"%s\" edited."
+msgstr "Osservatore: \"%s\" cambiato."
+
+#: ../src/specto/edit_watch.py:175
+msgid "removed logs from watch: \"%s\""
+msgstr "informazioni del giornale rimosse dall'osservatore: \"%s\""
+
+#: ../src/specto/edit_watch.py:247
+msgid "Username:"
+msgstr "Nome utente:"
+
+#: ../src/specto/edit_watch.py:286
+msgid "Pop3"
+msgstr "Pop3"
+
+#: ../src/specto/edit_watch.py:298
+msgid "Imap"
+msgstr "Imap"
+
+#: ../src/specto/main.py:62
+msgid "no GTK, activating console mode"
+msgstr "niente GTK, attivo la modalità console"
+
+#: ../src/specto/main.py:111
+msgid "Google.com cannot be reached, your Internet connection seems down! Waiting 10 seconds."
+msgstr "Non riesco a raggiungere Google.com, il tuo collegamento a Internet sembra non funzionare! Attendo 10 secondi."
+
+#: ../src/specto/main.py:165
+msgid "Specto is already running!"
+msgstr "Specto è già in funzione."
+
+#: ../src/specto/main.py:238
+#: ../src/specto/watch.py:218
+msgid "No updates yet."
+msgstr "Ancora nessun aggiornamento."
+
+#: ../src/specto/main.py:289
+msgid "watch \"%s\" started"
+msgstr "osservatore \"%s\" partito"
+
+#: ../src/specto/main.py:294
+msgid "watch \"%s\" stopped"
+msgstr "osservatore \"%s\" fermato"
+
+#: ../src/specto/main.py:467
+#: ../src/specto/main.py:476
+msgid "notifier: reappear"
+msgstr "notificatore: riapparso"
+
+#: ../src/specto/main.py:472
+msgid "notifier: hide"
+msgstr "notificatore: nascosto"
+
+#: ../src/specto/main.py:486
+msgid "preferences: create"
+msgstr "preferenze: create"
+
+#: ../src/specto/main.py:489
+msgid "preferences: reappear"
+msgstr "preferenze: riapparse"
+
+#: ../src/specto/main.py:496
+msgid "error log: create"
+msgstr "giornale di errore: creato"
+
+#: ../src/specto/main.py:498
+msgid "error log: already visible"
+msgstr "giornale di errore: già visibile"
+
+#: ../src/specto/main.py:501
+msgid "error log: recreate"
+msgstr "giornale di errore: ricreato"
+
+#: ../src/specto/main.py:507
+msgid "add watch: create"
+msgstr "aggiungi osservatore: crea"
+
+#: ../src/specto/main.py:509
+msgid "add watch: already visible"
+msgstr "aggiungi osservatore: già visibile"
+
+#: ../src/specto/main.py:512
+msgid "add watch: recreate"
+msgstr "aggiungi osservatore: ricreato"
+
+#: ../src/specto/main.py:526
+msgid "edit watch: create"
+msgstr "cambia osservatore: creato"
+
+#: ../src/specto/main.py:528
+msgid "edit watch: already visible"
+msgstr "cambia osservatore: già visibile"
+
+#: ../src/specto/main.py:531
+msgid "edit watch: recreate"
+msgstr "cambia osservatore: ricreato"
+
+#: ../src/specto/main.py:557
+msgid "Murder!"
+msgstr "Assassina!"
+
+#: ../src/specto/main.py:558
+msgid ""
+"Specto is currently busy and cannot quit yet.\n"
+"\n"
+"This may be because it is checking for watch updates.\n"
+"However, you can try forcing it to quit by clicking the murder button."
+msgstr ""
+"Specto è occupato e non piu` ancora uscire.\n"
+"\n"
+"Porebbe essere perché sta controllando l'aggiornamento di un osservatore.\n"
+"Tuttavia puoi provare a forzare l'uscita cliccando sul tasto dell'assassino."
+
+#: ../src/specto/notifier.py:343
+msgid "gmail <i>(%s unread)</i>"
+msgstr "gmail <i>(%s non letti)</i>"
+
+#: ../src/specto/notifier.py:372
+msgid "watch \"%s\" opened"
+msgstr "osservatore \"%s\" aperto"
+
+#: ../src/specto/notifier.py:404
+msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
+msgstr "Puoi aggiungere tutti i tipi di sito come osservatori. Pagine statiche, feed RSS o Atom, ecc. Specto li gestirà autonomaticamente."
+
+#: ../src/specto/notifier.py:405
+msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
+msgstr "Gli osservatori di siti possono usare diversi margini di errore il che ti consente di impostare un minimo di percentuale di differenza. Ció ti permette di adattartu ad una pagina che cambia o che ha molta pubblicittà"
+
+#: ../src/specto/notifier.py:406
+msgid "Single-click an existing watch to display information, and double-click it to open the content."
+msgstr "Clicca su un osservatore esistente per visualizzane le informazioni, e fai doppio click per aprirne i contenuti."
+
+#: ../src/specto/notifier.py:407
+msgid "Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers."
+msgstr "Seleziona un intervallo di aggiornamento ragionevole per risparmiare la tua banda e per evitare di essere bloccato dai fornitori di contenuti."
+
+#: ../src/specto/notifier.py:468
+msgid "notifier: size set"
+msgstr "notificatore: dimensione impostata"
+
+#: ../src/specto/notifier.py:470
+msgid "notifier: size not set"
+msgstr "notificatore: dimensione non impostata"
+
+#: ../src/specto/notifier.py:474
+msgid "notifier: position set"
+msgstr "notificatore: posizione impostata"
+
+#: ../src/specto/notifier.py:476
+msgid "notifier: position not set"
+msgstr "notificatore: posizione non impostata"
+
+#: ../src/specto/notifier.py:532
+msgid "Active"
+msgstr "Attivo"
+
+#: ../src/specto/notifier.py:540
+msgid "Type"
+msgstr "Tipo"
+
+#: ../src/specto/notifier.py:549
+msgid "Name"
+msgstr "Nome"
+
+#: ../src/specto/notifier.py:558
+msgid "ID"
+msgstr "ID"
+
+#: ../src/specto/notifier.py:565
+msgid "TYPE"
+msgstr "TIPO"
+
+#: ../src/specto/notifier.py:588
+msgid "Tip of the Day:"
+msgstr "Suggerimento del giorno:"
+
+#: ../src/specto/notifier.py:608
+#: ../src/specto/notifier.py:663
+#: ../src/specto/notifier.py:718
+msgid "<b>Name:</b>"
+msgstr "<b>Nome:</b>"
+
+#: ../src/specto/notifier.py:620
+#: ../src/specto/notifier.py:675
+#: ../src/specto/notifier.py:730
+msgid "<b>Last Updated:</b>"
+msgstr "<b>Ultimo aggiornamento:</b>"
+
+#: ../src/specto/notifier.py:632
+msgid "<b>Location:</b>"
+msgstr "<b>Posizione:</b>"
+
+#: ../src/specto/notifier.py:644
+msgid "<b>Error Margin:</b>"
+msgstr "<b>Margine di errore:</b>"
+
+#: ../src/specto/notifier.py:687
+msgid "<b>Host:</b>"
+msgstr "<b>Host:</b>"
+
+#: ../src/specto/notifier.py:699
+msgid "<b>Username:</b>"
+msgstr "<b>Nome utente:</b>"
+
+#: ../src/specto/notifier.py:742
+msgid "<b>File/folder:</b>"
+msgstr "<b>File/cartella:</b>"
+
+#: ../src/specto/preferences.py:92
+msgid "Preferences saved."
+msgstr "Preferenze salvate."
+
+#: ../src/specto/trayicon.py:76
+msgid "No updated watches."
+msgstr "Nessun osservatore aggiornato."
+
+#: ../src/specto/trayicon.py:78
+msgid "Updated watches:\n"
+msgstr "Osservatori aggiornati:\n"
+
+#: ../src/specto/trayicon.py:80
+msgid "website"
+msgstr "sito web"
+
+#: ../src/specto/trayicon.py:80
+msgid "websites"
+msgstr "siti web"
+
+#: ../src/specto/trayicon.py:86
+msgid "mail account"
+msgstr "account email"
+
+#: ../src/specto/trayicon.py:86
+msgid "mail accounts"
+msgstr "account email"
+
+#: ../src/specto/trayicon.py:94
+msgid "file/folder"
+msgstr "file/cartella"
+
+#: ../src/specto/trayicon.py:94
+msgid "files/folders"
+msgstr "file/cartelle"
+
+#: ../src/specto/trayicon.py:129
+msgid "Hide window"
+msgstr "Nascondi finestra"
+
+#: ../src/specto/trayicon.py:131
+msgid "Show window"
+msgstr "Visualizza finestra"
+
+#: ../src/specto/watch.py:66
+msgid "The watch, <b>%s</b>, has a problem. You may need to check the error log."
+msgstr "L'osservatore, <b>%s</b>, ha un problema. Potrebbe essere necessario controllare il giornale degli errori."
+
+#: ../src/specto/watch.py:80
+msgid "Watch \"%s\" updated!"
+msgstr "Osservatore \"%s\" aggironato!"
+
+#: ../src/specto/watch.py:94
+msgid "The website, <b>%s</b>, has been updated."
+msgstr "Il sito, <b>%s</b>, è stato aggiornato."
+
+#: ../src/specto/watch.py:98
+msgid "Your email account, <b>%s</b>, has new mail."
+msgstr "Il tuo account email, <b>%s<b>, ha nuovi messaggi."
+
+#: ../src/specto/watch.py:102
+msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
+msgstr "Il tuo account email, <b>%s</b>, ha <b>%s</b> nuovi messaggi."
+
+#: ../src/specto/watch.py:104
+msgid "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s"
+msgstr "Il tuo account email, <b>%s</b>, ha <b>%d</b> nuovi messaggi non letti, per un totatle di %s messaggi."
+
+#: ../src/specto/watch.py:118
+msgid "The file/folder, <b>%s</b>, has been updated."
+msgstr "Il file/cartella, <b>%s</b>, è stato aggiornato."
+
+#: ../src/specto/watch.py:120
+msgid "Not implemented yet"
+msgstr "Non ancora implementato"
+
+#: ../src/specto/watch_file.py:45
+msgid "Unknown File Watch"
+msgstr "File osservatore sconosciuto"
+
+#: ../src/specto/watch_file.py:74
+#: ../src/specto/watch_mail_gmail.py:76
+#: ../src/specto/watch_mail_imap.py:73
+#: ../src/specto/watch_mail_pop3.py:81
+#: ../src/specto/watch_web_static.py:87
+msgid "Updating watch: \"%s\""
+msgstr "Aggiorno l'osservatore: \"%s\""
+
+#: ../src/specto/watch_file.py:97
+msgid "Watch: \"%s\" has an error"
+msgstr "Osservatore: \"%s\" ha un errore"
+
+#: ../src/specto/watch_file.py:112
+msgid "update: %s was modified"
+msgstr "aggiornamento: %s è stato modificato"
+
+#: ../src/specto/watch_file.py:117
+msgid "update: %s was created"
+msgstr "aggiornamento: %s è stato creato"
+
+#: ../src/specto/watch_file.py:131
+msgid "Skipping %s"
+msgstr "Salto %s"
+
+#: ../src/specto/watch_file.py:140
+msgid "update: %s removed"
+msgstr "aggiornamento: %s rimosso"
+
+#: ../src/specto/watch_mail_gmail.py:44
+#: ../src/specto/watch_mail_imap.py:43
+#: ../src/specto/watch_mail_pop3.py:45
+msgid "Unknown Mail Watch"
+msgstr "Osservatore posta sconosciuto"
+
+#: ../src/specto/watch_mail_gmail.py:96
+msgid "Watch: \"%s\" has error: wrong username/password"
+msgstr "Osservatore: \"%s\" ha incontrato un errore: nome utente o password errata"
+
+#: ../src/specto/watch_mail_imap.py:82
+#: ../src/specto/watch_mail_imap.py:106
+msgid "Watch: \"%s\" has error: %s"
+msgstr "Osservatore: \"%s\" ha un errore: %s"
+
+#: ../src/specto/watch_mail_imap.py:95
+msgid "Mailbox does not exist"
+msgstr "La casella di posta non esiste"
+
+#: ../src/specto/watch_mail_pop3.py:90
+#: ../src/specto/watch_mail_pop3.py:104
+#: ../src/specto/watch_web_static.py:107
+msgid "Watch: \"%s\" has error: "
+msgstr "Osservatore: \"%s\" ha un errore:"
+
+#: ../src/specto/watch_web_static.py:63
+msgid "Watch: \"%s\" has error: empty url"
+msgstr "Osservatore: \"%s\" ha un errore: url vuota"
+
+#: ../src/specto/watch_web_static.py:166
+msgid "Difference percentage:%s (Watch: \"%s\")"
+msgstr "Differenza percentuale:%s (Osservatore: \"%s\")"
+

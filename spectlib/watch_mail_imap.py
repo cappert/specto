@@ -72,7 +72,7 @@ class Mail_watch(Watch):
     def update(self, lock):
         """ Check for new mails on your imap account. """
         self.error = False
-        self.specto.update_watch(True, self.id)
+        self.specto.mark_watch_busy(True, self.id)
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
            
         try:
@@ -108,7 +108,7 @@ class Mail_watch(Watch):
                 self.error = True
                 self.specto.logger.log(_("Watch: \"%s\" has error: %s") % (self.name, str(e)), "error", self.__class__)
             
-        self.specto.update_watch(False, self.id)
+        self.specto.mark_watch_busy(False, self.id)
         lock.release()
         Watch.update(self)
                     

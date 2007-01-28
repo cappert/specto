@@ -55,6 +55,7 @@ class Preferences:
         "on_help_clicked": self.help_clicked,
         "on_chkSoundUpdate_toggled": self.chkSoundUpdate_toggled,
         "on_chkSoundProblem_toggled": self.chkSoundProblem_toggled,
+        "on_chk_libnotify_toggled": self.chkLibnotify_toggled,
         "on_button_log_clear_clicked": self.specto.logger.clear_log,
         "on_button_log_open_clicked": self.specto.show_error_log
         }
@@ -87,6 +88,13 @@ class Preferences:
         else:
             self.wTree.get_widget("soundProblem").set_property('sensitive', 0)
 
+    def chkLibnotify_toggled(self, widget):
+        """ Make the slider below the libnotify checkbox insensitive or not """
+        if widget.get_active():
+            self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 1)
+        else:
+            self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 0)
+
     def set_preferences(self):
         """ Save the preferences in gconf. """
         self.specto.logger.log(_("Preferences saved."), "info", self.__class__)
@@ -110,6 +118,7 @@ class Preferences:
         #see if pop toast has to be saved
         if self.wTree.get_widget("chk_libnotify").get_active():
             client.set_entry("/pop_toast",1, "boolean")
+            client.set_entry("/pop_toast_duration", int(self.wTree.get_widget("hscale_libnotify_duration").get_value() ), "integer")#save the pop toast duration
         else:
             client.set_entry("/pop_toast",0, "boolean")
 
@@ -134,6 +143,12 @@ class Preferences:
         else:
             client.set_entry("/debug_mode",0, "boolean")
 
+
+
+
+
+
+
     def get_preferences(self):
         """ Get the preferences from gconf. """
         #create a gconf object
@@ -142,8 +157,15 @@ class Preferences:
         #check toast
         if client.get_entry("/pop_toast", "boolean") == True:
             self.wTree.get_widget("chk_libnotify").set_active(True)
+            self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 1)
         else:
             self.wTree.get_widget("chk_libnotify").set_active(False)
+            self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 0)
+        #set the toast duration properly
+        if not client.get_entry("/pop_toast_duration", "integer"):
+            pass#nothing was set, leave the value at 5
+        else:
+            self.wTree.get_widget("hscale_libnotify_duration").set_value(client.get_entry("/pop_toast_duration", "integer"))
 
         #check windowlist
         if client.get_entry("/hide_from_windowlist", "boolean") == False:

@@ -87,7 +87,7 @@ class Web_watch(Watch):
     def update(self, lock):
         """ See if a http or rss page changed. """
         self.error = False
-        self.specto.update_watch(True, self.id)
+        self.specto.mark_watch_busy(True, self.id)
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
         
         # Create a unique name for each url.
@@ -174,6 +174,7 @@ class Web_watch(Watch):
                         self.to_be_stored_filesize = self.new_filesize
                         #if self.specto.DEBUG: print "\tSaved filesize: ", self.to_be_stored_filesize
                         self.updated = True
+                        self.actually_updated = True
                         #this means that no matter what, the webpage is updated
                     else:
                     #if there is no important changes in filesize. Call the MD5Sum.
@@ -182,6 +183,7 @@ class Web_watch(Watch):
                             self.to_be_stored_filesize = self.new_filesize
                             #if self.specto.DEBUG: print "\tSaved filesize: ", self.to_be_stored_filesize
                             self.updated = True
+                            self.actually_updated = True
                             self._writeHeaders()
                         else:
                             #we don't want to juggle with all the possible filesizes, 
@@ -189,6 +191,7 @@ class Web_watch(Watch):
                             #if the watch is not updated would create a lot of fluctuations
                             self.to_be_stored_filesize = self.old_filesize
                             #if self.specto.DEBUG: print "\tSaved filesize: ", self.to_be_stored_filesize
+                            self.actually_updated = False
                 else:
                 #if there is NO previously stored filesize
                     self.to_be_stored_filesize = self.new_filesize
@@ -199,7 +202,7 @@ class Web_watch(Watch):
                 self.write_uri()#it's uri, not url.
             self.write_filesize()
             
-        self.specto.update_watch(False, self.id)
+        self.specto.mark_watch_busy(False, self.id)
         lock.release()
         Watch.update(self)
 
