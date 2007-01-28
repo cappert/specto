@@ -1,6 +1,6 @@
 import unittest
 from spectlib.net.connectionmanager import (NMListener, FallbackListener,
-                                            CallbackRunner)
+                                            CallbackRunner, getNetListener)
 import dbus
 import urllib2
 
@@ -23,7 +23,8 @@ class MockNetworkManager(object):
         for callback in self.callbacks['DeviceNoLongerActive'] :
             callback()
 
-    def connect_to_signal(self, signal_name, handler_function, dbus_interface):
+    def connect_to_signal(self, signal_name, handler_function,
+                          dbus_interface=None):
         if signal_name not in self.callbacks :
             self.callbacks[signal_name] = []
         self.callbacks[signal_name].append(handler_function)
@@ -35,11 +36,11 @@ class MockNetworkManager(object):
         return self
         
             
-class MockFailNetworkManager(object):
+class MockFailNetworkManager(MockNetworkManager):
     excepitonMessage='The name org.freedesktop.NetworkManager was not provided\
     by any .service files'
     def state(self):
-        raise dbus.dbus_bindings.DBusException(self.excepitonMessage)
+        raise dbus.DBusException(self.excepitonMessage)
 
 class LogingCallback(object):
     def __init__(self):
@@ -197,7 +198,6 @@ class TestFallbackConnectionListener(unittest.TestCase) :
     def test_disconnected(self):
         urllib2.urlopen = mockFailingUrlOpen
         self.assertFalse(self.fbListener.connected())
-
 
         
 if __name__ == '__main__':
