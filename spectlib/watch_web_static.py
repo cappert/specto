@@ -82,7 +82,7 @@ class Web_watch(Watch):
                 gtk.main_iteration()
             time.sleep(0.05)
         while gtk.events_pending():
-            gtk.main_iteration()  
+            gtk.main_iteration()
 
     def update(self, lock):
         """ See if a http or rss page changed. """
@@ -203,8 +203,7 @@ class Web_watch(Watch):
             self.write_filesize()
             
         self.specto.mark_watch_busy(False, self.id)
-        lock.release()
-        Watch.update(self)
+        Watch.update(self, lock)
 
     def content(self):
         """Get the content as a single string."""

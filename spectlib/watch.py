@@ -53,7 +53,7 @@ class Watch:
             global NotificationToast
             from spectlib.balloons import NotificationToast
         
-    def update(self):
+    def update(self, lock):
         """
         Check if an error sound has to be played or if a watch has to be flagged updated.
         """
@@ -78,6 +78,7 @@ class Watch:
             self.updated = True
             self.actually_updated = False
         self.timer_id = gobject.timeout_add(self.refresh, self.thread_update)
+        lock.release()
 
     def notify(self):
         """

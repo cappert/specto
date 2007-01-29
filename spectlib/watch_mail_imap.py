@@ -37,6 +37,7 @@ class Mail_watch(Watch):
     Watch class that will check if you recevied a new mail on your imap account. 
     """
     updated = False
+    actually_updated = False
     type = 1
     prot = 1
     
@@ -101,7 +102,7 @@ class Mail_watch(Watch):
                     newMsgs = data[0] #server.recent()[1][0] 
                     
                     if newMsgs != "":
-                        self.updated = True            
+                        self.actually_updated = True            
                 server.logout()
             
             except imaplib.IMAP4.error, e:
@@ -109,8 +110,7 @@ class Mail_watch(Watch):
                 self.specto.logger.log(_("Watch: \"%s\" has error: %s") % (self.name, str(e)), "error", self.__class__)
             
         self.specto.mark_watch_busy(False, self.id)
-        lock.release()
-        Watch.update(self)
+        Watch.update(self, lock)
                     
     def set_username(self, username):
         """ Set the username. """

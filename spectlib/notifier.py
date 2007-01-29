@@ -471,13 +471,14 @@ class Notifier:
             self.specto.conf_ui.set_entry("/hide_deactivated_watches", False, "boolean")
         else:
             for i in self.iter:
-                path = self.model.get_path(self.iter[i])
-                iter = self.model.get_iter(path)
-                model = self.model
-                id = int(model.get_value(iter, 3))
+                if self.model.iter_is_valid(self.iter[i]):
+                    path = self.model.get_path(self.iter[i])
+                    iter = self.model.get_iter(path)
+                    model = self.model
+                    id = int(model.get_value(iter, 3))
 
-                if self.specto.watch_db[id].active == False:
-                    model.remove(iter)
+                    if self.specto.watch_db[id].active == False:
+                        model.remove(iter)
             self.specto.conf_ui.set_entry("/hide_deactivated_watches", True, "boolean")
 
     def delete_event(self, *args):

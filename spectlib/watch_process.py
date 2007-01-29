@@ -87,8 +87,7 @@ class Process_watch(Watch):
             self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
         
         self.specto.mark_watch_busy(False, self.id)
-        lock.release()
-        Watch.update(self)
+        Watch.update(self, lock)
         
     def check_process(self):
         """ see if the process is running or not """

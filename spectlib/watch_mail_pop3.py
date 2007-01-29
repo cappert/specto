@@ -37,6 +37,7 @@ class Mail_watch(Watch):
     Watch class that will check if you recevied a new mail on your pop3 account. 
     """
     updated = False
+    actually_updated = False
     oldMsg = 0
     newMsg = 0
     type = 1
@@ -99,7 +100,7 @@ class Mail_watch(Watch):
                 s.quit()
                         
                 if self.newMsg > int(self.check_old()):
-                    self.updated = True
+                    self.actually_updated = True
                 self.write_new()
                 
             except poplib.error_proto, e:
@@ -107,8 +108,7 @@ class Mail_watch(Watch):
                 self.specto.logger.log(_("Watch: \"%s\" has error: ") % self.name + str(e), "error", self.__class__)
 
         self.specto.mark_watch_busy(False, self.id)
-        lock.release()
-        Watch.update(self)
+        Watch.update(self, lock)
         
     def check_old(self):
         """ Check how many messages there were last time. """

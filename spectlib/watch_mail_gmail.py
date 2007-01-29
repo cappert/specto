@@ -36,6 +36,7 @@ class Mail_watch(Watch):
     this watch will check if you have a new mail on your gmail account
     """
     updated = False
+    actually_updated = False
     oldMsg = 0
     newMsg = 0
     type = 1
@@ -52,7 +53,6 @@ class Mail_watch(Watch):
         self.password = password
         self.id = id
         self.error = False
-        self.actually_updated=False
         
     def dict_values(self):
         return { 'name': self.name, 'refresh': self.refresh, 'username': self.user, 'password':self.password, 'type':1, 'prot':2 }
@@ -103,8 +103,7 @@ class Mail_watch(Watch):
             self.specto.logger.log(_("Watch: \"%s\" has error: wrong username/password") % self.name, "error", self.__class__)
             
         self.specto.mark_watch_busy(False, self.id)
-        lock.release()
-        Watch.update(self)
+        Watch.update(self, lock)
         
     def set_username(self, username):
         """ Set the username for the watch. """
