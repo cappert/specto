@@ -52,6 +52,7 @@ class Web_watch(Watch):
     cached = 0
     url2_ = ""
     updated = False
+    actually_updated = False
     type = 0
 
     def __init__(self, specto, name, refresh, url, id, error_margin):

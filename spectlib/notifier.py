@@ -429,16 +429,19 @@ class Notifier:
         #change the name in the treeview
         model, iter = self.treeview.get_selection().get_selected()
         id = int(model.get_value(iter, 3))
+        self.change_name(args[2], id)
+        
+    def change_name(self, new_name, id):
         if self.specto.watch_db[id].updated == True:
-            name = "<b>" + args[2] + "</b>"
+            name = "<b>" + new_name + "</b>"
         else:
-            name = args[2]
-        self.model.set_value(iter, 2, name)
+            name = new_name
+        self.model.set_value(self.iter[id], 2, name)
         
         #write the new name in watches.list
-        self.specto.replace_name(self.specto.watch_db[id].name, args[2])
+        self.specto.replace_name(self.specto.watch_db[id].name, new_name)
         #change the name in the database
-        self.specto.watch_db[id].set_name(args[2])
+        self.specto.watch_db[id].set_name(new_name)
         self.show_watch_info()
         
 ### GUI FUNCTIONS ###

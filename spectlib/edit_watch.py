@@ -112,7 +112,7 @@ class Edit_watch:
             #change the name in the array
             self.specto.watch_db[self.watch.id].set_name(values['name'])
             #change the name in the notifier window
-            self.specto.notifier.change_entry_name(values['name'])
+            self.specto.notifier.change_name(values['name'], self.watch.id)
             
         values['type'] = self.watch.type
         values['refresh_value'] = self.wTree.get_widget("refresh").get_value_as_int()
