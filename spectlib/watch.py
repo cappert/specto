@@ -33,6 +33,7 @@ from spectlib.iniparser import ini_namespace
 from ConfigParser import ConfigParser
 from spectlib import i18n
 from spectlib.i18n import _
+from spectlib.balloons import NotificationToast
 
 def gettext_noop(s):
    return s
@@ -47,11 +48,7 @@ class Watch:
         self.specto = specto
         self.timer_id = -1
         gnome.sound_init('localhost')
-        global _
-        pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")
-        if (pop_toast == True) and (self.specto.GTK): 
-            global NotificationToast
-            from spectlib.balloons import NotificationToast
+        global _            
         
     def update(self, lock):
         """
@@ -274,18 +271,28 @@ class Watch_io:
         for option, value  in values.iteritems():
             self.cfg[name][option] = value
 
-        f = open(self.file_name, "w")
-        f.write(str(self.cfg).strip()) #write the new configuration file
-        f.close()
+        try:
+            f = open(self.file_name, "w")
+            f.write(str(self.cfg).strip()) #write the new configuration file
+            f.close()
+        except IOError:
+            print "There was an error writing to", self.file_name
 
     def remove_watch(self, name):
         """ Remove a watch from the configuration file. """
-        cfgpr = ConfigParser()
-        cfgpr.read(self.file_name)
-        cfgpr.remove_section(name)
-        f = open(self.file_name, "w")
-        cfgpr.write(f)
-        f.close()
+        try:
+            cfgpr = ConfigParser()
+            cfgpr.read(self.file_name)
+            cfgpr.remove_section(name)
+        except:
+            print "There was an error writing to", self.file_name
+            
+        try:
+            f = open(self.file_name, "w")
+            cfgpr.write(f)
+            f.close()
+        except IOError:
+            print "There was an error writing to", self.file_name
         
     def search_watch(self, name):
         """
@@ -300,13 +307,19 @@ class Watch_io:
     def replace_name(self, orig, new):
         """ Replace a watch name (rename). """
         #read the file
-        f = open(self.file_name, "r")
-        text = f.read()
-        f.close
-        text = text.replace("[" + orig + "]", "[" + new + "]")
+        try:
+            f = open(self.file_name, "r")
+            text = f.read()
+            f.close
+            text = text.replace("[" + orig + "]", "[" + new + "]")
+        except IOError:
+            print "There was an error writing to", self.file_name
         
         #replace and write file
-        f = open(self.file_name, "w")
-        f.write(text)
-        f.close()
+        try:
+            f = open(self.file_name, "w")
+            f.write(text)
+            f.close()
+        except IOError:
+            print "There was an error writing to", self.file_name
         
