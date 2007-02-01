@@ -1,6 +1,6 @@
 import unittest
 from spectlib.net.connectionmanager import (NMListener, FallbackListener,
-                                            CallbackRunner, getNetListener)
+                                            CallbackRunner, get_net_listener)
 import dbus
 import urllib2
 
@@ -16,12 +16,12 @@ class MockNetworkManager(object):
     def setConnected(self):
         self.status = 3
         for callback in self.callbacks['DeviceNowActive'] :
-            callback()
+            callback(dbus.String('Mock device'))
 
     def setDisconnected(self):
         self.status = 4
         for callback in self.callbacks['DeviceNoLongerActive'] :
-            callback()
+            callback(dbus.String('Mock device'))
 
     def connect_to_signal(self, signal_name, handler_function,
                           dbus_interface=None):

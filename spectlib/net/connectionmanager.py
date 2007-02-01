@@ -33,12 +33,8 @@ def get_net_listener() :
         listener = NMListener(dbus.SystemBus())
         if not listener.has_networkmanager() :
             listener = FallbackListener()
-            print "fallback - 1"
-        else :
-            print "nm"
     except dbus.DBusException:
         listener = FallbackListener()
-        print "fallback - 2"
     return listener
 
 class CallbackRunner(object):
@@ -76,7 +72,7 @@ class NMListener(CallbackRunner):
                                        'org.freedesktop.NetworkManager')
         self.lastStatus = self.nmIface.state()
 
-    def on_nm_event(self) :
+    def on_nm_event(self, deviceName) :
         wasConnected = self.connected()
         self.lastStatus = self.nmIface.state()
         if (not wasConnected) and self.connected() :
