@@ -1,3 +1,6 @@
+2007-02-02 Jean-Francois Fortin
+    * Remove a useless line in notifier.glade; the toolbar now follows gnome's global settings. Please folks, use glade3 if possible, not glade2, it's old and messy
+
 2007-01-27 Jean-Francois Fortin
     * Fix isue #5 sounds keep playing - this was due to the fact that the watches notified on each refresh if they were marked updated, even if they did not change! Therefore, we now use an additional variable: self.actually_updated
     * Fix issue #7 specify the libnotify balloon delay - you can now set a custom duration for balloons in the preferences

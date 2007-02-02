@@ -106,6 +106,7 @@ class Specto:
         self.connection_manager = conmgr.get_net_listener()
 
         #basic check for a network connection
+        #someone, please deprecate this and use conmgr + google ping fallback (included), this is an ugly hack I wrote a while ago here ~kiddo
         while True:
             try:
                 # try if google can be reached, i.e. connection to internet is up
