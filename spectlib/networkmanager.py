@@ -3,7 +3,7 @@
 
 # Specto , Unobtrusive event notifier
 #
-#       net/connectionmanager.py
+#       networkmanager.py
 #
 # Copyright (c) 2006-2007 Christopher Halse Rogers
 # This module code is maintained by : Christopher Halse Rogers

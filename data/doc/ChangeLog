@@ -1,3 +1,8 @@
+2007-02-04 Jean-Francois Fortin
+    * Add network connection icons for a possible network watch (tells you how many times your connection dropped)
+    * Kill the net/ folder, I have not been given reasons for its existence and it's breaking system-wide install
+    * Remove some prints from watch.py (they were only useful for troubleshooting issue #40)
+
 2007-02-02 Jean-Francois Fortin
     * Remove a useless line in notifier.glade; the toolbar now follows gnome's global settings. Please folks, use glade3 if possible, not glade2, it's old and messy
 

@@ -39,7 +39,7 @@ from spectlib.logger import Logger
 from spectlib.specto_gconf import GConfClient
 from spectlib.i18n import _
 from spectlib.import_export import Import_watch
-from spectlib.net import connectionmanager as conmgr
+from spectlib import networkmanager as conmgr
 
 #for the initial ping test
 from urllib2 import urlopen

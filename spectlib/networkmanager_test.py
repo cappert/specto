@@ -1,5 +1,5 @@
 import unittest
-from spectlib.net.connectionmanager import (NMListener, FallbackListener,
+from spectlib.networkmanager import (NMListener, FallbackListener,
                                             CallbackRunner, get_net_listener)
 import dbus
 import urllib2
