@@ -105,21 +105,6 @@ class Specto:
 
         self.connection_manager = conmgr.get_net_listener()
 
-        #basic check for a network connection
-        #someone, please deprecate this and use conmgr + google ping fallback (included), this is an ugly hack I wrote a while ago here ~kiddo
-        while True:
-            try:
-                # try if google can be reached, i.e. connection to internet is up
-                ping = urlopen('http://www.google.com')
-                ping.close()
-            except IOError:
-                # if not, wait 10 seconds before trying again
-                self.logger.log(_("Google.com cannot be reached, your Internet connection seems down! Waiting 10 seconds."), "critical", self.__class__)
-                sleep(10)
-            else:
-                # if yes, start specto
-                break
-
         if GTK:
             if self.conf_pref.get_entry("/always_show_icon", "boolean") == False:
                 #if the user has not requested the tray icon to be shown at all times, it's impossible that the notifier is hidden on startup, so we must show it.

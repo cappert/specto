@@ -72,7 +72,7 @@ class NMListener(CallbackRunner):
                                        'org.freedesktop.NetworkManager')
         self.lastStatus = self.nmIface.state()
 
-    def on_nm_event(self, deviceName) :
+    def on_nm_event(self, *args, **kwargs) :
         wasConnected = self.connected()
         self.lastStatus = self.nmIface.state()
         if (not wasConnected) and self.connected() :

@@ -61,7 +61,7 @@ class Mail_watch(Watch):
         """ Start the watch. """
         self.thread_update()
         
-    def thread_update(self):
+    def _real_update(self):
         lock = thread.allocate_lock()
         lock.acquire()
         t=thread.start_new_thread(self.update,(lock,))
@@ -70,8 +70,15 @@ class Mail_watch(Watch):
                 gtk.main_iteration()
             time.sleep(0.05)
         while gtk.events_pending():
-            gtk.main_iteration()  
-
+            gtk.main_iteration()
+        
+    def thread_update(self):
+        if not self.specto.connection_manager.connected():
+            self.specto.logger.log(_("No network connection detected"),
+                                   "info", self.__class__)
+            self.specto.connection_manager.add_callback(self._real_update)
+        else :
+            self._real_update()
         
     def update(self, lock):
         """ Check for new mails on your gmail account. """
