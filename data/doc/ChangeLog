@@ -1,3 +1,12 @@
+2007-02-06  Christopher James Halse Rogers  <chalserogers@gmail.com>
+
+	* Make the web and email watches network-aware.  These watches
+	will now only attempt to update when a network connection is
+	detected.  If a network connection is not detected, watch updates
+	will get triggered when a connection is available again.
+	* Remove the "ping google" at Specto startup code.  Obsoleted by
+	the new connection-manager :)
+
 2007-02-04 Jean-Francois Fortin
     * Add network connection icons for a possible network watch (tells you how many times your connection dropped)
     * Kill the net/ folder, I have not been given reasons for its existence and it's breaking system-wide install
