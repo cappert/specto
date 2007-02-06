@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Specto\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-01-27 17:01-0500\n"
-"Last-Translator: Jean-François Fortin Tam\n"
+"PO-Revision-Date: 2007-02-06 14:03-0500\n"
+"Last-Translator: Jean-Francois Fortin <nekohayo ~a~ gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -353,113 +353,109 @@ msgid "Imap"
 msgstr "IMAP"
 
 #: ../spectlib/import_export.py:87
-#: ../spectlib/notifier.py:578
+#: ../spectlib/notifier.py:581
 msgid "Active"
 msgstr "Actif"
 
 #: ../spectlib/import_export.py:95
-#: ../spectlib/notifier.py:586
+#: ../spectlib/notifier.py:589
 msgid "Type"
 msgstr "Type"
 
 #: ../spectlib/import_export.py:104
-#: ../spectlib/notifier.py:595
+#: ../spectlib/notifier.py:598
 msgid "Name"
 msgstr "Nom"
 
 #: ../spectlib/import_export.py:113
-#: ../spectlib/notifier.py:604
+#: ../spectlib/notifier.py:607
 msgid "ID"
 msgstr "ID"
 
 #: ../spectlib/import_export.py:120
-#: ../spectlib/notifier.py:611
+#: ../spectlib/notifier.py:614
 msgid "TYPE"
 msgstr "TYPE"
 
-#: ../spectlib/main.py:63
+#: ../spectlib/main.py:64
 msgid "no GTK, activating console mode"
 msgstr "GTK indisponible, activation du mode console"
 
-#: ../spectlib/main.py:113
-msgid "Google.com cannot be reached, your Internet connection seems down! Waiting 10 seconds."
-msgstr "Impossible de rejoindre Google.com pour effectuer le test de connexion. Patientons 10 secondes."
-
-#: ../spectlib/main.py:167
+#: ../spectlib/main.py:156
 msgid "Specto is already running!"
 msgstr "Specto est déjà en cours d'exécution!"
 
-#: ../spectlib/main.py:244
-#: ../spectlib/watch.py:245
+#: ../spectlib/main.py:233
+#: ../spectlib/watch.py:229
 msgid "No updates yet."
 msgstr "Rien à signaler."
 
-#: ../spectlib/main.py:299
+#: ../spectlib/main.py:288
 msgid "watch \"%s\" started"
 msgstr "observateur \"%s\" lancé"
 
-#: ../spectlib/main.py:304
+#: ../spectlib/main.py:293
 msgid "watch \"%s\" stopped"
 msgstr "observateur \"%s\" stoppé"
 
-#: ../spectlib/main.py:483
-#: ../spectlib/main.py:492
+#: ../spectlib/main.py:472
+#: ../spectlib/main.py:481
 msgid "notifier: reappear"
 msgstr "fenêtre principale: afficher"
 
-#: ../spectlib/main.py:488
+#: ../spectlib/main.py:477
 msgid "notifier: hide"
 msgstr "fenêtre principale: cacher"
 
-#: ../spectlib/main.py:501
+#: ../spectlib/main.py:490
 msgid "preferences: create"
 msgstr "fenêtre préférences: créer"
 
-#: ../spectlib/main.py:504
+#: ../spectlib/main.py:493
 msgid "preferences: reappear"
 msgstr "fenêtre préférences: afficher"
 
-#: ../spectlib/main.py:511
+#: ../spectlib/main.py:500
 msgid "error log: create"
 msgstr "fenêtre log d'erreurs: créer"
 
-#: ../spectlib/main.py:513
+#: ../spectlib/main.py:502
 msgid "error log: already visible"
 msgstr "fenêtre log d'erreurs: déjà affiché"
 
-#: ../spectlib/main.py:516
+#: ../spectlib/main.py:505
 msgid "error log: recreate"
 msgstr "fenêtre log d'erreurs: afficher"
 
-#: ../spectlib/main.py:522
+#: ../spectlib/main.py:511
 msgid "add watch: create"
 msgstr "fenêtre d'ajout d'observateur: créer"
 
-#: ../spectlib/main.py:524
+#: ../spectlib/main.py:513
 msgid "add watch: already visible"
 msgstr "fenêtre d'ajout d'observateur: déjà affiché"
 
-#: ../spectlib/main.py:527
+#: ../spectlib/main.py:516
 msgid "add watch: recreate"
 msgstr "fenêtre d'ajout d'observateur: afficher"
 
-#: ../spectlib/main.py:541
+#: ../spectlib/main.py:530
 msgid "edit watch: create"
 msgstr "fenêtre d'édition d'observateur: créer"
 
-#: ../spectlib/main.py:543
+#: ../spectlib/main.py:532
 msgid "edit watch: already visible"
 msgstr "fenêtre d'édition d'observateur: déjà affiché"
 
-#: ../spectlib/main.py:546
+#: ../spectlib/main.py:535
 msgid "edit watch: recreate"
 msgstr "fenêtre d'édition d'observateur: afficher"
 
-#: ../spectlib/main.py:581
+#: ../spectlib/main.py:570
 msgid "Murder!"
 msgstr "Assassiner !"
 
-#: ../spectlib/main.py:582
+#: ../spectlib/main.py:571
 msgid ""
 "Specto is currently busy and cannot quit yet.\n"
 "\n"
@@ -479,77 +475,77 @@ msgstr "Gmail <i>(%s non lus)</i>"
 msgid "watch \"%s\" opened"
 msgstr "ouverture de l'observateur \"%s\""
 
-#: ../spectlib/notifier.py:447
+#: ../spectlib/notifier.py:450
 msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
 msgstr "Vous pouvez ajouter toutes sortes d'observateurs. Pages statiques, fils de syndication RSS ou Atom, Specto les prendra en charge automatiquement."
 
-#: ../spectlib/notifier.py:448
+#: ../spectlib/notifier.py:451
 msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
 msgstr "Les observateurs de sites web peuvent utiliser une marge d'erreur en pourcentage. Ceci vous permet d'adapter Specto aux sites Internet qui changent constamment ou qui contiennent beaucoup de publicité."
 
-#: ../spectlib/notifier.py:449
+#: ../spectlib/notifier.py:452
 msgid "Single-click an existing watch to display information, and double-click it to open the content."
 msgstr "Faites un simple-clic sur un observateur pour afficher des informations ou double-cliquez dessus pour accéder au contenu associé."
 
-#: ../spectlib/notifier.py:450
+#: ../spectlib/notifier.py:453
 msgid "Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers."
 msgstr "Choisissez un délai de rafraîchissement raisonnable afin de conserver de la bande passante et éviter d'être bloqué par les distributeurs de contenu."
 
-#: ../spectlib/notifier.py:509
+#: ../spectlib/notifier.py:513
 msgid "notifier: size set"
 msgstr "fenêtre principale: taille définie"
 
-#: ../spectlib/notifier.py:511
+#: ../spectlib/notifier.py:515
 msgid "notifier: size not set"
 msgstr "fenêtre principale: taille non définie"
 
-#: ../spectlib/notifier.py:515
+#: ../spectlib/notifier.py:519
 msgid "notifier: position set"
 msgstr "fenêtre principale: position définie"
 
-#: ../spectlib/notifier.py:517
+#: ../spectlib/notifier.py:521
 msgid "notifier: position not set"
 msgstr "fenêtre principale: position non définie"
 
-#: ../spectlib/notifier.py:624
+#: ../spectlib/notifier.py:627
 msgid "Tip of the Day:"
 msgstr "Astuce du jour :"
 
-#: ../spectlib/notifier.py:642
-#: ../spectlib/notifier.py:697
-#: ../spectlib/notifier.py:752
-#: ../spectlib/notifier.py:795
+#: ../spectlib/notifier.py:645
+#: ../spectlib/notifier.py:700
+#: ../spectlib/notifier.py:755
+#: ../spectlib/notifier.py:798
 msgid "<b>Name:</b>"
 msgstr "<b>Nom :</b>"
 
-#: ../spectlib/notifier.py:654
-#: ../spectlib/notifier.py:709
-#: ../spectlib/notifier.py:764
-#: ../spectlib/notifier.py:807
+#: ../spectlib/notifier.py:657
+#: ../spectlib/notifier.py:712
+#: ../spectlib/notifier.py:767
+#: ../spectlib/notifier.py:810
 msgid "<b>Last Updated:</b>"
 msgstr "<b>Dernière mise à jour :</b>"
 
-#: ../spectlib/notifier.py:666
+#: ../spectlib/notifier.py:669
 msgid "<b>Location:</b>"
 msgstr "<b>Emplacement :</b>"
 
-#: ../spectlib/notifier.py:678
+#: ../spectlib/notifier.py:681
 msgid "<b>Error Margin:</b>"
 msgstr "<b>Marge d'erreur :</b>"
 
-#: ../spectlib/notifier.py:721
+#: ../spectlib/notifier.py:724
 msgid "<b>Host:</b>"
 msgstr "<b>Hôte :</b>"
 
-#: ../spectlib/notifier.py:733
+#: ../spectlib/notifier.py:736
 msgid "<b>Username:</b>"
 msgstr "<b>Utilisateur :</b>"
 
-#: ../spectlib/notifier.py:776
+#: ../spectlib/notifier.py:779
 msgid "<b>File/folder:</b>"
 msgstr "<b>Fichier/dossier :</b>"
 
-#: ../spectlib/notifier.py:819
+#: ../spectlib/notifier.py:822
 msgid "<b>Process:</b>"
 msgstr "<b>Processus :</b>"
 
@@ -605,47 +601,47 @@ msgstr "Cacher la fenêtre"
 msgid "Show window"
 msgstr "Afficher la fenêtre"
 
-#: ../spectlib/watch.py:66
+#: ../spectlib/watch.py:63
 msgid "The watch, <b>%s</b>, has a problem. You may need to check the error log."
 msgstr "L'observateur « <b>%s</b> » a rencontré un problème. Il serait recommandé d'aller vérifier les logs d'erreurs."
 
-#: ../spectlib/watch.py:75
+#: ../spectlib/watch.py:70
 msgid "Watch \"%s\" is already marked as updated in the notifier"
 msgstr "L'observateur \"%s\" est déjà considéré comme «mis à jour» dans la fenêtre de notifications"
 
-#: ../spectlib/watch.py:89
+#: ../spectlib/watch.py:84
 msgid "Watch \"%s\" updated!"
 msgstr "Observateur \"%s\" mis à jour !"
 
-#: ../spectlib/watch.py:106
+#: ../spectlib/watch.py:96
 msgid "The website, <b>%s</b>, has been updated."
 msgstr "Le site Internet, <b>%s</b>, a été mis à jour."
 
-#: ../spectlib/watch.py:111
+#: ../spectlib/watch.py:100
 msgid "Your email account, <b>%s</b>, has new mail."
 msgstr "Votre compte de courriel, <b>%s</b>, a nouveau message."
 
-#: ../spectlib/watch.py:115
+#: ../spectlib/watch.py:104
 msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
 msgstr "Votre compte de courriel, <b>%s</b>, a <b>%d</b> nouveau message."
 
-#: ../spectlib/watch.py:117
+#: ../spectlib/watch.py:106
 msgid "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s"
 msgstr "Votre compte de courriel, <b>%s</b>, a <b>%d</b> nouveaux messages non lus, pour un total de %s"
 
-#: ../spectlib/watch.py:131
+#: ../spectlib/watch.py:120
 msgid "The file/folder, <b>%s</b>, has been updated."
 msgstr "Le fichier/dossier, <b>%s</b>, a été mis à jour."
 
-#: ../spectlib/watch.py:136
+#: ../spectlib/watch.py:123
 msgid "The process, <b>%s</b>, has stopped."
 msgstr "Le site processus, <b>%s</b>, s'est arrêté."
 
-#: ../spectlib/watch.py:140
+#: ../spectlib/watch.py:125
 msgid "The process, <b>%s</b>, has started."
 msgstr "Le processus, <b>%s</b>, a démarré."
 
-#: ../spectlib/watch.py:145
+#: ../spectlib/watch.py:129
 msgid "Not implemented yet"
 msgstr "Pas encore implémenté"
 
@@ -654,11 +650,11 @@ msgid "Unknown File Watch"
 msgstr "Observateur de fichiers inconnu"
 
 #: ../spectlib/watch_file.py:77
-#: ../spectlib/watch_mail_gmail.py:80
-#: ../spectlib/watch_mail_imap.py:76
-#: ../spectlib/watch_mail_pop3.py:84
+#: ../spectlib/watch_mail_gmail.py:87
+#: ../spectlib/watch_mail_imap.py:85
+#: ../spectlib/watch_mail_pop3.py:93
 #: ../spectlib/watch_process.py:73
-#: ../spectlib/watch_web_static.py:91
+#: ../spectlib/watch_web_static.py:100
 msgid "Updating watch: \"%s\""
 msgstr "Mise à jour de l'observateur: \"%s\""
 
@@ -683,28 +679,35 @@ msgstr "Sauter %s"
 msgid "update: %s removed"
 msgstr "mise à jour: %s a été enlevé"
 
-#: ../spectlib/watch_mail_gmail.py:44
-#: ../spectlib/watch_mail_imap.py:43
-#: ../spectlib/watch_mail_pop3.py:45
+#: ../spectlib/watch_mail_gmail.py:45
+#: ../spectlib/watch_mail_imap.py:44
+#: ../spectlib/watch_mail_pop3.py:46
 msgid "Unknown Mail Watch"
 msgstr "Observateur de courriels inconnu"
 
-#: ../spectlib/watch_mail_gmail.py:103
+#: ../spectlib/watch_mail_gmail.py:77
+#: ../spectlib/watch_mail_imap.py:75
+#: ../spectlib/watch_mail_pop3.py:83
+#: ../spectlib/watch_web_static.py:90
+msgid "No network connection detected"
+msgstr "Pas de connexion réseau détectée"
+
+#: ../spectlib/watch_mail_gmail.py:110
 msgid "Watch: \"%s\" has error: wrong username/password"
 msgstr "Observateur : \"%s\" a causé une erreur : mauvais utilisateur/mot de passe"
 
-#: ../spectlib/watch_mail_imap.py:85
-#: ../spectlib/watch_mail_imap.py:109
+#: ../spectlib/watch_mail_imap.py:94
+#: ../spectlib/watch_mail_imap.py:118
 msgid "Watch: \"%s\" has error: %s"
 msgstr "Observateur : \"%s\" a causé une erreur : %s"
 
-#: ../spectlib/watch_mail_imap.py:98
+#: ../spectlib/watch_mail_imap.py:107
 msgid "Mailbox does not exist"
 msgstr "Le compte de courriel n'existe pas"
 
-#: ../spectlib/watch_mail_pop3.py:93
-#: ../spectlib/watch_mail_pop3.py:107
-#: ../spectlib/watch_web_static.py:111
+#: ../spectlib/watch_mail_pop3.py:102
+#: ../spectlib/watch_mail_pop3.py:116
+#: ../spectlib/watch_web_static.py:120
 msgid "Watch: \"%s\" has error: "
 msgstr "Observateur : \"%s\" a causé une erreur : "
 
@@ -712,11 +715,11 @@ msgstr "Observateur : \"%s\" a causé une erreur : "
 msgid "Unknown Process Watch"
 msgstr "Observateur de processus inconnu"
 
-#: ../spectlib/watch_web_static.py:63
+#: ../spectlib/watch_web_static.py:64
 msgid "Watch: \"%s\" has error: empty url"
 msgstr "Observateur : \"%s\" a causé une erreur : URL vide"
 
-#: ../spectlib/watch_web_static.py:170
+#: ../spectlib/watch_web_static.py:179
 msgid "Difference percentage:%s (Watch: \"%s\")"
 msgstr "Pourcentage de différence : %s (observateur: \"%s\")"
 

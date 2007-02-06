@@ -298,7 +298,7 @@
               <widget class="GtkToolButton" id="button_clear_all">
                 <property name="visible">True</property>
                 <property name="is_important">True</property>
-                <property name="label">Clear All</property>
+                <property name="label" translatable="yes">Clear All</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-clear</property>
                 <signal name="clicked" handler="on_clear_all_activate"/>
