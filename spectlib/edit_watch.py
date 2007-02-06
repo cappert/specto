@@ -217,14 +217,15 @@ class Edit_watch:
             lblSlider.show()
             tblWeb.attach(lblSlider, 0, 1, 2, 3)
 
-            self.adjustment = gtk.Adjustment(value=2.00, lower=0, upper=100, step_incr=0.01, page_incr=0, page_size=0)
+            self.adjustment = gtk.Adjustment(value=2.0, lower=0, upper=50, step_incr=0.1, page_incr=1.0, page_size=10)
             self.margin_scale = gtk.HScale(adjustment=self.adjustment)
-            self.margin_scale.set_digits(2)
+            self.margin_scale.set_digits(1)
             self.margin_scale.set_value_pos(gtk.POS_RIGHT)
+            self.margin_scale.show()
             margin = float(self.watch.error_margin) * 100
             self.margin_scale.set_value(margin)
             self.margin_scale.show()
-            tblWeb.attach(self.margin_scale, 1, 2, 2, 3)
+            tblWeb.attach(self.margin_scale, 0, 2, 3, 4)
 
             vbox_options.pack_start(tblWeb, False, False, 0)
 
