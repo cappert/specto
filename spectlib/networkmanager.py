@@ -27,6 +27,7 @@ import dbus
 import dbus.glib
 import urllib2
 import gobject
+import time
 
 def get_net_listener() :
     try:
@@ -92,18 +93,24 @@ class NMListener(CallbackRunner):
 
 class FallbackListener(CallbackRunner) :
     def __init__(self):
+        self.last_checked = 0
         self._lastConnected = self.connected()
         self._timer_id = gobject.timeout_add(int(10*60*1000), self._callback)
         
     def connected(self):
-        try:
-            # try if google can be reached, i.e. connection to internet is up
-            ping = urllib2.urlopen('http://www.google.com')
-            ping.close()
-            return True
-        except IOError:
-            return False
+        if (time.time() - self.last_checked) > 10*60 :
+            self.last_checked = time.time()
+            try:
+                # try to see if google can be reached
+                # i.e. connection to internet is up
+                ping = urllib2.urlopen('http://www.google.com')
+                ping.close()
+                self._lastConnected = True
+            except IOError:
+                self._lastConnected = False
 
+        return self._lastConnected
+            
     def _callback(self):
         wasConnected = self._lastConnected
         self._lastConnected = self.connected()

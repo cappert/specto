@@ -49,7 +49,9 @@ class About:
                     "Wout Clymans\n\t<woutclymans AT pi DOT be>\n",
                     "Giulio 'Dullboy' lotti\n\t<dullgiulio AT gmail DOT com>\n",
                     "Thomas McColgan\n\t<thomas DOT mccolgan AT gmx DOT de>\n",
-                    "Conor 'majikstreet' Callahan\n\t<majikstreet AT gmail DOT com>\n"]
+                    "Conor 'majikstreet' Callahan\n\t<majikstreet AT gmail DOT com>\n",
+                    "Chris 'RAOF' Halse Rogers\n\t<chalserogers AT gmail DOT com>\n"
+                   ]
         logo = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_about.png' )
 
         translator_credits = """

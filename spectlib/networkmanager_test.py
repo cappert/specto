@@ -3,6 +3,7 @@ from spectlib.networkmanager import (NMListener, FallbackListener,
                                             CallbackRunner, get_net_listener)
 import dbus
 import urllib2
+import time
 
 class MockNetworkManager(object):
     def __init__(self):
@@ -181,24 +182,57 @@ def mockWorkingUrlOpen(url) :
         def close(self) :
             pass
     return MockUrl()
-    
+
+class MockTime(object):
+    def __init__(self):
+        self._time = 0
+    def __call__(self):
+        return self._time
 
 class TestFallbackConnectionListener(unittest.TestCase) :
     def setUp(self):
-        self.fbListener = FallbackListener()
         self.realUrlOpen = urllib2.urlopen
+        self.realTime = time.time
 
     def tearDown(self):
         urllib2.urlopen = self.realUrlOpen
+        time.time = self.realTime
     
     def test_connected(self):
         urllib2.urlopen = mockWorkingUrlOpen
-        self.assertTrue(self.fbListener.connected())
+        fbListener = FallbackListener()
+        self.assertTrue(fbListener.connected())
 
     def test_disconnected(self):
         urllib2.urlopen = mockFailingUrlOpen
-        self.assertFalse(self.fbListener.connected())
+        fbListener = FallbackListener()
+        self.assertFalse(fbListener.connected())
 
+    def test_connected_caching(self):
+        """Test that connected() only pings google once
+        """
+        urllib2.urlopen = mockWorkingUrlOpen
+        fbListener = FallbackListener()
+        fbListener.connected()
+        urllib2.urlopen = mockFailingUrlOpen
+        self.assertTrue(fbListener.connected())
+
+    def test_connected_caching_timeout(self):
+        """
+        Test that connected() only pings google again,
+        after the cache timesout
+        """
+        urllib2.urlopen = mockWorkingUrlOpen
+        mockTime = MockTime()
+        mockTime._time = time.time()
+        time.time = mockTime
+        
+        fbListener = FallbackListener()
+        fbListener.connected()
+        urllib2.urlopen = mockFailingUrlOpen
+        mockTime._time = mockTime._time + 10*60 + 1
+        self.assertFalse(fbListener.connected())
+        
         
 if __name__ == '__main__':
     unittest.main()
