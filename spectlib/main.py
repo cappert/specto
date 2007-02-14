@@ -216,7 +216,12 @@ class Specto:
         elif values['type'] == 3: #add a process watch
             from spectlib.watch_process import Process_watch
             self.watch_db[id] = Process_watch(values['refresh'], values['process'], self, id, values['name'])
-            
+ 
+        elif values['type'] == 4: #add a process watch
+            from spectlib.watch_port import Port_watch
+            self.watch_db[id] = Port_watch(values['refresh'], values['port'], self, id, values['name'])
+ 
+           
         try:
             self.watch_db[id].updated = values['updated']
         except:
@@ -319,6 +324,9 @@ class Specto:
         elif int(values['type']) == 3: #process
             new_values['process'] = values['process']
 
+        elif int(values['type']) == 4: #port
+            new_values['port'] = values['port']
+
         id = self.create_watch(new_values)
         self.start_watch(id)
 
@@ -349,6 +357,9 @@ class Specto:
             
         elif int(values['type']) == 3: #process
             new_values['process'] = values['process']
+
+        elif int(values['type']) == 4: #port
+            new_values['port'] = values['port']
 
         self.watch_io.write_options(new_values)
         self.notifier.show_watch_info()

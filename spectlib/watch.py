@@ -125,6 +125,13 @@ class Watch:
                     NotificationToast(self.specto, _("The process, <b>%s</b>, has started.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
                 else:
                     print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
+            elif self.type==4:#port
+                if self.running==False:
+                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was closed.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
+                elif self.running==True:
+                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was established.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
+                else:
+                    print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
             else:
                 self.specto.logger.log(_("Not implemented yet"), "warning", self.__class__)#TODO: implement other notifications
             #end of the libnotify madness
@@ -205,7 +212,9 @@ class Watch_io:
                 values['mode'] = watch_options['mode']
             elif int(values['type']) == 3:
                 values['process'] = watch_options['process']
-                
+            elif int(values['type']) == 4:
+                values['port'] = watch_options['port']              
+  
             try:
                 if watch_options['updated'] == "True":
                     values['updated'] = True
