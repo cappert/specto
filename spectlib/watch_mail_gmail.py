@@ -46,7 +46,7 @@ class Mail_watch(Watch):
         Watch.__init__(self, specto)
         self.name = name
         self.refresh = refresh
-        if "@gmail.com" not in username:
+        if "@" not in username:
             self.user = username + "@gmail.com"
         else:
             self.user = username
