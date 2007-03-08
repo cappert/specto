@@ -7,19 +7,21 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="270"
-   height="270"
+   width="140"
+   height="140"
    id="svg1"
    sodipodi:version="0.32"
-   inkscape:version="0.43"
-   sodipodi:docbase="/home/jeff/projets/specto/graphics"
+   inkscape:version="0.45"
+   sodipodi:docbase="/home/jeff/trunks/specto/data/icons"
    sodipodi:docname="specto_window_icon.svg"
    inkscape:export-filename="/home/jeff/specto_window_icon.png"
    inkscape:export-xdpi="14.31"
    inkscape:export-ydpi="14.31"
-   version="1.0">
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:modified="true">
   <defs
      id="defs3">
     <linearGradient
@@ -92,7 +94,9 @@
      inkscape:window-x="145"
      inkscape:window-y="146"
      showgrid="false"
-     inkscape:grid-bbox="false" />
+     inkscape:grid-bbox="false"
+     width="140px"
+     height="140px" />
   <metadata
      id="metadata4">
     <rdf:RDF>
@@ -109,7 +113,8 @@
      id="layer4"
      inkscape:label="observatoire"
      style="display:inline"
-     sodipodi:insensitive="true">
+     sodipodi:insensitive="true"
+     transform="translate(-65.414093,-50.471276)">
     <rect
        style="fill:#000000;fill-opacity:1"
        id="rect1736"
@@ -135,7 +140,7 @@
        d="M 216.81855,33.690403 A 56.494976,56.494976 0 1 1 103.83119,33.149808 L 160.32358,33.690403 z"
        sodipodi:start="0"
        sodipodi:end="3.1511617"
-       transform="matrix(-0.817912,3.57412e-19,-3.768823e-19,-0.775657,243.4764,157.8444)" />
+       transform="matrix(-0.817912,0,0,-0.775657,243.4764,157.8444)" />
     <path
        style="fill:#000000;fill-opacity:1"
        d="M 178.91848,50.471276 L 203.73369,82.098496 L 151.59627,116.5794 L 133.09297,92.996765 L 178.91848,50.471276 z "

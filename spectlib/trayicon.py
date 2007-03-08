@@ -36,8 +36,8 @@ class Tray:
     """
     def __init__(self, specto):
         self.specto = specto
-        self.ICON_PATH = self.specto.PATH + "icons/specto_tray_1.png"
-        self.ICON2_PATH = self.specto.PATH + "icons/specto_tray_2.png"
+        self.ICON_PATH = self.specto.PATH + "icons/specto_tray_1.svg"
+        self.ICON2_PATH = self.specto.PATH + "icons/specto_tray_2.svg"
         # Create the tray icon object
         self.tray=None
         if not self.tray: self.tray = gtk.StatusIcon()

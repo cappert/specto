@@ -1,3 +1,11 @@
+2007-03-07 Jean-Francois Fortin
+    * use the current GTK theme icons for pretty much everything. Cleans up the code in Notifier. Needs work! Any help much appreciated
+    * use scalable vector graphics for the notification area icon
+    * use scalable vector graphics for the notifier window titlebar (looks better with Avant Window Navigator)
+    * make the "murder dialog" (when trying to quit specto during the first refresh) more HIG-compliant
+    * update the translation template and the French translation
+    * Wout, please look at line 49 of import_export.py: you forgot to svn add import_export.glade!
+
 2007-02-22 Jean-Francois Fortin
     * Committed a patch attached to Issue 45: "@gmail.com" appended to Gmail
     for your domain addresses. 

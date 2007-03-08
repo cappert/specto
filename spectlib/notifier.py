@@ -22,6 +22,29 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+
+
+### note from Kiddo about all those FIXMEs lying around:
+# a lot of stuff needs fixing: the icons are not set sensitive/insensitive like they should (and like they used to).
+# if you have any idea how to fix it, please do! Here is something to get you started:
+# the last line of this comment works... partly. It actually makes the entire icon column insensitive, 
+# but I instead want to make only the required cell sensitive/insensitive. Once that is done, we can fix the rest.
+#
+#       self.columnIcon.set_cell_data_func(self.columnIcon_renderer, self.columnIcon_renderer.set_property('sensitive', False))
+
+# additional info while discussing in #pygtk:
+# <doublep> if you need it on entire column, just do set_property once and you can even not use data_func
+# <nekohayo> doublep: nah, it currently works on the entire column and I need it on individual cells
+# <Juhaz> change your data function so it tests for something before setting the property
+# <doublep> (00:20:30) nekohayo: doublep: any idea on how to apply it to the cell now that it works on the entire column?
+# <Juhaz> or add a boolean column to your store
+# <doublep> you contradict yourself, no?
+#  yes, instead of data_func you can use auxiliary column
+# <nekohayo> uh.. no? well maybe that sentence was written weird
+# <doublep> you function should receive several arguments
+#  def celldatamethod(self, column, cell, model, iter, user_data)
+#  ... user_data usually doesn't exist. Decide how to infer sensitivity state based on iter, or add that column, as Juhaz suggested
+
 import sys
 import spectlib.edit_watch
 import spectlib.util
@@ -59,7 +82,7 @@ class Notifier:
         windowname= "notifier"
         self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_INT)
-
+        #__icon_size  = gtk.icon_size_lookup (gtk.ICON_SIZE_BUTTON) [0] #needed, otherwise gtk.image will not take into account the icon size no matter what you specify. ###uh no, it's not, actually it was a gnome-icon-theme 2.17 bug. I guess this line should be removed.
         #catch some events
         dic= {
         "on_add_activate": self.show_add_watch,
@@ -87,7 +110,7 @@ class Notifier:
         self.wTree.signal_autoconnect(dic)
 
         self.notifier=self.wTree.get_widget("notifier")
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.svg' )
         self.notifier.set_icon(icon)
         
         #create the gui
@@ -115,18 +138,18 @@ class Notifier:
         type = self.specto.watch_db[id].type
         self.specto.clear_watch(id)
         self.model.set_value(self.iter[id], 2, self.specto.watch_db[id].name)
-        
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
-        if type == 0:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
-        elif type == 1:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
-        elif type == 2:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
-        elif type == 3:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
-            
-        self.model.set_value(self.iter[id], 1, icon)
+
+#FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
+#         icon = self.specto.icon_theme.load_icon("error", 22, 0)
+#         if type == 0:#website
+#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
+#         elif type == 1:#email
+#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
+#         elif type == 2:#file/folder
+#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
+#         elif type == 3:#system process
+#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
+#         self.model.set_value(self.iter[id], 1, icon)
         
         if self.specto.watch_db[id].updated == False:
             self.wTree.get_widget("btnClear").set_sensitive(False)
@@ -140,22 +163,22 @@ class Notifier:
         self.wTree.get_widget("button_clear_all").set_sensitive(False)
         self.wTree.get_widget("clear_all1").set_sensitive(False)
         
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
+        icon = self.specto.icon_theme.load_icon("error", 22, 0)
         for i in self.specto.watch_db:
             if self.model.iter_is_valid(self.iter[i]):
                 self.model.set_value(self.iter[i], 2, "%s" % self.specto.watch_db[i].name)
                 type = self.specto.watch_db[i].type
 
-                if type == 0:
-                    icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
-                elif type == 1:
-                    icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
-                elif type == 2:
-                    icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
-                elif type == 3:
-                    icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
-        
-                self.model.set_value(self.iter[i], 1, icon)
+#FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
+#                 if type == 0:#website
+#                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
+#                 elif type == 1:#email
+#                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
+#                 elif type == 2:#file/folder
+#                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
+#                 elif type == 3:#system process
+#                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
+#                 self.model.set_value(self.iter[i], 1, icon)
 
     def refresh(self, *widget):
         """ Call the main funcion to refresh all active watches and change refresh icon to stop. """
@@ -205,16 +228,15 @@ class Notifier:
         self.wTree.get_widget("clear_all1").set_sensitive(True)
 
         type = self.specto.watch_db[id].type
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
-        if type == 0:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/web.png' )
-        elif type == 1:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/mail.png' )
-        elif type == 2:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/folder.png' )
-        elif type == 3:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/process.png' )
-
+        icon = self.specto.icon_theme.load_icon("error", 22, 0)
+        if type == 0:#website
+            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+        elif type == 1:#email
+            icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
+        elif type == 2:#file/folder
+            icon = self.specto.icon_theme.load_icon("folder", 22, 0)
+        elif type == 3:#system process
+            icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
         if self.model.iter_is_valid(self.iter[id]):
             self.model.set_value(self.iter[id], 1, icon)
         
@@ -228,35 +250,61 @@ class Notifier:
                     
     def toggle_updating(self,progress, id):
         """ If progress is True, a refresh icon is shown, else the type icon is shown. """ 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
+        icon = self.specto.icon_theme.load_icon("error", 22, 0)
         if progress == True:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/refresh.png' )
+            icon = self.specto.icon_theme.load_icon("reload", 22, 0)
             self.model.set_value(self.iter[id], 1, icon)
             if self.specto.GTK:
                 while gtk.events_pending():#this is to refresh the UI and display the "refresh" icon properly. It works! :)
                     gtk.main_iteration_do(False)
         else:
             if self.specto.watch_db[id].error == True:
-                icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/error.png' )
+                icon = self.specto.icon_theme.load_icon("error", 22, 0)
             else:
                 type = self.specto.watch_db[id].type
-                
-                if self.specto.watch_db[id].updated == True:
-                    dir = self.specto.PATH + 'icons/notifier/' 
-                else:
-                    dir = self.specto.PATH + 'icons/notifier/faded/' 
-        
-                if type == 0:
-                    icon = gtk.gdk.pixbuf_new_from_file(dir + 'web.png')
-                elif type == 1:
-                    icon = gtk.gdk.pixbuf_new_from_file(dir + 'mail.png')
-                elif type == 2:
-                    icon = gtk.gdk.pixbuf_new_from_file(dir + 'folder.png')
-                elif type ==3:
-                    icon = gtk.gdk.pixbuf_new_from_file(dir + 'process.png')
-                          
-            if self.model.iter_is_valid(self.iter[id]):
-                self.model.set_value(self.iter[id], 1, icon)
+                icon = self.specto.icon_theme.load_icon("error", 22, 0)
+                if type == 0:#website
+                    icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+                    if self.specto.watch_db[id].updated == True:
+                        pass
+                        #FIXME: needs to set the gtk sensitivity to True here
+                elif type == 1:#email
+                    icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
+                    if self.specto.watch_db[id].updated == True:
+                        pass
+                        #FIXME: needs to set the gtk sensitivity to True here
+                elif type == 2:#file/folder
+                    icon = self.specto.icon_theme.load_icon("folder", 22, 0)
+                    if self.specto.watch_db[id].updated == True:
+                        pass
+                        #FIXME: needs to set the gtk sensitivity to True here
+                elif type == 3:#system process
+                    icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
+                    if self.specto.watch_db[id].updated == True:
+                        pass
+                        #FIXME: needs to set the gtk sensitivity to True here
+                if self.model.iter_is_valid(self.iter[id]):
+                    self.model.set_value(self.iter[id], 1, icon)
+#FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
+#             else:
+#                 type = self.specto.watch_db[id].type
+#                 
+#                 if self.specto.watch_db[id].updated == True:
+#                     dir = self.specto.PATH + 'icons/notifier/' 
+#                 else:
+#                     dir = self.specto.PATH + 'icons/notifier/faded/' 
+#         
+#                 if type == 0:
+#                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'web.png')
+#                 elif type == 1:
+#                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'mail.png')
+#                 elif type == 2:
+#                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'folder.png')
+#                 elif type ==3:
+#                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'process.png')
+#                           
+#             if self.model.iter_is_valid(self.iter[id]):
+#                 self.model.set_value(self.iter[id], 1, icon)
         
     def deactivate(self, id):
         """ Disable the checkbox from the watch. """
@@ -265,15 +313,29 @@ class Notifier:
     def add_notifier_entry(self, name, type, id):
         """ Add an entry to the notifier list. """
         i = id
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
-        if type == 0:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
-        elif type == 1:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
-        elif type == 2:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
-        elif type == 3:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )    
+
+        icon = self.specto.icon_theme.load_icon("error", 22, 0)
+        if type == 0:#website
+            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+        elif type == 1:#email
+            icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
+        elif type == 2:#file/folder
+            icon = self.specto.icon_theme.load_icon("folder", 22, 0)
+        elif type == 3:#system process
+            icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
+#        if self.model.iter_is_valid(self.iter[id]):
+#            self.model.set_value(self.iter[id], 1, icon)
+
+#FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
+#         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
+#         if type == 0:
+#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
+#         elif type == 1:
+#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
+#         elif type == 2:
+#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
+#         elif type == 3:
+#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )    
 
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 1)
@@ -347,7 +409,7 @@ class Notifier:
                 self.web_info_table.show()
 
                 #show the image
-                self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/web.png' )
+                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("applications-internet", 64, 0))
 
             elif selected.type == 1:
                 #get the info
@@ -369,7 +431,7 @@ class Notifier:
                 self.mail_info_table.show()
 
                 #show the image
-                self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/mail.png' )
+                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("emblem-mail", 64, 0))
                 
             elif selected.type == 2:
                 self.lblFileNameText.set_label(selected.name)
@@ -377,7 +439,7 @@ class Notifier:
                 self.lblFileName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
                 self.lblFileLastUpdateText.set_label(selected.last_updated)
                 self.file_info_table.show()
-                self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/folder.png' )
+                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("folder", 64, 0))
                 
             elif selected.type == 3:
                 self.lblProcessNameText.set_label(selected.name)
@@ -385,14 +447,13 @@ class Notifier:
                 self.lblProcessName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
                 self.lblProcessLastUpdateText.set_label(selected.last_updated)
                 self.process_info_table.show()
-                self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/process.png' )
+                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("applications-system", 64, 0))
                 
         else:
             self.wTree.get_widget("edit").set_sensitive(False)
 
             #hide the tip of the day and show the buttons
             self.lblTip.show()
-            self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/tip.png' )
             self.wTree.get_widget("vbox_panel_buttons").hide()
 
             #hide all the tables
@@ -575,39 +636,38 @@ class Notifier:
             self.notifier.show()
 
         ### Checkbox
-        self.renderer = gtk.CellRendererToggle()
-        self.renderer.set_property("activatable", True)
-        self.renderer.connect("toggled", self.check_clicked, self.model)
-        self.columnCheck = gtk.TreeViewColumn(_("Active"), self.renderer, active=0)
+        self.columnCheck_renderer = gtk.CellRendererToggle()
+        self.columnCheck_renderer.set_property("activatable", True)
+        self.columnCheck_renderer.connect("toggled", self.check_clicked, self.model)
+        self.columnCheck = gtk.TreeViewColumn(_("Active"), self.columnCheck_renderer, active=0)
         self.columnCheck.connect("clicked", self.sort_column_active)
         self.columnCheck.set_sort_column_id(0)
-        #self.column.set_resizable(True)
         self.treeview.append_column(self.columnCheck)
 
         ### Icon
-        self.renderer = gtk.CellRendererPixbuf()
-        self.columnIcon = gtk.TreeViewColumn(_("Type"), self.renderer, pixbuf=1)
+        self.columnIcon_renderer = gtk.CellRendererPixbuf()
+        self.columnIcon = gtk.TreeViewColumn(_("Type"), self.columnIcon_renderer, pixbuf=1)
         self.columnIcon.set_clickable(True)
         self.columnIcon.connect("clicked", self.sort_column_type)
         self.treeview.append_column(self.columnIcon)
 
         ### Titre
-        self.renderer = gtk.CellRendererText()
-        self.renderer.set_property("editable", True)
-        self.renderer.connect('edited', self.change_entry_name)
-        self.columnTitel = gtk.TreeViewColumn(_("Name"), self.renderer, markup=2)
-        self.columnTitel.connect("clicked", self.sort_column_name)
-        self.columnTitel.set_expand(True)
-        self.columnTitel.set_resizable(True)
-        self.columnTitel.set_sort_column_id(2)
-        self.treeview.append_column(self.columnTitel)
+        self.columnTitle_renderer = gtk.CellRendererText()
+        self.columnTitle_renderer.set_property("editable", True)
+        self.columnTitle_renderer.connect('edited', self.change_entry_name)
+        self.columnTitle = gtk.TreeViewColumn(_("Name"), self.columnTitle_renderer, markup=2)
+        self.columnTitle.connect("clicked", self.sort_column_name)
+        self.columnTitle.set_expand(True)
+        self.columnTitle.set_resizable(True)
+        self.columnTitle.set_sort_column_id(2)
+        self.treeview.append_column(self.columnTitle)
         
         ### ID
-        self.renderer = gtk.CellRendererText()
-        self.column = gtk.TreeViewColumn(_("ID"), self.renderer, markup=3)
-        self.column.set_visible(False)
-        self.column.set_sort_column_id(3)
-        self.treeview.append_column(self.column)
+        self.columnID_renderer = gtk.CellRendererText()
+        self.columnID = gtk.TreeViewColumn(_("ID"), self.columnID_renderer, markup=3)
+        self.columnID.set_visible(False)
+        self.columnID.set_sort_column_id(3)
+        self.treeview.append_column(self.columnID)
         
         ### type
         self.renderer = gtk.CellRendererText()
@@ -629,7 +689,7 @@ class Notifier:
         self.lblTip.set_use_markup(True)
         self.lblTip.show()
         vbox_info.pack_start(self.lblTip, False, False, 0)
-        self.wTree.get_widget("imgWatch").set_from_file(self.specto.PATH + 'icons/notifier/big/tip.png' )
+        self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("dialog-information", 64, 0))
 
         #hide the buttons
         self.wTree.get_widget("vbox_panel_buttons").hide()
@@ -897,11 +957,11 @@ class Notifier:
     def sort_column_name(self, *widget):
         """ Call the sort_name function and set the sort_name menu item to active. """
         self.wTree.get_widget("by_name").set_active(True)
-        self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(not self.columnTitel.get_sort_order()) ,"string")
+        self.specto.conf_ui.set_entry("/sort_order", self.set_gconf_sort_order(not self.columnTitle.get_sort_order()) ,"string")
         
     def sort_name(self, *args):
         """ Sort by watch name. """
-        self.model.set_sort_column_id(2, not self.columnTitel.get_sort_order())
+        self.model.set_sort_column_id(2, not self.columnTitle.get_sort_order())
         self.specto.conf_ui.set_entry("/sort_function", "name", "string")
         
     def sort_column_type(self, *widget):

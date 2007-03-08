@@ -95,6 +95,7 @@ class Specto:
         self.GTK = GTK
         if GTK:
             self.tray = Tray(self)
+            self.icon_theme = gtk.icon_theme_get_default()
         self.watch_db = {}
         self.watch_io = Watch_io()
         watch_value_db = self.watch_io.read_options() 
@@ -576,13 +577,30 @@ class Specto:
         except:
             self.notifier.stop_refresh = True
             #create a close dialog
-            dialog = gtk.Dialog("Error quitting specto", None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+            dialog = gtk.Dialog(_("Cannot quit yet"), None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+            #HIG tricks
+            dialog.set_has_separator(False)
+            
+            dialog.add_button(_("Murder!"), 3)
             dialog.add_button(gtk.STOCK_CANCEL, -1)
-            dialog.add_button(_("Murder!"), 3)            
-            label = gtk.Label(_('Specto is currently busy and cannot quit yet.\n\nThis may be because it is checking for watch updates.\nHowever, you can try forcing it to quit by clicking the murder button.'))
-            dialog.vbox.pack_start(label, True, True, 20)
+
+            dialog.label_hbox = gtk.HBox(spacing=6)
+            
+            
+            icon = gtk.Image()
+            icon.set_from_pixbuf(self.icon_theme.load_icon("dialog-warning", 64, 0))
+            dialog.label_hbox.pack_start(icon, True, True, 6)
+            icon.show()
+
+            label = gtk.Label(_('<b><big>Specto is currently busy and cannot quit yet.</big></b>\n\nThis may be because it is checking for watch updates.\nHowever, you can try forcing it to quit by clicking the murder button.'))
+            label.set_use_markup(True)
+            dialog.label_hbox.pack_start(label, True, True, 6)#here, pack means "cram the label right at the start of the vbox before the buttons"
             label.show()
-            icon = gtk.gdk.pixbuf_new_from_file(self.PATH + 'icons/specto_window_icon.png' )
+            
+            dialog.vbox.pack_start(dialog.label_hbox, True, True, 12)
+            dialog.label_hbox.show()
+            
+            icon = gtk.gdk.pixbuf_new_from_file(self.PATH + 'icons/specto_window_icon.svg' )
             dialog.set_icon(icon)
             answer = dialog.run()
             if answer == 3:

@@ -37,10 +37,10 @@ temp_files = [#The path are relatives to sys.prefix
     ('share/doc/specto', give_files('data/doc/', '')),
     ('share/icons/hicolor/scalable/apps', ['data/icons/hicolor/scalable/specto.svg']),
     ('share/applications', ['specto.desktop']),
-    ('share/specto/icons', give_files('data/icons/', '.png')),
-    ('share/specto/icons/notifier', give_files('data/icons/notifier/', '.png')),
-    ('share/specto/icons/notifier/faded', give_files('data/icons/notifier/faded/', '.png')),
-    ('share/specto/icons/notifier/big', give_files('data/icons/notifier/big/', '.png', '.svg')),
+    ('share/specto/icons', give_files('data/icons/', '.png', '.svg')),
+    ('share/specto/icons/notifier', give_files('data/icons/notifier/', '.png')),#FIXME: should be deprecated when notifier is fully fixed
+    ('share/specto/icons/notifier/faded', give_files('data/icons/notifier/faded/', '.png')),#FIXME: should be deprecated when notifier is fully fixed
+    ('share/specto/icons/notifier/big', give_files('data/icons/notifier/big/', '.png', '.svg')),#FIXME: should be deprecated when notifier is fully fixed
     ('share/specto/glade', give_files('data/glade/', '.glade'))
     ]
 
