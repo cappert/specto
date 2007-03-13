@@ -66,7 +66,7 @@ class Port_watch(Watch):
             gtk.main_iteration()  
                 
     def update(self, lock):
-        """ See if a file was modified or created. """
+        """ See if a socket was opened or closed. """
         self.error = False
         self.specto.mark_watch_busy(True, self.id)
         self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
@@ -94,17 +94,17 @@ class Port_watch(Watch):
         y=os.popen( 'netstat -nt','r').read().splitlines()
         del y[0]
         del y[0]
-	for k in y:
-	    k = k.split(' ')
-	    while True:
-	        try:
-	            k.remove('')
-	        except:
-	            break
-            if int(k[3].split(':')[1]) == int(self.port):
-	        conn = True
+        for k in y:
+            k = k.split(' ')
+            while True:
+                try:
+                    k.remove('')
+                except:
+                    break
+                if int(k[3].split(':')[1]) == int(self.port):
+                    conn = True
 
-	if conn:
+        if conn:
             return True
         else:
             return False
