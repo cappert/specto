@@ -67,13 +67,11 @@ class Import_watch:
         
         if action == True:
             self.save = Save_dialog(self.specto, True, None)
-            self.import_watch.set_title("Import watches")
-            self.wTree.get_widget("button_action").set_label("Import watches")
-            self.wTree.get_widget("label_title").set_label("Select the watches you want to import and click on \"Import watches\".")
+            self.import_watch.set_title(_("Import watches"))
+            self.wTree.get_widget("button_action").set_label(_("Import watches"))
         else:
-            self.import_watch.set_title("Export watches")
-            self.wTree.get_widget("button_action").set_label("Export watches")
-            self.wTree.get_widget("label_title").set_label("Select the watches you want to export and click on \"Export watches\".")
+            self.import_watch.set_title(_("Export watches"))
+            self.wTree.get_widget("button_action").set_label(_("Export watches"))
         
         self.treeview=self.wTree.get_widget("treeview")
         self.treeview.set_model(self.model)
@@ -159,7 +157,7 @@ class Import_watch:
     
     def add_watch_entry(self, name, type, id):
         """ Add an entry to the notifier list. """
-        i = id
+        i = id#FIXME: those icons need to die when we figure out how to make cells' contents insensitive in notifier
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
         if type == 0:
             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )

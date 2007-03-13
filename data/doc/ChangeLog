@@ -1,4 +1,10 @@
 2007-03-07 Jean-Francois Fortin
+    * copy Wout's import_export.glade from 0.2 branch to trunk
+    * usability and code fixes for the export dialog
+    * translation fixes
+    * updated French translation and template
+
+2007-03-07 Jean-Francois Fortin
     * use the current GTK theme icons for pretty much everything. Cleans up the code in Notifier. Needs work! Any help much appreciated
     * use scalable vector graphics for the notification area icon
     * use scalable vector graphics for the notifier window titlebar (looks better with Avant Window Navigator)

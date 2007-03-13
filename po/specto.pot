@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: Wed Mar  7 23:49:40 2007\n"
+"POT-Creation-Date: Tue Mar 13 15:34:16 2007\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,6 +88,14 @@ msgstr ""
 
 #: ../data/glade/edit_watch.glade.h:9
 msgid "Watch Settings"
+msgstr ""
+
+#: ../data/glade/import_export.glade.h:1
+msgid "Deselect all"
+msgstr ""
+
+#: ../data/glade/import_export.glade.h:2
+msgid "Select all"
 msgstr ""
 
 #: ../data/glade/log_dialog.glade.h:1
@@ -316,23 +324,31 @@ msgstr ""
 msgid "Imap"
 msgstr ""
 
-#: ../spectlib/import_export.py:87 ../spectlib/notifier.py:642
+#: ../spectlib/import_export.py:70 ../spectlib/import_export.py:71
+msgid "Import watches"
+msgstr ""
+
+#: ../spectlib/import_export.py:73 ../spectlib/import_export.py:74
+msgid "Export watches"
+msgstr ""
+
+#: ../spectlib/import_export.py:85 ../spectlib/notifier.py:642
 msgid "Active"
 msgstr ""
 
-#: ../spectlib/import_export.py:95 ../spectlib/notifier.py:649
+#: ../spectlib/import_export.py:93 ../spectlib/notifier.py:649
 msgid "Type"
 msgstr ""
 
-#: ../spectlib/import_export.py:104 ../spectlib/notifier.py:658
+#: ../spectlib/import_export.py:102 ../spectlib/notifier.py:658
 msgid "Name"
 msgstr ""
 
-#: ../spectlib/import_export.py:113 ../spectlib/notifier.py:667
+#: ../spectlib/import_export.py:111 ../spectlib/notifier.py:667
 msgid "ID"
 msgstr ""
 
-#: ../spectlib/import_export.py:120 ../spectlib/notifier.py:674
+#: ../spectlib/import_export.py:118 ../spectlib/notifier.py:674
 msgid "TYPE"
 msgstr ""
 
