@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Specto\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-03-13 15:35-0500\n"
+"PO-Revision-Date: 2007-03-13 23:11-0500\n"
 "Last-Translator: Jean-Francois Fortin <nekohayo ~a~ gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 
 #: ../data/glade/add_watch.glade.h:1
 msgid "<b>General settings</b>"
-msgstr "<b>Préférences générales</b>"
+msgstr "<b>General settings</b>"
 
 #: ../data/glade/add_watch.glade.h:2
 msgid "<b>Watch name</b>"
@@ -84,12 +84,14 @@ msgid ""
 "Website\n"
 "Email\n"
 "Files or folders\n"
-"Process"
+"Process\n"
+"Port"
 msgstr ""
 "Page web\n"
 "Courriel\n"
 "Fichiers ou dossiers\n"
-"Processus"
+"Processus\n"
+"Port"
 
 #: ../data/glade/edit_watch.glade.h:1
 msgid "Error Log"
@@ -260,99 +262,104 @@ msgstr "fichier"
 msgid "folder"
 msgstr "dossier"
 
-#: ../spectlib/add_watch.py:297
-#: ../spectlib/edit_watch.py:204
+#: ../spectlib/add_watch.py:312
+#: ../spectlib/edit_watch.py:208
 msgid "URL:"
 msgstr "URL :"
 
-#: ../spectlib/add_watch.py:311
-#: ../spectlib/edit_watch.py:215
+#: ../spectlib/add_watch.py:326
+#: ../spectlib/edit_watch.py:219
 msgid "Error Margin (%):"
 msgstr "Marge d'erreur (%):"
 
-#: ../spectlib/add_watch.py:332
-#: ../spectlib/edit_watch.py:241
+#: ../spectlib/add_watch.py:347
+#: ../spectlib/edit_watch.py:245
 msgid "Protocol:"
 msgstr "Protocole :"
 
-#: ../spectlib/add_watch.py:341
+#: ../spectlib/add_watch.py:356
 msgid "POP3"
 msgstr "POP3"
 
-#: ../spectlib/add_watch.py:347
+#: ../spectlib/add_watch.py:362
 msgid "IMAP"
 msgstr "IMAP"
 
-#: ../spectlib/add_watch.py:352
-#: ../spectlib/edit_watch.py:315
+#: ../spectlib/add_watch.py:367
+#: ../spectlib/edit_watch.py:319
 msgid "Gmail"
 msgstr "Gmail"
 
-#: ../spectlib/add_watch.py:358
+#: ../spectlib/add_watch.py:373
 msgid "User:"
 msgstr "Utilisateur :"
 
-#: ../spectlib/add_watch.py:368
-#: ../spectlib/edit_watch.py:263
+#: ../spectlib/add_watch.py:383
+#: ../spectlib/edit_watch.py:267
 msgid "Password:"
 msgstr "Mot de passe:"
 
-#: ../spectlib/add_watch.py:379
-#: ../spectlib/edit_watch.py:275
+#: ../spectlib/add_watch.py:394
+#: ../spectlib/edit_watch.py:279
 msgid "Host:"
 msgstr "Hôte :"
 
-#: ../spectlib/add_watch.py:389
-#: ../spectlib/edit_watch.py:283
+#: ../spectlib/add_watch.py:404
+#: ../spectlib/edit_watch.py:287
 msgid "Use SSL:"
 msgstr "Activer SSL :"
 
-#: ../spectlib/add_watch.py:404
-#: ../spectlib/edit_watch.py:327
+#: ../spectlib/add_watch.py:419
+#: ../spectlib/edit_watch.py:331
 msgid "File/folder:"
 msgstr "Fichier/dossier :"
 
-#: ../spectlib/add_watch.py:414
-#: ../spectlib/edit_watch.py:337
+#: ../spectlib/add_watch.py:429
+#: ../spectlib/edit_watch.py:341
 msgid "File"
 msgstr "Fichier"
 
-#: ../spectlib/add_watch.py:420
-#: ../spectlib/edit_watch.py:342
+#: ../spectlib/add_watch.py:435
+#: ../spectlib/edit_watch.py:346
 msgid "Folder"
 msgstr "Dossier"
 
-#: ../spectlib/add_watch.py:426
-#: ../spectlib/edit_watch.py:348
+#: ../spectlib/add_watch.py:441
+#: ../spectlib/edit_watch.py:352
 msgid "Choose a file or folder"
 msgstr "Choisissez un fichier ou un dossier"
 
-#: ../spectlib/add_watch.py:436
-#: ../spectlib/edit_watch.py:368
+#: ../spectlib/add_watch.py:450
+#: ../spectlib/edit_watch.py:371
 msgid "Process:"
 msgstr "Processus :"
+
+#: ../spectlib/add_watch.py:465
+#: ../spectlib/edit_watch.py:389
+msgid "Port:"
+msgstr "Port :"
 
 #: ../spectlib/edit_watch.py:67
 msgid "Edit watch: "
 msgstr "Modifier l'observateur : "
 
-#: ../spectlib/edit_watch.py:167
+#: ../spectlib/edit_watch.py:171
 msgid "Watch : \"%s\" edited."
 msgstr "Observateur : \"%s\" modifié."
 
-#: ../spectlib/edit_watch.py:179
+#: ../spectlib/edit_watch.py:183
 msgid "removed logs from watch: \"%s\""
 msgstr "journaux détruits pour l'observateur :  \"%s\""
 
-#: ../spectlib/edit_watch.py:252
+#: ../spectlib/edit_watch.py:256
 msgid "Username:"
 msgstr "Utilisateur :"
 
-#: ../spectlib/edit_watch.py:291
+#: ../spectlib/edit_watch.py:295
 msgid "Pop3"
 msgstr "POP3"
 
-#: ../spectlib/edit_watch.py:303
+#: ../spectlib/edit_watch.py:307
 msgid "Imap"
 msgstr "IMAP"
 
@@ -367,27 +374,27 @@ msgid "Export watches"
 msgstr "Exporter des observateurs"
 
 #: ../spectlib/import_export.py:85
-#: ../spectlib/notifier.py:642
+#: ../spectlib/notifier.py:665
 msgid "Active"
 msgstr "Actif"
 
 #: ../spectlib/import_export.py:93
-#: ../spectlib/notifier.py:649
+#: ../spectlib/notifier.py:672
 msgid "Type"
 msgstr "Type"
 
 #: ../spectlib/import_export.py:102
-#: ../spectlib/notifier.py:658
+#: ../spectlib/notifier.py:681
 msgid "Name"
 msgstr "Nom"
 
 #: ../spectlib/import_export.py:111
-#: ../spectlib/notifier.py:667
+#: ../spectlib/notifier.py:690
 msgid "ID"
 msgstr "ID"
 
 #: ../spectlib/import_export.py:118
-#: ../spectlib/notifier.py:674
+#: ../spectlib/notifier.py:697
 msgid "TYPE"
 msgstr "TYPE"
 
@@ -485,87 +492,93 @@ msgstr ""
 "Cela peut être parce que des observateurs sont en cours de mise à jour.\n"
 "Si vous insistez, il est cependant possible de faire un arrêt d'urgence."
 
-#: ../spectlib/notifier.py:421
+#: ../spectlib/notifier.py:435
 msgid "gmail <i>(%s unread)</i>"
 msgstr "Gmail <i>(%s non lus)</i>"
 
-#: ../spectlib/notifier.py:472
+#: ../spectlib/notifier.py:495
 msgid "watch \"%s\" opened"
 msgstr "ouverture de l'observateur \"%s\""
 
-#: ../spectlib/notifier.py:511
+#: ../spectlib/notifier.py:534
 msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
 msgstr "Vous pouvez ajouter toutes sortes d'observateurs. Pages statiques, fils de syndication RSS ou Atom, Specto les prendra en charge automatiquement."
 
-#: ../spectlib/notifier.py:512
+#: ../spectlib/notifier.py:535
 msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
 msgstr "Les observateurs de sites web peuvent utiliser une marge d'erreur en pourcentage. Ceci vous permet d'adapter Specto aux sites Internet qui changent constamment ou qui contiennent beaucoup de publicité."
 
-#: ../spectlib/notifier.py:513
+#: ../spectlib/notifier.py:536
 msgid "Single-click an existing watch to display information, and double-click it to open the content."
 msgstr "Faites un simple-clic sur un observateur pour afficher des informations ou double-cliquez dessus pour accéder au contenu associé."
 
-#: ../spectlib/notifier.py:514
+#: ../spectlib/notifier.py:537
 msgid "Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers."
 msgstr "Choisissez un délai de rafraîchissement raisonnable afin de conserver de la bande passante et éviter d'être bloqué par les distributeurs de contenu."
 
-#: ../spectlib/notifier.py:574
+#: ../spectlib/notifier.py:597
 msgid "notifier: size set"
 msgstr "fenêtre principale: taille définie"
 
-#: ../spectlib/notifier.py:576
+#: ../spectlib/notifier.py:599
 msgid "notifier: size not set"
 msgstr "fenêtre principale: taille non définie"
 
-#: ../spectlib/notifier.py:580
+#: ../spectlib/notifier.py:603
 msgid "notifier: position set"
 msgstr "fenêtre principale: position définie"
 
-#: ../spectlib/notifier.py:582
+#: ../spectlib/notifier.py:605
 msgid "notifier: position not set"
 msgstr "fenêtre principale: position non définie"
 
-#: ../spectlib/notifier.py:687
+#: ../spectlib/notifier.py:710
 msgid "Tip of the Day:"
 msgstr "Astuce du jour :"
 
-#: ../spectlib/notifier.py:705
-#: ../spectlib/notifier.py:760
-#: ../spectlib/notifier.py:815
-#: ../spectlib/notifier.py:858
+#: ../spectlib/notifier.py:728
+#: ../spectlib/notifier.py:783
+#: ../spectlib/notifier.py:838
+#: ../spectlib/notifier.py:881
+#: ../spectlib/notifier.py:926
 msgid "<b>Name:</b>"
 msgstr "<b>Nom :</b>"
 
-#: ../spectlib/notifier.py:717
-#: ../spectlib/notifier.py:772
-#: ../spectlib/notifier.py:827
-#: ../spectlib/notifier.py:870
+#: ../spectlib/notifier.py:740
+#: ../spectlib/notifier.py:795
+#: ../spectlib/notifier.py:850
+#: ../spectlib/notifier.py:893
+#: ../spectlib/notifier.py:938
 msgid "<b>Last Updated:</b>"
 msgstr "<b>Dernière mise à jour :</b>"
 
-#: ../spectlib/notifier.py:729
+#: ../spectlib/notifier.py:752
 msgid "<b>Location:</b>"
 msgstr "<b>Emplacement :</b>"
 
-#: ../spectlib/notifier.py:741
+#: ../spectlib/notifier.py:764
 msgid "<b>Error Margin:</b>"
 msgstr "<b>Marge d'erreur :</b>"
 
-#: ../spectlib/notifier.py:784
+#: ../spectlib/notifier.py:807
 msgid "<b>Host:</b>"
 msgstr "<b>Hôte :</b>"
 
-#: ../spectlib/notifier.py:796
+#: ../spectlib/notifier.py:819
 msgid "<b>Username:</b>"
 msgstr "<b>Utilisateur :</b>"
 
-#: ../spectlib/notifier.py:839
+#: ../spectlib/notifier.py:862
 msgid "<b>File/folder:</b>"
 msgstr "<b>Fichier/dossier :</b>"
 
-#: ../spectlib/notifier.py:882
+#: ../spectlib/notifier.py:905
 msgid "<b>Process:</b>"
 msgstr "<b>Processus :</b>"
+
+#: ../spectlib/notifier.py:950
+msgid "<b>Port:</b>"
+msgstr "<b>Port :</b>"
 
 #: ../spectlib/preferences.py:100
 msgid "Preferences saved."

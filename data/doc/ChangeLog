@@ -1,4 +1,9 @@
 2007-03-07 Jean-Francois Fortin
+    * clean up, rewrite a portion of port watch into something simpler
+    * more themable icons
+    * port watch is now available in the GUI, please test it. Fixes issue #32
+
+2007-03-07 Jean-Francois Fortin
     * copy Wout's import_export.glade from 0.2 branch to trunk
     * usability and code fixes for the export dialog
     * translation fixes

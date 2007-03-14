@@ -56,7 +56,8 @@ class NotificationToast:
             self.toast.set_timeout(self.timeout)
         self.toast.set_urgency(self._Urgencies[urgency])
         if icon:
-            self.toast.set_property('icon-name', icon)
+            #self.toast.set_property('icon-name', icon)#we now use a pixbuf in the line below to allow themable icons
+            self.toast.set_icon_from_pixbuf(icon)
             
         if x!=0 and y!=0:#grab the x and y position of the tray icon and make the balloon emerge from it
             self.toast.set_hint("x", x)

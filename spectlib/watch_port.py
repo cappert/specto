@@ -95,14 +95,10 @@ class Port_watch(Watch):
         del y[0]
         del y[0]
         for k in y:
-            k = k.split(' ')
-            while True:
-                try:
-                    k.remove('')
-                except:
-                    break
-                if int(k[3].split(':')[1]) == int(self.port):
-                    conn = True
+            rawport=":"+str(self.port)
+            if rawport in k:
+                conn = True
+                break
 
         if conn:
             return True

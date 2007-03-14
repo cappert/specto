@@ -149,6 +149,7 @@ class Notifier:
 #             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
 #         elif type == 3:#system process
 #             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
+# ... and of course the port watch
 #         self.model.set_value(self.iter[id], 1, icon)
         
         if self.specto.watch_db[id].updated == False:
@@ -178,6 +179,7 @@ class Notifier:
 #                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
 #                 elif type == 3:#system process
 #                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
+# ... and of course the port watch
 #                 self.model.set_value(self.iter[i], 1, icon)
 
     def refresh(self, *widget):
@@ -237,6 +239,8 @@ class Notifier:
             icon = self.specto.icon_theme.load_icon("folder", 22, 0)
         elif type == 3:#system process
             icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
+        elif type == 4:#port
+            icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
         if self.model.iter_is_valid(self.iter[id]):
             self.model.set_value(self.iter[id], 1, icon)
         
@@ -283,6 +287,11 @@ class Notifier:
                     if self.specto.watch_db[id].updated == True:
                         pass
                         #FIXME: needs to set the gtk sensitivity to True here
+                elif type == 4:#port
+                    icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
+                    if self.specto.watch_db[id].updated == True:
+                        pass
+                        #FIXME: needs to set the gtk sensitivity to True here
                 if self.model.iter_is_valid(self.iter[id]):
                     self.model.set_value(self.iter[id], 1, icon)
 #FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
@@ -302,6 +311,7 @@ class Notifier:
 #                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'folder.png')
 #                 elif type ==3:
 #                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'process.png')
+# ... and of course the port watch
 #                           
 #             if self.model.iter_is_valid(self.iter[id]):
 #                 self.model.set_value(self.iter[id], 1, icon)
@@ -323,6 +333,8 @@ class Notifier:
             icon = self.specto.icon_theme.load_icon("folder", 22, 0)
         elif type == 3:#system process
             icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
+        elif type == 4:#port
+            icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
 #        if self.model.iter_is_valid(self.iter[id]):
 #            self.model.set_value(self.iter[id], 1, icon)
 
@@ -336,6 +348,7 @@ class Notifier:
 #             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
 #         elif type == 3:
 #             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )    
+# ... and of course the port watch
 
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 1)
@@ -381,6 +394,7 @@ class Notifier:
             self.mail_info_table.hide()
             self.file_info_table.hide()
             self.process_info_table.hide()
+            self.port_info_table.hide()
             
             id = int(model.get_value(iter, 3))
         
@@ -448,6 +462,14 @@ class Notifier:
                 self.lblProcessLastUpdateText.set_label(selected.last_updated)
                 self.process_info_table.show()
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("applications-system", 64, 0))
+
+            elif selected.type == 4:
+                self.lblPortNameText.set_label(selected.name)
+                self.lblPortName.set_label(selected.port)
+                self.lblPortName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
+                self.lblPortLastUpdateText.set_label(selected.last_updated)
+                self.port_info_table.show()
+                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0))
                 
         else:
             self.wTree.get_widget("edit").set_sensitive(False)
@@ -460,7 +482,8 @@ class Notifier:
             self.web_info_table.hide()
             self.mail_info_table.hide()
             self.file_info_table.hide()   
-            self.process_info_table.hide()         
+            self.process_info_table.hide()
+            self.port_info_table.hide()
         
     def open_watch(self, *args):
         """ 
@@ -891,6 +914,54 @@ class Notifier:
         self.process_info_table.attach(self.lblProcessName, 1, 2, 2, 3)
 
         vbox_info.pack_start(self.process_info_table, False, False, 0)
+
+
+
+        ###create port info        
+        self.port_info_table = gtk.Table(rows=3, columns=2, homogeneous=False)
+        self.port_info_table.set_col_spacings(6)
+        self.port_info_table.set_row_spacings(6)
+
+        #name
+        lblName = gtk.Label(_("<b>Name:</b>"))
+        lblName.set_alignment(xalign=0.0, yalign=0.5)
+        lblName.set_use_markup(True)
+        lblName.show()
+        self.port_info_table.attach(lblName, 0, 1, 0, 1)
+
+        self.lblPortNameText = gtk.Label()
+        self.lblPortNameText.set_alignment(xalign=0.0, yalign=0.5)
+        self.lblPortNameText.show()
+        self.port_info_table.attach(self.lblPortNameText,1, 2, 0, 1)
+
+        #last updated
+        lblLastUpdate = gtk.Label(_("<b>Last Updated:</b>"))
+        lblLastUpdate.set_alignment(xalign=0.0, yalign=0.5)
+        lblLastUpdate.set_use_markup(True)
+        lblLastUpdate.show()
+        self.port_info_table.attach(lblLastUpdate,0, 1, 1, 2)
+
+        self.lblPortLastUpdateText = gtk.Label()
+        self.lblPortLastUpdateText.set_alignment(xalign=0.0, yalign=0.5)
+        self.lblPortLastUpdateText.show()
+        self.port_info_table.attach(self.lblPortLastUpdateText,1, 2, 1, 2)
+
+        #port
+        lblPortName = gtk.Label(_("<b>Port:</b>"))
+        lblPortName.set_alignment(xalign=0.0, yalign=0.5)
+        lblPortName.set_use_markup(True)
+        lblPortName.show()
+        self.port_info_table.attach(lblPortName, 0, 1, 2, 3)
+
+        self.lblPortName = gtk.Label()
+        self.lblPortName.set_alignment(xalign=0.0, yalign=0.5)
+        self.lblPortName.show()
+        self.port_info_table.attach(self.lblPortName, 1, 2, 2, 3)
+
+        vbox_info.pack_start(self.port_info_table, False, False, 0)
+
+
+
         
     def show_add_watch(self, widget):
         """ Call the main function to show the add watch window. """

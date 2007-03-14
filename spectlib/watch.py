@@ -93,7 +93,7 @@ class Watch:
             self.tray_y = self.specto.tray.get_y()
 
             if self.type==0:#web
-                NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.PATH + "icons/notifier/big/web.png", self.tray_x, self.tray_y)
+                NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.icon_theme.load_icon("applications-internet", 64, 0), self.tray_x, self.tray_y)
             elif self.type==1:#email
 
                 if self.prot!=2:#other account than gmail
@@ -114,22 +114,22 @@ class Watch:
                         notification_toast = None#nothing to notify the user about.
 
                 if notification_toast:
-                    NotificationToast(self.specto, notification_toast, self.specto.PATH + "icons/notifier/big/mail.png", self.tray_x, self.tray_y)
+                    NotificationToast(self.specto, notification_toast, self.specto.icon_theme.load_icon("emblem-mail", 64, 0), self.tray_x, self.tray_y)
 
             elif self.type==2:#folder
-                NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, self.specto.PATH + "icons/notifier/big/folder.png", self.tray_x, self.tray_y)
+                NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, self.specto.icon_theme.load_icon("folder", 64, 0), self.tray_x, self.tray_y)
             elif self.type==3:#process
                 if self.running==False:
-                    NotificationToast(self.specto, _("The process, <b>%s</b>, has stopped.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
+                    NotificationToast(self.specto, _("The process, <b>%s</b>, has stopped.") % self.name, self.specto.icon_theme.load_icon("applications-system", 64, 0), self.tray_x, self.tray_y)
                 elif self.running==True:
-                    NotificationToast(self.specto, _("The process, <b>%s</b>, has started.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
+                    NotificationToast(self.specto, _("The process, <b>%s</b>, has started.") % self.name, self.specto.icon_theme.load_icon("applications-system", 64, 0), self.tray_x, self.tray_y)
                 else:
                     print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
             elif self.type==4:#port
                 if self.running==False:
-                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was closed.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
+                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was closed.") % self.name, self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0), self.tray_x, self.tray_y)
                 elif self.running==True:
-                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was established.") % self.name, self.specto.PATH + "icons/notifier/big/process.png", self.tray_x, self.tray_y)
+                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was established.") % self.name, self.specto.icon_theme.load_icon("network-offline", 64, 0), self.tray_x, self.tray_y)
                 else:
                     print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
             else:

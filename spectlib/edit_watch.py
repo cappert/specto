@@ -41,7 +41,7 @@ class Edit_watch:
     """
     Class to create the edit watch dialog.
     """
-    
+    #Please do not use confusing widget names such as 'lbl' and 'tbl', use full names like 'label' and 'table'.
     def __init__(self, specto, watch):
         self.watch = watch
         self.specto = specto
@@ -152,6 +152,10 @@ class Edit_watch:
         elif values['type'] == 3: #add a process
             values['process'] = self.txtProcess.get_text()
             self.specto.watch_db[self.watch.id].set_process(values['process'])
+
+        elif values['type'] == 4: #add a port
+            values['port'] = self.txtPort.get_text()
+            self.specto.watch_db[self.watch.id].set_port(values['port'])
             
         self.edit_watch.destroy()
         
@@ -201,10 +205,10 @@ class Edit_watch:
             tblWeb.show()
 
             #url
-            lblUrl = gtk.Label(_("URL:"))
-            lblUrl.set_alignment(xalign=0.0, yalign=0.5)
-            lblUrl.show()
-            tblWeb.attach(lblUrl, 0, 1, 0, 1)
+            labelUrl = gtk.Label(_("URL:"))
+            labelUrl.set_alignment(xalign=0.0, yalign=0.5)
+            labelUrl.show()
+            tblWeb.attach(labelUrl, 0, 1, 0, 1)
 
             self.txtUrl = gtk.Entry()
             self.txtUrl.set_text(self.watch.url_)
@@ -212,10 +216,10 @@ class Edit_watch:
             tblWeb.attach(self.txtUrl, 1, 2, 0, 1)
 
             #error margin
-            lblSlider = gtk.Label(_("Error Margin (%):"))
-            lblSlider.set_alignment(xalign=0.0, yalign=0.5)
-            lblSlider.show()
-            tblWeb.attach(lblSlider, 0, 1, 2, 3)
+            labelSlider = gtk.Label(_("Error Margin (%):"))
+            labelSlider.set_alignment(xalign=0.0, yalign=0.5)
+            labelSlider.show()
+            tblWeb.attach(labelSlider, 0, 1, 2, 3)
 
             self.adjustment = gtk.Adjustment(value=2.0, lower=0, upper=50, step_incr=0.1, page_incr=1.0, page_size=10)
             self.margin_scale = gtk.HScale(adjustment=self.adjustment)
@@ -238,21 +242,21 @@ class Edit_watch:
             tblMail.show()
 
             #protocol
-            lblProtocol = gtk.Label(_("Protocol:"))
-            lblProtocol.set_alignment(xalign=0.0, yalign=0.5)
-            lblProtocol.show()
-            tblMail.attach(lblProtocol, 0, 1, 0, 1)
+            labelProtocol = gtk.Label(_("Protocol:"))
+            labelProtocol.set_alignment(xalign=0.0, yalign=0.5)
+            labelProtocol.show()
+            tblMail.attach(labelProtocol, 0, 1, 0, 1)
             
-            self.lblProtocol_text = gtk.Label()
-            self.lblProtocol_text.set_alignment(0.0,0.0)
-            self.lblProtocol_text.show()
-            tblMail.attach(self.lblProtocol_text, 1 ,2, 0, 1)                
+            self.labelProtocol_text = gtk.Label()
+            self.labelProtocol_text.set_alignment(0.0,0.0)
+            self.labelProtocol_text.show()
+            tblMail.attach(self.labelProtocol_text, 1 ,2, 0, 1)                
 
             #username
-            lblUsername = gtk.Label(_("Username:"))
-            lblUsername.set_alignment(xalign=0.0, yalign=0.5)
-            lblUsername.show()
-            tblMail.attach(lblUsername, 0, 1, 1, 2)
+            labelUsername = gtk.Label(_("Username:"))
+            labelUsername.set_alignment(xalign=0.0, yalign=0.5)
+            labelUsername.show()
+            tblMail.attach(labelUsername, 0, 1, 1, 2)
 
             self.txtUsername = gtk.Entry()
             self.txtUsername.set_text(self.watch.user)
@@ -260,10 +264,10 @@ class Edit_watch:
             tblMail.attach(self.txtUsername, 1, 2, 1, 2)
 
             #password
-            lblPassword = gtk.Label(_("Password:"))
-            lblPassword.set_alignment(xalign=0.0, yalign=0.5)
-            lblPassword.show()
-            tblMail.attach(lblPassword, 0, 1, 2, 3)
+            labelPassword = gtk.Label(_("Password:"))
+            labelPassword.set_alignment(xalign=0.0, yalign=0.5)
+            labelPassword.show()
+            tblMail.attach(labelPassword, 0, 1, 2, 3)
 
             self.txtPassword = gtk.Entry()
             self.txtPassword.set_text(self.watch.password)
@@ -272,27 +276,27 @@ class Edit_watch:
             tblMail.attach(self.txtPassword, 1, 2, 2, 3)
 
             #host
-            lblHost = gtk.Label(_("Host:"))
-            lblHost.set_alignment(xalign=0.0, yalign=0.5)
-            tblMail.attach(lblHost, 0, 1, 3, 4)
+            labelHost = gtk.Label(_("Host:"))
+            labelHost.set_alignment(xalign=0.0, yalign=0.5)
+            tblMail.attach(labelHost, 0, 1, 3, 4)
 
             self.txtHost = gtk.Entry()
             tblMail.attach(self.txtHost, 1, 2, 3, 4)
             
             #ssl
-            lblSsl = gtk.Label(_("Use SSL:"))
-            lblSsl.set_alignment(xalign=0.0, yalign=0.5)
-            tblMail.attach(lblSsl, 0, 1, 4, 5)
+            labelSsl = gtk.Label(_("Use SSL:"))
+            labelSsl.set_alignment(xalign=0.0, yalign=0.5)
+            tblMail.attach(labelSsl, 0, 1, 4, 5)
             
             self.chkSsl = gtk.CheckButton(None, True)
             tblMail.attach(self.chkSsl, 1, 2, 4, 5)  
 
             if self.watch.prot == 0:
-                self.lblProtocol_text.set_text(_("Pop3"))
-                lblHost.show()
+                self.labelProtocol_text.set_text(_("Pop3"))
+                labelHost.show()
                 self.txtHost.set_text(self.watch.host)
                 self.txtHost.show()
-                lblSsl.show()
+                labelSsl.show()
                 self.chkSsl.show()
                 if str(self.watch.ssl) == 'True':
                     self.chkSsl.set_active(True)
@@ -300,11 +304,11 @@ class Edit_watch:
                     self.chkSsl.set_active(False)
                 
             elif self.watch.prot == 1:
-                self.lblProtocol_text.set_text(_("Imap"))
-                lblHost.show()
+                self.labelProtocol_text.set_text(_("Imap"))
+                labelHost.show()
                 self.txtHost.set_text(self.watch.host)
                 self.txtHost.show()
-                lblSsl.show()
+                labelSsl.show()
                 self.chkSsl.show()
                 if str(self.watch.ssl) == 'True':
                     self.chkSsl.set_active(True)
@@ -312,7 +316,7 @@ class Edit_watch:
                     self.chkSsl.set_active(False) 
                                                   
             else:
-                self.lblProtocol_text.set_text(_("Gmail"))
+                self.labelProtocol_text.set_text(_("Gmail"))
 
             vbox_options.pack_start(tblMail, False, False, 0)
             
@@ -324,10 +328,10 @@ class Edit_watch:
             tblFile.show()
             
             #file/folder
-            self.lblFile = gtk.Label(_("File/folder:"))
-            self.lblFile.set_alignment(xalign=0.0, yalign=0.5)
-            self.lblFile.show()
-            tblFile.attach(self.lblFile, 0, 1, 0, 1)
+            self.labelFile = gtk.Label(_("File/folder:"))
+            self.labelFile.set_alignment(xalign=0.0, yalign=0.5)
+            self.labelFile.show()
+            tblFile.attach(self.labelFile, 0, 1, 0, 1)
     
             #option file/folder
             vbox_file = gtk.HBox(False, 10)
@@ -364,11 +368,10 @@ class Edit_watch:
             tblProcess.set_col_spacings(6)
             tblProcess.show()
             
-            #process
-            lblProcess = gtk.Label(_("Process:"))
-            lblProcess.set_alignment(xalign=0.0, yalign=0.5)
-            lblProcess.show()
-            tblProcess.attach(lblProcess, 0, 1, 0, 1)
+            labelProcess = gtk.Label(_("Process:"))
+            labelProcess.set_alignment(xalign=0.0, yalign=0.5)
+            labelProcess.show()
+            tblProcess.attach(labelProcess, 0, 1, 0, 1)
             
             self.txtProcess = gtk.Entry()
             self.txtProcess.set_text(self.watch.process)
@@ -376,6 +379,24 @@ class Edit_watch:
             tblProcess.attach(self.txtProcess, 1, 2, 0, 1)
             
             vbox_options.pack_start(tblProcess, False, False, 0)
+
+        elif self.watch.type == 4: #add a port
+            tblPort = gtk.Table(rows=2, columns=1, homogeneous=False)
+            tblPort.set_row_spacings(6)
+            tblPort.set_col_spacings(6)
+            tblPort.show()
+            
+            labelPort = gtk.Label(_("Port:"))
+            labelPort.set_alignment(xalign=0.0, yalign=0.5)
+            labelPort.show()
+            tblPort.attach(labelPort, 0, 1, 0, 1)
+            
+            self.txtPort = gtk.Entry()
+            self.txtPort.set_text(self.watch.port)
+            self.txtPort.show()
+            tblPort.attach(self.txtPort, 1, 2, 0, 1)
+            
+            vbox_options.pack_start(tblPort, False, False, 0)
 
     
     def change_file_type(self, *args):
