@@ -75,7 +75,6 @@ class Preferences:
 
     def chkSoundUpdate_toggled(self, widget):
         """ Make the filechooser sensitive or insensitive. """
-        client = self.specto.GConfClient("/apps/specto/preferences")
         if widget.get_active():
             self.wTree.get_widget("soundUpdate").set_property('sensitive', 1)
         else:
@@ -98,50 +97,48 @@ class Preferences:
     def set_preferences(self):
         """ Save the preferences in gconf. """
         self.specto.logger.log(_("Preferences saved."), "info", self.__class__)
-        #create a gconf object
-        client = self.specto.GConfClient("/apps/specto/preferences")
-        
+
         #save the path from the update sound
         if self.wTree.get_widget("soundUpdate").get_property('sensitive') == 1:
-            client.set_entry("/update_sound", self.wTree.get_widget("soundUpdate").get_filename(), "string")
-            client.set_entry("/use_update_sound", 1, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/update_sound", self.wTree.get_widget("soundUpdate").get_filename())
+            self.specto.specto_gconf.set_entry("preferences/use_update_sound", True)
         else:
-            client.unset_entry("/use_update_sound")
+            self.specto.specto_gconf.unset_entry("preferences/use_update_sound")
 
         #save the path from the problem sound
         if self.wTree.get_widget("soundProblem").get_property('sensitive') == 1:
-            client.set_entry("/problem_sound", self.wTree.get_widget("soundProblem").get_filename(), "string")
-            client.set_entry("/use_problem_sound", 1, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/problem_sound", self.wTree.get_widget("soundProblem").get_filename())
+            self.specto.specto_gconf.set_entry("preferences/use_problem_sound", True)
         else:
-            client.unset_entry("/use_problem_sound")
+            self.specto.specto_gconf.unset_entry("preferences/use_problem_sound")
 
         #see if pop toast has to be saved
         if self.wTree.get_widget("chk_libnotify").get_active():
-            client.set_entry("/pop_toast",1, "boolean")
-            client.set_entry("/pop_toast_duration", int(self.wTree.get_widget("hscale_libnotify_duration").get_value() ), "integer")#save the pop toast duration
+            self.specto.specto_gconf.set_entry("preferences/pop_toast", True)
+            self.specto.specto_gconf.set_entry("preferences/pop_toast_duration", int(self.wTree.get_widget("hscale_libnotify_duration").get_value() ))#save the pop toast duration
         else:
-            client.set_entry("/pop_toast",0, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/pop_toast", False)
 
         #see if windowlist has to be saved
         if self.wTree.get_widget("chk_windowlist").get_active():
-            client.set_entry("/hide_from_windowlist", 0, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/hide_from_windowlist", False)
             self.specto.notifier.notifier.set_skip_taskbar_hint(False)#note, this is set_SKIP! this explains why it's False to skip.
         else:
-            client.set_entry("/hide_from_windowlist", 1, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/hide_from_windowlist", True)
             self.specto.notifier.notifier.set_skip_taskbar_hint(True)
 
         #see if tray has to be saved
         if self.wTree.get_widget("chk_tray").get_active():
-            client.set_entry("/always_show_icon", 1, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/always_show_icon", True)
         else:
-            client.set_entry("/always_show_icon", 0, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/always_show_icon", False)
         self.specto.recreate_tray()
 
         #see if debug mode has to be saved
         if self.wTree.get_widget("chk_debug").get_active():
-            client.set_entry("/debug_mode",1, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/debug_mode", True)
         else:
-            client.set_entry("/debug_mode",0, "boolean")
+            self.specto.specto_gconf.set_entry("preferences/debug_mode", False)
 
 
 
@@ -151,50 +148,47 @@ class Preferences:
 
     def get_preferences(self):
         """ Get the preferences from gconf. """
-        #create a gconf object
-        client = self.specto.GConfClient("/apps/specto/preferences")
-
         #check toast
-        if client.get_entry("/pop_toast", "boolean") == True:
+        if self.specto.specto_gconf.get_entry("preferences/pop_toast") == True:
             self.wTree.get_widget("chk_libnotify").set_active(True)
             self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 1)
         else:
             self.wTree.get_widget("chk_libnotify").set_active(False)
             self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 0)
         #set the toast duration properly
-        if not client.get_entry("/pop_toast_duration", "integer"):
+        if not self.specto.specto_gconf.get_entry("preferences/pop_toast_duration"):
             pass#nothing was set, leave the value at 5
         else:
-            self.wTree.get_widget("hscale_libnotify_duration").set_value(client.get_entry("/pop_toast_duration", "integer"))
+            self.wTree.get_widget("hscale_libnotify_duration").set_value(self.specto.specto_gconf.get_entry("preferences/pop_toast_duration"))
 
         #check windowlist
-        if client.get_entry("/hide_from_windowlist", "boolean") == False:
+        if self.specto.specto_gconf.get_entry("preferences/hide_from_windowlist") == False:
             self.wTree.get_widget("chk_windowlist").set_active(True)
         else:
             self.wTree.get_widget("chk_windowlist").set_active(False)
 
         #check tray
-        if client.get_entry("/always_show_icon", "boolean") == True:
+        if self.specto.specto_gconf.get_entry("preferences/always_show_icon") == True:
             self.wTree.get_widget("chk_tray").set_active(True)
         else:
             self.wTree.get_widget("chk_tray").set_active(False)
         
         #check update sound
-        if client.get_entry("/use_update_sound", "boolean"):
+        if self.specto.specto_gconf.get_entry("preferences/use_update_sound"):
             self.wTree.get_widget("chkSoundUpdate").set_active(True)
             
-        if client.get_entry("/update_sound", "string"):
-            self.wTree.get_widget("soundUpdate").set_filename(client.get_entry("/update_sound", "string"))
+        if self.specto.specto_gconf.get_entry("preferences/update_sound"):
+            self.wTree.get_widget("soundUpdate").set_filename(self.specto.specto_gconf.get_entry("preferences/update_sound"))
 
         #check problem sound
-        if client.get_entry("/use_problem_sound", "boolean"):
+        if self.specto.specto_gconf.get_entry("preferences/use_problem_sound"):
             self.wTree.get_widget("chkSoundProblem").set_active(True)
             
-        if client.get_entry("/problem_sound", "string"):
-            self.wTree.get_widget("soundProblem").set_filename(client.get_entry("/problem_sound", "string"))
+        if self.specto.specto_gconf.get_entry("preferences/problem_sound"):
+            self.wTree.get_widget("soundProblem").set_filename(self.specto.specto_gconf.get_entry("preferences/problem_sound"))
             
         #check debug
-        if client.get_entry("/debug_mode", "boolean") == True:
+        if self.specto.specto_gconf.get_entry("preferences/debug_mode") == True:
             self.wTree.get_widget("chk_debug").set_active(True)
         else:
             self.wTree.get_widget("chk_debug").set_active(False)

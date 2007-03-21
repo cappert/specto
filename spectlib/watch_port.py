@@ -75,7 +75,6 @@ class Port_watch(Watch):
             established = self.check_port()
             if self.running and established == False:
                 self.running = False
-                self.updated = True
                 self.actually_updated = True
             elif self.running == False and established == True:
                 self.running = True 
@@ -95,10 +94,18 @@ class Port_watch(Watch):
         del y[0]
         del y[0]
         for k in y:
-            rawport=":"+str(self.port)
-            if rawport in k:
+            k = k.split(' ')
+            while True:
+                try:
+                    k.remove('')
+                except:
+                    break
+            try:
+                port = int(k[3][k[3].rfind(':')+1:])
+            except:
+                port = -1
+            if port == int(self.port):
                 conn = True
-                break
 
         if conn:
             return True

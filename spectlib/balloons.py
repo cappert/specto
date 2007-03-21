@@ -29,7 +29,6 @@ import pynotify
 import sys
 
 from spectlib import logger
-from spectlib.specto_gconf import GConfClient
 
 notifyInitialized = False
 
@@ -49,9 +48,8 @@ class NotificationToast:
            pynotify.init(self._notifyRealm)
            notifyInitialized = True
         
-        self.conf_pref = GConfClient("/apps/specto/preferences")
         self.toast = pynotify.Notification(summary, body)
-        self.timeout = self.conf_pref.get_entry("/pop_toast_duration", "integer")*1000
+        self.timeout = specto.specto_gconf.get_entry("preferences/pop_toast_duration")*1000
         if self.timeout:
             self.toast.set_timeout(self.timeout)
         self.toast.set_urgency(self._Urgencies[urgency])

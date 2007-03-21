@@ -36,7 +36,7 @@ from datetime import datetime
 import spectlib.util as util
 from spectlib.watch import Watch_io
 from spectlib.logger import Logger
-from spectlib.specto_gconf import GConfClient
+from spectlib.specto_gconf import Specto_gconf
 from spectlib.i18n import _
 from spectlib.import_export import Import_watch
 from spectlib import networkmanager as conmgr
@@ -48,11 +48,13 @@ import time
 import thread
 
 #create a gconf object
-debug_gconf_client = GConfClient("/apps/specto/preferences")
+specto_gconf = Specto_gconf("/apps/specto")
 
-if debug_gconf_client.get_entry("/debug_mode", "boolean")==True:
+if specto_gconf.get_entry("preferences/debug_mode")==True:
     DEBUG = True
-elif debug_gconf_client.get_entry("/debug_mode", "boolean")==False:
+elif specto_gconf.get_entry("preferences/debug_mode")==False:
+    DEBUG = False
+else:
     DEBUG = False
 
 try:
@@ -89,9 +91,7 @@ class Specto:
         self.check_instance() #see if specto is already running
         self.util = util
         self.PATH = self.util.get_path()
-        self.GConfClient = GConfClient
-        self.conf_ui = self.GConfClient("/apps/specto/ui")
-        self.conf_pref = self.GConfClient("/apps/specto/preferences")
+        self.specto_gconf = specto_gconf
         self.GTK = GTK
         if GTK:
             self.tray = Tray(self)
@@ -102,19 +102,19 @@ class Specto:
         self.preferences_initialized = False
         self.notifier_initialized = False        
         #listen for gconf keys
-        self.conf_pref.notify_entry("/debug_mode", self.key_changed, "debug")
+        self.specto_gconf.notify_entry("preferences/debug_mode", self.key_changed, "debug")
 
         self.connection_manager = conmgr.get_net_listener()
 
         if GTK:
-            if self.conf_pref.get_entry("/always_show_icon", "boolean") == False:
+            if self.specto_gconf.get_entry("preferences/always_show_icon") == False:
                 #if the user has not requested the tray icon to be shown at all times, it's impossible that the notifier is hidden on startup, so we must show it.
                 self.notifier_keep_hidden = False
                 self.toggle_notifier()
-            elif self.conf_ui.get_entry("/notifier_state", "boolean")==True:
+            elif self.specto_gconf.get_entry("preferences/notifier_state")==True:
                 self.notifier_keep_hidden = False
                 self.toggle_notifier()
-            elif self.conf_ui.get_entry("/notifier_state", "boolean")==False:
+            elif self.specto_gconf.get_entry("preferences/notifier_state")==False:
                 self.notifier_keep_hidden = True
                 self.toggle_notifier()
                 self.notifier_keep_hidden = False
@@ -133,10 +133,9 @@ class Specto:
     def key_changed(self, *args):
         """ Listen for gconf keys. """
         label = args[3]
-        conf_pref = self.GConfClient("/apps/specto/preferences")
         
         if label == "debug":
-            self.DEBUG = conf_pref.get_entry("/debug_mode", "boolean")
+            self.DEBUG = self.specto_gconf.get_entry("preferences/debug_mode")
             
     def check_instance(self):
         """ Check if specto is already running. """
@@ -182,7 +181,7 @@ class Specto:
                 while gtk.events_pending():
                     gtk.main_iteration_do(False)
                     
-        if self.conf_ui.get_entry("/hide_deactivated_watches", "boolean") == True:
+        if self.specto_gconf.get_entry("ui/hide_deactivated_watches")== True:
             self.notifier.wTree.get_widget("display_all_watches").set_active(False)
             self.notifier.toggle_hide_deactivated_watches()
         
@@ -390,7 +389,7 @@ class Specto:
             if self.watch_db[i].updated == True:
                 self.tray.set_icon_state_excited()#change the tray icon color to orange
                 tooltip_updated_watches[self.watch_db[i].type] = tooltip_updated_watches[self.watch_db[i].type] + 1
-        if tooltip_updated_watches.values() == [0,0,0,0]:#there are no more watches to clear, reset the tray icon
+        if tooltip_updated_watches.values() == [0,0,0,0,0]:#there are no more watches to clear, reset the tray icon
             self.tray.set_icon_state_normal()
             self.notifier.wTree.get_widget("button_clear_all").set_sensitive(False)
 
@@ -482,16 +481,16 @@ class Specto:
         elif self.notifier_initialized:
             if self.notifier.get_state()==True and self.notifier_keep_hidden:
                 self.logger.log(_("notifier: reappear"), "debug", self.__class__)
-                self.conf_ui.set_entry("/notifier_state", True, "boolean")
+                self.specto_gconf.set_entry("ui/notifier_state", True)
                 self.notifier.restore_size_and_position()#to make sure that the x and y positions don't jump around
                 self.notifier.notifier.show()
             elif self.notifier.get_state()==True and not self.notifier_keep_hidden:
                 self.logger.log(_("notifier: hide"), "debug", self.__class__)
-                self.conf_ui.set_entry("/notifier_state", False, "boolean")
+                self.specto_gconf.set_entry("ui/notifier_state", False)
                 self.notifier.notifier.hide()
             else:
                 self.logger.log(_("notifier: reappear"), "debug", self.__class__)
-                self.conf_ui.set_entry("/notifier_state", True, "boolean")
+                self.specto_gconf.set_entry("ui/notifier_state", True)
                 self.notifier.restore_size_and_position()#to make sure that the x and y positions don't jump around
                 self.notifier.notifier.show()
         self.notifier_initialized = True

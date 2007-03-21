@@ -90,6 +90,7 @@ class Web_watch(Watch):
             self.specto.logger.log(_("No network connection detected"),
                                    "info", self.__class__)
             self.specto.connection_manager.add_callback(self._real_update)
+            self.specto.mark_watch_busy(False, self.id)
         else :
             self._real_update()
 

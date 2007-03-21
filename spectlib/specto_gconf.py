@@ -6,7 +6,7 @@
 #       specto_gconf.py
 #
 # Copyright (c) 2005, Jean-François Fortin Tam
-# This module code is maintained by : Conor Callahan, Jean-François Fortin,Pascal Potvin and Wout Clymans
+# This module code is maintained by : Wout Clymans
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -25,7 +25,7 @@
 
 import gconf
 
-class GConfClient:
+class Specto_gconf:
     """
     Specto gconf class. 
     """
@@ -35,40 +35,74 @@ class GConfClient:
         self.client = gconf.client_get_default()
         self.client.add_dir (directory, gconf.CLIENT_PRELOAD_NONE)
         self.directory = directory
+        self.org_directory = directory
+        
+    def set_directory(self, dir):
+        if dir != "": #change the dir
+            if self.org_directory + dir != self.directory: #check if the dir has to change
+                self.directory = self.org_directory + dir
+                self.client = gconf.client_get_default()
+                self.client.add_dir (self.directory, gconf.CLIENT_PRELOAD_NONE)
+        else: #change dir to original dir
+            self.directory = self.org_directory
+            self.client = gconf.client_get_default()
+            self.client.add_dir (self.directory, gconf.CLIENT_PRELOAD_NONE)            
 
-    def get_entry(self, key, type_):
-        """ Returns the value of a key. """
-        k = self.directory + key
-        s = ""
 
-        if type_ == "string":
-            s = self.client.get_string(k)
-        elif type_ == "boolean":
-            s = self.client.get_bool(k)
-        elif type_ == "integer":
-            s = self.client.get_int(k)
-        elif type_ == "float":
-            s = self.client.get_float(k)
+    def get_entry(self, key):
+        if "/" in key:
+            dir = "/" + key[:key.index('/')]
+            self.set_directory(dir)
+            key = key[key.index('/')+1:]
+            
+        k =  self.directory + "/" + key
                 
-        return s
+        value = self.client.get(k)
+        
+        if value == None:
+            return None      
+        if value.type == gconf.VALUE_STRING:
+            return value.get_string()
+        elif value.type == gconf.VALUE_BOOL:
+            return value.get_bool()
+        elif value.type == gconf.VALUE_INT:
+            return value.get_int()
 
-    def set_entry(self, key, entry, type_):
-        """ Set the value from a key. """
-        k = self.directory + key
+    def set_entry(self, key, entry):
+        """ Set the value from a key. """ 
+        if "/" in key:
+            dir = "/" + key[:key.index('/')]
+            self.set_directory(dir)
+            key = key[key.index('/')+1:]
+            
+        k =  self.directory + "/" + key
 
-        if type_ == "boolean":
-            self.client.set_bool(k, entry)
-        elif type_ == "string":
+        if type(entry) == type(str()): 
             self.client.set_string(k, entry)
-        elif type_ == "integer":
+        elif type(entry) == type(bool()): 
+            self.client.set_bool(k, entry)
+        elif type(entry) == type(int()): 
             self.client.set_int(k, entry)
-        elif type_ == "float":
+        elif type(entry) == type(float()): 
             self.client.set_float(k, entry)
 
     def unset_entry(self,key):
         """ Unset (remove) the key. """
-        self.client.unset(self.directory + key)
+        if "/" in key:
+            dir = "/" + key[:key.index('/')]
+            self.set_directory(dir)
+            key = key[key.index('/')+1:]
+        k =  self.directory + "/" + key
+
+        self.client.unset(k)
         
     def notify_entry(self, key, callback, label):
         """ Listen for changes in a key. """
-        self.client.notify_add (self.directory + key, callback, label)
+        if "/" in key:
+            dir = "/" + key[:key.index('/')]
+            self.set_directory(dir)
+            key = key[key.index('/')+1:]
+            
+        k =  self.directory + "/" + key
+        
+        self.client.notify_add(k, callback, label)

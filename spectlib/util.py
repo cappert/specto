@@ -24,19 +24,19 @@
 # Boston, MA 02111-1307, USA.
 
 import os, sys
-from spectlib.specto_gconf import GConfClient
+from spectlib.specto_gconf import Specto_gconf
 import gnomevfs
 
 def show_webpage(webpage):
     """ Open the webpage in the default browser. """
-    conf = GConfClient("/desktop/gnome/url-handlers/http")
-    default_browser = conf.get_entry("/command", "string")
+    specto_gconf = Specto_gconf("/desktop/gnome/url-handlers/http")
+    default_browser = specto_gconf.get_entry("command")
     os.system((default_browser % webpage) + " &") #open the browser with the page
 
 def open_gconf_application(key):
     """ Get the name from gconf and open the application. """
-    conf = GConfClient(key)
-    application = conf.get_entry("/command", "string")
+    specto_gconf = Specto_gconf(key)
+    application = specto_gconf.get_entry("command")
     os.system(application + " &")
     
 def open_file_watch(f):

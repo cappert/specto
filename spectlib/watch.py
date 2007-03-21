@@ -55,16 +55,16 @@ class Watch:
         Check if an error sound has to be played or if a watch has to be flagged updated.
         """
         #play error sound
-        if self.error == True and self.specto.conf_pref.get_entry("/use_problem_sound", "boolean"):
-            problem_sound = self.specto.conf_pref.get_entry("/problem_sound", "string")
+        if self.error == True and self.specto.specto_gconf.get_entry("preferences/use_problem_sound"):
+            problem_sound = self.specto.specto_gconf.get_entry("preferences/problem_sound")
             gnome.sound_play(problem_sound)
-            pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")  
+            pop_toast = self.specto.self.specto.specto_gconf.get_entry("preferences/pop_toast")  
             if (pop_toast == True) and (self.specto.GTK):
                 NotificationToast(self.specto, _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % str(self.name), self.specto.PATH + "icons/notifier/big/error.png",  urgency="critical")
         
         #call update function if watch was updated
         if self.actually_updated:#we want to notify, but ONLY if it has not been marked as updated already
-            try: 
+            try:
                 self.specto.toggle_updated(self.id) #call the main function to update the notifier entry. We need to use a try statement in case the watch was already toggled in the notifier entry.
             except: 
                 if self.specto.DEBUG : self.specto.logger.log(_("Watch \"%s\" is already marked as updated in the notifier") % self.name, "info", self.__class__)
@@ -83,11 +83,11 @@ class Watch:
         if self.specto.DEBUG or not self.specto.GTK:
             self.specto.logger.log(_("Watch \"%s\" updated!") % self.name, "info", self.__class__)
         #play a sound   
-        update_sound = self.specto.conf_pref.get_entry("/update_sound", "string")
-        if self.specto.conf_pref.get_entry("/use_update_sound", "boolean"):
+        update_sound = self.specto.specto_gconf.get_entry("preferences/update_sound")
+        if self.specto.specto_gconf.get_entry("preferences/use_update_sound"):
             gnome.sound_play(update_sound)
         #determine if libnotify support is to be used
-        pop_toast = self.specto.conf_pref.get_entry("/pop_toast", "boolean")
+        pop_toast = self.specto.specto_gconf.get_entry("preferences/pop_toast")
         if (pop_toast == True) and (self.specto.GTK):
             self.tray_x = self.specto.tray.get_x()
             self.tray_y = self.specto.tray.get_y()
@@ -127,9 +127,9 @@ class Watch:
                     print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
             elif self.type==4:#port
                 if self.running==False:
-                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was closed.") % self.name, self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0), self.tray_x, self.tray_y)
+                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was closed.") % self.name, self.specto.icon_theme.load_icon("network-offline", 64, 0), self.tray_x, self.tray_y)
                 elif self.running==True:
-                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was established.") % self.name, self.specto.icon_theme.load_icon("network-offline", 64, 0), self.tray_x, self.tray_y)
+                    NotificationToast(self.specto, _("The connection, <b>%s</b>, was established.") % self.name, self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0), self.tray_x, self.tray_y)
                 else:
                     print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
             else:
