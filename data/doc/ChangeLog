@@ -1,3 +1,24 @@
+2007-05-10 Jean-Francois Fortin Tam
+    * Happy birthday to myself ;)
+    * Remove shebangs from non-scripts (chalserogers)
+    * Fix ugly bugs in the file watch (chalserogers)
+    * Remove remaining "territory marks" (as per previous discussion)
+    * Make specto update its tray icon before notifying
+    * Add a short delay between updating the tray and notifying (prevents misplaced balloons)
+    * More error checking/reporting for web watch (chalserogers)
+    * Don't crash on corrupt watch list (chalserogers)
+    * Now possible to make icons transparent (woutc)
+    * Make use of transparency everywhere. Remove useless code and comments
+	* Remove useless icons since we can now make stock icons transparent
+	* Fix remaining bits of modules that still wanted to use the old icons
+    * Changes to the email counting logic, and more info for POP3 watches (woutc)
+    * A statusbar now tells the user if there is no network connection detected (woutc)
+    * Updated French translation
+    * Added Turkish translation (Murat Güneş)
+    * Updated Italian translation (Vincenzo Consales)
+    * Don't screw up when opening files/folders with spaces
+    * Work around evolution being really braindead (refusing to start with %s). This somewhat fixes the "go to" button with POP3 and IMAP watches
+
 2007-03-18 Wout Clymans
     * Fixed issue #50: update the notifier infopane automatically
     * Implemented new Gconf module

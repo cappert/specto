@@ -20,7 +20,7 @@ def give_files(dir, *extension):
 
     return files
 
-i18n_languages = "fr ro de sv it"#list all the languages, separated by one whitespace
+i18n_languages = "fr ro de sv it tr"#list all the languages, separated by one whitespace
 def give_mo_file(lang):
     return "po/" + str(lang) + "/specto.mo"
 
@@ -38,9 +38,6 @@ temp_files = [#The path are relatives to sys.prefix
     ('share/icons/hicolor/scalable/apps', ['data/icons/hicolor/scalable/specto.svg']),
     ('share/applications', ['specto.desktop']),
     ('share/specto/icons', give_files('data/icons/', '.png', '.svg')),
-    ('share/specto/icons/notifier', give_files('data/icons/notifier/', '.png')),#FIXME: should be deprecated when notifier is fully fixed
-    ('share/specto/icons/notifier/faded', give_files('data/icons/notifier/faded/', '.png')),#FIXME: should be deprecated when notifier is fully fixed
-    ('share/specto/icons/notifier/big', give_files('data/icons/notifier/big/', '.png', '.svg')),#FIXME: should be deprecated when notifier is fully fixed
     ('share/specto/glade', give_files('data/glade/', '.glade'))
     ]
 

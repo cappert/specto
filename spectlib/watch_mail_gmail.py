@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -6,7 +5,6 @@
 #       watch_mail_gmail.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
-# This module code is maintained by : Wout Clymans and Jean-François Fortin Tam
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -41,6 +39,7 @@ class Mail_watch(Watch):
     newMsg = 0
     type = 1
     prot = 2 #gmail protocol
+    mail_info = []
     
     def __init__(self, refresh, username, password, specto, id,  name = _("Unknown Mail Watch")):
         Watch.__init__(self, specto)
@@ -77,6 +76,7 @@ class Mail_watch(Watch):
             self.specto.logger.log(_("No network connection detected"),
                                    "info", self.__class__)
             self.specto.connection_manager.add_callback(self._real_update)
+            self.specto.mark_watch_busy(False, self.id)
         else :
             self._real_update()
         
@@ -89,22 +89,20 @@ class Mail_watch(Watch):
         try:
             s = GmailAtom(self.user, self.password)
             s.refreshInfo()
-            self.newMsg = s.getUnreadMsgCount()
-            if not self.oldMsg: self.oldMsg = 0
-            if self.updated==False:#if the watch has been cleared, make the message count be right next time we check
-                self.oldMsg=0
-            if self.newMsg == 0:#no unread messages, we need to clear the watch
-                self.oldMsg = 0
+            self.oldMsg = s.getUnreadMsgCount()
+            self.newMsg = 0
+            if self.oldMsg == 0:#no unread messages, we need to clear the watch
                 self.actually_updated=False
                 self.specto.notifier.clear_watch("", self.id)
-            elif self.newMsg > self.oldMsg:
-                self.updated = True
-                self.actually_updated=True
-            elif self.oldMsg==self.newMsg:
-                self.actually_updated=False #no new unread messages.
-            elif self.oldMsg > self.newMsg:#the unread mail count went down! That means the user most likely deleted some of them, so we have to adjust our count.
-                self.oldMsg = self.newMsg
-                self.actually_updated=False
+            else:
+                i=0
+                while i < self.oldMsg:
+                    info = s.getMsgAuthorName(i) + s.getMsgTitle(i) + s.getMsgSummary(i) #create unique info
+                    if info not in self.mail_info: #check if it is a new email or just unread
+                        self.actually_updated=True
+                        self.mail_info.append(info)
+                        self.newMsg+=1
+                    i+=1
         except:
             self.error = True
             self.specto.logger.log(_("Watch: \"%s\" has error: wrong username/password") % self.name, "error", self.__class__)

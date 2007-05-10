@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -80,7 +79,7 @@ class Add_watch:
     def name_changed(self, widget):
         """ Show the watch name in the window. """
         new_name = "<b>" + self.name.get_text() + "</b>"
-        self.wTree.get_widget("label7").set_label(new_name)
+        self.wTree.get_widget("label7").set_label(new_name)#.replace("&", "&amp;"))#patch from bkeifer, buggy
 
     def show_mail_options(self, *args):
         """

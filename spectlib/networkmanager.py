@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -6,7 +5,6 @@
 #       networkmanager.py
 #
 # Copyright (c) 2006-2007 Christopher Halse Rogers
-# This module code is maintained by : Christopher Halse Rogers
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public

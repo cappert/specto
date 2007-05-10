@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -6,7 +5,6 @@
 #       balloons.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
-# This module code is maintained by : Giulio Lotti
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -40,7 +38,7 @@ class NotificationToast:
         'normal': pynotify.URGENCY_NORMAL
         }
 
-    # I'd love to have a default icon.
+    # I'd love to have a default icon. #Kiddo: which one? Not sure this is a really good thing. Unless we show the Specto logo?
     def __init__(self, specto, body, icon=None, x=0, y=0, urgency="low", summary=_notifyRealm):
         global notifyInitialized
 

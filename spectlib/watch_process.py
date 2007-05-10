@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -6,7 +5,6 @@
 #       watch_process.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
-# This module code is maintained by : Wout Clymans
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -21,29 +20,6 @@
 # License along with this program; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-
-
-
-### note from Kiddo about all those FIXMEs lying around:
-# a lot of stuff needs fixing: the icons are not set sensitive/insensitive like they should (and like they used to).
-# if you have any idea how to fix it, please do! Here is something to get you started:
-# the last line of this comment works... partly. It actually makes the entire icon column insensitive, 
-# but I instead want to make only the required cell sensitive/insensitive. Once that is done, we can fix the rest.
-#
-#       self.columnIcon.set_cell_data_func(self.columnIcon_renderer, self.columnIcon_renderer.set_property('sensitive', False))
-
-# additional info while discussing in #pygtk:
-# <doublep> if you need it on entire column, just do set_property once and you can even not use data_func
-# <nekohayo> doublep: nah, it currently works on the entire column and I need it on individual cells
-# <Juhaz> change your data function so it tests for something before setting the property
-# <doublep> (00:20:30) nekohayo: doublep: any idea on how to apply it to the cell now that it works on the entire column?
-# <Juhaz> or add a boolean column to your store
-# <doublep> you contradict yourself, no?
-#  yes, instead of data_func you can use auxiliary column
-# <nekohayo> uh.. no? well maybe that sentence was written weird
-# <doublep> you function should receive several arguments
-#  def celldatamethod(self, column, cell, model, iter, user_data)
-#  ... user_data usually doesn't exist. Decide how to infer sensitivity state based on iter, or add that column, as Juhaz suggested
 
 import sys
 import spectlib.edit_watch
@@ -138,19 +114,21 @@ class Notifier:
         type = self.specto.watch_db[id].type
         self.specto.clear_watch(id)
         self.model.set_value(self.iter[id], 2, self.specto.watch_db[id].name)
-
-#FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
-#         icon = self.specto.icon_theme.load_icon("error", 22, 0)
-#         if type == 0:#website
-#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
-#         elif type == 1:#email
-#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
-#         elif type == 2:#file/folder
-#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
-#         elif type == 3:#system process
-#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
-# ... and of course the port watch
-#         self.model.set_value(self.iter[id], 1, icon)
+        
+        icon = self.specto.icon_theme.load_icon("error", 22, 0)
+        if type == 0:#website
+            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+        elif type == 1:#email
+            icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
+        elif type == 2:#file/folder
+            icon = self.specto.icon_theme.load_icon("folder", 22, 0)
+        elif type == 3:#system process
+            icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
+        elif type == 4:#port
+            icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
+        
+        if self.model.iter_is_valid(self.iter[id]):
+            self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 50))
         
         if self.specto.watch_db[id].updated == False:
             self.wTree.get_widget("btnClear").set_sensitive(False)
@@ -170,17 +148,18 @@ class Notifier:
                 self.model.set_value(self.iter[i], 2, "%s" % self.specto.watch_db[i].name)
                 type = self.specto.watch_db[i].type
 
-#FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
-#                 if type == 0:#website
-#                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
-#                 elif type == 1:#email
-#                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
-#                 elif type == 2:#file/folder
-#                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
-#                 elif type == 3:#system process
-#                     icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
-# ... and of course the port watch
-#                 self.model.set_value(self.iter[i], 1, icon)
+                icon = self.specto.icon_theme.load_icon("error", 22, 0)
+                if type == 0:#website
+                    icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+                elif type == 1:#email
+                    icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
+                elif type == 2:#file/folder
+                    icon = self.specto.icon_theme.load_icon("folder", 22, 0)
+                elif type == 3:#system process
+                    icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
+                elif type == 4:#port
+                    icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
+                self.model.set_value(self.iter[i], 1, self.make_transparent(icon, 50))
 
     def refresh(self, *widget):
         """ Call the main funcion to refresh all active watches and change refresh icon to stop. """
@@ -242,20 +221,21 @@ class Notifier:
         elif type == 4:#port
             icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
         if self.model.iter_is_valid(self.iter[id]):
-            self.model.set_value(self.iter[id], 1, icon)
+            self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 0))
         
         if self.treeview.get_selection().get_selected():
             model, iter = self.treeview.get_selection().get_selected()
-            i = int(model.get_value(iter, 3))
-            if self.specto.watch_db[i].name == self.specto.watch_db[id].name:
-                self.show_watch_info()
+            if iter != None:
+                i = int(model.get_value(iter, 3))
+                if self.specto.watch_db[i].name == self.specto.watch_db[id].name:
+                    self.show_watch_info()
                     
     def toggle_updating(self,progress, id):
         """ If progress is True, a refresh icon is shown, else the type icon is shown. """ 
         icon = self.specto.icon_theme.load_icon("error", 22, 0)
         if progress == True:
             icon = self.specto.icon_theme.load_icon("reload", 22, 0)
-            self.model.set_value(self.iter[id], 1, icon)
+            self.model.set_value(self.iter[id], 1, icon) #do not use transparency here, it's useless and dangerous
             if self.specto.GTK:
                 while gtk.events_pending():#this is to refresh the UI and display the "refresh" icon properly. It works! :)
                     gtk.main_iteration_do(False)
@@ -267,56 +247,32 @@ class Notifier:
                 icon = self.specto.icon_theme.load_icon("error", 22, 0)
                 if type == 0:#website
                     icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
-                    if self.specto.watch_db[id].updated == True:
-                        pass
-                        #FIXME: needs to set the gtk sensitivity to True here
                 elif type == 1:#email
                     icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
-                    if self.specto.watch_db[id].updated == True:
-                        pass
-                        #FIXME: needs to set the gtk sensitivity to True here
                 elif type == 2:#file/folder
                     icon = self.specto.icon_theme.load_icon("folder", 22, 0)
-                    if self.specto.watch_db[id].updated == True:
-                        pass
-                        #FIXME: needs to set the gtk sensitivity to True here
                 elif type == 3:#system process
                     icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
-                    if self.specto.watch_db[id].updated == True:
-                        pass
-                        #FIXME: needs to set the gtk sensitivity to True here
                 elif type == 4:#port
                     icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
-                    if self.specto.watch_db[id].updated == True:
-                        pass
-                        #FIXME: needs to set the gtk sensitivity to True here
-                if self.model.iter_is_valid(self.iter[id]):
+            if self.model.iter_is_valid(self.iter[id]):
+                if self.specto.watch_db[id].updated == False:
+                    self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 50))#we must keep it faded, exceptionally
+                else:
+                    #self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 0)) #do not use transparency here, it's useless and dangerous
                     self.model.set_value(self.iter[id], 1, icon)
-#FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
-#             else:
-#                 type = self.specto.watch_db[id].type
-#                 
-#                 if self.specto.watch_db[id].updated == True:
-#                     dir = self.specto.PATH + 'icons/notifier/' 
-#                 else:
-#                     dir = self.specto.PATH + 'icons/notifier/faded/' 
-#         
-#                 if type == 0:
-#                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'web.png')
-#                 elif type == 1:
-#                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'mail.png')
-#                 elif type == 2:
-#                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'folder.png')
-#                 elif type ==3:
-#                     icon = gtk.gdk.pixbuf_new_from_file(dir + 'process.png')
-# ... and of course the port watch
-#                           
-#             if self.model.iter_is_valid(self.iter[id]):
-#                 self.model.set_value(self.iter[id], 1, icon)
         
     def deactivate(self, id):
         """ Disable the checkbox from the watch. """
         self.model.set_value(self.iter[id], 0, 0)#TODO: make the text label in the "Name" column and the buttons insensitive
+        
+    def make_transparent(self, pixbuf, percent):
+        """ Calculate the alpha and return a transparent pixbuf. The input percentage is the 'transparency' percentage. 0 means no transparency. """
+        pixbuf = pixbuf.add_alpha(False, '0', '0', '0')
+        for row in pixbuf.get_pixels_array():
+            for pix in row:
+                pix[3] = min(int(pix[3]), 255 - (percent * 0.01 * 255))#note: we must *0.01, NOT /100, otherwise it won't work
+        return pixbuf
             
     def add_notifier_entry(self, name, type, id):
         """ Add an entry to the notifier list. """
@@ -333,24 +289,10 @@ class Notifier:
             icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
         elif type == 4:#port
             icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
-#        if self.model.iter_is_valid(self.iter[id]):
-#            self.model.set_value(self.iter[id], 1, icon)
-
-#FIXME: NEEDS GTK SENSITIVITY! this section below is for hardcoded transparent icons, will not be necessary when we figure out how to make cell contents insensitive properly        
-#         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
-#         if type == 0:
-#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
-#         elif type == 1:
-#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
-#         elif type == 2:
-#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
-#         elif type == 3:
-#             icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )    
-# ... and of course the port watch
-
+        
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 1)
-        self.model.set_value(self.iter[i], 1, icon)
+        self.model.set_value(self.iter[i], 1, self.make_transparent(icon, 50))
         self.model.set_value(self.iter[i], 2, name)
         self.model.set_value(self.iter[i], 3, id)
         self.model.set_value(self.iter[i], 4, type)
@@ -374,7 +316,14 @@ class Notifier:
         self.specto.set_status(i, model.get_value(iter, 0))
         
         if self.wTree.get_widget("display_all_watches").active == False:
-            model.remove(iter)    
+            model.remove(iter)
+
+    def connected_message(self, connected):
+        if not connected:
+            self.wTree.get_widget("statusbar1").push(0, _("The network connection seems to be down, watches will not update until then."))
+            self.wTree.get_widget("statusbar1").show()
+        else:
+            self.wTree.get_widget("statusbar1").hide()
 
     def show_watch_info(self, *args):
         """ Show the watch information in the notifier window. """
@@ -430,7 +379,7 @@ class Notifier:
                 self.lblMailHostText.set_use_markup(True)#Use pango markup such as <i> and <b>
 
                 if selected.prot == 2:
-                    self.lblMailHostText.set_label( _("gmail <i>(%s unread)</i>") % selected.newMsg )
+                    self.lblMailHostText.set_label( _("gmail <i>(%s unread)</i>") % selected.oldMsg )
                 else:
                     self.lblMailHostText.set_label(selected.host)
 

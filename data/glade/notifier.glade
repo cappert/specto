@@ -285,9 +285,6 @@
                 <property name="stock_id">gtk-refresh</property>
                 <signal name="clicked" handler="on_refresh_activate"/>
               </widget>
-              <packing>
-                <property name="expand">False</property>
-              </packing>
             </child>
             <child>
               <widget class="GtkToolButton" id="button_add">
@@ -296,9 +293,6 @@
                 <property name="stock_id">gtk-add</property>
                 <signal name="clicked" handler="on_add_activate"/>
               </widget>
-              <packing>
-                <property name="expand">False</property>
-              </packing>
             </child>
             <child>
               <widget class="GtkToolButton" id="button_clear_all">
@@ -309,9 +303,6 @@
                 <property name="stock_id">gtk-clear</property>
                 <signal name="clicked" handler="on_clear_all_activate"/>
               </widget>
-              <packing>
-                <property name="expand">False</property>
-              </packing>
             </child>
           </widget>
           <packing>
@@ -426,6 +417,14 @@
             <property name="expand">False</property>
             <property name="fill">False</property>
             <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkStatusbar" id="statusbar1">
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </widget>

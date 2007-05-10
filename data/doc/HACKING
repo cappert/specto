@@ -18,8 +18,9 @@ Some file definitions :
             .../notifier.py : The source code of the main notifying window.
             .../preferences.py : The source code of the preferences window.
             .../trayicon.py : The trayicon is the icon shown in the panel notification area.
-            .../traypopup.py : The traypopup shows a popup when right clicked.
             .../util.py : Every utility function should be written here.
+            .../logger.py : A module for logging debug and info messages for the user
+            .../networkmanager.py : If available, bind into NetworkManager (a very nifty network daemon)
             .../iniparser.py : a module that reads and writes to configuration files
             .../specto_gconf.py : the gconf binding for specto that allows managing simple preferences
             etc

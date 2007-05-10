@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -6,7 +5,6 @@
 #       watch.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
-# This module code is maintained by : Pascal Potvin, Jean-François Fortin and Wout Clymans
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -35,6 +33,8 @@ from spectlib import i18n
 from spectlib.i18n import _
 from spectlib.balloons import NotificationToast
 
+from time import sleep
+
 def gettext_noop(s):
    return s
 
@@ -58,9 +58,9 @@ class Watch:
         if self.error == True and self.specto.specto_gconf.get_entry("preferences/use_problem_sound"):
             problem_sound = self.specto.specto_gconf.get_entry("preferences/problem_sound")
             gnome.sound_play(problem_sound)
-            pop_toast = self.specto.self.specto.specto_gconf.get_entry("preferences/pop_toast")  
+            pop_toast = self.specto.specto_gconf.get_entry("preferences/pop_toast")  
             if (pop_toast == True) and (self.specto.GTK):
-                NotificationToast(self.specto, _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % str(self.name), self.specto.PATH + "icons/notifier/big/error.png",  urgency="critical")
+                NotificationToast(self.specto, _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % self.name, self.specto.icon_theme.load_icon("error", 64, 0), urgency="critical")#fixme: not sure if that's possible, but this has no self.tray_x, self.tray_y, because we cannot be sure that the tray icon is actually displayed already
         
         #call update function if watch was updated
         if self.actually_updated:#we want to notify, but ONLY if it has not been marked as updated already
@@ -69,6 +69,7 @@ class Watch:
             except: 
                 if self.specto.DEBUG : self.specto.logger.log(_("Watch \"%s\" is already marked as updated in the notifier") % self.name, "info", self.__class__)
             else: pass
+            self.specto.count_updated_watches()
             self.notify()
             self.updated = True
             self.actually_updated = False
@@ -89,6 +90,7 @@ class Watch:
         #determine if libnotify support is to be used
         pop_toast = self.specto.specto_gconf.get_entry("preferences/pop_toast")
         if (pop_toast == True) and (self.specto.GTK):
+            sleep(0.5)#this is an important hack :) the reason why there is a sleep of half a second is to leave time for the tray icon to appear before getting its coordinates
             self.tray_x = self.specto.tray.get_x()
             self.tray_y = self.specto.tray.get_y()
 
@@ -96,23 +98,23 @@ class Watch:
                 NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.icon_theme.load_icon("applications-internet", 64, 0), self.tray_x, self.tray_y)
             elif self.type==1:#email
 
-                if self.prot!=2:#other account than gmail
+                if self.prot==0:#pop3 account
+                    notification_toast = i18n._translation.ungettext(\
+                    # English singular form:
+                    (_("Your email account, <b>%s</b>, has <b>%d</b> new mail.") % (self.name, self.newMsg)),\
+                    # English plural form:
+                    (_("Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s") % (self.name, self.newMsg, self.oldMsg)),\
+                    self.oldMsg)
+                elif self.prot==1:#imap account
                     notification_toast = _("Your email account, <b>%s</b>, has new mail.") % str(self.name)
                 elif self.prot==2:#gmail
                     notification_toast = i18n._translation.ungettext(\
                         # English singular form:
-                        (_("Your email account, <b>%s</b>, has <b>%d</b> new mail.") % (self.name, self.newMsg-self.oldMsg)),\
+                        (_("Your email account, <b>%s</b>, has <b>%d</b> new mail.") % (self.name, self.newMsg)),\
                         # English plural form:
-                        (_("Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s") % (self.name, self.newMsg-self.oldMsg, self.newMsg)),\
-                        self.newMsg-self.oldMsg)
+                        (_("Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s") % (self.name, self.newMsg, self.oldMsg)),\
+                        self.oldMsg)
                     
-                    if (self.newMsg - self.oldMsg >1):
-                        self.oldMsg = self.newMsg#store temporarily the number of old messages to prevent false alerts
-                    elif (self.newMsg - self.oldMsg == 1):
-                        self.oldMsg = self.newMsg#store temporarily the number of old messages to prevent false alerts
-                    else:
-                        notification_toast = None#nothing to notify the user about.
-
                 if notification_toast:
                     NotificationToast(self.specto, notification_toast, self.specto.icon_theme.load_icon("emblem-mail", 64, 0), self.tray_x, self.tray_y)
 
@@ -191,27 +193,52 @@ class Watch_io:
                 watch_options.update(watch_options_)
             values = {}
             values['name'] = name_
-            values['type'] = int(watch_options['type'])
+            try:
+                values['type'] = int(watch_options['type'])
+            except KeyError :
+                ### XXX: Hack!  If any of this info is incomplete, just move 
+                ### on to the next config item rather than crashing!
+                continue
             del watch_options['type'] #delete the standard options from the dictionary with extra arguments because we allready saved them in the line above
-            values['refresh'] = int(watch_options['refresh'])
+            try:
+                values['refresh'] = int(watch_options['refresh'])
+            except KeyError :
+                ### XXX: Hack, as above
+                continue
             del watch_options['refresh']
 
             if int(values['type']) == 0:
-                values['uri'] = watch_options['uri']
-                values['error_margin'] = watch_options['error_margin']
+                try:
+                    values['uri'] = watch_options['uri']
+                    values['error_margin'] = watch_options['error_margin']
+                except KeyError:
+                    ### XXX: Hack as above
+                    continue
 
             elif int(values['type']) == 1:
-                values['prot'] = watch_options['prot']
-                if int(values['prot']) != 2:
-                    values['host'] = watch_options['host']
-                    values['ssl'] = watch_options['ssl']
-                values['username'] = watch_options['username']
-                values['password'] = watch_options['password']
+                try:
+                    values['prot'] = watch_options['prot']
+                    if int(values['prot']) != 2:
+                        values['host'] = watch_options['host']
+                        values['ssl'] = watch_options['ssl']
+                    values['username'] = watch_options['username']
+                    values['password'] = watch_options['password']
+                except KeyError :
+                   ### XXX: Hack, as above
+                   continue
             elif int(values['type']) == 2:
-                values['file'] = watch_options['file']
-                values['mode'] = watch_options['mode']
+                try:
+                    values['file'] = watch_options['file']
+                    values['mode'] = watch_options['mode']
+                except KeyError :
+                   ### XXX: Hack, as above
+                   continue
             elif int(values['type']) == 3:
-                values['process'] = watch_options['process']
+                try:
+                    values['process'] = watch_options['process']
+                except KeyError :
+                   ### XXX: Hack, as above
+                   continue
             elif int(values['type']) == 4:
                 values['port'] = watch_options['port']              
   

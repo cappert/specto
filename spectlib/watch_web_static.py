@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -6,7 +5,6 @@
 #       watch_web_static.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
-# This module code is maintained by : Jean-François Fortin, Pascal Potvin and Wout Clymans
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -27,7 +25,7 @@ from spectlib.watch import Watch
 
 import StringIO, gzip
 import os, md5, urllib2
-from httplib import HTTPMessage
+from httplib import HTTPMessage, BadStatusLine
 from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
 from spectlib.i18n import _
@@ -75,6 +73,7 @@ class Web_watch(Watch):
         self.thread_update()
 
     def _real_update(self):
+        self.specto.notifier.connected_message(True)#hide the network error message
         lock = thread.allocate_lock()
         lock.acquire()
         t=thread.start_new_thread(self.update,(lock,))
@@ -89,6 +88,7 @@ class Web_watch(Watch):
         if not self.specto.connection_manager.connected():
             self.specto.logger.log(_("No network connection detected"),
                                    "info", self.__class__)
+            self.specto.notifier.connected_message(False) #show the network error message
             self.specto.connection_manager.add_callback(self._real_update)
             self.specto.mark_watch_busy(False, self.id)
         else :
@@ -116,7 +116,7 @@ class Web_watch(Watch):
                 request.add_header("If-None-Match", self.infoB_['ETag'])
         try:
             response = urllib2.urlopen(request)
-        except urllib2.URLError, e:
+        except (urllib2.URLError, BadStatusLine), e:
             self.error = True
             self.specto.logger.log(_("Watch: \"%s\" has error: ") % self.name + str(e), "error", self.__class__)
         else:

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -6,7 +5,6 @@
 #       watch_mail_imap.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
-# This module code is maintained by : Wout Clymans
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -25,12 +23,13 @@
 
 from spectlib.watch import Watch
 
-import poplib
+import poplib, email
 import os
 from socket import error
 from spectlib.i18n import _
 import thread
 import gtk, time
+import string
 
 class Mail_watch(Watch):
     """ 
@@ -42,6 +41,7 @@ class Mail_watch(Watch):
     newMsg = 0
     type = 1
     prot = 0
+    mail_info = []
     
     def __init__(self, refresh, host, username, password, ssl, specto, id,  name = _("Unknown Mail Watch")):
         Watch.__init__(self, specto)
@@ -83,6 +83,7 @@ class Mail_watch(Watch):
             self.specto.logger.log(_("No network connection detected"),
                                    "info", self.__class__)
             self.specto.connection_manager.add_callback(self._real_update)
+            self.specto.mark_watch_busy(False, self.id)
         else :
             self._real_update()
         
@@ -104,12 +105,27 @@ class Mail_watch(Watch):
             try:
                 s.user(self.user)
                 s.pass_(self.password)
-                self.newMsg = len(s.list()[1])
+                self.oldMsg = len(s.list()[1])
+                self.newMsg = 0
+                                
+                if self.oldMsg > 0:
+                    i=1
+                    while i < self.oldMsg+1:
+                        #str_msg = string.join(s.top(i, 0)[1], "\n")
+                        #msg = email.message_from_string(str_msg)
+                        #print format % (i, msg["From"], msg["Subject"])
+                        info = string.split(s.uidl(i))[2] #get unique info
+                        if info not in self.mail_info: #check if it is a new email or just unread
+                            self.actually_updated=True
+                            self.mail_info.append(info)
+                            self.newMsg+=1
+                        i+=1
+                    print self.mail_info
                 s.quit()
                         
-                if self.newMsg > int(self.check_old()):
-                    self.actually_updated = True
-                self.write_new()
+                #if self.newMsg > int(self.check_old()):
+                #    self.actually_updated = True
+                #self.write_new()
                 
             except poplib.error_proto, e:
                 self.error = True

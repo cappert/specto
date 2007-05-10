@@ -1,55 +1,56 @@
-# Something funny here.
-# Copyright (C) KIDDO INTERNATIONAL DRUGS DEALER.
-# Giulio Iotti <dullgiulio@gmail.com>, 2006
+# Turkish translation for specto
+# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# This file is distributed under the same license as the specto package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.1\n"
+"Project-Id-Version: specto\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: Tue Mar 13 23:10:56 2007\n"
-"PO-Revision-Date: 2007-04-25 09:39+0000\n"
-"Last-Translator: Vincenzo Consales <aquarius987@gmail.com>\n"
-"Language-Team: Italian Translation Team <it@li.org>\n"
+"PO-Revision-Date: 2007-04-13 18:08+0000\n"
+"Last-Translator: Murat Güneş <mgunes@gmx.net>\n"
+"Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: pygettext.py 1.4\n"
-"X-Rosetta-Export-Date: 2007-05-10 19:48:10+0000\n"
+"X-Rosetta-Export-Date: 2007-05-10 19:48:11+0000\n"
 
 #: ../data/glade/add_watch.glade.h:1
 msgid "<b>General settings</b>"
-msgstr "<h>Impostazioni generali</b>"
+msgstr "<b>Genel ayarlar</b>"
 
 #: ../data/glade/add_watch.glade.h:2
 msgid "<b>Watch name</b>"
-msgstr "<b>Nome dell'osservatore</b>"
+msgstr "<b>İzleme adı</b>"
 
 #: ../data/glade/add_watch.glade.h:3
 msgid "Add a Watch"
-msgstr "Aggiungi un osservatore"
+msgstr "İzleme Ekle"
 
 #: ../data/glade/add_watch.glade.h:4
+#, fuzzy
 msgid ""
 "Choose \n"
 "an other name"
-msgstr ""
-"Scegli \n"
-"un altro nome"
+msgstr "Seç"
 
 #: ../data/glade/add_watch.glade.h:6
 msgid ""
 "Edit existing\n"
 "watch"
 msgstr ""
-"Cambia un osservatore\n"
-"esistente"
+"Varolan izlemeyi\n"
+"düzenle"
 
 #: ../data/glade/add_watch.glade.h:8 ../data/glade/edit_watch.glade.h:2
 msgid "Name:"
-msgstr "Nome:"
+msgstr "Ad:"
 
 #: ../data/glade/add_watch.glade.h:9 ../data/glade/edit_watch.glade.h:3
 msgid "Refresh Interval:"
-msgstr "Interallo di aggiornamento:"
+msgstr "Tazeleme aralığı:"
 
 #: ../data/glade/add_watch.glade.h:10 ../data/glade/edit_watch.glade.h:5
 msgid ""
@@ -58,14 +59,14 @@ msgid ""
 "Hours\n"
 "Days"
 msgstr ""
-"Secondi\n"
-"Minuti\n"
-"Ore\n"
-"Giorni"
+"Saniye\n"
+"Dakika\n"
+"Saat\n"
+"Gün"
 
 #: ../data/glade/add_watch.glade.h:14
 msgid "The watch name is already in use"
-msgstr "Il nome dell'osservatore è già in uso"
+msgstr "İzleme adı zaten kullanımda"
 
 #: ../data/glade/add_watch.glade.h:15
 msgid ""
@@ -74,14 +75,14 @@ msgid ""
 "\n"
 "If you want to create a new one, you need to choose a different name."
 msgstr ""
-"Il nome dell'osservatore che hai specificato esite già Intendevi modificare "
-"quell'osservatore esistente, o intendevi forse crearne uno nuovo?\n"
+"Belirttiğiniz izleme adı zaten kullanımda! Varolan izlemeyi düzenlemek mi, "
+"yoksa yeni bir izleme yaratmak mı istiyorsunuz?\n"
 "\n"
-"Se ne vuoi creare uno novo, devi scegliere un nome diverso."
+"Eğer yeni bir izleme yaratmak istiyorsanız, farklı bir isim seçmelisiniz."
 
 #: ../data/glade/add_watch.glade.h:18
 msgid "Watch Type:"
-msgstr "Tipo di osservatore:"
+msgstr "İzleme Türü:"
 
 #: ../data/glade/add_watch.glade.h:19
 #, fuzzy
@@ -92,31 +93,31 @@ msgid ""
 "Process\n"
 "Port"
 msgstr ""
-"Sito web\n"
-"Email\n"
-"File o cartelle\n"
-"Processo\n"
-"Porta"
+"Web Sitesi\n"
+"E-Posta\n"
+"Dosyalar veya Klasörler\n"
+"İşlem\n"
+"Port"
 
 #: ../data/glade/edit_watch.glade.h:1
 msgid "Error Log"
-msgstr "Giornale di errore"
+msgstr "Hata Günlüğü"
 
 #: ../data/glade/edit_watch.glade.h:4 ../data/glade/log_dialog.glade.h:9
 msgid "Save As"
-msgstr "Salva come..."
+msgstr "Farklı İsimle Kaydet"
 
 #: ../data/glade/edit_watch.glade.h:9
 msgid "Watch Settings"
-msgstr "Impostazioni dell'osservatore"
+msgstr "İzleme Ayarları"
 
 #: ../data/glade/import_export.glade.h:1
 msgid "Deselect all"
-msgstr ""
+msgstr "Tümününün seçimini kaldır"
 
 #: ../data/glade/import_export.glade.h:2
 msgid "Select all"
-msgstr ""
+msgstr "Tümünü Seç"
 
 #: ../data/glade/log_dialog.glade.h:1
 msgid ""
@@ -127,138 +128,140 @@ msgid ""
 "Error\n"
 "Critical"
 msgstr ""
-"Tutti\n"
-"Debug\n"
-"Info\n"
-"Attenzione\n"
-"Errore\n"
-"Critici"
+"Tüm\n"
+"Hata Ayıklama\n"
+"Bilgi\n"
+"Uyarı\n"
+"Hata\n"
+"Kritik"
 
 #: ../data/glade/log_dialog.glade.h:7
 msgid "Filter:"
-msgstr "Filtro:"
+msgstr "Fİltre:"
 
 #: ../data/glade/log_dialog.glade.h:8
 msgid "Logs"
-msgstr "Giornali"
+msgstr "Günlükler"
 
 #: ../data/glade/notifier.glade.h:1
 msgid "By Active"
-msgstr "Per attivit"
+msgstr "Faaliyet Durumuna Göre"
 
 #: ../data/glade/notifier.glade.h:2
 msgid "By Name"
-msgstr "Per nome"
+msgstr "Ada Göre"
 
 #: ../data/glade/notifier.glade.h:3
 msgid "By Watch Type"
-msgstr "Per tipo di osservatore"
+msgstr "İzleme Türüne Göre"
 
 #: ../data/glade/notifier.glade.h:4
+#, fuzzy
 msgid "Display _All Watches"
-msgstr "Visualizza _tutti gli osservatori"
+msgstr "Tüm _İzlemeleri Göster"
 
 #: ../data/glade/notifier.glade.h:5
+#, fuzzy
 msgid "Display _Toolbar"
-msgstr "Visualizza _barra degli strumenti"
+msgstr "Araç _Çubuğunu Göster"
 
 #: ../data/glade/notifier.glade.h:6
 msgid "Notifications"
-msgstr "Notifiche"
+msgstr "Bildirimler"
 
 #: ../data/glade/notifier.glade.h:7
 msgid "Sorting"
-msgstr "Ordinamento"
+msgstr "Sıralama"
 
 #: ../data/glade/notifier.glade.h:8
 msgid "_Clear All"
-msgstr "_Pulisci tutti"
+msgstr "_Tümünü Sil"
 
 #: ../data/glade/notifier.glade.h:9
 msgid "_Edit"
-msgstr "_Cambia"
+msgstr ""
 
 #: ../data/glade/notifier.glade.h:10
 msgid "_Error Log"
-msgstr "_Giornale errori"
+msgstr ""
 
 #: ../data/glade/notifier.glade.h:11
 msgid "_Export Watches"
-msgstr "_Esporta osservatori"
+msgstr ""
 
 #: ../data/glade/notifier.glade.h:12
 msgid "_File"
-msgstr "_File"
+msgstr ""
 
 #: ../data/glade/notifier.glade.h:13
 msgid "_Help"
-msgstr "_Aiuto"
+msgstr ""
 
 #: ../data/glade/notifier.glade.h:14
 msgid "_Import Watches"
-msgstr "_Importa osservatori"
+msgstr ""
 
 #: ../data/glade/notifier.glade.h:15
 msgid "_View"
-msgstr "_Visualizza"
+msgstr ""
 
 #: ../data/glade/preferences.glade.h:1
 msgid "<b>Debugging and Logging</b>"
-msgstr "<b>Debug e giornale</b>"
+msgstr "<b>Hata ayıklama ve günlükleme</b>"
 
 #: ../data/glade/preferences.glade.h:2
 msgid "<b>Display</b>"
-msgstr "<b>Mostra</b>"
+msgstr "<b>Görüntü</b>"
 
 #: ../data/glade/preferences.glade.h:3
 msgid "<b>Sounds</b>"
-msgstr "<b>Suoni</b>"
+msgstr ""
+"Copy text   \t\n"
+"<b>Sesler</b>"
 
 #: ../data/glade/preferences.glade.h:4
 msgid "A problem occured"
-msgstr "Si è verificato un problema"
+msgstr "Bir sorun ortaya çıktı"
 
 #: ../data/glade/preferences.glade.h:5
 msgid "A watch is updated"
-msgstr "Un osservatore è stato aggiornato"
+msgstr "Bir izleme güncellendi"
 
 #: ../data/glade/preferences.glade.h:6
 msgid "Always show the icon in the notification area"
-msgstr "Visualizza sempre l'icona nell'area di notifica"
+msgstr "Bildirim alanında her zaman ikonu göster"
 
 #: ../data/glade/preferences.glade.h:7
 msgid "Display the notification window in the window list"
-msgstr "Mostra la finestra di notifica nella lista finestre"
+msgstr "Bildirim penceresini pencere listesinde göster"
 
 #: ../data/glade/preferences.glade.h:8
 msgid "Duration (in seconds):"
-msgstr "Durata (in secondi):"
+msgstr "Süre (saniye)"
 
 #: ../data/glade/preferences.glade.h:9
 msgid "Enable debug mode and logging"
-msgstr "Abilita la modalità di debug ed il giornale"
+msgstr "Hata ayıklama ve günlükleme modunu etkinleştir"
 
 #: ../data/glade/preferences.glade.h:10
 msgid ""
 "If activated, you will receive more information when running Specto from a "
 "terminal, and more information will be printed to the logs."
 msgstr ""
-"Se attivato, riceverai piu` informazioni quando fai partire Specto dal "
-"terminale e piu` informazioni saranno scritte nel giornale."
+"Etkinleştirildiğinde, Specto'yu terminalden çalıştırırken daha fazla bilgi "
+"alacaksınız, ve günlüklere daha fazla bilgi yazılacak."
 
 #: ../data/glade/preferences.glade.h:11
 msgid "Pop toasts from the tray icon when a watch is updated"
-msgstr ""
-"Visualizza un toast sulla barra delle icone quando un osservatore viene "
-"aggiornato"
+msgstr "Bir izleme güncellendiğinde bildirim alaını ikonundan uyarı ver"
 
 #: ../data/glade/preferences.glade.h:12
 msgid "Preferences"
-msgstr "Preferenze"
+msgstr "Tercihler"
 
 #: ../data/glade/preferences.glade.h:13
 msgid "Select a File"
-msgstr "Seleziona un file"
+msgstr "Bir Dosya Seçin"
 
 #: ../data/glade/preferences.glade.h:14
 msgid ""
@@ -266,28 +269,30 @@ msgid ""
 "you diagnose problems. Logging will save all this information to a log file. "
 "You can use this to help developers improve Specto."
 msgstr ""
-"In modalità debug, Specto fornirà piu` informazioni per aiutarti a "
-"diagnosticare i problemi."
+"Hata ayıklama modunda, Specto sorunları çözmenize yardımcı olmak için daha "
+"fazla bilgi temin edecektir. Günlükleme tüm bu bilgiyi bir günlük dosyasına "
+"yazacaktır. Bunu programcıların Specto'yu geliştirmesine yardım etmek için "
+"kullanabilirsiniz."
 
 #: ../spectlib/add_watch.py:166
 msgid "file"
-msgstr "file"
+msgstr "dosya"
 
 #: ../spectlib/add_watch.py:168
 msgid "folder"
-msgstr "cartella"
+msgstr "dizin"
 
 #: ../spectlib/add_watch.py:312 ../spectlib/edit_watch.py:208
 msgid "URL:"
-msgstr "URL:"
+msgstr "Adres (URL):"
 
 #: ../spectlib/add_watch.py:326 ../spectlib/edit_watch.py:219
 msgid "Error Margin (%):"
-msgstr "Margine di errore (%):"
+msgstr "Hata Payı (%):"
 
 #: ../spectlib/add_watch.py:347 ../spectlib/edit_watch.py:245
 msgid "Protocol:"
-msgstr "Protocollo:"
+msgstr "Protokol:"
 
 #: ../spectlib/add_watch.py:356
 msgid "POP3"
@@ -299,179 +304,179 @@ msgstr "IMAP"
 
 #: ../spectlib/add_watch.py:367 ../spectlib/edit_watch.py:319
 msgid "Gmail"
-msgstr "Gmail"
+msgstr "GMail"
 
 #: ../spectlib/add_watch.py:373
 msgid "User:"
-msgstr "Utente:"
+msgstr "Kullanıcı:"
 
 #: ../spectlib/add_watch.py:383 ../spectlib/edit_watch.py:267
 msgid "Password:"
-msgstr "Password:"
+msgstr "Parola :"
 
 #: ../spectlib/add_watch.py:394 ../spectlib/edit_watch.py:279
 msgid "Host:"
-msgstr "Host:"
+msgstr "Bilgisayar Adı:"
 
 #: ../spectlib/add_watch.py:404 ../spectlib/edit_watch.py:287
 msgid "Use SSL:"
-msgstr "Usa SSL:"
+msgstr "SSL Kullan:"
 
 #: ../spectlib/add_watch.py:419 ../spectlib/edit_watch.py:331
 msgid "File/folder:"
-msgstr "File/Cartella:"
+msgstr "Dosya/Klasör:"
 
 #: ../spectlib/add_watch.py:429 ../spectlib/edit_watch.py:341
 msgid "File"
-msgstr "File"
+msgstr "Dosya"
 
 #: ../spectlib/add_watch.py:435 ../spectlib/edit_watch.py:346
 msgid "Folder"
-msgstr "Cartella"
+msgstr "Dizin"
 
 #: ../spectlib/add_watch.py:441 ../spectlib/edit_watch.py:352
 msgid "Choose a file or folder"
-msgstr "Scegli un file o una cartella"
+msgstr "Bir dosya ya da dizin seçiniz"
 
 #: ../spectlib/add_watch.py:450 ../spectlib/edit_watch.py:371
 msgid "Process:"
-msgstr "Processo:"
+msgstr "İşlem:"
 
 #: ../spectlib/add_watch.py:465 ../spectlib/edit_watch.py:389
 msgid "Port:"
-msgstr "Porta:"
+msgstr "Bağlantı Noktası:"
 
 #: ../spectlib/edit_watch.py:67
 msgid "Edit watch: "
-msgstr "Cambia un osservatore: "
+msgstr "İzleme Düzenle "
 
 #: ../spectlib/edit_watch.py:171
 msgid "Watch : \"%s\" edited."
-msgstr "Osservatore: \"%s\" cambiato."
+msgstr "\"%s\" izlemesi düzenlendi."
 
 #: ../spectlib/edit_watch.py:183
 msgid "removed logs from watch: \"%s\""
-msgstr "informazioni del giornale rimosse dall'osservatore: \"%s\""
+msgstr "\"%s\" izlemesinden günlükler çıkarıldı"
 
 #: ../spectlib/edit_watch.py:256
 msgid "Username:"
-msgstr "Nome utente:"
+msgstr "Kulanıcı Adı:"
 
 #: ../spectlib/edit_watch.py:295
 msgid "Pop3"
-msgstr "Pop3"
+msgstr "POP3"
 
 #: ../spectlib/edit_watch.py:307
 msgid "Imap"
-msgstr "Imap"
+msgstr "IMAP"
 
 #: ../spectlib/import_export.py:70 ../spectlib/import_export.py:71
 msgid "Import watches"
-msgstr ""
+msgstr "İzlemeleri İçe Aktar"
 
 #: ../spectlib/import_export.py:73 ../spectlib/import_export.py:74
 msgid "Export watches"
-msgstr ""
+msgstr "İzlemeleri Dışa Aktar"
 
 #: ../spectlib/import_export.py:85 ../spectlib/notifier.py:665
 msgid "Active"
-msgstr "Attivo"
+msgstr "Etkin"
 
 #: ../spectlib/import_export.py:93 ../spectlib/notifier.py:672
 msgid "Type"
-msgstr "Tipo"
+msgstr "Tür"
 
 #: ../spectlib/import_export.py:102 ../spectlib/notifier.py:681
 msgid "Name"
-msgstr "Nome"
+msgstr "İsim"
 
 #: ../spectlib/import_export.py:111 ../spectlib/notifier.py:690
 msgid "ID"
-msgstr "ID"
+msgstr "No (ID)"
 
 #: ../spectlib/import_export.py:118 ../spectlib/notifier.py:697
 msgid "TYPE"
-msgstr "TIPO"
+msgstr "TÜR"
 
 #: ../spectlib/main.py:64
 msgid "no GTK, activating console mode"
-msgstr "niente GTK, attivo la modalità console"
+msgstr "GTK bulunamadı, konsol modu etkinleştiriliyor"
 
 #: ../spectlib/main.py:157
 msgid "Specto is already running!"
-msgstr "Specto è già in funzione."
+msgstr "Specto zaten çalışmakta!"
 
 #: ../spectlib/main.py:239 ../spectlib/watch.py:238
 msgid "No updates yet."
-msgstr "Ancora nessun aggiornamento."
+msgstr "Henüz güncelleme yok."
 
 #: ../spectlib/main.py:294
 msgid "watch \"%s\" started"
-msgstr "osservatore \"%s\" partito"
+msgstr "\"%s\" izlemesi başladı"
 
 #: ../spectlib/main.py:299
 msgid "watch \"%s\" stopped"
-msgstr "osservatore \"%s\" fermato"
+msgstr "\"%s\" izlemesi durduruldu"
 
 #: ../spectlib/main.py:484 ../spectlib/main.py:493
 msgid "notifier: reappear"
-msgstr "notificatore: riapparso"
+msgstr "hatırlatıcı: yeniden görünür"
 
 #: ../spectlib/main.py:489
 msgid "notifier: hide"
-msgstr "notificatore: nascosto"
+msgstr "hatırlatıcı: sakla"
 
 #: ../spectlib/main.py:502
 msgid "preferences: create"
-msgstr "preferenze: create"
+msgstr "Tercihler: yarat"
 
 #: ../spectlib/main.py:505
 msgid "preferences: reappear"
-msgstr "preferenze: riapparse"
+msgstr "tercihler: yeinden görünür"
 
 #: ../spectlib/main.py:512
 msgid "error log: create"
-msgstr "giornale di errore: creato"
+msgstr "hata günlüğü: yarat"
 
 #: ../spectlib/main.py:514
 msgid "error log: already visible"
-msgstr "giornale di errore: già visibile"
+msgstr "hata günlüğü: zaten görünür"
 
 #: ../spectlib/main.py:517
 msgid "error log: recreate"
-msgstr "giornale di errore: ricreato"
+msgstr "hata günlüğü: yeniden yarat"
 
 #: ../spectlib/main.py:523
 msgid "add watch: create"
-msgstr "aggiungi osservatore: crea"
+msgstr "izleme ekle: yarat"
 
 #: ../spectlib/main.py:525
 msgid "add watch: already visible"
-msgstr "aggiungi osservatore: già visibile"
+msgstr "izleme ekle: zaten görünür"
 
 #: ../spectlib/main.py:528
 msgid "add watch: recreate"
-msgstr "aggiungi osservatore: ricreato"
+msgstr "izleme ekle: yeniden yarat"
 
 #: ../spectlib/main.py:542
 msgid "edit watch: create"
-msgstr "cambia osservatore: creato"
+msgstr "izleme düzenle: yarat"
 
 #: ../spectlib/main.py:544
 msgid "edit watch: already visible"
-msgstr "cambia osservatore: già visibile"
+msgstr "izleme düzenle: zaten görünür"
 
 #: ../spectlib/main.py:547
 msgid "edit watch: recreate"
-msgstr "cambia osservatore: ricreato"
+msgstr "izleme düzenle: yeniden yarat"
 
 #: ../spectlib/main.py:580
 msgid "Cannot quit yet"
-msgstr ""
+msgstr "Henüz çıkmak mümkün değil"
 
 #: ../spectlib/main.py:584
 msgid "Murder!"
-msgstr "Assassina!"
+msgstr "Cinayet!"
 
 #: ../spectlib/main.py:595
 msgid ""
@@ -480,22 +485,26 @@ msgid ""
 "This may be because it is checking for watch updates.\n"
 "However, you can try forcing it to quit by clicking the murder button."
 msgstr ""
+"<b><big>Specto şu anda meşgul ve henüz sonlandırılamaz.</big></b>\n"
+"\n"
+"Bunun nedeni izleme güncellemelerini kontrol etmekte olması olabilir.\n"
+"Yine de \"Cinayet!\" düğmesine basarak programı sonlanmaya zorlayabilirsiniz."
 
 #: ../spectlib/notifier.py:435
 msgid "gmail <i>(%s unread)</i>"
-msgstr "gmail <i>(%s non letti)</i>"
+msgstr "gmail <i>(%s adet okunmamış)</i>"
 
 #: ../spectlib/notifier.py:495
 msgid "watch \"%s\" opened"
-msgstr "osservatore \"%s\" aperto"
+msgstr "izleme \"%s\" açıldı"
 
 #: ../spectlib/notifier.py:534
 msgid ""
 "You can add all kinds of websites as watches. Static pages, RSS or Atom "
 "feeds, etc. Specto will automatically handle them."
 msgstr ""
-"Puoi aggiungere tutti i tipi di sito come osservatori. Pagine statiche, feed "
-"RSS o Atom, ecc. Specto li gestirà autonomaticamente."
+"Her tür web sitesini izleme olarak ekleyebilirsiniz. Statik sayfalar, RSS ve "
+"Atom kaynakları, vs. Specto bunları otomatik olarak tanıyacaktır."
 
 #: ../spectlib/notifier.py:535
 msgid ""
@@ -503,297 +512,263 @@ msgid ""
 "difference percentage. This allows you to adapt to websites that change "
 "constantly or have lots of advertising."
 msgstr ""
-"Gli osservatori di siti possono usare diversi margini di errore il che ti "
-"consente di impostare un minimo di percentuale di differenza. Ció ti "
-"permette di adattartu ad una pagina che cambia o che ha molta pubblicittà"
+"Web sitesi izlemelerinde asgari bir fark yüzdesi belirtmenize imkan sağlayan "
+"bir \"hata payı\" kullanabilirsiniz. Bu, sürekli değişen veya fazlaca reklam "
+"içeren web sitelerine uyumluluğu sağlayabilir."
 
 #: ../spectlib/notifier.py:536
 msgid ""
 "Single-click an existing watch to display information, and double-click it "
 "to open the content."
 msgstr ""
-"Clicca su un osservatore esistente per visualizzane le informazioni, e fai "
-"doppio click per aprirne i contenuti."
+"Varolan bir izlemeye tek tıklayarak bilgi görüntüleyebilir, ve çift "
+"tıklayarak içeriğini açabilirsiniz."
 
 #: ../spectlib/notifier.py:537
 msgid ""
 "Please set a reasonable refresh interval in order to save bandwidth and "
 "prevent you from being blocked from content providers."
 msgstr ""
-"Seleziona un intervallo di aggiornamento ragionevole per risparmiare la tua "
-"banda e per evitare di essere bloccato dai fornitori di contenuti."
+"Lütfen bant genişliğinden tasarruf etmek ve içerik sağlayıcılar tarafından "
+"engellenmeyi önlemek için makul bir tazeleme aralığı seçiniz."
 
 #: ../spectlib/notifier.py:597
 msgid "notifier: size set"
-msgstr "notificatore: dimensione impostata"
+msgstr "hatırlatma: ebat ayarlandı"
 
 #: ../spectlib/notifier.py:599
 msgid "notifier: size not set"
-msgstr "notificatore: dimensione non impostata"
+msgstr "hatırlatma: ebat ayarlanmadı"
 
 #: ../spectlib/notifier.py:603
 msgid "notifier: position set"
-msgstr "notificatore: posizione impostata"
+msgstr "hatırlatma: yer ayarlı"
 
 #: ../spectlib/notifier.py:605
 msgid "notifier: position not set"
-msgstr "notificatore: posizione non impostata"
+msgstr "hatırlatma: yer ayarlanmadı"
 
 #: ../spectlib/notifier.py:710
 msgid "Tip of the Day:"
-msgstr "Suggerimento del giorno:"
+msgstr "Günün Püf Noktası:"
 
 #: ../spectlib/notifier.py:728 ../spectlib/notifier.py:783
 #: ../spectlib/notifier.py:838 ../spectlib/notifier.py:881
 #: ../spectlib/notifier.py:926
 msgid "<b>Name:</b>"
-msgstr "<b>Nome:</b>"
+msgstr "<b>Ad::</b>"
 
 #: ../spectlib/notifier.py:740 ../spectlib/notifier.py:795
 #: ../spectlib/notifier.py:850 ../spectlib/notifier.py:893
 #: ../spectlib/notifier.py:938
 msgid "<b>Last Updated:</b>"
-msgstr "<b>Ultimo aggiornamento:</b>"
+msgstr "<b>Son Güncelleme:</b>"
 
 #: ../spectlib/notifier.py:752
 msgid "<b>Location:</b>"
-msgstr "<b>Posizione:</b>"
+msgstr "<b>Yer:</b>"
 
 #: ../spectlib/notifier.py:764
 msgid "<b>Error Margin:</b>"
-msgstr "<b>Margine di errore:</b>"
+msgstr "<b>Hata Payı:</b>"
 
 #: ../spectlib/notifier.py:807
 msgid "<b>Host:</b>"
-msgstr "<b>Host:</b>"
+msgstr "<b>Makine:</b>"
 
 #: ../spectlib/notifier.py:819
 msgid "<b>Username:</b>"
-msgstr "<b>Nome utente:</b>"
+msgstr "<b>Kullanıcı Adı:</b>"
 
 #: ../spectlib/notifier.py:862
 msgid "<b>File/folder:</b>"
-msgstr "<b>File/cartella:</b>"
+msgstr "<b>Dosya/klasör:</b>"
 
 #: ../spectlib/notifier.py:905
 msgid "<b>Process:</b>"
-msgstr ""
+msgstr "<b>İşlem:</b>"
 
 #: ../spectlib/notifier.py:950
 msgid "<b>Port:</b>"
-msgstr ""
+msgstr "<b>Bağlantı noktası:</b>"
 
 #: ../spectlib/preferences.py:100
 msgid "Preferences saved."
-msgstr "Preferenze salvate."
+msgstr "Tercihler kaydedildi."
 
 #: ../spectlib/trayicon.py:76
 msgid "No updated watches."
-msgstr "Nessun osservatore aggiornato."
+msgstr "Güncellenmiş bir izleme yok."
 
 #: ../spectlib/trayicon.py:78
 msgid "Updated watches:\n"
-msgstr "Osservatori aggiornati:\n"
+msgstr "Güncellenmiş izlemeler:\n"
 
 #: ../spectlib/trayicon.py:80
 msgid "website"
-msgstr "sito web"
+msgstr "web sitesi"
 
 #: ../spectlib/trayicon.py:80
 msgid "websites"
-msgstr "siti web"
+msgstr "web siteleri"
 
 #: ../spectlib/trayicon.py:86
 msgid "mail account"
-msgstr "account email"
+msgstr "posta hesabı"
 
 #: ../spectlib/trayicon.py:86
 msgid "mail accounts"
-msgstr "account email"
+msgstr "posta hesapları"
 
 #: ../spectlib/trayicon.py:94
 msgid "file/folder"
-msgstr "file/cartella"
+msgstr "dosya/klasör"
 
 #: ../spectlib/trayicon.py:94
 msgid "files/folders"
-msgstr "file/cartelle"
+msgstr "dosyalar/klasörler"
 
 #: ../spectlib/trayicon.py:101
 msgid "process"
-msgstr ""
+msgstr "işlem"
 
 #: ../spectlib/trayicon.py:101
 msgid "processes"
-msgstr ""
+msgstr "işlemler"
 
 #: ../spectlib/trayicon.py:137
 msgid "Hide window"
-msgstr "Nascondi finestra"
+msgstr "Pencereyi gizle"
 
 #: ../spectlib/trayicon.py:139
 msgid "Show window"
-msgstr "Visualizza finestra"
+msgstr "Pencereyi göster"
 
 #: ../spectlib/watch.py:63
 msgid ""
 "The watch, <b>%s</b>, has a problem. You may need to check the error log."
 msgstr ""
-"L'osservatore, <b>%s</b>, ha un problema. Potrebbe essere necessario "
-"controllare il giornale degli errori."
+"<b>%s</b> izlemesinde bir sorun var. Daha fazla bilgi için hata günlüğüne "
+"bakınız."
 
 #: ../spectlib/watch.py:70
 msgid "Watch \"%s\" is already marked as updated in the notifier"
-msgstr ""
+msgstr "\"%s\" izlemesi zaten güncellenmiş olarak işaretli"
 
 #: ../spectlib/watch.py:84
 msgid "Watch \"%s\" updated!"
-msgstr "Osservatore \"%s\" aggironato!"
+msgstr "\"%s\" izlemesi güncellendi!"
 
 #: ../spectlib/watch.py:96
 msgid "The website, <b>%s</b>, has been updated."
-msgstr "Il sito, <b>%s</b>, è stato aggiornato."
+msgstr "<b>%s</b> web sitesi güncellendi."
 
 #: ../spectlib/watch.py:100
 msgid "Your email account, <b>%s</b>, has new mail."
-msgstr "Il tuo account email, <b>%s<b>, ha nuovi messaggi."
+msgstr "<b>%s</b> adlı posta hesabınızda yeni posta var."
 
 #: ../spectlib/watch.py:104
 msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
-msgstr "Il tuo account email, <b>%s</b>, ha <b>%s</b> nuovi messaggi."
+msgstr "<b>%s</b> adlı posta hesabınızda <b>%d</b> adet yeni posta var."
 
 #: ../spectlib/watch.py:106
 msgid ""
 "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %s"
 msgstr ""
-"Il tuo account email, <b>%s</b>, ha <b>%d</b> nuovi messaggi non letti, per "
-"un totatle di %s messaggi."
+"<b>%s</b> adlı posta hesabınızda <b>%d</b> okunmamış, ve toplamda %s posta "
+"var."
 
 #: ../spectlib/watch.py:120
 msgid "The file/folder, <b>%s</b>, has been updated."
-msgstr "Il file/cartella, <b>%s</b>, è stato aggiornato."
+msgstr ""
 
 #: ../spectlib/watch.py:123
-#, fuzzy
 msgid "The process, <b>%s</b>, has stopped."
-msgstr "Il processo, <b>%s</b>, è stato fermato."
+msgstr ""
 
 #: ../spectlib/watch.py:125
 msgid "The process, <b>%s</b>, has started."
-msgstr "Il processo, <b>%s</b>, è stato avviato."
+msgstr ""
 
 #: ../spectlib/watch.py:130
-#, fuzzy
 msgid "The connection, <b>%s</b>, was closed."
-msgstr "La connessione, <b>%s</b>, è stata chiusa."
+msgstr "<b>%s</b> bağlantısı kapandı"
 
 #: ../spectlib/watch.py:132
-#, fuzzy
 msgid "The connection, <b>%s</b>, was established."
-msgstr "La connessione, <b>%s</b>, è stata stabilita."
+msgstr "<b>%s</b> bağlantısı sağlandı"
 
 #: ../spectlib/watch.py:136
 msgid "Not implemented yet"
-msgstr "Non ancora implementato"
+msgstr "Henüz kullanımda değil"
 
 #: ../spectlib/watch_file.py:45
 msgid "Unknown File Watch"
-msgstr "File osservatore sconosciuto"
+msgstr "Bilinmeyen Dosya İzlemesi"
 
 #: ../spectlib/watch_file.py:77 ../spectlib/watch_mail_gmail.py:87
 #: ../spectlib/watch_mail_imap.py:85 ../spectlib/watch_mail_pop3.py:93
 #: ../spectlib/watch_port.py:72 ../spectlib/watch_process.py:73
 #: ../spectlib/watch_web_static.py:100
 msgid "Updating watch: \"%s\""
-msgstr "Aggiorno l'osservatore: \"%s\""
+msgstr "\"%s\" izlemesi güncelleniyor"
 
 #: ../spectlib/watch_file.py:100 ../spectlib/watch_port.py:86
 #: ../spectlib/watch_process.py:87
 msgid "Watch: \"%s\" has an error"
-msgstr "Osservatore: \"%s\" ha un errore"
+msgstr "\"%s\"  izlemesinde bir hata var"
 
 #: ../spectlib/watch_file.py:115
 msgid "update: %s was modified"
-msgstr "aggiornamento: %s è stato modificato"
+msgstr "%s değiştirildi"
 
 #: ../spectlib/watch_file.py:120
 msgid "update: %s was created"
-msgstr "aggiornamento: %s è stato creato"
+msgstr "%s yaratıldı"
 
 #: ../spectlib/watch_file.py:134
 msgid "Skipping %s"
-msgstr "Salto %s"
+msgstr "%s atlanıyor"
 
 #: ../spectlib/watch_file.py:143
 msgid "update: %s removed"
-msgstr "aggiornamento: %s rimosso"
+msgstr "%s kaldırıldı"
 
 #: ../spectlib/watch_mail_gmail.py:45 ../spectlib/watch_mail_imap.py:44
 #: ../spectlib/watch_mail_pop3.py:46
 msgid "Unknown Mail Watch"
-msgstr "Osservatore posta sconosciuto"
+msgstr "Bilinmeyen Posta İzlemesi"
 
 #: ../spectlib/watch_mail_gmail.py:77 ../spectlib/watch_mail_imap.py:75
 #: ../spectlib/watch_mail_pop3.py:83 ../spectlib/watch_web_static.py:90
 msgid "No network connection detected"
-msgstr "Nessuna connessione di rete rilevata"
+msgstr "Ağ bağlantısı tesbit edilemedi"
 
 #: ../spectlib/watch_mail_gmail.py:110
 msgid "Watch: \"%s\" has error: wrong username/password"
-msgstr ""
-"Osservatore: \"%s\" ha incontrato un errore: nome utente o password errata"
+msgstr "\"%s\" izlemesinde bir hata var: yanlış kullanıcı adı / şifre"
 
 #: ../spectlib/watch_mail_imap.py:94 ../spectlib/watch_mail_imap.py:118
 msgid "Watch: \"%s\" has error: %s"
-msgstr "Osservatore: \"%s\" ha un errore: %s"
+msgstr "\"%s\" izlemesinde hata: %s"
 
 #: ../spectlib/watch_mail_imap.py:107
 msgid "Mailbox does not exist"
-msgstr "La casella di posta non esiste"
+msgstr "Böyle bir posta kutusu yok"
 
 #: ../spectlib/watch_mail_pop3.py:102 ../spectlib/watch_mail_pop3.py:116
 #: ../spectlib/watch_web_static.py:120
 msgid "Watch: \"%s\" has error: "
-msgstr "Osservatore: \"%s\" ha un errore: "
+msgstr "\"%s\" izlemesinde hata: "
 
 #: ../spectlib/watch_port.py:40 ../spectlib/watch_process.py:41
 msgid "Unknown Process Watch"
-msgstr ""
+msgstr "Bilinmeyen İşlem İzlemesi"
 
 #: ../spectlib/watch_web_static.py:64
 msgid "Watch: \"%s\" has error: empty url"
-msgstr "Osservatore: \"%s\" ha un errore: url vuota"
+msgstr "\"%s\" izlemesinde hata: boş adres (URL)"
 
 #: ../spectlib/watch_web_static.py:179
 msgid "Difference percentage:%s (Watch: \"%s\")"
-msgstr "Differenza percentuale:%s (Osservatore: \"%s\")"
-
-#~ msgid ""
-#~ "Website\n"
-#~ "Email\n"
-#~ "Files or folders"
-#~ msgstr ""
-#~ "Sito\n"
-#~ "Email\n"
-#~ "File o cartella"
-
-#~ msgid "Clear All"
-#~ msgstr "Pulisci tutti"
-
-#~ msgid ""
-#~ "Google.com cannot be reached, your Internet connection seems down! Waiting "
-#~ "10 seconds."
-#~ msgstr ""
-#~ "Non riesco a raggiungere Google.com, il tuo collegamento a Internet sembra "
-#~ "non funzionare! Attendo 10 secondi."
-
-#~ msgid ""
-#~ "Specto is currently busy and cannot quit yet.\n"
-#~ "\n"
-#~ "This may be because it is checking for watch updates.\n"
-#~ "However, you can try forcing it to quit by clicking the murder button."
-#~ msgstr ""
-#~ "Specto è occupato e non piu` ancora uscire.\n"
-#~ "\n"
-#~ "Porebbe essere perché sta controllando l'aggiornamento di un osservatore.\n"
-#~ "Tuttavia puoi provare a forzare l'uscita cliccando sul tasto dell'assassino."
+msgstr "Fark yüzdesi:s% (İzleme: \"%s\")"

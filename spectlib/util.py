@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -6,7 +5,6 @@
 #       util.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
-# This module code is maintained by : Jean-François Fortin, Pascal Potvin and Wout Clymans
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -37,13 +35,15 @@ def open_gconf_application(key):
     """ Get the name from gconf and open the application. """
     specto_gconf = Specto_gconf(key)
     application = specto_gconf.get_entry("command")
+    if "mailto" in key:
+        application = application.replace(" %s", "")#this is an ugly hack, because evolution really doesn't want to startup with %s
     os.system(application + " &")
     
 def open_file_watch(f):
     """ Open a file with the correct application (mime). """
     mime_type = gnomevfs.get_mime_type(f)
     application = gnomevfs.mime_get_default_application(mime_type)
-    os.system(application[2] + " " + f + " &")
+    os.system(application[2] + " \"" + f + "\" &")
 
 def get_path(category=None):
     """ Return the correct path. """

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: UTF8 -*-
 
 # Specto , Unobtrusive event notifier
@@ -157,24 +156,28 @@ class Import_watch:
     
     def add_watch_entry(self, name, type, id):
         """ Add an entry to the notifier list. """
-        i = id#FIXME: those icons need to die when we figure out how to make cells' contents insensitive in notifier
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/error.png' )
-        if type == 0:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/web.png' )
-        elif type == 1:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/mail.png' )
-        elif type == 2:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/folder.png' )
-        elif type == 3:
-            icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/notifier/faded/process.png' )
+        i = id
+
+        icon = self.specto.icon_theme.load_icon("error", 22, 0)
+        if type == 0:#website
+            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+        elif type == 1:#email
+            icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
+        elif type == 2:#file/folder
+            icon = self.specto.icon_theme.load_icon("folder", 22, 0)
+        elif type == 3:#system process
+            icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
+        elif type == 4:#port
+            icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
 
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 0)
-        self.model.set_value(self.iter[i], 1, icon)
+        self.model.set_value(self.iter[i], 1, icon)#self.specto.notifier.make_transparent(icon, 50))#does not need transparency here
         self.model.set_value(self.iter[i], 2, name)
         self.model.set_value(self.iter[i], 3, id)
         self.model.set_value(self.iter[i], 4, type)
-    
+        #self.watches = self.watches + 1 #this line was in notifier.py. Should it be here also?
+        
     def check_clicked(self, object, path, model):
         """ Call the main function to start/stop the selected watch. """
         sel = self.treeview.get_selection()
