@@ -26,6 +26,7 @@ import pygtk
 pygtk.require("2.0")
 import gtk
 import spectlib.util
+from spectlib.i18n import _
 
 class About:
     """
@@ -53,16 +54,7 @@ class About:
                    ]
         logo = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_about.png' )
 
-        translator_credits = """
-FR - French
-Jean-Francois Fortin Tam
-
-IT - Italian
-Giulio lotti
-
-RO - Romanian
-Adrian Petrescu
-"""
+        translator_credits = _("translator-credits")
 
         #create tree
         self.about=gtk.AboutDialog()

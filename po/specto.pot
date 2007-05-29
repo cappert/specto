@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: Thu May 10 15:33:12 2007\n"
+"POT-Creation-Date: Tue May 29 18:06:54 2007\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,75 +233,79 @@ msgstr ""
 msgid "While in debug mode, Specto will provide more information in order to help you diagnose problems. Logging will save all this information to a log file. You can use this to help developers improve Specto."
 msgstr ""
 
-#: ../spectlib/add_watch.py:166
+#: ../spectlib/about.py:57
+msgid "translator-credits"
+msgstr ""
+
+#: ../spectlib/add_watch.py:165
 msgid "file"
 msgstr ""
 
-#: ../spectlib/add_watch.py:168
+#: ../spectlib/add_watch.py:167
 msgid "folder"
 msgstr ""
 
-#: ../spectlib/add_watch.py:312 ../spectlib/edit_watch.py:207
+#: ../spectlib/add_watch.py:311 ../spectlib/edit_watch.py:207
 msgid "URL:"
 msgstr ""
 
-#: ../spectlib/add_watch.py:326 ../spectlib/edit_watch.py:218
+#: ../spectlib/add_watch.py:325 ../spectlib/edit_watch.py:218
 msgid "Error Margin (%):"
 msgstr ""
 
-#: ../spectlib/add_watch.py:347 ../spectlib/edit_watch.py:244
+#: ../spectlib/add_watch.py:346 ../spectlib/edit_watch.py:244
 msgid "Protocol:"
 msgstr ""
 
-#: ../spectlib/add_watch.py:356
+#: ../spectlib/add_watch.py:355
 msgid "POP3"
 msgstr ""
 
-#: ../spectlib/add_watch.py:362
+#: ../spectlib/add_watch.py:361
 msgid "IMAP"
 msgstr ""
 
-#: ../spectlib/add_watch.py:367 ../spectlib/edit_watch.py:318
+#: ../spectlib/add_watch.py:366 ../spectlib/edit_watch.py:318
 msgid "Gmail"
 msgstr ""
 
-#: ../spectlib/add_watch.py:373
+#: ../spectlib/add_watch.py:372
 msgid "User:"
 msgstr ""
 
-#: ../spectlib/add_watch.py:383 ../spectlib/edit_watch.py:266
+#: ../spectlib/add_watch.py:382 ../spectlib/edit_watch.py:266
 msgid "Password:"
 msgstr ""
 
-#: ../spectlib/add_watch.py:394 ../spectlib/edit_watch.py:278
+#: ../spectlib/add_watch.py:393 ../spectlib/edit_watch.py:278
 msgid "Host:"
 msgstr ""
 
-#: ../spectlib/add_watch.py:404 ../spectlib/edit_watch.py:286
+#: ../spectlib/add_watch.py:403 ../spectlib/edit_watch.py:286
 msgid "Use SSL:"
 msgstr ""
 
-#: ../spectlib/add_watch.py:419 ../spectlib/edit_watch.py:330
+#: ../spectlib/add_watch.py:418 ../spectlib/edit_watch.py:330
 msgid "File/folder:"
 msgstr ""
 
-#: ../spectlib/add_watch.py:429 ../spectlib/edit_watch.py:340
+#: ../spectlib/add_watch.py:428 ../spectlib/edit_watch.py:340
 msgid "File"
 msgstr ""
 
-#: ../spectlib/add_watch.py:435 ../spectlib/edit_watch.py:345
+#: ../spectlib/add_watch.py:434 ../spectlib/edit_watch.py:345
 msgid "Folder"
 msgstr ""
 
-#: ../spectlib/add_watch.py:441 ../spectlib/edit_watch.py:351
+#: ../spectlib/add_watch.py:440 ../spectlib/edit_watch.py:351
 msgid "Choose a file or folder"
 msgstr ""
 
-#: ../spectlib/add_watch.py:450 ../spectlib/edit_watch.py:370
+#: ../spectlib/add_watch.py:449 ../spectlib/edit_watch.py:370
 msgid "Process:"
 msgstr ""
 
-#: ../spectlib/add_watch.py:465 ../spectlib/edit_watch.py:388
+#: ../spectlib/add_watch.py:464 ../spectlib/edit_watch.py:388
 msgid "Port:"
 msgstr ""
 

@@ -1,3 +1,9 @@
+2007-05-29 Jean-Francois Fortin Tam
+    * add a "translator-credits" string that is translatable for the about dialog
+    * write a script that creates a translation tarball for easy upload to Canonical's Rosetta
+    * updated all translations to give credit where it is due
+    * fix the turkish translation filenames
+
 2007-05-10 Jean-Francois Fortin Tam
     * Happy birthday to myself ;)
     * Remove shebangs from non-scripts (chalserogers)
