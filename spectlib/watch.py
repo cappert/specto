@@ -55,10 +55,10 @@ class Watch:
         Check if an error sound has to be played or if a watch has to be flagged updated.
         """
         #play error sound
-        if self.error == True and self.specto.specto_gconf.get_entry("preferences/use_problem_sound"):
-            problem_sound = self.specto.specto_gconf.get_entry("preferences/problem_sound")
+        if self.error == True and self.specto.specto_gconf.get_entry("use_problem_sound"):
+            problem_sound = self.specto.specto_gconf.get_entry("problem_sound")
             gnome.sound_play(problem_sound)
-            pop_toast = self.specto.specto_gconf.get_entry("preferences/pop_toast")  
+            pop_toast = self.specto.specto_gconf.get_entry("pop_toast")  
             if (pop_toast == True) and (self.specto.GTK):
                 NotificationToast(self.specto, _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % self.name, self.specto.icon_theme.load_icon("error", 64, 0), urgency="critical")#fixme: not sure if that's possible, but this has no self.tray_x, self.tray_y, because we cannot be sure that the tray icon is actually displayed already
         
@@ -84,11 +84,11 @@ class Watch:
         if self.specto.DEBUG or not self.specto.GTK:
             self.specto.logger.log(_("Watch \"%s\" updated!") % self.name, "info", self.__class__)
         #play a sound   
-        update_sound = self.specto.specto_gconf.get_entry("preferences/update_sound")
-        if self.specto.specto_gconf.get_entry("preferences/use_update_sound"):
+        update_sound = self.specto.specto_gconf.get_entry("update_sound")
+        if self.specto.specto_gconf.get_entry("use_update_sound"):
             gnome.sound_play(update_sound)
         #determine if libnotify support is to be used
-        pop_toast = self.specto.specto_gconf.get_entry("preferences/pop_toast")
+        pop_toast = self.specto.specto_gconf.get_entry("pop_toast")
         if (pop_toast == True) and (self.specto.GTK):
             sleep(0.5)#this is an important hack :) the reason why there is a sleep of half a second is to leave time for the tray icon to appear before getting its coordinates
             self.tray_x = self.specto.tray.get_x()

@@ -47,7 +47,7 @@ class NotificationToast:
            notifyInitialized = True
         
         self.toast = pynotify.Notification(summary, body)
-        self.timeout = specto.specto_gconf.get_entry("preferences/pop_toast_duration")*1000
+        self.timeout = specto.specto_gconf.get_entry("pop_toast_duration")*1000
         if self.timeout:
             self.toast.set_timeout(self.timeout)
         self.toast.set_urgency(self._Urgencies[urgency])

@@ -1,3 +1,10 @@
+2007-06-02 Jean-Francois Fortin Tam
+    * figure out if gconf values are set or not. Who needs stinking gconf schemas? Fixes issue #41.
+    * kill the gconf subfolders '/apps/specto/preferences/' and '/apps/specto/ui/' by merging them in '/apps/specto/'. You can cleanup yours by running this command: "gconftool-2 --recursive-unset /apps/specto"
+    * flip the gconf keys in the right direction ("show_toolbar" instead of "hide_toolbar" which was an unelegant hack)
+    * make some keys more obvious ("show_notifier" instead of "notifier_state")
+    * add a hidden gconf key, "follow_website_redirects" (fixes issue #58)
+    
 2007-05-29 Jean-Francois Fortin Tam
     * add a "translator-credits" string that is translatable for the about dialog
     * write a script that creates a translation tarball for easy upload to Canonical's Rosetta

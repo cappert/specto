@@ -70,7 +70,7 @@ class Notifier:
         "on_import_watches_activate": self.import_watches,
         "on_export_watches_activate": self.export_watches,
         "on_error_log_activate": self.show_error_log,
-        "on_display_all_watches_activate": self.toggle_hide_deactivated_watches,
+        "on_display_all_watches_activate": self.toggle_show_deactivated_watches,
         "on_display_toolbar_activate": self.toggle_display_toolbar,
         "on_help_activate": self.show_help,
         "on_about_activate": self.show_about,
@@ -490,19 +490,19 @@ class Notifier:
         """ Show or hide the toolbar. """
         if self.wTree.get_widget("display_toolbar").active:
             self.wTree.get_widget("toolbar").show()
-            self.specto.specto_gconf.set_entry("ui/hide_toolbar", False)
+            self.specto.specto_gconf.set_entry("hide_toolbar", False)
         else:
             self.wTree.get_widget("toolbar").hide()
-            self.specto.specto_gconf.set_entry("ui/hide_toolbar", True)
+            self.specto.specto_gconf.set_entry("hide_toolbar", True)
             
-    def toggle_hide_deactivated_watches(self, *widget):
+    def toggle_show_deactivated_watches(self, *widget):
         """ Display only active watches or all watches. """
         if self.wTree.get_widget("display_all_watches").active:
             for id in self.specto.watch_db:
                 if self.specto.watch_db[id].active == False:
                     self.add_notifier_entry(self.specto.watch_db[id].name, self.specto.watch_db[id].type, id)
                     self.deactivate(id)
-            self.specto.specto_gconf.set_entry("ui/hide_deactivated_watches", False)
+            self.specto.specto_gconf.set_entry("show_deactivated_watches", False)
         else:
             for i in self.iter:
                 if self.model.iter_is_valid(self.iter[i]):
@@ -513,7 +513,7 @@ class Notifier:
 
                     if self.specto.watch_db[id].active == False:
                         model.remove(iter)
-            self.specto.specto_gconf.set_entry("ui/hide_deactivated_watches", True)
+            self.specto.specto_gconf.set_entry("show_deactivated_watches", True)
 
     def delete_event(self, *args):
         """
@@ -521,9 +521,9 @@ class Notifier:
         Return True to stop destroying the main window.
         """
         self.save_size_and_position()
-        if self.specto.specto_gconf.get_entry("preferences/always_show_icon") == True:
+        if self.specto.specto_gconf.get_entry("always_show_icon") == True:
             self.notifier.hide()
-            self.specto.specto_gconf.set_entry("ui/notifier_state", False)#save the window state for the next time specto starts
+            self.specto.specto_gconf.set_entry("show_notifier", False)#save the window state for the next time specto starts
             return True
         else:
             self.specto.quit()
@@ -532,11 +532,11 @@ class Notifier:
         """
         Restore the size and the postition from the notifier window.
         """
-        saved_window_width = self.specto.specto_gconf.get_entry("ui/window_notifier_width")
-        saved_window_height = self.specto.specto_gconf.get_entry("ui/window_notifier_height")
-        saved_window_x = self.specto.specto_gconf.get_entry("ui/window_notifier_x")
-        saved_window_y = self.specto.specto_gconf.get_entry("ui/window_notifier_y")
-        if self.specto.specto_gconf.get_entry("preferences/hide_from_windowlist")==True:
+        saved_window_width = self.specto.specto_gconf.get_entry("window_notifier_width")
+        saved_window_height = self.specto.specto_gconf.get_entry("window_notifier_height")
+        saved_window_x = self.specto.specto_gconf.get_entry("window_notifier_x")
+        saved_window_y = self.specto.specto_gconf.get_entry("window_notifier_y")
+        if self.specto.specto_gconf.get_entry("hide_from_windowlist")==True:
             self.notifier.set_skip_taskbar_hint(True) #hide from the window list applet
 
         if saved_window_width != None and saved_window_height != None:#check if the size is not 0
@@ -560,16 +560,16 @@ class Notifier:
         current_window_width = current_window_size[0]
         current_window_height = current_window_size[1]
         #save in gconf
-        self.specto.specto_gconf.set_entry("ui/window_notifier_width", current_window_width)
-        self.specto.specto_gconf.set_entry("ui/window_notifier_height", current_window_height)
+        self.specto.specto_gconf.set_entry("window_notifier_width", current_window_width)
+        self.specto.specto_gconf.set_entry("window_notifier_height", current_window_height)
 
         #save the window position in gconf when the window is closed
         current_window_xy = self.wTree.get_widget("notifier").get_position()
         current_window_x = current_window_xy[0]
         current_window_y = current_window_xy[1]
         #save in gconf
-        self.specto.specto_gconf.set_entry("ui/window_notifier_x", current_window_x)
-        self.specto.specto_gconf.set_entry("ui/window_notifier_y", current_window_y)
+        self.specto.specto_gconf.set_entry("window_notifier_x", current_window_x)
+        self.specto.specto_gconf.set_entry("window_notifier_y", current_window_y)
 
     def get_state(self):
         """ Return True if the notifier window is visible. """
@@ -589,20 +589,20 @@ class Notifier:
 
         ### Initiate the window
         self.restore_size_and_position()
-        self.hide_toolbar = self.specto.specto_gconf.get_entry("ui/hide_toolbar")
-        if  self.hide_toolbar == False:
-            self.wTree.get_widget("display_toolbar").set_active(True)
-            self.toggle_display_toolbar()
-        else:
+        self.show_toolbar = self.specto.specto_gconf.get_entry("show_toolbar")
+        if  self.show_toolbar == False:
             self.wTree.get_widget("display_toolbar").set_active(False)
             self.toggle_display_toolbar()
-            
-        if self.specto.specto_gconf.get_entry("ui/hide_deactivated_watches") == True:
-            self.wTree.get_widget("display_all_watches").set_active(False)
         else:
+            self.wTree.get_widget("display_toolbar").set_active(True)
+            self.toggle_display_toolbar()
+            
+        if self.specto.specto_gconf.get_entry("show_deactivated_watches") == True:
             self.wTree.get_widget("display_all_watches").set_active(True)
+        else:
+            self.wTree.get_widget("display_all_watches").set_active(False)
     
-        if self.specto.specto_gconf.get_entry("ui/notifier_state") == True:
+        if self.specto.specto_gconf.get_entry("show_notifier") == True:
             self.notifier.show()
 
         ### Checkbox
@@ -942,7 +942,7 @@ class Notifier:
 
     def get_startup_sort_order(self):
         order = self.get_gconf_sort_order()
-        sort_function = self.specto.specto_gconf.get_entry("ui/sort_function")
+        sort_function = self.specto.specto_gconf.get_entry("sort_function")
         if  sort_function == "name":
             self.wTree.get_widget("by_name").set_active(True)
             self.model.set_sort_column_id(2, order)
@@ -955,7 +955,7 @@ class Notifier:
             
     def get_gconf_sort_order(self):
         """ Get the order (asc, desc) from a gconf key. """
-        order = self.specto.specto_gconf.get_entry("ui/sort_order")
+        order = self.specto.specto_gconf.get_entry("sort_order")
         if order == "asc":
             sort_order = gtk.SORT_ASCENDING
         else:
@@ -975,12 +975,12 @@ class Notifier:
     def sort_column_name(self, *widget):
         """ Call the sort_name function and set the sort_name menu item to active. """
         self.wTree.get_widget("by_name").set_active(True)
-        self.specto.specto_gconf.set_entry("ui/sort_order", self.set_gconf_sort_order(not self.columnTitle.get_sort_order()))
+        self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(not self.columnTitle.get_sort_order()))
         
     def sort_name(self, *args):
         """ Sort by watch name. """
         self.model.set_sort_column_id(2, not self.columnTitle.get_sort_order())
-        self.specto.specto_gconf.set_entry("ui/sort_function", "name")
+        self.specto.specto_gconf.set_entry("sort_function", "name")
         
     def sort_column_type(self, *widget):
         """ Call the sort_type function and set the sort_type menu item to active. """
@@ -990,18 +990,18 @@ class Notifier:
     def sort_type(self, *args):
         """ Sort by watch type. """
         self.model.set_sort_column_id(4, not self.columnType.get_sort_order())
-        self.specto.specto_gconf.set_entry("ui/sort_function", "type")
-        self.specto.specto_gconf.set_entry("ui/sort_order", self.set_gconf_sort_order(self.columnType.get_sort_order()))
+        self.specto.specto_gconf.set_entry("sort_function", "type")
+        self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(self.columnType.get_sort_order()))
     
     def sort_column_active(self, *widget):
         """ Call the sort_active function and set the sort_active menu item to active. """
         self.wTree.get_widget("by_watch_active").set_active(True)
-        self.specto.specto_gconf.set_entry("ui/sort_order", self.set_gconf_sort_order(not self.columnCheck.get_sort_order()))
+        self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(not self.columnCheck.get_sort_order()))
         
     def sort_active(self, *args):
         """ Sort by active watches. """
         self.model.set_sort_column_id(0, not self.columnCheck.get_sort_order())
-        self.specto.specto_gconf.set_entry("ui/sort_function", "active")
+        self.specto.specto_gconf.set_entry("sort_function", "active")
 
 
 

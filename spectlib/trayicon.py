@@ -43,7 +43,7 @@ class Tray:
         self.tray.set_from_file(self.ICON_PATH)
         self.tray.connect("activate", self.show_notifier)
         self.tray.connect("popup-menu", self.show_popup)
-        if self.specto.specto_gconf.get_entry("preferences/always_show_icon") == True:
+        if self.specto.specto_gconf.get_entry("always_show_icon") == True:
             self.tray.set_visible(True)
         else:
             self.tray.set_visible(False)      
@@ -53,7 +53,7 @@ class Tray:
 
     def set_icon_state_excited(self):
         """ Change the tray icon to updated. """
-        if self.specto.specto_gconf.get_entry("preferences/always_show_icon") == False:
+        if self.specto.specto_gconf.get_entry("always_show_icon") == False:
             self.tray.set_from_file( self.ICON2_PATH )
             self.tray.set_visible(True)#we need to show the tray again
         else:
@@ -61,7 +61,7 @@ class Tray:
         
     def set_icon_state_normal(self):
         """ Change the tray icon to not updated. If the user requested to always show the tray, it will change its icon but not disappear. Otherwise, it will be removed."""
-        if self.specto.specto_gconf.get_entry("preferences/always_show_icon") == False:
+        if self.specto.specto_gconf.get_entry("always_show_icon") == False:
             self.tray.set_visible(False)
         else:
             self.tray.set_from_file( self.ICON_PATH )
@@ -126,7 +126,7 @@ class Tray:
         
     def show_notifier(self, widget):
         """ Call the main function to show the notifier window. """
-        if self.specto.specto_gconf.get_entry("preferences/always_show_icon") == True:
+        if self.specto.specto_gconf.get_entry("always_show_icon") == True:
             self.specto.toggle_notifier()
         else:
             self.specto.notifier.notifier.present()
@@ -139,7 +139,7 @@ class Tray:
         # status_icon :	the object which received the signal
         # button :	the button that was pressed, or 0 if the signal is not emitted in response to a button press event
         # activate_time :	the timestamp of the event that triggered the signal emission
-        if self.specto.specto_gconf.get_entry("preferences/always_show_icon") == True and self.specto.notifier.get_state() == True:
+        if self.specto.specto_gconf.get_entry("always_show_icon") == True and self.specto.notifier.get_state() == True:
             text = _("Hide window")
         else:
             text = _("Show window")

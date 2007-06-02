@@ -49,9 +49,9 @@ import thread
 #create a gconf object
 specto_gconf = Specto_gconf("/apps/specto")
 
-if specto_gconf.get_entry("preferences/debug_mode")==True:
+if specto_gconf.get_entry("debug_mode")==True:
     DEBUG = True
-elif specto_gconf.get_entry("preferences/debug_mode")==False:
+elif specto_gconf.get_entry("debug_mode")==False:
     DEBUG = False
 else:
     DEBUG = False
@@ -91,6 +91,7 @@ class Specto:
         self.util = util
         self.PATH = self.util.get_path()
         self.specto_gconf = specto_gconf
+        self.check_default_settings()#if this is the first run of specto, set the default values for gconf. Whenever you add some gconf preference for specto, this function will also need to be updated.
         self.GTK = GTK
         if GTK:
             self.tray = Tray(self)
@@ -101,19 +102,19 @@ class Specto:
         self.preferences_initialized = False
         self.notifier_initialized = False        
         #listen for gconf keys
-        self.specto_gconf.notify_entry("preferences/debug_mode", self.key_changed, "debug")
+        self.specto_gconf.notify_entry("debug_mode", self.key_changed, "debug")
 
         self.connection_manager = conmgr.get_net_listener()
 
         if GTK:
-            if self.specto_gconf.get_entry("preferences/always_show_icon") == False:
+            if self.specto_gconf.get_entry("always_show_icon") == False:
                 #if the user has not requested the tray icon to be shown at all times, it's impossible that the notifier is hidden on startup, so we must show it.
                 self.notifier_keep_hidden = False
                 self.toggle_notifier()
-            elif self.specto_gconf.get_entry("preferences/notifier_state")==True:
+            elif self.specto_gconf.get_entry("show_notifier")==True:
                 self.notifier_keep_hidden = False
                 self.toggle_notifier()
-            elif self.specto_gconf.get_entry("preferences/notifier_state")==False:
+            elif self.specto_gconf.get_entry("show_notifier")==False:
                 self.notifier_keep_hidden = True
                 self.toggle_notifier()
                 self.notifier_keep_hidden = False
@@ -134,8 +135,31 @@ class Specto:
         label = args[3]
         
         if label == "debug":
-            self.DEBUG = self.specto_gconf.get_entry("preferences/debug_mode")
-            
+            self.DEBUG = self.specto_gconf.get_entry("debug_mode")
+
+    def check_default_settings(self):
+        """ This is used to set the default settings properly the first time Specto is run, without using gconf schemas """
+        self.default_settings=(
+            ["always_show_icon", False], #having it True would be against the HIG!
+            ["debug_mode", False],
+            ["follow_website_redirects", True],
+            ["pop_toast_duration", 5],
+            ["pop_toast", True],
+            ["show_deactivated_watches", True],
+            ["show_in_windowlist", True],
+            ["show_notifier", True],
+            ["show_toolbar", True],
+            ["sort_function", "name"],
+            ["sort_order", "asc"],
+            ["update_sound", "/usr/share/sounds/ekiga/voicemail.wav"],
+            ["use_update_sound", False],
+            ["window_notifier_height", 500],
+            ["window_notifier_width", 500]
+            )
+        for default_setting in self.default_settings:
+            if self.specto_gconf.get_entry(default_setting[0]) == None: #the key has no user-defined value or does not exist
+                self.specto_gconf.set_entry(default_setting[0], default_setting[1])
+
     def check_instance(self):
         """ Check if specto is already running. """
         pidfile = os.environ['HOME'] + "/.specto/" + "specto.pid"
@@ -180,7 +204,7 @@ class Specto:
                 while gtk.events_pending():
                     gtk.main_iteration_do(False)
                     
-        if self.specto_gconf.get_entry("ui/hide_deactivated_watches")== True:
+        if self.specto_gconf.get_entry("hide_deactivated_watches")== True:
             self.notifier.wTree.get_widget("display_all_watches").set_active(False)
             self.notifier.toggle_hide_deactivated_watches()
         
@@ -480,16 +504,16 @@ class Specto:
         elif self.notifier_initialized:
             if self.notifier.get_state()==True and self.notifier_keep_hidden:
                 self.logger.log(_("notifier: reappear"), "debug", self.__class__)
-                self.specto_gconf.set_entry("ui/notifier_state", True)
+                self.specto_gconf.set_entry("show_notifier", True)
                 self.notifier.restore_size_and_position()#to make sure that the x and y positions don't jump around
                 self.notifier.notifier.show()
             elif self.notifier.get_state()==True and not self.notifier_keep_hidden:
                 self.logger.log(_("notifier: hide"), "debug", self.__class__)
-                self.specto_gconf.set_entry("ui/notifier_state", False)
+                self.specto_gconf.set_entry("show_notifier", False)
                 self.notifier.notifier.hide()
             else:
                 self.logger.log(_("notifier: reappear"), "debug", self.__class__)
-                self.specto_gconf.set_entry("ui/notifier_state", True)
+                self.specto_gconf.set_entry("show_notifier", True)
                 self.notifier.restore_size_and_position()#to make sure that the x and y positions don't jump around
                 self.notifier.notifier.show()
         self.notifier_initialized = True

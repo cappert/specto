@@ -207,8 +207,7 @@ class Web_watch(Watch):
                     self.to_be_stored_filesize = self.new_filesize
                     #if self.specto.DEBUG: print "\tSaved filesize: ", self.to_be_stored_filesize
 
-            if (self.url2_ != self.url_):
-                #print 'Not the same url ' + self.url2_
+            if (self.url2_ != self.url_) and self.specto.specto_gconf.get_entry("follow_website_redirects") == True:
                 self.write_uri()#it's uri, not url.
             self.write_filesize()
             
