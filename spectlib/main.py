@@ -579,7 +579,7 @@ class Specto:
             
     def show_help(self, *args):
         """ Show the help web page. """
-        self.util.show_webpage("http://specto.ecchi.ca")
+        self.util.show_webpage("http://code.google.com/p/specto/w/list")
         
     def import_export_watches(self, action):
         """ Show the import/export window. """
@@ -597,9 +597,8 @@ class Specto:
         try:
             gtk.main_quit()
         except:
-            self.notifier.stop_refresh = True
             #create a close dialog
-            dialog = gtk.Dialog(_("Cannot quit yet"), None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+            dialog = gtk.Dialog(_("Cannot quit yet"), None, gtk.DIALOG_MODAL | gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
             #HIG tricks
             dialog.set_has_separator(False)
             
@@ -626,7 +625,8 @@ class Specto:
             dialog.set_icon(icon)
             answer = dialog.run()
             if answer == 3:
-                try:
+                try:#go figure, it never works!
+                    self.notifier.stop_refresh = True
                     sys.exit(0)
                 except:
                     #kill the specto process with killall

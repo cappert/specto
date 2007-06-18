@@ -57,7 +57,7 @@ class Notifier:
         gladefile= self.specto.PATH + 'glade/notifier.glade' 
         windowname= "notifier"
         self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
-        self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_INT)
+        self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_INT, pango.Weight)
         #__icon_size  = gtk.icon_size_lookup (gtk.ICON_SIZE_BUTTON) [0] #needed, otherwise gtk.image will not take into account the icon size no matter what you specify. ###uh no, it's not, actually it was a gnome-icon-theme 2.17 bug. I guess this line should be removed.
         #catch some events
         dic= {
@@ -113,7 +113,7 @@ class Notifier:
             
         type = self.specto.watch_db[id].type
         self.specto.clear_watch(id)
-        self.model.set_value(self.iter[id], 2, self.specto.watch_db[id].name)
+        self.model.set(self.iter[id], 2, self.specto.watch_db[id].name, 5, pango.WEIGHT_NORMAL)
         
         icon = self.specto.icon_theme.load_icon("error", 22, 0)
         if type == 0:#website
@@ -145,7 +145,7 @@ class Notifier:
         icon = self.specto.icon_theme.load_icon("error", 22, 0)
         for i in self.specto.watch_db:
             if self.model.iter_is_valid(self.iter[i]):
-                self.model.set_value(self.iter[i], 2, "%s" % self.specto.watch_db[i].name)
+                self.model.set(self.iter[i], 2, "%s" % self.specto.watch_db[i].name, 5, pango.WEIGHT_NORMAL)
                 type = self.specto.watch_db[i].type
 
                 icon = self.specto.icon_theme.load_icon("error", 22, 0)
@@ -204,7 +204,7 @@ class Notifier:
 
     def toggle_updated(self, id):
         """ Change the name and icon from the watch in the notifier window. """
-        self.model.set_value(self.iter[id], 2, "<b>%s</b>" % self.specto.watch_db[id].name)
+        self.model.set(self.iter[id], 2, "%s" % self.specto.watch_db[id].name, 5, pango.WEIGHT_BOLD)
         self.wTree.get_widget("button_clear_all").set_sensitive(True)
         self.wTree.get_widget("clear_all1").set_sensitive(True)
 
@@ -337,11 +337,7 @@ class Notifier:
             self.wTree.get_widget("vbox_panel_buttons").show()
 
             #hide all the tables
-            self.web_info_table.hide()
-            self.mail_info_table.hide()
-            self.file_info_table.hide()
-            self.process_info_table.hide()
-            self.port_info_table.hide()
+            self.notebook_info.hide()
             
             id = int(model.get_value(iter, 3))
         
@@ -352,70 +348,54 @@ class Notifier:
             else:
                 self.wTree.get_widget("btnClear").set_sensitive(True)
 
+            #show the table
+            self.notebook_info.show()
+            self.notebook_info.set_current_page(selected.type)
 
             if selected.type == 0:
                 #get the info
-                self.lblNameText.set_label(selected.name)
-                self.lblNameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
-                
-                self.lblLocationText.set_label(selected.url_)
-                self.lblLocationText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
+                self.wTree.get_widget("lblNameText").set_label(selected.name)
+                self.wTree.get_widget("lblLocationText").set_label(selected.url_)
 
                 margin = float(selected.error_margin) * 100
-                self.lblErrorMarginText.set_label(str(margin) + " %")
-                
-                self.lblLastUpdateText.set_label(selected.last_updated)
+                self.wTree.get_widget("lblErrorMarginText").set_label(str(margin) + " %")
 
-                #show the table
-                self.web_info_table.show()
+                self.wTree.get_widget("lblLastUpdateText").set_label(selected.last_updated)
 
                 #show the image
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("applications-internet", 64, 0))
 
             elif selected.type == 1:
                 #get the info
-                self.lblMailNameText.set_label(selected.name)
-                self.lblMailNameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
-                self.lblMailHostText.set_use_markup(True)#Use pango markup such as <i> and <b>
+                self.wTree.get_widget("lblMailNameText").set_label(selected.name)
 
                 if selected.prot == 2:
-                    self.lblMailHostText.set_label( _("gmail <i>(%s unread)</i>") % selected.oldMsg )
+                    self.wTree.get_widget("lblMailHostText").set_label( _("gmail <i>(%s unread)</i>") % selected.oldMsg )
                 else:
-                    self.lblMailHostText.set_label(selected.host)
+                    self.wTree.get_widget("lblMailHostText").set_label(selected.host)
 
-                self.lblMailUsernameText.set_label(selected.user)
-                self.lblMailUsernameText.set_ellipsize(pango.ELLIPSIZE_MIDDLE)#shorten the string in the middle if too long
-                
-                self.lblMailLastUpdateText.set_label(selected.last_updated)
-
-                #show the table
-                self.mail_info_table.show()
+                self.wTree.get_widget("lblMailUsernameText").set_label(selected.user)
+                self.wTree.get_widget("lblMailLastUpdateText").set_label(selected.last_updated)
 
                 #show the image
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("emblem-mail", 64, 0))
                 
             elif selected.type == 2:
-                self.lblFileNameText.set_label(selected.name)
-                self.lblFileName.set_label(selected.file)
-                self.lblFileName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
-                self.lblFileLastUpdateText.set_label(selected.last_updated)
-                self.file_info_table.show()
+                self.wTree.get_widget("lblFileNameText").set_label(selected.name)
+                self.wTree.get_widget("lblFileName").set_label(selected.file)
+                self.wTree.get_widget("lblFileLastUpdateText").set_label(selected.last_updated)
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("folder", 64, 0))
                 
             elif selected.type == 3:
-                self.lblProcessNameText.set_label(selected.name)
-                self.lblProcessName.set_label(selected.process)
-                self.lblProcessName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
-                self.lblProcessLastUpdateText.set_label(selected.last_updated)
-                self.process_info_table.show()
+                self.wTree.get_widget("lblProcessNameText").set_label(selected.name)
+                self.wTree.get_widget("lblProcessName").set_label(selected.process)
+                self.wTree.get_widget("lblProcessLastUpdateText").set_label(selected.last_updated)
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("applications-system", 64, 0))
 
             elif selected.type == 4:
-                self.lblPortNameText.set_label(selected.name)
-                self.lblPortName.set_label(selected.port)
-                self.lblPortName.set_ellipsize(pango.ELLIPSIZE_START)#shorten the string if too long
-                self.lblPortLastUpdateText.set_label(selected.last_updated)
-                self.port_info_table.show()
+                self.wTree.get_widget("lblPortNameText").set_label(selected.name)
+                self.wTree.get_widget("lblPortName").set_label(selected.port)
+                self.wTree.get_widget("lblPortLastUpdateText").set_label(selected.last_updated)
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0))
                 
         else:
@@ -426,11 +406,7 @@ class Notifier:
             self.wTree.get_widget("vbox_panel_buttons").hide()
 
             #hide all the tables
-            self.web_info_table.hide()
-            self.mail_info_table.hide()
-            self.file_info_table.hide()   
-            self.process_info_table.hide()
-            self.port_info_table.hide()
+            self.notebook_info.hide()
         
     def open_watch(self, *args):
         """ 
@@ -464,10 +440,10 @@ class Notifier:
         
     def change_name(self, new_name, id):
         if self.specto.watch_db[id].updated == True:
-            name = "<b>" + new_name + "</b>"
+            weight = pango.WEIGHT_BOLD
         else:
-            name = new_name
-        self.model.set_value(self.iter[id], 2, name)
+            weight = pango.WEIGHT_NORMAL
+        self.model.set(self.iter[id], 2, new_name, 5, weight)
         
         #write the new name in watches.list
         self.specto.replace_name(self.specto.watch_db[id].name, new_name)
@@ -625,7 +601,7 @@ class Notifier:
         self.columnTitle_renderer = gtk.CellRendererText()
         self.columnTitle_renderer.set_property("editable", True)
         self.columnTitle_renderer.connect('edited', self.change_entry_name)
-        self.columnTitle = gtk.TreeViewColumn(_("Name"), self.columnTitle_renderer, markup=2)
+        self.columnTitle = gtk.TreeViewColumn(_("Name"), self.columnTitle_renderer, text=2, weight=5)
         self.columnTitle.connect("clicked", self.sort_column_name)
         self.columnTitle.set_expand(True)
         self.columnTitle.set_resizable(True)
@@ -665,249 +641,7 @@ class Notifier:
         self.wTree.get_widget("vbox_panel_buttons").hide()
         
         self.wTree.get_widget("edit").set_sensitive(False)
-
-        ###create web info
-        self.web_info_table = gtk.Table(rows=3, columns=2, homogeneous=False)
-        self.web_info_table.set_row_spacings(6)
-        self.web_info_table.set_col_spacings(6)
-
-        #name
-        lblName = gtk.Label(_("<b>Name:</b>"))
-        lblName.set_alignment(xalign=0.0, yalign=0.5)
-        lblName.set_use_markup(True)
-        lblName.show()
-        self.web_info_table.attach(lblName, 0, 1, 0, 1)
-
-        self.lblNameText = gtk.Label()
-        self.lblNameText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblNameText.show()
-        self.web_info_table.attach(self.lblNameText,1, 2, 0, 1)
-
-        #last updated
-        lblLastUpdate = gtk.Label(_("<b>Last Updated:</b>"))
-        lblLastUpdate.set_alignment(xalign=0.0, yalign=0.5)
-        lblLastUpdate.set_use_markup(True)
-        lblLastUpdate.show()
-        self.web_info_table.attach(lblLastUpdate,0, 1, 1, 2)
-
-        self.lblLastUpdateText = gtk.Label()
-        self.lblLastUpdateText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblLastUpdateText.show()
-        self.web_info_table.attach(self.lblLastUpdateText,1, 2, 1, 2)
-
-        #location
-        lblLocation = gtk.Label(_("<b>Location:</b>"))
-        lblLocation.set_alignment(xalign=0.0, yalign=0.5)
-        lblLocation.set_use_markup(True)
-        lblLocation.show()
-        self.web_info_table.attach(lblLocation, 0, 1, 2, 3)
-
-        self.lblLocationText = gtk.Label()
-        self.lblLocationText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblLocationText.show()
-        self.web_info_table.attach(self.lblLocationText, 1, 2, 2, 3)
-
-        #error margin
-        lblErrorMargin = gtk.Label(_("<b>Error Margin:</b>"))
-        lblErrorMargin.set_alignment(xalign=0.0, yalign=0.5)
-        lblErrorMargin.set_use_markup(True)
-        lblErrorMargin.show()
-        self.web_info_table.attach(lblErrorMargin, 0, 1, 3, 4)
-
-        self.lblErrorMarginText = gtk.Label()
-        self.lblErrorMarginText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblErrorMarginText.show()
-        self.web_info_table.attach(self.lblErrorMarginText, 1, 2, 3, 4)
-
-        vbox_info.pack_start(self.web_info_table, False, False, 0)
-
-        ###create mail info
-        self.mail_info_table = gtk.Table(rows=4, columns=2, homogeneous=False)
-        self.mail_info_table.set_col_spacings(6)
-        self.mail_info_table.set_row_spacings(6)
-
-        #name
-        lblName = gtk.Label(_("<b>Name:</b>"))
-        lblName.set_alignment(xalign=0.0, yalign=0.5)
-        lblName.set_use_markup(True)
-        lblName.show()
-        self.mail_info_table.attach(lblName, 0, 1, 0, 1)
-
-        self.lblMailNameText = gtk.Label()
-        self.lblMailNameText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblMailNameText.show()
-        self.mail_info_table.attach(self.lblMailNameText,1, 2, 0, 1)
-
-        #last updated
-        lblLastUpdate = gtk.Label(_("<b>Last Updated:</b>"))
-        lblLastUpdate.set_alignment(xalign=0.0, yalign=0.5)
-        lblLastUpdate.set_use_markup(True)
-        lblLastUpdate.show()
-        self.mail_info_table.attach(lblLastUpdate,0, 1, 1, 2)
-
-        self.lblMailLastUpdateText = gtk.Label()
-        self.lblMailLastUpdateText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblMailLastUpdateText.show()
-        self.mail_info_table.attach(self.lblMailLastUpdateText,1, 2, 1, 2)
-
-        #host
-        lblMailHost = gtk.Label(_("<b>Host:</b>"))
-        lblMailHost.set_alignment(xalign=0.0, yalign=0.5)
-        lblMailHost.set_use_markup(True)
-        lblMailHost.show()
-        self.mail_info_table.attach(lblMailHost, 0, 1, 2, 3)
-
-        self.lblMailHostText = gtk.Label()
-        self.lblMailHostText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblMailHostText.show()
-        self.mail_info_table.attach(self.lblMailHostText, 1, 2, 2, 3)
-
-        #username
-        lblMailUsername = gtk.Label(_("<b>Username:</b>"))
-        lblMailUsername.set_alignment(xalign=0.0, yalign=0.5)
-        lblMailUsername.set_use_markup(True)
-        lblMailUsername.show()
-        self.mail_info_table.attach(lblMailUsername, 0, 1, 3, 4)
-
-        self.lblMailUsernameText = gtk.Label()
-        self.lblMailUsernameText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblMailUsernameText.show()
-        self.mail_info_table.attach(self.lblMailUsernameText, 1, 2, 3, 4)
-
-        vbox_info.pack_start(self.mail_info_table, False, False, 0)
-
-        ###create file/folder info
-        self.file_info_table = gtk.Table(rows=3, columns=2, homogeneous=False)
-        self.file_info_table.set_col_spacings(6)
-        self.file_info_table.set_row_spacings(6)
-
-        #name
-        lblName = gtk.Label(_("<b>Name:</b>"))
-        lblName.set_alignment(xalign=0.0, yalign=0.5)
-        lblName.set_use_markup(True)
-        lblName.show()
-        self.file_info_table.attach(lblName, 0, 1, 0, 1)
-
-        self.lblFileNameText = gtk.Label()
-        self.lblFileNameText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblFileNameText.show()
-        self.file_info_table.attach(self.lblFileNameText,1, 2, 0, 1)
-
-        #last updated
-        lblLastUpdate = gtk.Label(_("<b>Last Updated:</b>"))
-        lblLastUpdate.set_alignment(xalign=0.0, yalign=0.5)
-        lblLastUpdate.set_use_markup(True)
-        lblLastUpdate.show()
-        self.file_info_table.attach(lblLastUpdate,0, 1, 1, 2)
-
-        self.lblFileLastUpdateText = gtk.Label()
-        self.lblFileLastUpdateText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblFileLastUpdateText.show()
-        self.file_info_table.attach(self.lblFileLastUpdateText,1, 2, 1, 2)
-
-        #file/folder
-        lblFileName = gtk.Label(_("<b>File/folder:</b>"))
-        lblFileName.set_alignment(xalign=0.0, yalign=0.5)
-        lblFileName.set_use_markup(True)
-        lblFileName.show()
-        self.file_info_table.attach(lblFileName, 0, 1, 2, 3)
-
-        self.lblFileName = gtk.Label()
-        self.lblFileName.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblFileName.show()
-        self.file_info_table.attach(self.lblFileName, 1, 2, 2, 3)
-
-        vbox_info.pack_start(self.file_info_table, False, False, 0)
-        
-        ###create process info        
-        self.process_info_table = gtk.Table(rows=3, columns=2, homogeneous=False)
-        self.process_info_table.set_col_spacings(6)
-        self.process_info_table.set_row_spacings(6)
-
-        #name
-        lblName = gtk.Label(_("<b>Name:</b>"))
-        lblName.set_alignment(xalign=0.0, yalign=0.5)
-        lblName.set_use_markup(True)
-        lblName.show()
-        self.process_info_table.attach(lblName, 0, 1, 0, 1)
-
-        self.lblProcessNameText = gtk.Label()
-        self.lblProcessNameText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblProcessNameText.show()
-        self.process_info_table.attach(self.lblProcessNameText,1, 2, 0, 1)
-
-        #last updated
-        lblLastUpdate = gtk.Label(_("<b>Last Updated:</b>"))
-        lblLastUpdate.set_alignment(xalign=0.0, yalign=0.5)
-        lblLastUpdate.set_use_markup(True)
-        lblLastUpdate.show()
-        self.process_info_table.attach(lblLastUpdate,0, 1, 1, 2)
-
-        self.lblProcessLastUpdateText = gtk.Label()
-        self.lblProcessLastUpdateText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblProcessLastUpdateText.show()
-        self.process_info_table.attach(self.lblProcessLastUpdateText,1, 2, 1, 2)
-
-        #process
-        lblProcessName = gtk.Label(_("<b>Process:</b>"))
-        lblProcessName.set_alignment(xalign=0.0, yalign=0.5)
-        lblProcessName.set_use_markup(True)
-        lblProcessName.show()
-        self.process_info_table.attach(lblProcessName, 0, 1, 2, 3)
-
-        self.lblProcessName = gtk.Label()
-        self.lblProcessName.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblProcessName.show()
-        self.process_info_table.attach(self.lblProcessName, 1, 2, 2, 3)
-
-        vbox_info.pack_start(self.process_info_table, False, False, 0)
-
-
-
-        ###create port info        
-        self.port_info_table = gtk.Table(rows=3, columns=2, homogeneous=False)
-        self.port_info_table.set_col_spacings(6)
-        self.port_info_table.set_row_spacings(6)
-
-        #name
-        lblName = gtk.Label(_("<b>Name:</b>"))
-        lblName.set_alignment(xalign=0.0, yalign=0.5)
-        lblName.set_use_markup(True)
-        lblName.show()
-        self.port_info_table.attach(lblName, 0, 1, 0, 1)
-
-        self.lblPortNameText = gtk.Label()
-        self.lblPortNameText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblPortNameText.show()
-        self.port_info_table.attach(self.lblPortNameText,1, 2, 0, 1)
-
-        #last updated
-        lblLastUpdate = gtk.Label(_("<b>Last Updated:</b>"))
-        lblLastUpdate.set_alignment(xalign=0.0, yalign=0.5)
-        lblLastUpdate.set_use_markup(True)
-        lblLastUpdate.show()
-        self.port_info_table.attach(lblLastUpdate,0, 1, 1, 2)
-
-        self.lblPortLastUpdateText = gtk.Label()
-        self.lblPortLastUpdateText.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblPortLastUpdateText.show()
-        self.port_info_table.attach(self.lblPortLastUpdateText,1, 2, 1, 2)
-
-        #port
-        lblPortName = gtk.Label(_("<b>Port:</b>"))
-        lblPortName.set_alignment(xalign=0.0, yalign=0.5)
-        lblPortName.set_use_markup(True)
-        lblPortName.show()
-        self.port_info_table.attach(lblPortName, 0, 1, 2, 3)
-
-        self.lblPortName = gtk.Label()
-        self.lblPortName.set_alignment(xalign=0.0, yalign=0.5)
-        self.lblPortName.show()
-        self.port_info_table.attach(self.lblPortName, 1, 2, 2, 3)
-
-        vbox_info.pack_start(self.port_info_table, False, False, 0)
-
-
+        self.notebook_info = self.wTree.get_widget("notebook_info")
 
         
     def show_add_watch(self, widget):

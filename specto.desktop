@@ -2,8 +2,7 @@
 Name=Specto
 Comment=Be notified of everything
 Comment[fr]=Soyez alerte
-Categories=GNOME;Application;Utility;
-Encoding=UTF-8
+Categories=GNOME;Utility;
 Exec=specto
 Icon=specto
 StartupNotify=true

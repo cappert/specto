@@ -284,7 +284,7 @@ class Add_watch:
             
     def help_clicked(self,widget):
         """ Call the show help function. """
-        self.specto.util.show_webpage("http://specto.ecchi.ca/Manual/AddingWatches")
+        self.specto.util.show_webpage("http://code.google.com/p/specto/wiki/AddingWatches")
     
     def cancel_clicked(self,widget):
         """ Destroy the add watch window. """

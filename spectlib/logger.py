@@ -127,7 +127,7 @@ class Log_dialog:
            
     def show_help(self, widget):
         """ Show the help webpage. """
-        self.specto.util.show_webpage("http://specto.ecchi.ca/Manual/Troubleshooting")
+        self.specto.util.show_webpage("http://code.google.com/p/specto/wiki/Troubleshooting")
         
     def delete_event(self, widget, *args):
         """ Close the window. """
