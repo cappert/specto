@@ -204,9 +204,9 @@ class Specto:
                 while gtk.events_pending():
                     gtk.main_iteration_do(False)
                     
-        if self.specto_gconf.get_entry("hide_deactivated_watches")== True:
-            self.notifier.wTree.get_widget("display_all_watches").set_active(False)
-            self.notifier.toggle_hide_deactivated_watches()
+        if self.specto_gconf.get_entry("show_deactivated_watches")== True:
+            self.notifier.wTree.get_widget("display_all_watches").set_active(True)
+        self.notifier.toggle_show_deactivated_watches(startup=True)#True makes startup=True, only used on the first startup to avoid duplicate watches.
         
         #start the active watches
         if self.notifier_initialized:            
@@ -397,7 +397,18 @@ class Specto:
         self.count_updated_watches()
         self.watch_io.remove_watch(name)#do not clear the watch after removing it or it will mess up the watches.list
         self.notifier.model.remove(self.notifier.iter[id])
-        
+    
+    def find_watch(self, name):
+        """
+        Returns the key of a watch or None if it doesn't exists.
+        """
+        k = -1
+        for key in self.watch_db.iterkeys():
+            if self.watch_db[key].name == name: 
+                k = key
+                break
+        return k
+    
     def check_unique_watch(self, name):
         """ Check if the watch name is unique. """
         if self.watch_io.search_watch(name) and GTK:

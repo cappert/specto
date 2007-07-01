@@ -29,7 +29,8 @@ def show_webpage(webpage):
     """ Open the webpage in the default browser. """
     specto_gconf = Specto_gconf("/desktop/gnome/url-handlers/http")
     default_browser = specto_gconf.get_entry("command")
-    os.system((default_browser % webpage) + " &") #open the browser with the page
+    clean_url = str(webpage.replace("&", "\&"))
+    os.system((default_browser % clean_url) + " &") #open the browser with the page
 
 def open_gconf_application(key):
     """ Get the name from gconf and open the application. """

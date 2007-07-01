@@ -95,7 +95,7 @@ class Watch:
             self.tray_y = self.specto.tray.get_y()
 
             if self.type==0:#web
-                NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.icon_theme.load_icon("applications-internet", 64, 0), self.tray_x, self.tray_y)
+                NotificationToast(self.specto, _("The website, <b>%s</b>, has been updated.") % str(self.name), self.specto.icon_theme.load_icon("applications-internet", 64, 0), self.tray_x, self.tray_y, name=self.name)
             elif self.type==1:#email
 
                 if self.prot==0:#pop3 account
@@ -116,10 +116,10 @@ class Watch:
                         self.oldMsg)
                     
                 if notification_toast:
-                    NotificationToast(self.specto, notification_toast, self.specto.icon_theme.load_icon("emblem-mail", 64, 0), self.tray_x, self.tray_y)
+                    NotificationToast(self.specto, notification_toast, self.specto.icon_theme.load_icon("emblem-mail", 64, 0), self.tray_x, self.tray_y, name=self.name)
 
             elif self.type==2:#folder
-                NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, self.specto.icon_theme.load_icon("folder", 64, 0), self.tray_x, self.tray_y)
+                NotificationToast(self.specto, _("The file/folder, <b>%s</b>, has been updated.") % self.name, self.specto.icon_theme.load_icon("folder", 64, 0), self.tray_x, self.tray_y, name=self.name)
             elif self.type==3:#process
                 if self.running==False:
                     NotificationToast(self.specto, _("The process, <b>%s</b>, has stopped.") % self.name, self.specto.icon_theme.load_icon("applications-system", 64, 0), self.tray_x, self.tray_y)

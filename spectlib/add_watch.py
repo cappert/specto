@@ -78,8 +78,8 @@ class Add_watch:
 
     def name_changed(self, widget):
         """ Show the watch name in the window. """
-        new_name = "<b>" + self.name.get_text() + "</b>"
-        self.wTree.get_widget("label7").set_label(new_name)#.replace("&", "&amp;"))#patch from bkeifer, buggy
+        new_name = "<b>" + self.name.get_text().replace("&", "&amp;") + "</b>"
+        self.wTree.get_widget("label7").set_label(new_name)
 
     def show_mail_options(self, *args):
         """
@@ -109,7 +109,7 @@ class Add_watch:
         """
         values = {}
         #get the standard options from a watch
-        values['name'] = self.name.get_text()#FIXME: cfgparse cannot have single quotes (') it seems. We must watch out for the watch name or arguments not to have them.
+        values['name'] = self.name.get_text()
         
         #check if the watch is unique
         if not self.specto.check_unique_watch(values['name']):

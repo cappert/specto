@@ -1,7 +1,17 @@
+2007-06-30 Jean-Francois Fortin Tam
+    * updated the Italian translation (Alessandro Falappa)
+    * added a partial Portuguese translation (Charles Gratarolli)
+    * action button for libnotify balloons (patch by Matias Torres) 
+    * fixed the gconf key for show_deactivated_watches, which was not used everywhere
+    * fixed the logic for showing/hiding deactivated watches. It really was horrible, a complete mess.
+    * prevent the text in the notifier entries from looking fuzzy on startup, by specifying pango.WEIGHT_NORMAL
+    * fix issue #56, Ampersands in watched URLs result in truncated address when passed to browser
+    * fix issue #52, Ampersands in watch names in add_watch window
+
 2007-06-17 Jean-Francois Fortin Tam
     * corrected some errors in the French translation
     * added Spanish translation (Nicolas Espina Tacchetti)
-    * fix issue #59, invalid specto.desktop file (patch by sas.dean)~
+    * fix issue #59, invalid specto.desktop file (patch by Dean Sas)
     * fix issue #27, items jumping around the notifier's list (patch by Yevgen Muntyan)
     * fix issue #4, watch info pane contents centered instead of left aligned (patch by Yevgen Muntyan)
     * fix issue #29, murder dialog's cancel action makes specto crash

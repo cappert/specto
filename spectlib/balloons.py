@@ -25,8 +25,11 @@ import pygtk
 pygtk.require('2.0')
 import pynotify
 import sys
+import gtk
+import spectlib.util
 
 from spectlib import logger
+from spectlib.i18n import _
 
 notifyInitialized = False
 
@@ -38,18 +41,28 @@ class NotificationToast:
         'normal': pynotify.URGENCY_NORMAL
         }
 
+    def __open_watch(self, n, action, id):
+        if self.specto.notifier.open_watch(id):
+            self.specto.notifier.clear_watch('',id)
+
     # I'd love to have a default icon. #Kiddo: which one? Not sure this is a really good thing. Unless we show the Specto logo?
-    def __init__(self, specto, body, icon=None, x=0, y=0, urgency="low", summary=_notifyRealm):
+    def __init__(self, specto, body, icon=None, x=0, y=0, urgency="low", summary=_notifyRealm, name=None):
         global notifyInitialized
 
         if not notifyInitialized:
            pynotify.init(self._notifyRealm)
            notifyInitialized = True
-        
+
+        self.specto=specto
         self.toast = pynotify.Notification(summary, body)
         self.timeout = specto.specto_gconf.get_entry("pop_toast_duration")*1000
         if self.timeout:
             self.toast.set_timeout(self.timeout)
+        if name:
+            #If name is not None and exists in specto.watch_db, a button is added to the notification
+            w = self.specto.find_watch(name)
+            if w != -1:
+                self.toast.add_action("clicked", gtk.stock_lookup(gtk.STOCK_JUMP_TO)[1].replace('_', ''), self.__open_watch, w)
         self.toast.set_urgency(self._Urgencies[urgency])
         if icon:
             #self.toast.set_property('icon-name', icon)#we now use a pixbuf in the line below to allow themable icons

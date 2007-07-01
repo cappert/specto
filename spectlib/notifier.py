@@ -74,8 +74,8 @@ class Notifier:
         "on_display_toolbar_activate": self.toggle_display_toolbar,
         "on_help_activate": self.show_help,
         "on_about_activate": self.show_about,
-        "on_treeview_row_activated": self.open_watch,
-        "on_btnOpen_clicked": self.open_watch,
+        "on_treeview_row_activated": self.open_watch_callback,
+        "on_btnOpen_clicked": self.open_watch_callback,
         "on_btnClear_clicked": self.clear_watch,
         "on_treeview_cursor_changed": self.show_watch_info,
         "on_btnEdit_clicked": self.show_edit_watch, 
@@ -296,6 +296,7 @@ class Notifier:
         self.model.set_value(self.iter[i], 2, name)
         self.model.set_value(self.iter[i], 3, id)
         self.model.set_value(self.iter[i], 4, type)
+        self.model.set(self.iter[i], 5, pango.WEIGHT_NORMAL)#make sure the text is not fuzzy on startup
         self.watches = self.watches + 1
         
     def check_clicked(self, object, path, model):
@@ -407,16 +408,15 @@ class Notifier:
 
             #hide all the tables
             self.notebook_info.hide()
-        
-    def open_watch(self, *args):
+            
+    def open_watch(self, id):
         """ 
-        Open the selected watch and mark it is not updated anymore. 
+        Open the selected watch. 
+        Returns False if the watch failed to open
         """
-        model, iter = self.treeview.get_selection().get_selected()
-        id = int(model.get_value(iter, 3))
+        res = True
         selected = self.specto.watch_db[id]
         self.specto.logger.log(_("watch \"%s\" opened") % self.specto.watch_db[id].name, "info", self.__class__)
-        self.clear_watch(args[0])
         if selected.type == 0:
             uri_real = self.specto.watch_io.read_option(self.specto.watch_db[id].name, "uri_real")#this is just in case the uri_real parameter is present, i.e.: a web feed
             if uri_real:
@@ -430,6 +430,19 @@ class Notifier:
                 spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
         elif selected.type == 2:
             spectlib.util.open_file_watch(selected.file)
+        else: 
+            res=False
+        return res
+
+    def open_watch_callback(self, *args):
+        """
+        Opens the selected watch and mark it is not updated anymore
+        """
+        model, iter = self.treeview.get_selection().get_selected()
+        id = int(model.get_value(iter, 3))
+        if self.open_watch(id):
+            self.clear_watch(args[0])
+
                 
     def change_entry_name(self, *args):
         """ Edit the name from the watch in the notifier window. """
@@ -471,15 +484,17 @@ class Notifier:
             self.wTree.get_widget("toolbar").hide()
             self.specto.specto_gconf.set_entry("hide_toolbar", True)
             
-    def toggle_show_deactivated_watches(self, *widget):
+    def toggle_show_deactivated_watches(self, startup=False): #, *widget):
         """ Display only active watches or all watches. """
+        if startup !=True: startup=False #this is important to prevent *widget from messing with us. If you don't believe me, print startup ;)
         if self.wTree.get_widget("display_all_watches").active:
             for id in self.specto.watch_db:
-                if self.specto.watch_db[id].active == False:
-                    self.add_notifier_entry(self.specto.watch_db[id].name, self.specto.watch_db[id].type, id)
+                if self.specto.watch_db[id].active ==False:#for each watch that is supposed to be inactive, show it in the notifier but don't activate it
+                    if startup==False:#recreate the item because it was deleted
+                        self.add_notifier_entry(self.specto.watch_db[id].name, self.specto.watch_db[id].type, id)
                     self.deactivate(id)
-            self.specto.specto_gconf.set_entry("show_deactivated_watches", False)
-        else:
+            self.specto.specto_gconf.set_entry("show_deactivated_watches", True)
+        else:#hide the deactivated watches
             for i in self.iter:
                 if self.model.iter_is_valid(self.iter[i]):
                     path = self.model.get_path(self.iter[i])
@@ -489,7 +504,7 @@ class Notifier:
 
                     if self.specto.watch_db[id].active == False:
                         model.remove(iter)
-            self.specto.specto_gconf.set_entry("show_deactivated_watches", True)
+            self.specto.specto_gconf.set_entry("show_deactivated_watches", False)
 
     def delete_event(self, *args):
         """
