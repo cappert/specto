@@ -1,3 +1,6 @@
+2007-07-17 Jean-François Fortin Tam
+    * bump the version to 0.2.2 for the release
+    
 2007-07-11 Jean-François Fortin Tam
     * updated the spanish translation (Mario César Señoranis Ayala)
     * cleaned up some function names that were confusing in watch_file
