@@ -78,18 +78,18 @@ class File_watch(Watch):
         
         try:
             self.get_cache_file()
-            self.old_values = self.read_options()
+            self.old_values = self.read_cache_file()
             mode = os.stat(self.file)[ST_MODE]
             self.new_files = []
             if S_ISDIR(mode):
                 self.get_dir(self.file)
-                self.write_options()#write the new values to the cache file
-                self.old_values = self.read_options() #read the new valeus
+                self.update_cache_file()#write the new values to the cache file
+                self.old_values = self.read_cache_file() #read the new valeus
                 self.get_removed_files() #remove the files that were removed
-                self.write_options()#write the values (with the removed lines) to the cache file
+                self.update_cache_file()#write the values (with the removed lines) to the cache file
             else:
                 self.get_file(self.file)
-                self.write_options()
+                self.update_cache_file()
                 
             #first time don't mark as updated
             if self.first_time == True:
@@ -112,12 +112,12 @@ class File_watch(Watch):
             if size != old_size:
                 #replace filesize
                 self.old_values = self.old_values.replace(file_ + ": " + str(old_size), file_ + ": " + str(size))
-                print _("update: %s was modified") % file_
+                self.specto.logger.log(_("update: %s was modified") % file_, "info", self.__class__)
                 self.updated = True
         elif (size or size ==0) and not old_size:
             #add the file to the list
             self.old_values += file_ + ": " + str(size) + "\n"
-            print _("update: %s was created") % file_
+            self.specto.logger.log(_("update: %s was created") % file_, "info", self.__class__)
             self.updated = True
             
     def get_dir(self, dir_):
@@ -130,8 +130,8 @@ class File_watch(Watch):
             elif S_ISREG(mode): # It's a file, get the info
                 self.new_files.append(pathname)
                 self.get_file(pathname)
-            else: # Unknown file type, print a message
-                print _('Skipping %s' % pathname)
+            else: # Unknown file type
+                self.specto.logger.log(_("Skipping %s") % pathname, "debug", self.__class__)
                 
     def get_removed_files(self):
         """ Get the removed files. """
@@ -140,19 +140,19 @@ class File_watch(Watch):
         y = 0
         for i in self.old_files:
             if i not in self.new_files:#see if a old file still exists in the new files list
-                print _("update: %s removed") % i
+                self.specto.logger.log(_("update: %s removed") % i, "info", self.__class__)
                 self.updated = True
             else:
                 self.old_values += old_values_[y] + "\n"
             y+=1
         
-    def write_options(self):
+    def update_cache_file(self):
         """ Write the new values in the cache file. """
         f = file(self.file_name, "w")
         f.write(str(self.old_values))
         f.close()
         
-    def read_options(self):
+    def read_cache_file(self):
         """ Read the options from the cache file. """
         try:
             f = file(self.file_name, "r")# Load up the cached version

@@ -120,7 +120,7 @@ class Mail_watch(Watch):
                             self.mail_info.append(info)
                             self.newMsg+=1
                         i+=1
-                    print self.mail_info
+                    #print self.mail_info
                 s.quit()
                         
                 #if self.newMsg > int(self.check_old()):

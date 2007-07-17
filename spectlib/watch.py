@@ -126,14 +126,14 @@ class Watch:
                 elif self.running==True:
                     NotificationToast(self.specto, _("The process, <b>%s</b>, has started.") % self.name, self.specto.icon_theme.load_icon("applications-system", 64, 0), self.tray_x, self.tray_y)
                 else:
-                    print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
+                    self.specto.logger.log(("This is a bug. The watch" + str(self.name) + "'s value for self.running is" + str(self.running)), "debug", self.__class__)
             elif self.type==4:#port
                 if self.running==False:
                     NotificationToast(self.specto, _("The connection, <b>%s</b>, was closed.") % self.name, self.specto.icon_theme.load_icon("network-offline", 64, 0), self.tray_x, self.tray_y)
                 elif self.running==True:
                     NotificationToast(self.specto, _("The connection, <b>%s</b>, was established.") % self.name, self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0), self.tray_x, self.tray_y)
                 else:
-                    print "this is a bug. The watch", self.name, "'s value for self.running is", self.running
+                    self.specto.logger.log(("This is a bug. The watch" + str(self.name) + "'s value for self.running is" + str(self.running)), "debug", self.__class__)
             else:
                 self.specto.logger.log(_("Not implemented yet"), "warning", self.__class__)#TODO: implement other notifications
             #end of the libnotify madness
@@ -280,16 +280,16 @@ class Watch_io:
     def write_options(self, values):
         """
         Write or change the watch options in a configuration file.
-        Values has to be a dictionary with the name from the options and the value. example: { 'name':'value', 'name':'value' }
-        If the name is not found, a new watch will be added, else the excisting watch will be changed.
+        Values has to be a dictionary with the name from the options and the value. example: { 'name':'value', 'option1':'value' }
+        If the name is not found, a new watch will be added, else the existing watch will be changed.
         """
         self.cfg = ini_namespace(file(self.file_name))
         name = values['name']
 
         if not self.cfg._sections.has_key(name):
-            self.cfg.new_namespace(name) #add a new watch
+            self.cfg.new_namespace(name) #add a new watch in the list
 
-        del values['name']
+        del values['name']#now that we know the name of the watch, we only want to write its options
         for option, value  in values.iteritems():
             self.cfg[name][option] = value
 
@@ -298,7 +298,7 @@ class Watch_io:
             f.write(str(self.cfg).strip()) #write the new configuration file
             f.close()
         except IOError:
-            print "There was an error writing to", self.file_name
+            self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
 
     def remove_watch(self, name):
         """ Remove a watch from the configuration file. """
@@ -307,14 +307,14 @@ class Watch_io:
             cfgpr.read(self.file_name)
             cfgpr.remove_section(name)
         except:
-            print "There was an error writing to", self.file_name
+            self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
             
         try:
             f = open(self.file_name, "w")
             cfgpr.write(f)
             f.close()
         except IOError:
-            print "There was an error writing to", self.file_name
+            self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
         
     def search_watch(self, name):
         """
@@ -335,7 +335,7 @@ class Watch_io:
             f.close
             text = text.replace("[" + orig + "]", "[" + new + "]")
         except IOError:
-            print "There was an error writing to", self.file_name
+            self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
         
         #replace and write file
         try:
@@ -343,5 +343,5 @@ class Watch_io:
             f.write(text)
             f.close()
         except IOError:
-            print "There was an error writing to", self.file_name
+            self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
         

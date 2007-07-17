@@ -247,14 +247,14 @@ class Web_watch(Watch):
         f.close()
 
     def write_filesize(self):
-        """ Write the filesize in the cache. """
+        """ Write the filesize in the watch list. """
         self.new_values = {}
         self.new_values['name'] = self.name
         self.new_values['filesize'] = self.to_be_stored_filesize
         self.specto.watch_io.write_options(self.new_values)
 
     def write_uri(self):
-        """ Write the uri in the cache. """
+        """ Write the uri in the watch list. """
         self.new_values = {}
         self.new_values['name'] = self.name
         self.new_values['uri'] = self.url2_

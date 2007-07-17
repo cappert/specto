@@ -20,7 +20,7 @@ def give_files(dir, *extension):
 
     return files
 
-i18n_languages = "fr ro de sv it tr es pt_BR"#list all the languages, separated by one whitespace
+i18n_languages = "fr cs de es it pt_BR ro sv tr"#list all the languages, separated by one whitespace
 def give_mo_file(lang):
     return "po/" + str(lang) + "/specto.mo"
 
@@ -48,7 +48,7 @@ setup(name = "specto",
     version = version_string,
     description = "A desktop application that will watch configurable events (website updates, emails, file and folder changes...)",
     author = "Jean-Francois Fortin Tam",
-    author_email = "kiddokiddo at users dot sourceforge dot net",
+    author_email = "nekohayo at gmail dot com",
     url = "http://specto.sourceforge.net",
     packages = ['spectlib'],
     #package_dir = {'': 'src'},
