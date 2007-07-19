@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Specto 0.2\n"
 "POT-Creation-Date: Tue Feb  6 14:00:13 2007\n"
-"PO-Revision-Date: 2007-07-07 10:49-0500\n"
+"PO-Revision-Date: 2007-07-19 12:14-0500\n"
 "Last-Translator: Jeff Fortin <nekohayo ~at~ gmail.com>\n"
 "Language-Team:  <nicolasespina@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -102,7 +102,7 @@ msgstr ""
 
 #: ../data/glade/edit_watch.glade.h:1
 msgid "Error Log"
-msgstr "Registro de Errores"
+msgstr "Registro de _Errores"
 
 #: ../data/glade/edit_watch.glade.h:4
 #: ../data/glade/log_dialog.glade.h:9
@@ -131,7 +131,7 @@ msgid ""
 "Critical"
 msgstr ""
 "Todo\n"
-"Debug\n"
+"Informe de Fallos\n"
 "Información\n"
 "Advertencias\n"
 "Error\n"
@@ -163,7 +163,7 @@ msgstr "Mostrar _Todos los Observadores"
 
 #: ../data/glade/notifier.glade.h:5
 msgid "Display _Toolbar"
-msgstr "Mostrar _Toolbar"
+msgstr "Mostrar _Barra de Herramientas"
 
 #: ../data/glade/notifier.glade.h:6
 msgid "Notifications"
@@ -207,7 +207,7 @@ msgstr "_Ver"
 
 #: ../data/glade/preferences.glade.h:1
 msgid "<b>Debugging and Logging</b>"
-msgstr "<b>Registros y Debug</b>"
+msgstr "<b>Registros e Informe de Fallos</b>"
 
 #: ../data/glade/preferences.glade.h:2
 msgid "<b>Display</b>"
@@ -227,7 +227,7 @@ msgstr "Un observador fue actualizado"
 
 #: ../data/glade/preferences.glade.h:6
 msgid "Always show the icon in the notification area"
-msgstr "Mostrar siempre el ícono en el área de notificación"
+msgstr "Mostrar siempre el icono en el área de notificación"
 
 #: ../data/glade/preferences.glade.h:7
 msgid "Display the notification window in the window list"
@@ -239,11 +239,11 @@ msgstr "Duración (en segundos)"
 
 #: ../data/glade/preferences.glade.h:9
 msgid "Enable debug mode and logging"
-msgstr "Activar el modo Debug y Registros"
+msgstr "Activar el modo de Informe de Fallos y Registros"
 
 #: ../data/glade/preferences.glade.h:10
 msgid "If activated, you will receive more information when running Specto from a terminal, and more information will be printed to the logs."
-msgstr "Si se activa, recibirás mas información cuando ejecutes Specto desde una terminal, y mas información sera informada en los Registros."
+msgstr "Si se activa, recibirá mas información cuando ejecute Specto desde una terminal, y se adjuntara más información en los Registros del Programa."
 
 #: ../data/glade/preferences.glade.h:11
 msgid "Pop toasts from the tray icon when a watch is updated"
@@ -259,7 +259,7 @@ msgstr "Seleccione un Archivo"
 
 #: ../data/glade/preferences.glade.h:14
 msgid "While in debug mode, Specto will provide more information in order to help you diagnose problems. Logging will save all this information to a log file. You can use this to help developers improve Specto."
-msgstr "En el modo Debug, Specto brinda más información para ayudar a diagnosticar problemas. Los Registros salvan toda la información dentro de un archivo de Registro. Puedes usar esto para ayudar a los desarrolladores de Specto"
+msgstr "En el modo de Informe de Fallos, Specto brinda más información para ayudar a diagnosticar problemas. El modo de Registros guardan toda la información dentro de un archivo de Registro. Puedes usar esto para ayudar a los desarrolladores de Specto."
 
 #: ../spectlib/about.py:57
 msgid "translator-credits"
@@ -502,12 +502,12 @@ msgid ""
 msgstr ""
 "<b><big>Specto actualmente esta ocupado y no puede salir todavía.</big></b>\n"
 "\n"
-"Puede ser por que este chequeando por actualizaciones.\n"
-"Sin embargo, puedes tratar de forzarlo a salir clickeando en el botón ¡Asesinar!"
+"Puede ser que este revisando actualizaciones en los Observadores.\n"
+"Sin embargo, puede tratar de forzarlo a salir usando el botón ¡Asesinar!"
 
 #: ../spectlib/notifier.py:323
 msgid "The network connection seems to be down, watches will not update until then."
-msgstr "La conexión parece caida, los observadores no se actualizaran hasta resolverlo."
+msgstr "La conexión parece caída, los observadores no se actualizaran hasta resolverlo."
 
 #: ../spectlib/notifier.py:382
 msgid "gmail <i>(%s unread)</i>"
@@ -519,11 +519,11 @@ msgstr "observador \"%s\" abierto"
 
 #: ../spectlib/notifier.py:481
 msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
-msgstr "No puedes agregar este tipo de sitios Web como observadores. Paginas estáticas, RSS o Atom Feeds, etc. Specto los manipula automáticamente."
+msgstr "Puedes agregar todo tipo de contenido web como observadores. Specto manipula automáticamente: Paginas estáticas, RSS o Atom Feeds, etc."
 
 #: ../spectlib/notifier.py:482
 msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
-msgstr "Los observadores de sitios web pueden usar un margen de error que te permiten fijar un porcentaje mínimo de diferencia. Esto te permite adaptarte a los sitios que cambian constantemente o tienen mucha publicidad."
+msgstr "Los observadores de sitios web pueden usar un margen de error que permiten fijar un porcentaje mínimo de diferencia. Esto te permite adaptarte a los sitios que cambian constantemente o tienen mucha publicidad."
 
 #: ../spectlib/notifier.py:483
 msgid "Single-click an existing watch to display information, and double-click it to open the content."
