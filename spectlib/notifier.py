@@ -105,14 +105,20 @@ class Notifier:
         Call the main function to clear the watch and reset the name in the notifier.
         If widget == '' then id will be used to clear the watch else the selected watch will be cleared.
         """
-        if widget:
-            try:
-                model, iter = self.treeview.get_selection().get_selected()
-                id = int(model.get_value(iter, 3))
-            except:
-                id = id[0]
-        else:
+##        if widget:
+##            try:
+##                model, iter = self.treeview.get_selection().get_selected()
+##                id = int(model.get_value(iter, 3))
+##            except:
+##                id = id[0]
+##        else:
+##            id = id[0]
+        try:
             id = id[0]
+        except:
+            model, iter = self.treeview.get_selection().get_selected()
+            id = int(model.get_value(iter, 3))          
+            
             
         type = self.specto.watch_db[id].type
         self.specto.clear_watch(id)
