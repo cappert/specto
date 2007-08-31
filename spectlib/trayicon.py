@@ -150,6 +150,25 @@ class Tray:
         self.item_help = gtk.ImageMenuItem(gtk.STOCK_HELP)
         self.item_about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
         self.item_quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        self.item_clear = gtk.ImageMenuItem(gtk.STOCK_CLEAR)
+        
+        #create submenu for updated watches
+        self.sub_menu = gtk.Menu()
+
+        self.sub_item_clear = gtk.MenuItem(_("_Clear All"), True)
+        self.sub_item_clear.connect('activate', self.specto.notifier.clear_all)
+        self.sub_menu.append(self.sub_item_clear)
+        
+        self.sub_menu.append(gtk.SeparatorMenuItem())
+        
+        for i in self.specto.watch_db:
+            if self.specto.watch_db[i].updated == True:
+                self.sub_item_clear = gtk.MenuItem(self.specto.watch_db[i].name, True)
+                self.sub_item_clear.connect('activate', self.specto.notifier.clear_watch, self.specto.watch_db[i].id)
+                self.sub_menu.append( self.sub_item_clear)
+                
+        self.sub_menu.show_all()        
+        self.item_clear.set_submenu(self.sub_menu)
 
         # Connect the events
         self.item_show.connect( 'activate', self.show_notifier)
@@ -163,6 +182,8 @@ class Tray:
         
         # Append menu items to the menu
         self.menu.append( self.item_show)
+        self.menu.append( gtk.SeparatorMenuItem())
+        self.menu.append( self.item_clear)
         self.menu.append( gtk.SeparatorMenuItem())
         self.menu.append( self.item_pref)
         self.menu.append( self.item_help)

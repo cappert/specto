@@ -296,10 +296,11 @@ class Watch_io:
         try:
             f = open(self.file_name, "w")
             f.write(str(self.cfg).strip()) #write the new configuration file
-            f.close()
         except IOError:
             self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
-
+        finally:
+            f.close()
+            
     def remove_watch(self, name):
         """ Remove a watch from the configuration file. """
         try:
@@ -312,9 +313,10 @@ class Watch_io:
         try:
             f = open(self.file_name, "w")
             cfgpr.write(f)
-            f.close()
         except IOError:
             self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+        finally:
+            f.close()
         
     def search_watch(self, name):
         """
@@ -332,16 +334,18 @@ class Watch_io:
         try:
             f = open(self.file_name, "r")
             text = f.read()
-            f.close
-            text = text.replace("[" + orig + "]", "[" + new + "]")
         except IOError:
             self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+        finally:
+            f.close
+                       
+        text = text.replace("[" + orig + "]", "[" + new + "]")
         
         #replace and write file
         try:
             f = open(self.file_name, "w")
             f.write(text)
-            f.close()
         except IOError:
             self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
-        
+        finally:
+            f.close()
