@@ -134,6 +134,16 @@ class Watch:
                     NotificationToast(self.specto, _("The connection, <b>%s</b>, was established.") % self.name, self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0), self.tray_x, self.tray_y)
                 else:
                     self.specto.logger.log(("This is a bug. The watch" + str(self.name) + "'s value for self.running is" + str(self.running)), "debug", self.__class__)
+            elif self.type==5: #google reader
+                notification_toast = i18n._translation.ungettext(\
+                    # English singular form:
+                    (_("Your Google Reader account, <b>%s</b>, has <b>%d</b> new message.") % (self.name, self.newMsg)),\
+                    # English plural form:
+                    (_("Your Google Reader account, <b>%s</b>, has <b>%d</b> new messages, totalling %s") % (self.name, self.newMsg, self.oldMsg)),\
+                    self.oldMsg)
+                
+                if notification_toast:
+                    NotificationToast(self.specto, notification_toast, self.specto.icon_theme.load_icon("applications-internet", 64, 0), self.tray_x, self.tray_y, name=self.name)                
             else:
                 self.specto.logger.log(_("Not implemented yet"), "warning", self.__class__)#TODO: implement other notifications
             #end of the libnotify madness
@@ -240,7 +250,14 @@ class Watch_io:
                    ### XXX: Hack, as above
                    continue
             elif int(values['type']) == 4:
-                values['port'] = watch_options['port']              
+                values['port'] = watch_options['port']
+            elif int(values['type']) == 5:
+                try:
+                    values['username'] = watch_options['username']
+                    values['password'] = watch_options['password']
+                except KeyError:
+                    ### XXX: Hack, as above
+                    continue
   
             try:
                 if watch_options['updated'] == "True":

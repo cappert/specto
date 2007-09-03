@@ -242,6 +242,10 @@ class Specto:
         elif values['type'] == 4: #add a port watch
             from spectlib.watch_port import Port_watch
             self.watch_db[id] = Port_watch(values['refresh'], values['port'], self, id, values['name'])
+            
+        elif values['type'] == 5: #add a google reader account
+            from spectlib.watch_web_greader import Google_reader
+            self.watch_db[id] = Google_reader(values['refresh'], values['username'], values['password'], self, id, values['name'])
  
            
         try:
@@ -348,6 +352,10 @@ class Specto:
 
         elif int(values['type']) == 4: #port
             new_values['port'] = values['port']
+        
+        elif int(values['type']) == 5: #google reader
+            new_values['username'] = values['username']
+            new_values['password'] = values['password']
 
         id = self.create_watch(new_values)
         self.start_watch(id)
@@ -382,7 +390,11 @@ class Specto:
 
         elif int(values['type']) == 4: #port
             new_values['port'] = values['port']
-
+            
+        elif int(values['type']) == 5: #google reader
+            new_values['username'] = values['username']
+            new_values['password'] = values['password']
+            
         self.watch_io.write_options(new_values)
         self.notifier.show_watch_info()
 
@@ -417,12 +429,12 @@ class Specto:
         
     def count_updated_watches(self):
         """ Count the number of updated watches for the tooltip. """
-        tooltip_updated_watches = { 0:0,1:0,2:0,3:0,4:0 }#don't forget to update this if you are implementing a new type of watch
+        tooltip_updated_watches = { 0:0,1:0,2:0,3:0,4:0,5:0 }#don't forget to update this if you are implementing a new type of watch
         for i in self.watch_db:
             if self.watch_db[i].updated == True:
                 self.tray.set_icon_state_excited()#change the tray icon color to orange
                 tooltip_updated_watches[self.watch_db[i].type] = tooltip_updated_watches[self.watch_db[i].type] + 1
-        if tooltip_updated_watches.values() == [0,0,0,0,0]:#there are no more watches to clear, reset the tray icon
+        if tooltip_updated_watches.values() == [0,0,0,0,0,0]:#there are no more watches to clear, reset the tray icon
             self.tray.set_icon_state_normal()
             self.notifier.wTree.get_widget("button_clear_all").set_sensitive(False)
 

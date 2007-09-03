@@ -105,14 +105,6 @@ class Notifier:
         Call the main function to clear the watch and reset the name in the notifier.
         If widget == '' then id will be used to clear the watch else the selected watch will be cleared.
         """
-##        if widget:
-##            try:
-##                model, iter = self.treeview.get_selection().get_selected()
-##                id = int(model.get_value(iter, 3))
-##            except:
-##                id = id[0]
-##        else:
-##            id = id[0]
         try:
             id = id[0]
         except:
@@ -135,6 +127,8 @@ class Notifier:
             icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
         elif type == 4:#port
             icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
+        elif type == 5:#google reader
+            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
         
         if self.model.iter_is_valid(self.iter[id]):
             self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 50))
@@ -168,6 +162,9 @@ class Notifier:
                     icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
                 elif type == 4:#port
                     icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
+                elif type == 5:#google reader
+                    icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+                    
                 self.model.set_value(self.iter[i], 1, self.make_transparent(icon, 50))
 
     def refresh(self, *widget):
@@ -229,6 +226,9 @@ class Notifier:
             icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
         elif type == 4:#port
             icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
+        elif type == 5:#google reader
+            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+            
         if self.model.iter_is_valid(self.iter[id]):
             self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 0))
         
@@ -264,9 +264,13 @@ class Notifier:
                     icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
                 elif type == 4:#port
                     icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
+                elif type == 5:#google reader
+                    icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+                    
             if self.model.iter_is_valid(self.iter[id]):
                 if self.specto.watch_db[id].updated == False:
                     self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 50))#we must keep it faded, exceptionally
+                    self.show_watch_info()
                 else:
                     #self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 0)) #do not use transparency here, it's useless and dangerous
                     self.model.set_value(self.iter[id], 1, icon)
@@ -298,6 +302,8 @@ class Notifier:
             icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
         elif type == 4:#port
             icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
+        elif type == 5:#google reader
+            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
         
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 1)
@@ -407,6 +413,8 @@ class Notifier:
                 self.wTree.get_widget("lblPortName").set_label(selected.port)
                 self.wTree.get_widget("lblPortLastUpdateText").set_label(selected.last_updated)
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0))
+            elif selected.type == 5:###this need to be updated!
+                pass
                 
         else:
             self.wTree.get_widget("edit").set_sensitive(False)
