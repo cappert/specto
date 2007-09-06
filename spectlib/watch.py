@@ -137,9 +137,9 @@ class Watch:
             elif self.type==5: #google reader
                 notification_toast = i18n._translation.ungettext(\
                     # English singular form:
-                    (_("Your Google Reader account, <b>%s</b>, has <b>%d</b> new message.") % (self.name, self.newMsg)),\
+                    (_("Your Google Reader watch, <b>%s</b>, has <b>%d</b> new message.") % (self.name, self.newMsg)),\
                     # English plural form:
-                    (_("Your Google Reader account, <b>%s</b>, has <b>%d</b> new messages, totalling %s") % (self.name, self.newMsg, self.oldMsg)),\
+                    (_("Your Google Reader watch, <b>%s</b>, has <b>%d</b> new messages, totalling %s") % (self.name, self.newMsg, self.oldMsg)),\
                     self.oldMsg)
                 
                 if notification_toast:

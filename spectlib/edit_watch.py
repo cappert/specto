@@ -156,6 +156,12 @@ class Edit_watch:
             values['port'] = self.txtPort.get_text()
             self.specto.watch_db[self.watch.id].set_port(values['port'])
             
+        elif values['type'] == 5: #add Google Reader
+            values['username'] = self.txtUserGr.get_text()
+            values['password'] = self.txtPassGr.get_text()
+            self.specto.watch_db[self.watch.id].set_username(values['username'])
+            self.specto.watch_db[self.watch.id].set_password(values['password'])
+            
         self.edit_watch.destroy()
         
         if self.watch.active == True:
@@ -396,6 +402,40 @@ class Edit_watch:
             tblPort.attach(self.txtPort, 1, 2, 0, 1)
             
             vbox_options.pack_start(tblPort, False, False, 0)
+            
+        elif self.watch.type == 5: #add Google Reader
+            ###create the GReader options gui
+            tblGReader = gtk.Table(rows=2, columns=2, homogeneous=False)
+            tblGReader.set_row_spacings(6)
+            tblGReader.set_col_spacings(6)
+            tblGReader.show()
+            
+
+            #username
+            labelUsername = gtk.Label(_("Username:"))
+            labelUsername.set_alignment(xalign=0.0, yalign=0.5)
+            labelUsername.show()
+            tblGReader.attach(labelUsername, 0, 1, 0, 1)
+
+            self.txtUserGr = gtk.Entry()
+            self.txtUserGr.set_text(self.watch.user)
+            self.txtUserGr.show()
+            tblGReader.attach(self.txtUserGr, 1, 2, 0, 1)
+
+            #password
+            labelPassword = gtk.Label(_("Password:"))
+            labelPassword.set_alignment(xalign=0.0, yalign=0.5)
+            labelPassword.show()
+            tblGReader.attach(labelPassword, 0, 1, 1, 2)
+
+            self.txtPassGr = gtk.Entry()
+            self.txtPassGr.set_visibility(False)
+            self.txtPassGr.set_text(self.watch.password)
+            self.txtPassGr.show()
+            tblGReader.attach(self.txtPassGr, 1, 2, 1, 2)
+
+            vbox_options.pack_start(tblGReader, False, False, 0)
+            
 
     
     def change_file_type(self, *args):

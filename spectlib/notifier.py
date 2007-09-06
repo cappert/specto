@@ -128,7 +128,7 @@ class Notifier:
         elif type == 4:#port
             icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
         elif type == 5:#google reader
-            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+            icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
         
         if self.model.iter_is_valid(self.iter[id]):
             self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 50))
@@ -163,7 +163,7 @@ class Notifier:
                 elif type == 4:#port
                     icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
                 elif type == 5:#google reader
-                    icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+                    icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
                     
                 self.model.set_value(self.iter[i], 1, self.make_transparent(icon, 50))
 
@@ -227,7 +227,7 @@ class Notifier:
         elif type == 4:#port
             icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
         elif type == 5:#google reader
-            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+            icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
             
         if self.model.iter_is_valid(self.iter[id]):
             self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 0))
@@ -265,7 +265,7 @@ class Notifier:
                 elif type == 4:#port
                     icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
                 elif type == 5:#google reader
-                    icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+                    icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
                     
             if self.model.iter_is_valid(self.iter[id]):
                 if self.specto.watch_db[id].updated == False:
@@ -303,7 +303,7 @@ class Notifier:
         elif type == 4:#port
             icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
         elif type == 5:#google reader
-            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
+            icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
         
         self.iter[i] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[i], 0, 1)
@@ -413,7 +413,12 @@ class Notifier:
                 self.wTree.get_widget("lblPortName").set_label(selected.port)
                 self.wTree.get_widget("lblPortLastUpdateText").set_label(selected.last_updated)
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0))
-            elif selected.type == 5:###this need to be updated!
+                
+            elif selected.type == 5:
+                self.wTree.get_widget("lblReadNameText").set_label(selected.name)
+                self.wTree.get_widget("lblReadUpdateText").set_label(selected.last_updated)
+                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("internet-news-reader", 64, 0))                
+            elif selected.type == 6:###this need to be updated!
                 pass
                 
         else:
@@ -447,6 +452,8 @@ class Notifier:
                 spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
         elif selected.type == 2:
             spectlib.util.open_file_watch(selected.file)
+        elif selected.type == 5: #google reader
+                spectlib.util.show_webpage("http://www.google.com/reader/view/")
         else: 
             res=False
         return res

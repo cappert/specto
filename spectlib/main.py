@@ -433,7 +433,7 @@ class Specto:
         for i in self.watch_db:
             if self.watch_db[i].updated == True:
                 self.tray.set_icon_state_excited()#change the tray icon color to orange
-                tooltip_updated_watches[self.watch_db[i].type] = tooltip_updated_watches[self.watch_db[i].type] + 1
+                tooltip_updated_watches[self.watch_db[i].type] += 1
         if tooltip_updated_watches.values() == [0,0,0,0,0,0]:#there are no more watches to clear, reset the tray icon
             self.tray.set_icon_state_normal()
             self.notifier.wTree.get_widget("button_clear_all").set_sensitive(False)

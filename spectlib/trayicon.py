@@ -109,15 +109,15 @@ class Tray:
                 
                 if show_return:
                     message = message + "\n"
-                message = message + "\t" + str(updated_messages[3]) + " " + type
-                
+                message = message + "\t" + str(updated_messages[4]) + " " + type
+            
             #google reader tooltip
             if updated_messages[5] > 0:
-                type = i18n._translation.ungettext(_("GReader message"), _("GReader messages"), updated_messages[5])
+                type = i18n._translation.ungettext(_("GReader watch"), _("GReader watches"), updated_messages[5])
 
                 if show_return:
                     message = message + "\n"
-                message = message + "\t" + str(updated_messages[4]) + " " + type                
+                message = message + "\t" + str(updated_messages[5]) + " " + type                
         self.tray.set_tooltip(message)
             
     def show_preferences(self, widget):

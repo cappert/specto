@@ -171,6 +171,9 @@ class Add_watch:
 
             elif values['type'] == 4: #add a port
                 values['port'] = self.txtPort.get_text()
+            elif values['type'] == 5: #add a google reader
+                values['username'] = self.txtUserGr.get_text()
+                values['password'] = self.txtPassGr.get_text()
                     
             self.add_watch.destroy()
             self.specto.add_watch(values) #write the options in the configuration file
@@ -192,6 +195,8 @@ class Add_watch:
                 self.tblProcess.hide()
             elif self.option_visible == 4:
                 self.tblPort.hide()
+            elif self.option_visible == 5:
+                self.tblGReader.hide()
                 
         if selected_type == 0: #website
             self.tblWeb.show()
@@ -207,6 +212,9 @@ class Add_watch:
 
         if selected_type == 4: #add a port
             self.tblPort.show()
+        
+        if selected_type == 5:
+            self.tblGReader.show()
 
         self.option_visible = selected_type
                     
@@ -272,6 +280,19 @@ class Add_watch:
                 error = True
             else:
                 self.txtPort.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+        elif selected_type == 5:
+            if self.txtPassGr.get_text() == "":
+                self.txtPassGr.grab_focus()
+                self.txtPassGr.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
+                error = True
+            else:
+                self.txtPassGr.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+            if self.txtUserGr.get_text() == "":
+                self.txtUserGr.grab_focus()
+                self.txtUserGr.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
+                error = True
+            else:
+                self.txtUserGr.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
 
         if self.name.get_text() == "":
             self.name.grab_focus()
@@ -470,13 +491,40 @@ class Add_watch:
         self.txtPort.show()
         self.tblPort.attach(self.txtPort, 1, 2, 0, 1)
 
+        ###create the GReader options gui
+        self.tblGReader = gtk.Table(rows=2, columns=2, homogeneous=False)
+        self.tblGReader.set_row_spacings(6)
+        self.tblGReader.set_col_spacings(6)
 
+        #username
+        labelUsername = gtk.Label(_("Username:"))
+        labelUsername.set_alignment(xalign=0.0, yalign=0.5)
+        labelUsername.show()
+        self.tblGReader.attach(labelUsername, 0, 1, 0, 1)
+
+        self.txtUserGr = gtk.Entry()
+        self.txtUserGr.show()
+        self.tblGReader.attach(self.txtUserGr, 1, 2, 0, 1)
+
+        #password
+        labelPassword = gtk.Label(_("Password:"))
+        labelPassword.set_alignment(xalign=0.0, yalign=0.5)
+        labelPassword.show()
+        self.tblGReader.attach(labelPassword, 0, 1, 1, 2)
+
+        self.txtPassGr = gtk.Entry()
+        self.txtPassGr.set_visibility(False)
+        self.txtPassGr.show()
+        self.tblGReader.attach(self.txtPassGr, 1, 2, 1, 2)
+        
         vbox = self.wTree.get_widget("vbox_watch_options")
         vbox.pack_start(self.tblWeb, False, False, 0)
         vbox.pack_start(self.tblMail, False, False, 0)
         vbox.pack_start(self.tblFile, False, False, 0)
         vbox.pack_start(self.tblProcess, False, False, 0)
         vbox.pack_start(self.tblPort, False, False, 0)
+        vbox.pack_start(self.tblGReader, False, False, 0)
+                
         
     
 class Unique_Dialog:
