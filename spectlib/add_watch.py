@@ -22,6 +22,7 @@
 # Boston, MA 02111-1307, USA.
 
 import sys
+import gobject
 from spectlib.i18n import _
 
 try:
@@ -33,6 +34,7 @@ except:
 try:
     import gtk
     import gtk.glade
+    import spectlib.gtkutil
 except:
     pass
 
@@ -41,8 +43,9 @@ class Add_watch:
     Class to create the add watch dialog.
     """
     #Please do not use confusing widget names such as 'lbl' and 'tbl', use full names like 'label' and 'table'.
-    def __init__(self, specto):
+    def __init__(self, specto, notifier):
         self.specto = specto
+        self.notifier = notifier
         #create tree
         gladefile= self.specto.PATH + 'glade/add_watch.glade' 
         windowname= "add_watch"
@@ -58,6 +61,8 @@ class Add_watch:
         "on_name_changed": self.name_changed,
         "on_add_watch_delete_event": self.delete_event,
         "on_type_changed": self.change_options,
+        "check_command_toggled": self.command_toggled,
+        "check_open_toggled": self.open_toggled,
         "on_refresh_unit_changed": self.set_refresh_values }
 
         #attach the events
@@ -74,149 +79,64 @@ class Add_watch:
         self.refresh_unit = self.wTree.get_widget("refresh_unit")
         
         #create the gui
-        self.create_add_gui()
+        self.plugins_ = {}
+        self.watch_options = {}
+        liststore = gtk.ListStore(gtk.gdk.Pixbuf, gobject.TYPE_STRING)
+        i = 0
+        for plugin in self.specto.watch_db.plugin_dict.values():
+            image = self.notifier.get_icon(plugin.icon, 0, False)
+            liststore.append((image, plugin.type_desc))
+            #self.type.insert_text(i, )
+            self.plugins_[i] = plugin.type
+            i += 1
+        
+        px = gtk.CellRendererPixbuf()
+        text = gtk.CellRendererText()
+        text.set_property('xalign', 1.0)
+        self.type.pack_start(px, True)        
+        self.type.pack_start(text, False)
+        self.type.add_attribute(px, "pixbuf", 0)        
+        self.type.add_attribute(text, "text", 1)
+        self.type.set_model(liststore)        
+
+        #set the default values
+        self.type.set_active(0)
+        self.refresh_unit.set_active(2)
+        self.refresh.set_value(1.0)
 
     def name_changed(self, widget):
         """ Show the watch name in the window. """
         new_name = "<b>" + self.name.get_text().replace("&", "&amp;") + "</b>"
         self.wTree.get_widget("label7").set_label(new_name)
 
-    def show_mail_options(self, *args):
-        """
-        Check if we have to show the host and ssl fields or not.
-        """
-        if self.chkGmail.get_active() == True:
-            self.labelHost.hide()
-            self.txtHost.hide()
-            self.labelSsl.hide()
-            self.chkSsl.hide()
-        else:
-            self.labelHost.show()
-            self.txtHost.show()
-            self.labelSsl.show()
-            self.chkSsl.show()
-                       
-    def change_file_type(self, *args):
-        """ Check if a file watch or a folder watch has to be used. """
-        if self.chkFolder.get_active() == True:
-            self.btnFile.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
-        else:
-            self.btnFile.set_action(gtk.FILE_CHOOSER_ACTION_OPEN)
-            
-    def create_watch(self):
-        """
-        Add the watch to the watches repository.
-        """
-        values = {}
-        #get the standard options from a watch
-        values['name'] = self.name.get_text()
-        
-        #check if the watch is unique
-        if not self.specto.check_unique_watch(values['name']):
-            unique_dialog = Unique_Dialog()
-            result = unique_dialog.run()
-            
-            if result ==1:
-                self.name.grab_focus()
-            else: #edit the existing watch
-                self.add_watch.hide_all()
-                name = values['name']
-                self.specto.show_edit_watch(-1, name)
-            
-        else:
-            self.add_watch.hide_all()#FIXME: this is just an illusion to make the user believe that it was done instantaneously, instead of waiting for (sometimes slow) ressources to destroy the window. Note that I used hide_all instead of hide, otherwise the window refuses to hide itself and its contents.
-            values['type'] = self.type.get_active()
-            values['refresh_value'] = self.refresh.get_value_as_int()
-            values['refresh_unit'] = self.refresh_unit.get_active()
-    
-            #get the watch dependant options
-            watch_options = {}
-    
-            if values['type'] == 0: #add a website
-                values['url'] = self.txtUrl.get_text()
-                if values['url'][:7] != "http://" and values['url'][:8] != "https://" and values['url'][:6] != "ftp://":
-                    values['url'] = "http://" + values['url']
-                    
-                values['error_margin'] = (self.adjustment.get_value() / 100)
-                    
-            elif values['type'] == 1: #add an email
-                #check if the watch uses pop3, imap or gmail
-                if self.chkPop3.get_active() == True:
-                    prot = 0
-                    values.update({'host': self.txtHost.get_text()})
-                    values.update({'ssl':self.chkSsl.get_active()})
-                elif self.chkImap.get_active() == True:
-                    prot = 1
-                    values.update({'host': self.txtHost.get_text()})
-                    values.update({'ssl':self.chkSsl.get_active()})
-                else:
-                    prot = 2
-    
-                values.update(
-                {
-                'username': self.txtUsername.get_text(),
-                'password': self.txtPassword.get_text(),
-                'prot': prot
-                }
-                )
-            elif values['type'] == 2: #add a file
-                values['file'] = self.btnFile.get_filename()
-                if self.chkFile.get_active() == True:
-                    values['mode'] = _("file")
-                else:
-                    values['mode'] = _("folder")
-                    
-            elif values['type'] == 3: #add a system process
-                values['process'] = self.txtProcess.get_text()
-
-            elif values['type'] == 4: #add a port
-                values['port'] = self.txtPort.get_text()
-            elif values['type'] == 5: #add a google reader
-                values['username'] = self.txtUserGr.get_text()
-                values['password'] = self.txtPassGr.get_text()
-                    
-            self.add_watch.destroy()
-            self.specto.add_watch(values) #write the options in the configuration file
-            #"del self" would be useful here I think.
-
     def change_options(self, widget):
-        """ Show the table with the right watch options. """
-        selected_type = self.type.get_active()
+        """ Show the table with the right watch options. """ 
+        try:
+            self.table.destroy()
+        except:
+            pass
 
-        #hide the previous table
-        if self.option_visible != -1:
-            if self.option_visible == 0:
-                self.tblWeb.hide()
-            elif self.option_visible == 1:
-                self.tblMail.hide()
-            elif self.option_visible == 2:
-                self.tblFile.hide()
-            elif self.option_visible == 3:
-                self.tblProcess.hide()
-            elif self.option_visible == 4:
-                self.tblPort.hide()
-            elif self.option_visible == 5:
-                self.tblGReader.hide()
-                
-        if selected_type == 0: #website
-            self.tblWeb.show()
-
-        if selected_type == 1: #email
-            self.tblMail.show()
-
-        if selected_type == 2: #add a file
-            self.tblFile.show()
-            
-        if selected_type == 3: #add a process
-            self.tblProcess.show()
-
-        if selected_type == 4: #add a port
-            self.tblPort.show()
+        watch_type = self.plugins_[self.type.get_active()]
+        values = self.specto.watch_db.plugin_dict[watch_type].get_add_gui_info()
         
-        if selected_type == 5:
-            self.tblGReader.show()
+        #create the options gui
+        self.table = gtk.Table(rows=len(values), columns=1, homogeneous=False)
+        self.table.set_row_spacings(6)
+        self.table.set_col_spacings(6)
+        
+        self.watch_options[watch_type] = {}
 
-        self.option_visible = selected_type
+        i = 0
+        for value, widget in values:
+            table, _widget = widget.get_widget()
+            self.table.attach(table, 0, 1, i, i + 1)
+            self.watch_options[watch_type].update({value:widget})
+        
+            i += 1
+
+        self.table.show()
+        vbox = self.wTree.get_widget("vbox_watch_options")
+        vbox.pack_start(self.table, False, False, 0)
                     
     def set_refresh_values(self, widget):
         """ Set the max and min values for the refresh unit. """
@@ -235,73 +155,74 @@ class Add_watch:
 
     def add_clicked(self,widget):
         """
-        Check that everything is properly filled in before calling create_watch.
-        """          
-        error = False
-        selected_type = self.type.get_active()
-        if selected_type == 0:
-            if self.txtUrl.get_text() == "":
-                self.txtUrl.grab_focus()
-                self.txtUrl.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                error = True
+        Add the watch to the watches repository.
+        """
+        values = {}
+        #get the standard options from a watch
+        values['name'] = self.name.get_text()
+                
+        #check if the watch is unique
+        if self.specto.watch_io.is_unique_watch(values['name']):
+            unique_dialog = Unique_Dialog(self.specto)
+            result = unique_dialog.run()
+            
+            if result ==1:
+                self.name.grab_focus()
+            else: #edit the existing watch
+                self.add_watch.hide_all()
+                name = values['name']
+                self.notifier.show_edit_watch(-1, name)
+            
+        else:            
+            values['refresh'] = self.specto.watch_db.set_interval(self.refresh.get_value_as_int(), self.refresh_unit.get_active())
+            values['type'] = self.plugins_[self.type.get_active()]
+            values['active'] = True
+            values['last_updated'] = ""
+            values['updated'] = False
+            if self.wTree.get_widget("check_command").get_active() == True:
+                values['command'] = self.wTree.get_widget("entry_update_command").get_text()
+                
+            if self.wTree.get_widget("check_open").get_active() == True:
+                values['open_command'] = self.wTree.get_widget("entry_open_command").get_text()
             else:
-                self.txtUrl.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
-        elif selected_type == 1:
-            if not self.chkGmail.get_active():
-                if self.txtHost.get_text() == "":
-                    self.txtHost.grab_focus()
-                    self.txtHost.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                    error = True
-                else:
-                    self.txtHost.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
-            if self.txtPassword.get_text() == "":
-                self.txtPassword.grab_focus()
-                self.txtPassword.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                error = True
-            else:
-                self.txtPassword.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
-            if self.txtUsername.get_text() == "":
-                self.txtUsername.grab_focus()
-                self.txtUsername.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                error = True
-            else:
-                self.txtUsername.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
-        elif selected_type == 3:
-            if self.txtProcess.get_text() == "":
-                self.txtProcess.grab_focus()
-                self.txtProcess.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                error = True
-            else:
-                self.txtProcess.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
-        elif selected_type == 4:
-            if self.txtPort.get_text() == "":
-                self.txtPort.grab_focus()
-                self.txtPort.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                error = True
-            else:
-                self.txtPort.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
-        elif selected_type == 5:
-            if self.txtPassGr.get_text() == "":
-                self.txtPassGr.grab_focus()
-                self.txtPassGr.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                error = True
-            else:
-                self.txtPassGr.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
-            if self.txtUserGr.get_text() == "":
-                self.txtUserGr.grab_focus()
-                self.txtUserGr.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                error = True
-            else:
-                self.txtUserGr.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+                values['open_command'] = ""
+                open = True
 
-        if self.name.get_text() == "":
-            self.name.grab_focus()
-            self.name.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-            error = True
-        else:
-            self.name.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
-        if error == False:
-            self.create_watch()
+                
+            gui_values = self.specto.watch_db.plugin_dict[values['type']].get_add_gui_info()
+            window_options = self.watch_options[values['type']]                
+            
+            for key in window_options:
+                values[key] = window_options[key].get_value()
+                window_options[key].set_color(0xFFFF, 0xFFFF, 0xFFFF)
+                
+            self.wTree.get_widget("name").modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))                
+            
+            try:        
+                id = self.specto.watch_db.create({0:values})[0] #write the options in the configuration file
+            except AttributeError, error_fields:
+                fields = str(error_fields).split(",")
+                i = 1
+                for field in fields:
+                    if field == " name":
+                        self.wTree.get_widget("name").modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
+                        self.wTree.get_widget("name").grab_focus()
+                    else:
+                        field = window_options[field.strip()]
+                        if i == 1:
+                            field.grab_focus()
+                            i = 0
+                        field.set_color(65535, 0, 0)
+            else:
+                self.add_watch.destroy()            
+                if open == True:
+                    try:
+                        self.specto.watch_db[id].open_command = self.specto.watch_db[id].standard_open_command
+                    except:
+                        self.specto.watch_db[id].open_command = ""
+                self.specto.watch_io.write_watch(values)
+                self.notifier.add_notifier_entry(id)
+                self.specto.watch_db[id].start()
             
     def help_clicked(self,widget):
         """ Call the show help function. """
@@ -316,223 +237,22 @@ class Add_watch:
         self.add_watch.destroy()
         return True
     
-    def create_add_gui(self):
-        """ Create the gui for the different kinds of watches. """
-        ###create the web options gui
-        self.tblWeb = gtk.Table(rows=2, columns=2, homogeneous=False)
-        self.tblWeb.set_row_spacings(6)
-        self.tblWeb.set_col_spacings(6)
-
-        #set the default values
-        self.type.set_active(0)
-        self.refresh_unit.set_active(2)
-        self.refresh.set_value(1.0)
-
-        #url
-        labelUrl = gtk.Label(_("URL:"))
-        labelUrl.set_alignment(xalign=0.0, yalign=0.5)
-        labelUrl.show()
-        self.tblWeb.attach(labelUrl, 0, 1, 0, 1)
-
-        self.txtUrl = gtk.Entry()
-        self.txtUrl.show()
-        self.tblWeb.attach(self.txtUrl, 1, 2, 0, 1)
-
-        tblError_margin = gtk.Table(rows=2, columns=1, homogeneous=False)
-        tblError_margin.show()
-        self.tblWeb.attach(tblError_margin, 0, 2, 2, 3)
+    def command_toggled(self, widget):
+        sensitive = self.wTree.get_widget("check_command").get_active()
+        self.wTree.get_widget("entry_update_command").set_sensitive(sensitive)
         
-        #error margin
-        labelSlider = gtk.Label(_("Error Margin (%):"))
-        labelSlider.set_alignment(xalign=0.0, yalign=0.5)
-        labelSlider.show()
-        #self.tblWeb.attach(labelSlider, 0, 1, 2, 3)
-        tblError_margin.attach(labelSlider, 0, 1, 0, 1)
+    def open_toggled(self, widget):
+        sensitive = self.wTree.get_widget("check_open").get_active()
+        self.wTree.get_widget("entry_open_command").set_sensitive(sensitive)
 
-        self.adjustment = gtk.Adjustment(value=2.0, lower=0, upper=50, step_incr=0.1, page_incr=1.0, page_size=10)
-        self.margin_scale = gtk.HScale(adjustment=self.adjustment)
-        self.margin_scale.set_digits(1)
-        self.margin_scale.set_value_pos(gtk.POS_RIGHT)
-        self.margin_scale.show()
-        #self.tblWeb.attach(self.margin_scale, 1, 2, 2, 3)
-        tblError_margin.attach(self.margin_scale, 0, 1, 1, 2)
-
-
-        ###create the mail options gui
-        self.tblMail = gtk.Table(rows=5, columns=2, homogeneous=False)
-        self.tblMail.set_row_spacings(6)
-        self.tblMail.set_col_spacings(6)
-
-        #protocol
-        labelProtocol = gtk.Label(_("Protocol:"))
-        labelProtocol.set_alignment(xalign=0.0, yalign=0.5)
-        labelProtocol.show()
-        self.tblMail.attach(labelProtocol, 0, 1, 0, 1)
-
-        vbox_prot = gtk.HBox(False, 10)
-        vbox_prot.show()
-        self.tblMail.attach(vbox_prot, 1, 2, 0, 1)
-
-        self.chkPop3 = gtk.RadioButton(None, _("POP3"))
-        self.chkPop3.set_active(True)
-        self.chkPop3.connect("toggled", self.show_mail_options)
-        vbox_prot.pack_start(self.chkPop3, True, True, 0)
-        self.chkPop3.show()
-
-        self.chkImap = gtk.RadioButton(self.chkPop3, _("IMAP"))
-        self.chkImap.connect("toggled", self.show_mail_options)
-        vbox_prot.pack_start(self.chkImap, True, True, 0)
-        self.chkImap.show()
-
-        self.chkGmail = gtk.RadioButton(self.chkPop3, _("Gmail"))
-        self.chkGmail.connect("toggled", self.show_mail_options)
-        vbox_prot.pack_start(self.chkGmail, True, True, 0)
-        self.chkGmail.show()
-
-        #username
-        labelUsername = gtk.Label(_("User:"))
-        labelUsername.set_alignment(xalign=0.0, yalign=0.5)
-        labelUsername.show()
-        self.tblMail.attach(labelUsername, 0, 1, 1, 2)
-
-        self.txtUsername = gtk.Entry()
-        self.txtUsername.show()
-        self.tblMail.attach(self.txtUsername, 1, 2, 1, 2)
-
-        #password
-        labelPassword = gtk.Label(_("Password:"))
-        labelPassword.set_alignment(xalign=0.0, yalign=0.5)
-        labelPassword.show()
-        self.tblMail.attach(labelPassword, 0, 1, 2, 3)
-
-        self.txtPassword = gtk.Entry()
-        self.txtPassword.set_visibility(False)
-        self.txtPassword.show()
-        self.tblMail.attach(self.txtPassword, 1, 2, 2, 3)
-
-        #host
-        self.labelHost = gtk.Label(_("Host:"))
-        self.labelHost.set_alignment(xalign=0.0, yalign=0.5)
-        self.labelHost.show()
-        self.tblMail.attach(self.labelHost, 0, 1, 3, 4)
-
-        self.txtHost = gtk.Entry()
-        self.txtHost.show()
-        self.tblMail.attach(self.txtHost, 1, 2, 3, 4)
-        
-        #ssl
-        self.labelSsl = gtk.Label(_("Use SSL:"))
-        self.labelSsl.set_alignment(xalign=0.0, yalign=0.5)
-        self.labelSsl.show()
-        self.tblMail.attach(self.labelSsl, 0, 1, 4, 5)
-        
-        self.chkSsl = gtk.CheckButton(None, True)
-        self.chkSsl.show()
-        self.tblMail.attach(self.chkSsl, 1, 2, 4, 5)        
-        
-        ###create the file options gui
-        self.tblFile = gtk.Table(rows=2, columns=2, homogeneous=False)
-        self.tblFile.set_row_spacings(6)
-        self.tblFile.set_col_spacings(6)
-        
-        #file/folder
-        self.labelFile = gtk.Label(_("File/folder:"))
-        self.labelFile.set_alignment(xalign=0.0, yalign=0.5)
-        self.labelFile.show()
-        self.tblFile.attach(self.labelFile, 0, 1, 0, 1)
-
-        #option file/folder
-        vbox_file = gtk.HBox(False, 10)
-        vbox_file.show()
-        self.tblFile.attach(vbox_file, 1, 2, 0, 1)
-
-        self.chkFile = gtk.RadioButton(None, _("File"))
-        self.chkFile.set_active(True)
-        self.chkFile.connect("toggled", self.change_file_type)
-        vbox_file.pack_start(self.chkFile, True, True, 0)
-        self.chkFile.show()
-
-        self.chkFolder = gtk.RadioButton(self.chkFile, _("Folder"))
-        self.chkFolder.connect("toggled", self.change_file_type)
-        vbox_file.pack_start(self.chkFolder, True, True, 0)
-        self.chkFolder.show()
-
-        #file selection
-        self.btnFile = gtk.FileChooserButton(_("Choose a file or folder"))
-        self.btnFile.show()
-        self.tblFile.attach(self.btnFile, 0, 2, 1, 2)
-        
-        ###create the process gui
-        self.tblProcess = gtk.Table(rows=2, columns=1, homogeneous=False)
-        self.tblProcess.set_row_spacings(6)
-        self.tblProcess.set_col_spacings(6)
-        
-        self.labelProcess = gtk.Label(_("Process:"))
-        self.labelProcess.set_alignment(xalign=0.0, yalign=0.5)
-        self.labelProcess.show()
-        self.tblProcess.attach(self.labelProcess, 0, 1, 0, 1)
-        
-        self.txtProcess = gtk.Entry()
-        self.txtProcess.show()
-        self.tblProcess.attach(self.txtProcess, 1, 2, 0, 1)
-
-
-        ###create the port gui
-        self.tblPort = gtk.Table(rows=2, columns=1, homogeneous=False)
-        self.tblPort.set_row_spacings(6)
-        self.tblPort.set_col_spacings(6)
-        
-        self.labelPort = gtk.Label(_("Port:"))
-        self.labelPort.set_alignment(xalign=0.0, yalign=0.5)
-        self.labelPort.show()
-        self.tblPort.attach(self.labelPort, 0, 1, 0, 1)
-        
-        self.txtPort = gtk.Entry()
-        self.txtPort.show()
-        self.tblPort.attach(self.txtPort, 1, 2, 0, 1)
-
-        ###create the GReader options gui
-        self.tblGReader = gtk.Table(rows=2, columns=2, homogeneous=False)
-        self.tblGReader.set_row_spacings(6)
-        self.tblGReader.set_col_spacings(6)
-
-        #username
-        labelUsername = gtk.Label(_("Username:"))
-        labelUsername.set_alignment(xalign=0.0, yalign=0.5)
-        labelUsername.show()
-        self.tblGReader.attach(labelUsername, 0, 1, 0, 1)
-
-        self.txtUserGr = gtk.Entry()
-        self.txtUserGr.show()
-        self.tblGReader.attach(self.txtUserGr, 1, 2, 0, 1)
-
-        #password
-        labelPassword = gtk.Label(_("Password:"))
-        labelPassword.set_alignment(xalign=0.0, yalign=0.5)
-        labelPassword.show()
-        self.tblGReader.attach(labelPassword, 0, 1, 1, 2)
-
-        self.txtPassGr = gtk.Entry()
-        self.txtPassGr.set_visibility(False)
-        self.txtPassGr.show()
-        self.tblGReader.attach(self.txtPassGr, 1, 2, 1, 2)
-        
-        vbox = self.wTree.get_widget("vbox_watch_options")
-        vbox.pack_start(self.tblWeb, False, False, 0)
-        vbox.pack_start(self.tblMail, False, False, 0)
-        vbox.pack_start(self.tblFile, False, False, 0)
-        vbox.pack_start(self.tblProcess, False, False, 0)
-        vbox.pack_start(self.tblPort, False, False, 0)
-        vbox.pack_start(self.tblGReader, False, False, 0)
-                
-        
     
 class Unique_Dialog:
     """
     Class to create a message when you add a watch with an existing name.
     """
     
-    def __init__(self):
+    def __init__(self, specto):
+        self.specto = specto
         self.gladefile= self.specto.PATH + 'glade/add_watch.glade' 
         self.dialogname = "dialog"    
         

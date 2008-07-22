@@ -21,11 +21,25 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys
-import spectlib.edit_watch
-import spectlib.util
+import sys, os
 from random import randrange
+from datetime import datetime
+
+from spectlib.preferences import Preferences
+from spectlib.add_watch import Add_watch
+from spectlib.about import About
+from spectlib.edit_watch import Edit_watch
+from spectlib.logger import Log_dialog
+from spectlib.balloons import NotificationToast
+from spectlib.import_watch import Import_watch
+from spectlib.export_watch import Export_watch
+from spectlib.trayicon import Tray
+
+
+import spectlib.util
+from spectlib.gtkconfig import ErrorDialog
 from spectlib.i18n import _
+
 try:
     import pygtk
     pygtk.require("2.0")
@@ -37,6 +51,7 @@ try:
     import gtk.glade
     import gobject
     import pango
+    import gnome
 except:
     pass
     
@@ -45,20 +60,30 @@ class Notifier:
     """
     Class to create the main specto window
     """
+    add_w = ""
+    edit_w = ""
+    error_l = ""
+    about = ""
+    export_watch = ""
+    import_watch = ""    
     
     def __init__(self, specto):
         """
         In this init we are going to display the main notifier window.
         """
         self.specto = specto
-        self.iter = {}
-        #self.watches = 0
+        self.tray = Tray(specto, self)
+        self.balloon = NotificationToast(specto, self)
+        self.preferences_initialized = False   
+        gnome.sound_init('localhost') 
+
         #create tree
+        self.iter = {}
         gladefile= self.specto.PATH + 'glade/notifier.glade' 
         windowname= "notifier"
         self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_STRING, pango.Weight)
-        #__icon_size  = gtk.icon_size_lookup (gtk.ICON_SIZE_BUTTON) [0] #needed, otherwise gtk.image will not take into account the icon size no matter what you specify. ###uh no, it's not, actually it was a gnome-icon-theme 2.17 bug. I guess this line should be removed.
+
         #catch some events
         dic= {
         "on_add_activate": self.show_add_watch,
@@ -81,22 +106,22 @@ class Notifier:
         "on_btnEdit_clicked": self.show_edit_watch, 
         "on_by_watch_type_activate": self.sort_type,
         "on_by_name_activate": self.sort_name,
-        "on_by_watch_active_activate": self.sort_active
+        "on_by_watch_active_activate": self.sort_active,
+        "on_remove_clicked": self.remove_watch,
+        "on_clear_activate": self._clear_watch,
+        "on_remove_activate": self.remove_watch
         }
         self.wTree.signal_autoconnect(dic)
 
         self.notifier=self.wTree.get_widget("notifier")
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.svg' )
         self.notifier.set_icon(icon)
-        
+                
         self.specto.notifier_initialized = True
         
         #create the gui
         self.create_notifier_gui()
 
-        self.pref = ""
-        self.add_w = ""
-        self.edit_w = ""
         self.stop_refresh = False
         
 
@@ -116,17 +141,25 @@ class Notifier:
         watch.clear()
         self.model.set(self.iter[id], 2, watch.name, 5, pango.WEIGHT_NORMAL)
         
-        if self.model.iter_is_valid(self.iter[id]):
-            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50))
+        if self.model.iter_is_valid(self.iter[id]) and not watch.error:
+            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50, False))
         
         if watch.updated == False:
             self.wTree.get_widget("btnClear").set_sensitive(False)
         else:
             self.wTree.get_widget("btnClear").set_sensitive(True)
+        
+        #check if all watches has been cleared
+        updated_watches = False
+        updates = self.specto.watch_db.count_updated_watches()
+        for updated in updates.values():
+            if updated > 0:
+                updated_watches = True
+        if updated_watches == False:
+            self.wTree.get_widget("button_clear_all").set_sensitive(False)
 
     def clear_all(self, widget):
         """ Call the main function to clear all watches and reset the name in the notifier. """
-        #self.specto.toggle_all_cleared()
         self.wTree.get_widget("btnClear").set_sensitive(False)
         self.wTree.get_widget("button_clear_all").set_sensitive(False)
         self.wTree.get_widget("clear_all1").set_sensitive(False)
@@ -139,13 +172,14 @@ class Notifier:
         """ Call the main funcion to refresh all active watches and change refresh icon to stop. """
         if self.wTree.get_widget("button_refresh").get_stock_id() == "gtk-refresh":
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-stop") #menu item, does not allow changing label
+            self.wTree.get_widget("button_refresh").set_label("Stop")
             self.wTree.get_widget("button_add").set_sensitive(False)
             self.wTree.get_widget("btnEdit").set_sensitive(False)
             for i in self.iter:
                 if self.stop_refresh == True:
                     self.stop_refresh = False
                     break
-                
+                    
                 try:
                     iter = self.model.get_iter(i)
                     if self.model.iter_is_valid(iter):
@@ -153,29 +187,20 @@ class Notifier:
                         id = int(model.get_value(iter, 3))
                 except:
                     break
-
                 if self.specto.watch_db[id].active == True:
                     try:
                         self.specto.watch_db[id].stop()
                     except:
                         pass
-                    self.specto.watch_db[id].start()    
+                    self.specto.watch_db[id].start()
                     
-                if self.specto.GTK:
-                    while gtk.events_pending():
-                        gtk.main_iteration_do(False)
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-refresh") #menu item, does not allow changing label
+            self.wTree.get_widget("button_refresh").set_label("Refresh All")
             self.wTree.get_widget("button_add").set_sensitive(True) 
             self.wTree.get_widget("btnEdit").set_sensitive(True)           
         else:
             self.stop_refresh = True    
                 
-    def import_watches(self, *widget):
-        self.specto.import_export_watches(True)
-        
-    def export_watches(self, *widget):
-        self.specto.import_export_watches(False)
-
     def toggle_updated(self, id):
         """ Change the name and icon from the watch in the notifier window. """
         watch = self.specto.watch_db[id]
@@ -184,47 +209,114 @@ class Notifier:
         self.wTree.get_widget("clear_all1").set_sensitive(True)
                     
         if self.model.iter_is_valid(self.iter[id]):
-            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 0))
-        
-        if self.treeview.get_selection().get_selected():
-            model, iter = self.treeview.get_selection().get_selected()
-            if iter != None:
-                i = int(model.get_value(iter, 3))
-                if self.specto.watch_db[i].name == watch.name:
-                    self.show_watch_info()
-                    
-    def mark_watch_status(self,status, id):
+            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 0, False))
+    
+    def mark_error(self, error_message):
+        error_dialog = ErrorDialog(self.specto, error_message)
+                                                    
+    def mark_watch_status(self, status, id):
         """ show the right icon for the status from the watch. """ 
         watch = self.specto.watch_db[id]
-        icon = self.get_icon("error", 50)
-        if status == "updating":
-            icon = self.get_icon("reload", 0)
-            #self.model.set_value(self.iter[id], 1, icon) #do not use transparency here, it's useless and dangerous
-            if self.specto.GTK:
-                while gtk.events_pending():#this is to refresh the UI and display the "refresh" icon properly. It works! :)
-                    gtk.main_iteration_do(False)
-        elif status == "idle":
-            if watch.error == True:
-                #icon = self.get_icon("error", 50)
-                pass
-            else:
-                icon = self.get_icon(watch.icon, 50)
-        elif status == "updated":
-            self.toggle_updated(id)
-            self.specto.tray.show_tooltip()
-            icon = self.get_icon(watch.icon, 0)
+                            
+        statusbar = self.wTree.get_widget("statusbar1")
+        icon = self.get_icon("error", 50, False)
+        
+        try:
+            if status == "updating":
+                icon = self.get_icon("reload", 0, False)
+                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" started updating."))            
+                        
+            elif status == "idle":
+                self.tray.show_tooltip() #check if all watches are cleared
+                if watch.updated == True:
+                    icon = self.get_icon(watch.icon, 0, False)
+                else:
+                    icon = self.get_icon(watch.icon, 50, False)
+                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" finished updating."))            
             
-        self.model.set_value(self.iter[id], 1, icon)     
+            elif status == "no-network":
+                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The network connection seems to be down, network watches will not update until then."))             
+                self.tray.show_tooltip()
+                icon = self.get_icon(watch.icon, 50, False)
+                
+            elif status == "network":
+                icon = self.get_icon(watch.icon, 50, False)
+                
+            elif status == "idle-clear":
+                self.tray.show_tooltip() #check if all watches are cleared
+                if watch.updated == True:
+                    icon = self.get_icon(watch.icon, 0, False)
+                    statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" is cleared."))            
+                else:
+                    icon = self.get_icon(watch.icon, 50, False)
+                
+            elif status == "clear":
+                self.clear_watch(None, watch.id)
+                icon = self.get_icon(watch.icon, 50, False)            
+                
+            elif status == "error":
+                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" has a problem."))            
+                balloon_icon = self.get_icon("error", 50, True)
+                icon = self.get_icon("error", 50, False)
+                self.balloon.show_toast( _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % watch.name, balloon_icon, urgency="critical")
+                if self.specto.specto_gconf.get_entry("use_problem_sound"):            
+                    problem_sound = self.specto.specto_gconf.get_entry("problem_sound")
+                    gnome.sound_play(problem_sound)
+                
+            elif status == "updated":
+                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" is updated."))                        
+                self.toggle_updated(id)
+                self.tray.show_tooltip()
+                balloon_icon = self.get_icon(watch.icon, 0, True)
+                self.balloon.show_toast(watch.get_balloon_text(), balloon_icon, name=watch.name)                
+                icon = self.get_icon(watch.icon, 0, False)
+                if self.specto.specto_gconf.get_entry("use_update_sound"):
+                    update_sound = self.specto.specto_gconf.get_entry("update_sound")
+                    gnome.sound_play(update_sound)
+                    
+            elif status == "mark-updated":
+                self.toggle_updated(id)
+                self.tray.show_tooltip()
+                icon = self.get_icon(watch.icon, 0, False)
+            
+            self.model.set_value(self.iter[id], 1, icon)
+        
+            try:
+                model, iter = self.treeview.get_selection().get_selected()
+                id2 = int(model.get_value(iter, 3))
+                if id == id2:
+                    self.show_watch_info()
+            except:
+                pass
+        except:
+            self.specto.logger.log(_("There was an error marking the watch status"), "error", watch.name)
+                
             
     def deactivate(self, id):
         """ Disable the checkbox from the watch. """
+        watch = self.specto.watch_db[id]
         self.model.set_value(self.iter[id], 0, 0)#TODO: make the text label in the "Name" column and the buttons insensitive
+    
+    def activate(self, id):
+        """ enable the checkbox from the watch. """
+        watch = self.specto.watch_db[id]
+        self.model.set_value(self.iter[id], 0, 1)#TODO: make the text label in the "Name" column and the buttons insensitive
         
-    def get_icon(self, icon, percent):
+    def get_icon(self, icon, percent, size):
         """ Calculate the alpha and return a transparent pixbuf. The input percentage is the 'transparency' percentage. 0 means no transparency. """
         if icon == "":
             icon = "dialog-information"
-        icon = self.specto.icon_theme.load_icon(icon, 22, 0)
+    
+        if size == True:
+            size = 64
+        else:
+            size = 22
+            
+        try:
+            icon = self.specto.icon_theme.load_icon(icon, size, 0)
+        except gobject.GError:
+            icon = gtk.gdk.pixbuf_new_from_file_at_size(self.specto.PATH + "icons/specto_tray_1.svg", size, size)
+            
         icon = icon.add_alpha(False, '0', '0', '0')
         for row in icon.get_pixels_array():
             for pix in row:
@@ -234,14 +326,29 @@ class Notifier:
     def add_notifier_entry(self, id):
         """ Add an entry to the notifier list. """
         watch = self.specto.watch_db[id]
-        
+        if watch.active == True:
+            active = 1
+        else:
+            active = 0
+                    
         self.iter[id] = self.model.insert_before(None, None)
-        self.model.set_value(self.iter[id], 0, 1)
-        self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50))
+        self.model.set_value(self.iter[id], 0, active)
+        self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50, False))
         self.model.set_value(self.iter[id], 2, watch.name)
         self.model.set_value(self.iter[id], 3, watch.id)
         self.model.set_value(self.iter[id], 4, watch.type)
         self.model.set(self.iter[id], 5, pango.WEIGHT_NORMAL)#make sure the text is not fuzzy on startup
+        
+        if not self.wTree.get_widget("display_all_watches").active and active == 0: #dont creat the entry
+            self.remove_notifier_entry(id)
+
+        
+    def remove_notifier_entry(self, id):
+        path = self.model.get_path(self.iter[id])
+        iter = self.model.get_iter(path)
+        id = int(self.model.get_value(iter, 3))
+        self.model.remove(iter)
+
         
     def check_clicked(self, object, path, model):
         """ Call the main function to start/stop the selected watch. """
@@ -249,21 +356,23 @@ class Notifier:
         sel.select_path(path)
             
         model, iter = self.treeview.get_selection().get_selected()
-        i = int(model.get_value(iter, 3))
+        id = int(model.get_value(iter, 3))
+        watch = self.specto.watch_db[id]
         
         if model.get_value(iter,0):
             model.set_value(iter, 0, 0)
-            self.specto.stop_watch(i)
+            if watch.updated:
+                self.clear_watch("", id)
+            self.mark_watch_status("idle", id)
+            watch.stop()
+            if not self.wTree.get_widget("display_all_watches").active:
+                self.remove_notifier_entry(id)
         else:
             model.set_value(iter, 0, 1)
-            self.specto.start_watch(i)
+            watch.start()
             
-        self.specto.set_status(i, model.get_value(iter, 0))
-        
-        if self.wTree.get_widget("display_all_watches").active == False:
-            model.remove(iter)
-
     def connected_message(self, connected):
+        return
         if not connected:
             self.wTree.get_widget("statusbar1").push(0, _("The network connection seems to be down, watches will not update until then."))
             self.wTree.get_widget("statusbar1").show()
@@ -273,120 +382,82 @@ class Notifier:
     def show_watch_info(self, *args):
         """ Show the watch information in the notifier window. """
         model, iter = self.treeview.get_selection().get_selected()
-        
+
         if iter != None and self.model.iter_is_valid(iter):
             self.wTree.get_widget("edit").set_sensitive(True)
-
-            #hide the tip of the day and show the buttons
-            self.lblTip.hide()
-            self.wTree.get_widget("vbox_panel_buttons").show()
-            self.wTree.get_widget("notebook1").show()
-
-            #hide all the tables
-            self.notebook_info.hide()
-            
+            self.wTree.get_widget("remove").set_sensitive(True)
+        
+            if not self.info_table.flags() & gtk.VISIBLE:
+                #hide the tip of the day and show the buttons
+                self.quicktip.hide()
+                self.quicktip_image.hide()
+                self.wTree.get_widget("vbox_panel_buttons").show()
+                self.wTree.get_widget("notebook1").show()
+                self.info_table.show()
+                            
             id = int(model.get_value(iter, 3))
-        
-            selected = self.specto.watch_db[id]
-        
-            if selected.updated == False:
-                self.wTree.get_widget("btnClear").set_sensitive(False)
-            else:
-                self.wTree.get_widget("btnClear").set_sensitive(True)
-
-            #show the table
-            self.notebook_info.show()
-            self.notebook_info.set_current_page(selected.type)
-
-            if selected.type == 0:
-                #get the info
-                self.wTree.get_widget("lblNameText").set_label(selected.name)
-                self.wTree.get_widget("lblLocationText").set_label(selected.url_)
-
-                margin = float(selected.error_margin) * 100
-                self.wTree.get_widget("lblErrorMarginText").set_label(str(margin) + " %")
-
-                self.wTree.get_widget("lblLastUpdateText").set_label(selected.last_updated)
-
-                #show the image
-                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("applications-internet", 64, 0))
-
-            elif selected.type == 1:
-                #get the info
-                self.wTree.get_widget("lblMailNameText").set_label(selected.name)
-
-                if selected.prot == 2:
-                    self.wTree.get_widget("lblMailHostText").set_label( _("gmail <i>(%s unread)</i>") % selected.oldMsg )
-                else:
-                    self.wTree.get_widget("lblMailHostText").set_label(selected.host)
-
-                self.wTree.get_widget("lblMailUsernameText").set_label(selected.user)
-                self.wTree.get_widget("lblMailLastUpdateText").set_label(selected.last_updated)
-
-                #show the image
-                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("emblem-mail", 64, 0))
-                
-            elif selected.type == 2:
-                self.wTree.get_widget("lblFileNameText").set_label(selected.name)
-                self.wTree.get_widget("lblFileName").set_label(selected.file)
-                self.wTree.get_widget("lblFileLastUpdateText").set_label(selected.last_updated)
-                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("folder", 64, 0))
-                
-            elif selected.type == 3:
-                self.wTree.get_widget("lblProcessNameText").set_label(selected.name)
-                self.wTree.get_widget("lblProcessName").set_label(selected.process)
-                self.wTree.get_widget("lblProcessLastUpdateText").set_label(selected.last_updated)
-                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("applications-system", 64, 0))
-
-            elif selected.type == 4:
-                self.wTree.get_widget("lblPortNameText").set_label(selected.name)
-                self.wTree.get_widget("lblPortName").set_label(selected.port)
-                self.wTree.get_widget("lblPortLastUpdateText").set_label(selected.last_updated)
-                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("network-transmit-receive", 64, 0))
-                
-            elif selected.type == 5:
-                self.wTree.get_widget("lblReadNameText").set_label(selected.name)
-                self.wTree.get_widget("lblReadUpdateText").set_label(selected.last_updated)
-                self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("internet-news-reader", 64, 0))                
-            elif selected.type == 6:###this need to be updated!
-                pass
-            self.wTree.get_widget("notebook1").set_current_page(0)
-            self.wTree.get_widget("lblExtraInfo").set_label(selected.get_extra_information())              
-        else:
-            self.wTree.get_widget("edit").set_sensitive(False)
-
-            #hide the tip of the day and show the buttons
-            self.lblTip.show()
-            self.wTree.get_widget("vbox_panel_buttons").hide()
-
-            #hide all the tables
-            self.notebook_info.hide()
             
+            watch = self.specto.watch_db[id]
+            watch_values = watch.get_gui_info()
+            
+            #set the error log field
+            if not self.specto.DEBUG:
+                self.wTree.get_widget("notebook1").remove_page(2)
+            else:
+                if self.wTree.get_widget("notebook1").get_n_pages() == 2:                    
+                    self.wTree.get_widget("notebook1").append_page(self.error_log_window, self.label_error_log)
+                log_text = self.specto.logger.watch_log(watch.name)
+                
+                start = self.log_buffer.get_start_iter()
+                end = self.log_buffer.get_end_iter()
+                self.log_buffer.delete(start, end)
+                
+                iter = self.log_buffer.get_iter_at_offset(0)            
+                for line in log_text:
+                    self.log_buffer.insert_with_tags_by_name(iter, line[1], line[0])
+                                                                            
+            if watch.updated == False:
+                self.wTree.get_widget("clear").set_sensitive(False)
+                self.wTree.get_widget("btnClear").set_sensitive(False)
+                self.wTree.get_widget("lblExtraInfo").set_label("No extra information available.")
+            else:
+                self.wTree.get_widget("clear").set_sensitive(True)
+                self.wTree.get_widget("btnClear").set_sensitive(True)
+                try:
+                    self.wTree.get_widget("lblExtraInfo").set_label(watch.get_extra_information())
+                except:
+                    self.specto.logger.log(_("Extra information could not be set"), "error", self.specto.watch_db[id].name)
+                
+                            
+            i = 0
+            while i < 4:
+                if i >= len(watch_values):
+                    self.info_labels[i][0].set_label("")
+                    self.info_labels[i][1].set_label("")
+                else:
+                    #create label
+                    self.info_labels[i][0].set_label("<b>" + str(watch_values[i][0]) + ":</b>")
+                    label = str(watch_values[i][1]).replace("&", "&amp;")
+                    self.info_labels[i][1].set_label(label)
+
+                i += 1
+            
+            image = self.wTree.get_widget("watch_icon")
+            image.set_from_pixbuf(self.get_icon(watch.icon, 0, True))
+                        
     def open_watch(self, id):
         """ 
         Open the selected watch. 
         Returns False if the watch failed to open
         """
         res = True
-        selected = self.specto.watch_db[id]
-        self.specto.logger.log(_("watch \"%s\" opened") % self.specto.watch_db[id].name, "info", self.__class__)
-        if selected.type == 0:
-            uri_real = self.specto.watch_io.read_option(self.specto.watch_db[id].name, "uri_real")#this is just in case the uri_real parameter is present, i.e.: a web feed
-            if uri_real:
-                spectlib.util.show_webpage(uri_real)
-            else:
-                spectlib.util.show_webpage(selected.url_)
-        elif selected.type == 1:
-            if selected.prot == 2: #gmail opens in a browser
-                spectlib.util.show_webpage("https://gmail.google.com")
-            else:
-                spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
-        elif selected.type == 2:
-            spectlib.util.open_file_watch(selected.file)
-        elif selected.type == 5: #google reader
-                spectlib.util.show_webpage("http://www.google.com/reader/view/")
-        else: 
-            res=False
+        try:
+            watch = self.specto.watch_db[id]
+            if watch.open_command != "":
+                self.specto.logger.log(_("watch opened"), "info", self.specto.watch_db[id].name)
+                os.system(watch.open_command + " &")
+        except:
+            res = False
         return res
 
     def open_watch_callback(self, *args):
@@ -395,9 +466,120 @@ class Notifier:
         """
         model, iter = self.treeview.get_selection().get_selected()
         id = int(model.get_value(iter, 3))
-        if self.open_watch(id):
-            self.clear_watch(args[0])
+        self.open_watch(id)
+        if self.specto.watch_db[id].updated == True:
+            self.clear_watch(None, id)
+            
+    def show_watch_popup(self, treeview, event, data=None):
+        if event.button == 3:
+            x = int(event.x)
+            y = int(event.y)
+            time = event.time
+            pthinfo = treeview.get_path_at_pos(x, y)
+            if pthinfo is not None:
+                path, col, cellx, celly = pthinfo
+                treeview.grab_focus()
+                treeview.set_cursor( path, col, 0)
+                menu = self.create_menu(self,self.notifier,None)
+                menu.popup(None, None, None, 3, time)
 
+            return 1
+        
+    def start_watch(self, widget):
+        model, iter = self.treeview.get_selection().get_selected()
+        id = int(model.get_value(iter, 3))
+        watch = self.specto.watch_db[id]
+        
+        self.activate(id)
+        watch.start()
+        
+    def stop_watch(self, widget):
+        model, iter = self.treeview.get_selection().get_selected()
+        id = int(model.get_value(iter, 3))
+        watch = self.specto.watch_db[id]
+        
+        self.deactivate(id)
+        if watch.updated:
+            self.clear_watch("", id)
+            
+        if not self.wTree.get_widget("display_all_watches").active:
+            self.remove_notifier_entry(id)        
+        watch.stop()
+    
+    def _clear_watch(self, *widget):
+        try:
+            model, iter = self.treeview.get_selection().get_selected()
+            id = int(model.get_value(iter, 3))
+        
+            self.clear_watch(id)
+        except:
+            pass
+        
+    def refresh_watch(self, widget):
+        model, iter = self.treeview.get_selection().get_selected()
+        id = int(model.get_value(iter, 3))
+        watch = self.specto.watch_db[id]
+        watch.restart()
+        
+    def edit_watch(self, widget):
+        model, iter = self.treeview.get_selection().get_selected()
+        id = int(model.get_value(iter, 3))
+        self.show_edit_watch(self, widget, id)
+        
+
+    def create_menu(self, window,event, data=None):
+        model, iter = self.treeview.get_selection().get_selected()
+        id = int(model.get_value(iter, 3))
+        watch = self.specto.watch_db[id]
+        menu = gtk.Menu()
+        
+        menuItem = gtk.ImageMenuItem("Start watch")
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_OK, gtk.ICON_SIZE_MENU)
+        menuItem.set_image(image)
+        menuItem.connect('activate',self.start_watch)
+        if watch.active == True:
+            menuItem.set_sensitive(False)
+        menu.append(menuItem)
+
+                        
+        menuItem = gtk.ImageMenuItem("Stop watch")
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_MENU)
+        menuItem.set_image(image)
+        menuItem.connect('activate',self.stop_watch)
+        if watch.active == False:
+            menuItem.set_sensitive(False)            
+        menu.append(menuItem)    
+        
+        menuItem = gtk.ImageMenuItem("Refresh watch")
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
+        menuItem.set_image(image)
+        menuItem.connect('activate',self.refresh_watch)  
+        if watch.active == False:
+            menuItem.set_sensitive(False)            
+        menu.append(menuItem)
+            
+            
+        menuItem = gtk.ImageMenuItem("Edit watch")
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
+        menuItem.set_image(image)
+        menuItem.connect('activate',self.edit_watch)  
+        menu.append(menuItem)
+
+        menuItem = gtk.ImageMenuItem("Clear watch")
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
+        menuItem.set_image(image)
+        menuItem.connect('activate',self._clear_watch)            
+        if watch.updated == False:
+            menuItem.set_sensitive(False)
+        menu.append(menuItem)
+
+        menu.show_all()
+        return menu
                 
     def change_entry_name(self, *args):
         """ Edit the name from the watch in the notifier window. """
@@ -414,9 +596,9 @@ class Notifier:
         self.model.set(self.iter[id], 2, new_name, 5, weight)
         
         #write the new name in watches.list
-        self.specto.replace_name(self.specto.watch_db[id].name, new_name)
+        self.specto.watch_io.replace_name(self.specto.watch_db[id].name, new_name)
         #change the name in the database
-        self.specto.watch_db[id].set_name(new_name)
+        self.specto.watch_db[id].name = new_name
         self.show_watch_info()
         
 ### GUI FUNCTIONS ###
@@ -439,28 +621,47 @@ class Notifier:
             self.wTree.get_widget("toolbar").hide()
             self.specto.specto_gconf.set_entry("hide_toolbar", True)
             
-    def toggle_show_deactivated_watches(self, startup=False): #, *widget):
+    def toggle_show_deactivated_watches(self, *widget):
         """ Display only active watches or all watches. """
-        if startup !=True: startup=False #this is important to prevent *widget from messing with us. If you don't believe me, print startup ;)
-        if self.wTree.get_widget("display_all_watches").active:
-            for id in self.specto.watch_db:
-                if self.specto.watch_db[id].active ==False:#for each watch that is supposed to be inactive, show it in the notifier but don't activate it
-                    if startup==False:#recreate the item because it was deleted
-                        self.add_notifier_entry(self.specto.watch_db[id].name, self.specto.watch_db[id].type, id)
-                    self.deactivate(id)
-            self.specto.specto_gconf.set_entry("show_deactivated_watches", True)
-        else:#hide the deactivated watches
-            for i in self.iter:
-                if self.model.iter_is_valid(self.iter[i]):
-                    path = self.model.get_path(self.iter[i])
-                    iter = self.model.get_iter(path)
-                    model = self.model
-                    id = int(model.get_value(iter, 3))
+        if self.startup !=True: self.startup=False #this is important to prevent *widget from messing with us. If you don't believe me, print startup ;)
+        if self.startup == True:
+            self.startup = False
+        else:
+            if self.wTree.get_widget("display_all_watches").active:
+                for watch in self.specto.watch_db:
+                    if watch.active == False:#for each watch that is supposed to be inactive, show it in the notifier but don't activate it
+                        if self.startup == False:#recreate the item because it was deleted
+                            self.add_notifier_entry(watch.id)
+                self.specto.specto_gconf.set_entry("show_deactivated_watches", True)
+            else:#hide the deactivated watches
+                for i in self.iter:
+                    if self.model.iter_is_valid(self.iter[i]):
+                        path = self.model.get_path(self.iter[i])
+                        iter = self.model.get_iter(path)
+                        model = self.model
+                        id = int(model.get_value(iter, 3))
 
-                    if self.specto.watch_db[id].active == False:
-                        model.remove(iter)
-            self.specto.specto_gconf.set_entry("show_deactivated_watches", False)
-
+                        if self.specto.watch_db[id].active == False:
+                            model.remove(iter)
+                self.specto.specto_gconf.set_entry("show_deactivated_watches", False)
+                
+    def remove_watch(self, *widget):
+        try:
+            model, iter = self.treeview.get_selection().get_selected()
+            id = int(model.get_value(iter, 3))
+        except:
+            pass
+        else:
+            dialog = spectlib.gtkconfig.RemoveDialog("Remove a watch", 
+            "<big>Remove the watch \"" + self.specto.watch_db[id].name + " \"?</big>\nThis operation cannot be undone.")
+            answer = dialog.show()
+            if answer == True:
+                self.remove_notifier_entry(id)
+                self.specto.watch_db.remove(id) #remove the watch
+                self.specto.watch_io.remove_watch(self.specto.watch_db[id].name)        
+                self.tray.show_tooltip()
+        
+        
     def delete_event(self, *args):
         """
         Return False to destroy the main window.
@@ -487,16 +688,10 @@ class Notifier:
 
         if saved_window_width != None and saved_window_height != None:#check if the size is not 0
             self.wTree.get_widget("notifier").resize(saved_window_width, saved_window_height)
-            self.specto.logger.log(_("notifier: size set"), "debug", self.__class__)
-        else:
-            self.specto.logger.log(_("notifier: size not set"), "debug", self.__class__)
             
         if saved_window_x != None and saved_window_y != None:#check if the position is not 0
             self.wTree.get_widget("notifier").move(saved_window_x, saved_window_y)
-            self.specto.logger.log(_("notifier: position set"), "debug", self.__class__)
-        else:
-            self.specto.logger.log(_("notifier: position not set"), "debug", self.__class__)
-
+            
     def save_size_and_position(self):
         """
         Save the size and position from the notifier in gconf when the window is closed.
@@ -529,8 +724,12 @@ class Notifier:
         self.treeview=self.wTree.get_widget("treeview")
         self.treeview.set_model(self.model)
         self.treeview.set_flags(gtk.TREE_MODEL_ITERS_PERSIST)
+        self.treeview.connect ("button_press_event", self.show_watch_popup, None)        
         self.wTree.get_widget("button_clear_all").set_sensitive(False)
         self.wTree.get_widget("clear_all1").set_sensitive(False)
+        
+        if self.specto.specto_gconf.get_entry("show_in_windowlist") == False:
+            self.notifier.set_skip_taskbar_hint(True)
 
 
         ### Initiate the window
@@ -542,11 +741,13 @@ class Notifier:
         else:
             self.wTree.get_widget("display_toolbar").set_active(True)
             self.toggle_display_toolbar()
-            
+        
+        self.startup = True    
         if self.specto.specto_gconf.get_entry("show_deactivated_watches") == True:
             self.wTree.get_widget("display_all_watches").set_active(True)
         else:
             self.wTree.get_widget("display_all_watches").set_active(False)
+        self.startup = False
     
         if self.specto.specto_gconf.get_entry("show_notifier") == True:
             self.notifier.show()
@@ -569,8 +770,8 @@ class Notifier:
 
         ### Titre
         self.columnTitle_renderer = gtk.CellRendererText()
-        self.columnTitle_renderer.set_property("editable", True)
-        self.columnTitle_renderer.connect('edited', self.change_entry_name)
+        #self.columnTitle_renderer.set_property("editable", True)
+        #self.columnTitle_renderer.connect('edited', self.change_entry_name)
         self.columnTitle = gtk.TreeViewColumn(_("Name"), self.columnTitle_renderer, text=2, weight=5)
         self.columnTitle.connect("clicked", self.sort_column_name)
         self.columnTitle.set_expand(True)
@@ -600,49 +801,70 @@ class Notifier:
 
         #show tip of the day
         self.quicktip = self.get_quick_tip()
-        self.lblTip = gtk.Label(("<big>" + _("Tip of the Day:") + "</big> "+ self.quicktip))
-        self.lblTip.set_line_wrap(True)
-        self.lblTip.set_use_markup(True)
-        self.lblTip.show()
-        vbox_info.pack_start(self.lblTip, False, False, 0)
-        self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("dialog-information", 64, 0))
+        self.quicktip_image = gtk.Image()
+        self.quicktip_image.set_from_pixbuf(self.get_icon("dialog-information", 0, True))
+        self.quicktip_image.show()
+        vbox_info.pack_start(self.quicktip_image, False, False, 0)
+        self.quicktip = gtk.Label(("<big>" + _("Tip of the Day:") + "</big> "+ self.quicktip))
+        self.quicktip.set_line_wrap(True)
+        self.quicktip.set_use_markup(True)
+        self.quicktip.set_alignment(xalign=0.0, yalign=0.5)
+        self.quicktip.show()
+        vbox_info.pack_start(self.quicktip, False, False, 0)
+        
+        #create the info table
+        self.info_table = gtk.Table(rows=4, columns=2, homogeneous=True)
+        self.info_table.set_row_spacings(6)
+        self.info_table.set_col_spacings(6)
+        vbox_watch_info = self.wTree.get_widget("vbox_watch_info")        
+        vbox_watch_info.pack_start(self.info_table, False, False, 0)   #show the image
+        
+        i = 0
+        self.info_labels = []
+        while i < 4:
+            gtk_label = gtk.Label()
+            gtk_label.set_alignment(xalign=0.0, yalign=0.5)
+            gtk_label.set_use_markup(True)
+            gtk_label.set_ellipsize(pango.ELLIPSIZE_END)
+            gtk_label.show()
+            
+            #create value
+            gtk_label1 = gtk.Label()
+            gtk_label1.set_alignment(xalign=0.0, yalign=0.5)
+            gtk_label1.set_use_markup(True)
+            gtk_label1.set_ellipsize(pango.ELLIPSIZE_END)
+            gtk_label1.show()
 
+            self.info_labels.extend([ (gtk_label, gtk_label1) ])
+            self.info_table.attach(self.info_labels[i][1], 1, 2, i, i + 1) 
+            self.info_table.attach(self.info_labels[i][0], 0, 1, i, i + 1)
+            
+            i += 1
+        
+        #create the error log textview and notebook label
+        self.error_log = gtk.TextView()
+        self.log_buffer = self.error_log.get_buffer()
+        self.log_buffer.create_tag("ERROR", foreground="#a40000")
+        self.log_buffer.create_tag("INFO", foreground="#4e9a06")
+        self.log_buffer.create_tag("WARNING", foreground="#c4a000")
+        self.error_log_window = gtk.ScrolledWindow()
+        self.error_log_window.add_with_viewport(self.error_log)
+        self.error_log_window.show()
+        self.label_error_log = gtk.Label("Error log")
+        self.error_log.show()
+        self.label_error_log.show()
+        
         #hide the buttons
         self.wTree.get_widget("vbox_panel_buttons").hide()
         
         self.wTree.get_widget("edit").set_sensitive(False)
-        self.notebook_info = self.wTree.get_widget("notebook_info")
+        self.wTree.get_widget("clear").set_sensitive(False)
+        self.wTree.get_widget("remove").set_sensitive(False)
+    
+        self.wTree.get_widget("statusbar1").show()
+
         self.wTree.get_widget("notebook1").hide()
 
-        
-    def show_add_watch(self, widget):
-        """ Call the main function to show the add watch window. """
-        self.specto.show_add_watch()
-
-    def show_edit_watch(self, widget):
-        """ Call the main function to show the edit watch window. """
-        model, iter = self.treeview.get_selection().get_selected()
-        if model.iter_is_valid(iter):
-            id = int(model.get_value(iter, 3))
-            self.specto.show_edit_watch(id)
-
-    def show_preferences(self, widget):
-        """ Call the main function to show the preferences window. """
-        self.specto.show_preferences()
-    
-    def show_error_log(self, *widget):
-        """ Call the main function to show the log window. """
-        self.specto.show_error_log()
-        
-    def show_help(self, *args):
-        """ Call the main function to show the help. """
-        self.specto.show_help()
-        
-    def show_about(self, *args):
-        """ Call the main function to show the about window. """
-        self.specto.show_about()
-        
-        
 ### Sort functions ###
 
     def get_startup_sort_order(self):
@@ -708,7 +930,92 @@ class Notifier:
         self.model.set_sort_column_id(0, not self.columnCheck.get_sort_order())
         self.specto.specto_gconf.set_entry("sort_function", "active")
 
+    def recreate_tray(self, *args):
+        """
+        Recreate a tray icon if the notification area unexpectedly quits.
+        """
+        try:self.tray.destroy()
+        except:pass
+        self.tray = ""
+        self.tray = Tray(self.specto, self)
+        self.specto.watch_db.count_updated_watches()
 
+    def show_preferences(self, *args):
+        """ Show the preferences window. """
+        if not self.preferences_initialized or self.preferences.get_state() == True:
+            self.pref=Preferences(self.specto, self)
+        else:
+            self.pref.show()
+            
+    def show_add_watch(self, *args):
+        """ Show the add watch window. """
+        if self.add_w == "":
+            self.add_w= Add_watch(self.specto, self)
+        elif self.add_w.add_watch.flags() & gtk.MAPPED:
+            pass
+        else:
+            self.add_w= Add_watch(self.specto, self)
+
+    def show_edit_watch(self, widget, *args):
+        """ Show the edit watch window. """
+        selected = ""
+        try:
+            model, iter = self.treeview.get_selection().get_selected()
+            if model.iter_is_valid(iter):
+                id = int(model.get_value(iter, 3))
+        except:
+            for watch in self.specto.watch_db:
+                try:
+                    if watch.name == args[0]:
+                        id = watch.id
+                        break
+                except:
+                    return
+
+        if self.edit_w == "":
+            self.edit_w= Edit_watch(self.specto, self, id)
+        elif self.edit_w.edit_watch.flags() & gtk.MAPPED:
+            pass
+        else:
+            self.edit_w= Edit_watch(self.specto, self, id)
+
+    def show_error_log(self, *widget):
+        """ Call the main function to show the log window. """
+        if self.error_l == "":
+            self.error_l= Log_dialog(self.specto, self)
+        elif self.error_l.log_dialog.flags() & gtk.MAPPED:
+            pass
+        else:
+            self.error_l= Log_dialog(self.specto, self)
+        
+    def show_help(self, *args):
+        """ Call the main function to show the help. """
+        self.specto.util.show_webpage("http://code.google.com/p/specto/w/list")
+        
+    def show_about(self, *args):
+        """ Call the main function to show the about window. """
+        if self.about == "":
+            self.about = About(self.specto)
+        elif self.about.about.flags() & gtk.MAPPED:
+            pass
+        else:
+            self.about = About(self.specto)
+
+    def import_watches(self, *widget):
+        if self.import_watch == "":
+            self.import_watch = Import_watch(self.specto, self)
+        elif self.import_watch.save.save_dialog.flags() & gtk.MAPPED:
+            pass
+        else:
+            self.import_watch = Import_watch(self.specto, self)        
+            
+    def export_watches(self, *widget):
+        if self.export_watch == "":
+            self.export_watch = Export_watch(self.specto, self)
+        elif self.export_watch.export_watch.flags() & gtk.MAPPED:
+            pass
+        else:
+            self.export_watch = Export_watch(self.specto, self)        
 
 if __name__ == "__main__":
     #run the gui

@@ -23,6 +23,10 @@
 import logging
 import sys, os
 import re
+from datetime import datetime
+import traceback
+import shutil
+
 from spectlib.i18n import _
 
 try:
@@ -42,8 +46,9 @@ class Log_dialog:
     Class to create the log dialog window. 
     """
     
-    def __init__(self, specto):
+    def __init__(self, specto, notifier):
         self.specto = specto
+        self.notifier = notifier
         #create tree
         gladefile= self.specto.PATH + 'glade/log_dialog.glade'
         windowname= "log_dialog"
@@ -95,15 +100,15 @@ class Log_dialog:
             self.logwindow.set_text(self.log)
         else:
             if level == 1:
-                pattern = ("\w\s*- DEBUG -\s*\w")
+                pattern = ("\w*\s*-\s*DEBUG\s*-\s*\w*\s*-\s*\w*")
             elif level == 2:
-                pattern = ("\w\s*- INFO -\s*\w")
+                pattern = ("\w*\s*-\s*INFO\s*-\s*\w*\s*-\s*\w*")
             elif level == 3:
-                pattern = ("\w\s*- WARNING -\s*\w")
+                pattern = ("\w*\s*-\s*WARNING\s*-\s*\w*\s*-\s*\w*")
             elif level == 4:
-                pattern = ("\w\s*- ERROR -\s*\w")
+                pattern = ("\w*\s*-\s*ERROR\s*-\s*\w*\s*-\s*\w*")
             elif level == 5:
-                pattern = ("\w\s*- CRITICAL -\s*\w")
+                pattern = ("\w*\s*-\s*CRITICAL\s*-\s*\w*\s*-\s*\w*")
             elif level == -1:
                 pattern = self.wTree.get_widget("combo_level").child.get_text()
                 
@@ -115,14 +120,14 @@ class Log_dialog:
     
     def read_log(self):
         """ Read the log file. """
-        self.file_name = os.environ['HOME'] + "/.specto/" + "specto.log"
+        self.file_name = self.specto.SPECTO_DIR + "/specto.log"
         if not os.path.exists(self.file_name):
             f = open(self.file_name, "w")
             f.close()
         os.chmod(self.file_name, 0600)
         
         log_file = open(self.file_name, "r")
-        self.log = log_file.read()
+        self.log = log_file.read().replace("&Separator;", " - ")
         log_file.close()
            
     def show_help(self, widget):
@@ -189,17 +194,25 @@ class Logger:
 
     def __init__(self, specto):
         self.specto = specto
-        self.file_name = os.environ['HOME'] + "/.specto/" + "specto.log"
-
+        self.file_name = self.specto.SPECTO_DIR + "/specto.log"
+        
         if not os.path.exists(self.file_name):
             f = open(self.file_name, "a")
             f.close()
         os.chmod(self.file_name, 0600)
         
+        self.error_file = self.specto.SPECTO_DIR + "/error.log"
+        if not os.path.exists(self.error_file):
+            f = open(self.error_file, "a")
+            f.close()
+        os.chmod(self.error_file, 0600)
+        
+        self.log_rotation()
+        
         #write to log file
         #TODO:XXX: Do we need to gettextize it? Maybe just the date.
-        logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)-12s - %(levelname)s - %(message)s',
+        logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s &Separator; %(levelname)s &Separator; %(name)s &Separator; %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S',
                     filename=self.file_name,
                     filemode='a')
@@ -208,13 +221,14 @@ class Logger:
         console = logging.StreamHandler()
         console.setLevel(logging.DEBUG)
 
-        formatter = logging.Formatter('%(levelname)s - %(name)-12s - %(message)s')
+        formatter = logging.Formatter('%(levelname)s - %(name)s - %(message)s')
+        #formatter = logging.Formatter('%(levelname)s - %(message)s')
         console.setFormatter(formatter)
         logging.getLogger('').addHandler(console)            
 
     def log(self, message, level, logger):
         """ Log a message. """
-        log = logging.getLogger(str(logger)[9:])
+        log = logging.getLogger(str(logger))
         
         if self.specto.DEBUG == True:
             if level == "debug":
@@ -225,26 +239,28 @@ class Logger:
                 log.warn(message)
             elif level == "error":
                 log.error(message)
+                self.log_error()
             else:
                 log.critical(message)
-                
+                                
     def read_log(self):
         """ Read the log file. """
         #get the info from the log file
         log_file = open(self.file_name, "r")
         self.logfile = log_file.read()
+        self.logfile.replace("&Separator;", " - ")
         log_file.close()
                 
     def watch_log(self, watch_name):
         """ Filter the log for a watch name. """
         self.read_log()
         buffer_log = self.logfile.split("\n")
-        filtered_log = ""
+        filtered_log = []
         
-        for i in buffer_log:
-            if re.search(watch_name, i):
-                filtered_log += i + "\n"
-                
+        for line in buffer_log:
+            if line != "" and line.split("&Separator;")[2].strip() == watch_name:
+                info = line.split("&Separator;")
+                filtered_log.append([info[1].strip(), info[0] + " - " + info[3] + "\n"])
         return filtered_log
     
     def remove_watch_log(self, watch_name):
@@ -254,7 +270,7 @@ class Logger:
         filtered_log = ""
         
         for i in buffer_log:
-            if not re.search(watch_name, i):
+            if not re.search(watch_name, i) and i <> "":
                 filtered_log += i + "\n"
                 
         f = open(self.file_name, "w")
@@ -267,3 +283,32 @@ class Logger:
         f.write("")
         f.close()
         os.chmod(self.file_name, 0600)
+        
+    def log_error(self):        
+        error_message = "Error on: " + datetime.today().strftime("%A %d %b %Y %H:%M") + "\n"
+        
+        et, ev, tb = sys.exc_info()                                                 
+        while tb :                                                                  
+            co = tb.tb_frame.f_code                                                 
+            error_message += "Filename: " + str(co.co_filename) + "\n"                          
+            error_message += "Error Line # : " + str(traceback.tb_lineno(tb)) + "\n"             
+            tb = tb.tb_next 
+            
+        error_message += "Type: " + str(et) + "\n" + "Error: " + str(ev) + "\n\n"
+        
+        f = open(self.error_file, "a")
+        f.write(error_message)
+        f.close()
+        
+    def log_rotation(self):
+        if os.path.getsize(self.file_name) > 150000:
+            shutil.move(self.file_name, self.file_name + ".1")
+            f = open(self.file_name, "a")
+            f.close()
+            os.chmod(self.file_name, 0600)
+            
+        if os.path.getsize(self.error_file) > 150000:
+            shutil.move(self.error_file, self.error_file + ".1")
+            f = open(self.error_file, "a")
+            f.close()
+            os.chmod(self.error_file, 0600)            

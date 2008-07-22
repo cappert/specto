@@ -41,8 +41,9 @@ class Preferences:
     Display the preferences window.
     """
     
-    def __init__(self, specto):
+    def __init__(self, specto, notifier):
         self.specto = specto
+        self.notifier = notifier
         gladefile= self.specto.PATH + 'glade/preferences.glade'
         windowname= "preferences"
         self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
@@ -56,7 +57,7 @@ class Preferences:
         "on_chkSoundProblem_toggled": self.chkSoundProblem_toggled,
         "on_chk_libnotify_toggled": self.chkLibnotify_toggled,
         "on_button_log_clear_clicked": self.specto.logger.clear_log,
-        "on_button_log_open_clicked": self.specto.show_error_log
+        "on_button_log_open_clicked": self.notifier.show_error_log
         }
         
         #attach the events
@@ -71,6 +72,7 @@ class Preferences:
         """ Save the preferences. """
         self.preferences.hide()
         self.set_preferences()
+        self.notifier.show_watch_info()        
 
     def chkSoundUpdate_toggled(self, widget):
         """ Make the filechooser sensitive or insensitive. """
@@ -121,30 +123,26 @@ class Preferences:
         #see if windowlist has to be saved
         if self.wTree.get_widget("chk_windowlist").get_active():
             self.specto.specto_gconf.set_entry("show_in_windowlist", True)
-            self.specto.notifier.notifier.set_skip_taskbar_hint(True)
+            self.notifier.notifier.set_skip_taskbar_hint(False)
         else:
-            self.specto.specto_gconf.set_entry("show_in_windowlist", True)
-            self.specto.notifier.notifier.set_skip_taskbar_hint(False)#note, this is set_SKIP! this explains why it's False to skip.
+            self.specto.specto_gconf.set_entry("show_in_windowlist", False)
+            self.notifier.notifier.set_skip_taskbar_hint(True)#note, this is set_SKIP! this explains why it's False to skip.
 
         #see if tray has to be saved
         if self.wTree.get_widget("chk_tray").get_active():
             self.specto.specto_gconf.set_entry("always_show_icon", True)
         else:
             self.specto.specto_gconf.set_entry("always_show_icon", False)
-        self.specto.recreate_tray()
+        self.notifier.recreate_tray()
 
         #see if debug mode has to be saved
         if self.wTree.get_widget("chk_debug").get_active():
             self.specto.specto_gconf.set_entry("debug_mode", True)
+            self.specto.DEBUG = True
         else:
             self.specto.specto_gconf.set_entry("debug_mode", False)
-
-
-
-
-
-
-
+            self.specto.DEBUG = False
+            
     def get_preferences(self):
         """ Get the preferences from gconf. """
         #check toast

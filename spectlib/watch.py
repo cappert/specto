@@ -24,56 +24,86 @@
 # The Watcher : this file should give a class intended for subclassing. It should give all the basic methods.
 import os, sys, time
 import gobject
-import gnome
 import thread
 import gtk
 
 #specto imports
-from spectlib.iniparser import ini_namespace
+import spectlib.config
+from spectlib.tools.iniparser import ini_namespace
 from ConfigParser import ConfigParser
 from spectlib import i18n
 from spectlib.i18n import _
-from spectlib.balloons import NotificationToast
 
 from time import sleep
 from datetime import datetime
+import base64 #encode/decode passwords
+
+try:
+    from spectlib.tools.keyringmanager import Keyring
+    keyring = True
+except:
+    keyring = False
 
 def gettext_noop(s):
    return s
 
 class Watch:
-    def __init__(self, specto, id, name, interval, type):
-        self.name = name
-        self.interval = interval
-        self.type = type
-        self.error = False
-        self.timer_id = -1
-        self.id = id
-        self.updated = False
+    def __init__(self, specto, id, values, watch_values):
         self.specto = specto
-        self.active = True #active/not active
-        self.last_updated = "No updates yet"
-        self.actually_updated = False
-        gnome.sound_init('localhost')
+        watch_values.extend([('name', spectlib.config.String(True)),
+                            ('refresh', spectlib.config.Integer(True)),
+                            ('type', spectlib.config.String(True)),
+                            ('updated', spectlib.config.Boolean(False)),
+                            ('command', spectlib.config.String(False)),
+                            ('active', spectlib.config.Boolean(False)),
+                            ('last_updated', spectlib.config.String(False)),
+                            ('open_command', spectlib.config.String(False))
+                            ])
+
+        self.id = id
         self.use_network = False
-        global _
+        self.error = False
+        self.actually_updated = False
+        self.timer_id = -1
+        self.deleted = False
+
+        self.watch_values = watch_values
+        self.set_values(values)
+                
+        self.watch_io = Watch_io(self.specto.FILE)
         
+        global _
+                    
     def start(self):
         """ Start the watch. """
-        self.active = True
-        if self.use_network == True:
-            self.check_connection()
-        else:
+        try:            
+            self.active = True
+            self.watch_io.write_option(self.name, 'active', self.active)
             self.start_update()
+        except:
+            self.error = True
+            self.specto.logger.log(_("There was an error starting the watch"), "error", self.name)
             
     def stop(self):
         """ Stop the watch. """
-        self.active = False
-        gobject.source_remove(self.timer_id)
+        try:
+            self.active = False
+            self.watch_io.write_option(self.name, 'active', self.active)
+            gobject.source_remove(self.timer_id)
+        except:
+            self.error = True
+            self.specto.logger.log(_("There was an error stopping the watch"), "error", self.name)           
 
     def clear(self):
         """ clear the watch """
-        self.updated = False
+        try:
+            self.updated = False
+            self.watch_io.write_option(self.name, 'updated', self.updated)
+            if not self.error:
+                self.specto.mark_watch_status("idle-clear", self.id)
+        except:
+            self.error = True
+            self.specto.logger.log(_("There was an error clearing the watch"), "error", self.name)
 
     def restart(self):
         """ restart the watch """
@@ -82,98 +112,208 @@ class Watch:
         self.start()        
         
     def start_update(self):
-        self.specto.mark_watch_status("updating", self.id)
-        self.error = False
-        #self.update()
-        #return
-        self.lock = thread.allocate_lock()
-        self.lock.acquire()
-        thread.start_new_thread(self.update,())
-        while self.lock.locked():
-            while gtk.events_pending():
-                gtk.main_iteration()
-            time.sleep(0.05)
-        while gtk.events_pending():
-            gtk.main_iteration()
+        try:
+            if self.updated == True:
+                self.specto.mark_watch_status("mark-updated", self.id)
+            if self.use_network:
+                if not self.check_connection():
+                    return 
+            self.specto.logger.log("Started update.", "debug", self.name)   
+            self.specto.mark_watch_status("updating", self.id)
+            self.error = False
+            self.actually_updated = False
+            #self.update()
+            #return
+            self.lock = thread.allocate_lock()
+            self.lock.acquire()
+            thread.start_new_thread(self.update,())
+            while self.lock.locked():
+                while gtk.events_pending():
+                    gtk.main_iteration()
+                time.sleep(0.05)
+        except:
+            self.error = True
+            self.specto.logger.log(_("There was an error starting to update the watch"), "error", self.name)
+
+                
+                        
+    def watch_updated(self):
+        try:
+            self.specto.logger.log("Watch is updated!", "info", self.name)   
+            self.actually_updated = False
+            self.updated = True            
+            self.last_updated = datetime.today().strftime("%A %d %b %Y %H:%M")
+            self.watch_io.write_option(self.name, 'updated', self.updated)
+            self.watch_io.write_option(self.name, 'last_updated', self.last_updated)
+            self.specto.mark_watch_status("updated", self.id)
+            if self.command != "": #run watch specific updated commando
+                os.system(self.command + " &")
+        except:
+            self.error = True
+            self.specto.logger.log(_("There was an error marking the watch as updated"), "error", self.name)
+                
         
     def timer_update(self):
         """ update the timer """
-        if self.actually_updated == True:
-            self.actually_updated = False
-            self.updated = True
-            self.last_updated = datetime.today().strftime("%A %d %b %Y %H:%M")
-            self.specto.mark_watch_status("updated", self.id)
-        else:
-            self.specto.mark_watch_status("idle", self.id)
         try:
-            self.lock.release()
-            self.timer_id = gobject.timeout_add(self.interval, self.thread_update)
+            if self.actually_updated == True:
+                self.watch_updated()
+            elif self.error == True:
+                self.specto.mark_watch_status("error", self.id)
+            elif self.active == False:
+                self.stop()
+            else:
+                self.specto.mark_watch_status("idle", self.id)
+            try:
+                self.lock.release()
+                self.timer_id = gobject.timeout_add(self.refresh, self.start_update)
+            except:
+                self.timer_id = gobject.timeout_add(self.refresh, self.update)
         except:
-            self.timer_id = gobject.timeout_add(self.interval, self.update)
+            self.error = True
+            self.specto.logger.log(_("There was an error updating the watch"), "error", self.name)
 
     def check_connection(self):
-        if not self.specto.connection_manager.connected():
-            self.specto.logger.log(_("No network connection detected"),
-                                   "info", self.__class__)
+        if  not self.specto.connection_manager.connected():
+            self.specto.logger.log(_("No network connection detected"), "warning", self.name)
             self.specto.connection_manager.add_callback(self.start_update)
-            self.specto.mark_watch_status("idle", self.id)
+            self.specto.mark_watch_status("no-network", self.id)
+            return False
         else :
-            self.start_update()
-
-    def set_name(self, name):
-        """ Set the name. """
-        self.name = name
-
-    def get_name(self):
-        """ Return the name. """
-        return self.name
-
-    def set_interval(self, interval):
-        self.interval = interval
+            self.specto.mark_watch_status("network", self.id)
+            #proxy support
+            self.specto.specto_gconf.set_directory("/system/http_proxy")
+            http_proxy = "http://%s:%s" % (self.specto.specto_gconf.get_entry("host"),
+            self.specto.specto_gconf.get_entry("port")) 
+            https_proxy = "https://%s:%s" % (self.specto.specto_gconf.get_entry("secure_host"),
+            self.specto.specto_gconf.get_entry("secure_port")) 
+            proxies = {"http": http_proxy, "https": https_proxy} 
+            self.specto.specto_gconf.set_directory("")            
+            return True
         
-    def get_interval(self):
-        return self.interval
-    
-    def set_error(self, error):
-        self.error = error
+    def get_values(self):
+        return self.values
         
-    def get_error(self):
-        return self.error
+    def set_values(self, values, validate=False):
+        error_fields = ""
+        for key, type in self.watch_values:
+            try:
+                value = values[key]
+            except KeyError:
+                if type.mandatory == False:
+                    values[key] = type.getStandardValue()
+                    value = values[key]
+                    if not validate:
+                        setattr(self, key, value)
+                else:
+                    error_fields += ", " + key
+            else:    
+                value = type.checkRestrictions(values[key])
+                if value[0] == True:
+                    if type.mandatory == True and value[1] == type.getStandardValue():
+                        error_fields += ", " + key
+                    else:
+                        values[key] = value[1]
+                        if not validate:
+                            setattr(self, key, value[1])
+                else:
+                    error_fields += ", " + key
+        
+        if values['open_command'] == "":
+            try:
+                self.open_command = self.standard_open_command
+            except:
+                self.open_command = ""
+            
+        if self.last_updated == "":
+            self.last_updated = "No updates yet"
+                
+        if len(error_fields) <> 0:
+            error_fields = error_fields.lstrip(",")
+            raise AttributeError, error_fields
+        else:
+            if not validate:
+                self.values = values
+        
+    def get_balloon_text(self):        
+        return "No message specified yet!"
     
+    def get_extra_information(self):
+        return "No extra information available."
+    
+    def remove_cache_files(self):
+        return ""
+        
 class Watch_collection:
-    def __init__(self):
+    def __init__(self, specto):
         self.watch_db = []
         self.id = 0
         self.plugin_dict = {}
+        self.disabl_plugin_dict = {}
+        self.specto = specto
         self.load_plugins()
                 
     def load_plugins(self):
-        dir = "spectlib/plugins/"
+        dir = self.specto.SRC_PATH + "/plugins/"  
         for f in os.listdir(dir):
-            if f[-3:] == ".py":
+            if f[-3:] == ".py" and f != "__init__.py":
+                if not os.path.exists('data'):
+                    dir = "spectlib.plugins."
+                else:
+                    dir = "spectlib/plugins/"
                 _file = dir + f[:-3]
-                mod = __import__(_file)
+                mod = __import__(_file, globals(), locals(), [''])
                 obj = sys.modules[_file]
-                self.plugin_dict[obj.type] = mod        
+
+                self.plugin_dict[obj.type] = mod
+
                 
-    def add(self,specto, values):
-        """ read the content from the dictionary and create the watch """        
+    def create(self, values):
+        """ read the content from the dictionary and create the watch """      
+        _id = []
         for i in values:
+            if values[i]['type'] == "0":
+                values[i]['type'] = "Web_watch"
+            if values[i]['type'] == "1":
+                if values[i]['prot'] == "2":
+                    values[i]['type'] = "Mail_watch_gmail"                    
+
             type = values[i]['type']
-            
+                        
             #get the right object and create the watch object
-            obj = getattr(self.plugin_dict[type], type)
-            watch_ = obj(specto, self.id, values[i])
+            mod = ""
+            try:
+                mod = self.plugin_dict[type]
+            except:
+                print "Please enable plugin \""+ type + "\", if you want to use the watch: "+ values[i]["name"] + "."
             
-            self.watch_db.append(watch_)
-            self.id+=1
+            if mod:  
+                obj = getattr(mod, type)
+                try:
+                    watch_ = obj(self.specto, self.id, values[i])
+                except AttributeError, error_fields:
+                    if len(values) > 1:
+                        pass
+                    else:
+                        raise AttributeError, error_fields
+                else:
+                    self.watch_db.append(watch_)
+                    _id.append(self.id)
+                    self.id+=1
+                        
+        return _id
         
     def remove(self, id):
         """ remove the watch from the collection """
         self.watch_db[id].stop()
-        self.watch_db[id].updated = False        
-        del self.watch_db[id]
-        
+        self.watch_db[id].updated = False   
+        self.watch_db[id].deleted = True
+        try:
+            self.watch_db[id].remove_cache_files()
+        except:
+            pass
+        self.specto.logger.remove_watch_log(self.watch_db[id].name)    
+                
     def get(self, id):
         """ get a watch object """
         return self.watch_db[id]
@@ -196,7 +336,7 @@ class Watch_collection:
     def restart_all_watches(self):
         """ restart all watches in the collection """
         for watch in self.watch_db:
-            if watch.activate == True:
+            if watch.active == True:
                 watch.restart()
         
     def length(self):
@@ -207,15 +347,15 @@ class Watch_collection:
         """ Count the number of updated watches for the tooltip. """
         count_updates = {}
         for watch in self.watch_db:
-            print watch.updated
             try:
-                count_updates[watch.type]
+                count_updates[watch.type_desc]
             except KeyError:
-                count_updates[watch.type] = 0
+                count_updates[watch.type_desc] = 0
             
             if watch.updated == True:
-                count_updates[watch.type] += 1
-                
+                updates = count_updates[watch.type_desc]
+                count_updates[watch.type_desc] = updates + 1
+        
         return count_updates
     
     def find_watch(self, name):
@@ -223,19 +363,48 @@ class Watch_collection:
         Returns the key of a watch or None if it doesn't exists.
         """
         k = -1
-        for key in self.watch_db.iterkeys():
-            if self.watch_db[key].name == name: 
-                k = key
+        for watch in self.watch_db:
+            if watch.name == name: 
+                k = watch.id
                 break
         return k
     
-    def check_unique_watch(self, name):
-        """ Check if the watch name is unique. """
-        if self.watch_io.search_watch(name) and GTK:
-            return False
+    def set_interval(self, refresh, refresh_unit):
+        """
+        Set the interval between the update checks.
+        refresh = number
+        refresh_unit = days, hours, minutes,... in values of 0, 1, 2, 3.
+        """
+        new_refresh = 0
+        if refresh_unit == 0:#seconds
+            new_refresh = refresh * 1000
+        elif refresh_unit == 1:#minutes
+            new_refresh = refresh * 60 * 1000
+        elif refresh_unit == 2:#hours
+            new_refresh = (refresh * 60) * 60 * 1000
+        elif refresh_unit == 3:#days
+            new_refresh = ((refresh * 60) * 60) * 24 *1000
+        
+        return new_refresh
+        
+    def get_interval(self, value):
+        """ Get the interval between 2 updates. """
+        if ((value / 60) / 60) / 24 / 1000 > 0:
+            refresh_value = ((value / 60) / 60) / 24 / 1000
+            type = 3
+        elif (value / 60) / 60 / 1000 > 0:
+            refresh_value = (value / 60) / 60 / 1000
+            type = 2
+        elif value / 60 / 1000 > 0:
+            refresh_value = value / 60 / 1000
+            type = 1
         else:
-            return True
-    
+            refresh_value = value / 1000
+            type = 0
+            
+        return refresh_value, type
+
+        
     def __getitem__(self, i):
         return self.watch_db[i]
 
@@ -288,17 +457,25 @@ class Watch_io:
             self.cfg = ini_namespace(file(self.file_name))
         except:
             self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", self.__class__)
-            
+        
+        name = self.hide_brackets(name)    
         options = self.cfg._sections[name]._options.keys()
         
         for option_ in options:
-            watch_options_ = { option_: self.read_watch_option(name, option_) }
-            watch_options.update(watch_options_) 
+            if option_ == "password" and not self.check_old_version(self.cfg[name]['type']): #don't use decoding for old watches.list
+                option = self.read_option(name, option_)
+                option = self.decode_password(name, option)
+            else:
+                option = self.read_option(name, option_)
+                
+            watch_options_ = { option_: option }
+            watch_options.update(watch_options_)
+        name = self.show_brackets(name)
         watch_options.update({'name':name})
                 
         return watch_options
     
-    def read_watch_option(self, name, option):
+    def read_option(self, name, option):
         """ Read one option from a watch """
         try:
             return self.cfg[name][option]
@@ -312,30 +489,51 @@ class Watch_io:
         If the name is not found, a new watch will be added, else the excisting watch will be changed.
         """
         try:
-            self.cfg = ini_namespace(file(self.file_name))
+            cfg = ini_namespace(file(self.file_name))
         except:
             return 0
         
-        if self.cfg:
-            try:
-                name = values['name']
+        if cfg:
+            name = self.hide_brackets(values['name'])
+            if not cfg._sections.has_key(name):
+                cfg.new_namespace(name) #add a new watch
+                try:
+                    f = open(self.file_name, "w")
+                    f.write(str(cfg).strip()) #write the new configuration file
+                except IOError:
+                    self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+                finally:
+                    f.close()
 
-                if not self.cfg._sections.has_key(name):
-                    self.cfg.new_namespace(name) #add a new watch
-    
-                del values['name']
-                for option, value  in values.iteritems():
-                    self.cfg[name][option] = value
-            except:
-                self.specto.logger.log(_("There was an reading the watches from %s") % self.file_name, "critical", self.__class__)
-
-            try:
-                f = open(self.file_name, "w")
-                f.write(str(self.cfg).strip()) #write the new configuration file
-            except IOError:
-                self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
-            finally:
-                f.close()
+            del values['name']
+            for option, value  in values.iteritems():
+                self.write_option(name, option, value)
+                
+            #except:
+            #    self.specto.logger.log(_("There was an reading the watches from %s") % self.file_name, "critical", self.__class__)
+                
+    def write_option(self, name, option, value):
+        try:
+            cfg = ini_namespace(file(self.file_name))
+        except:
+            return 0
+        
+        if cfg:
+            name = self.hide_brackets(name)
+            if not cfg._sections.has_key(name):
+                return 0
+            else:
+                if option == "password": # and self.check_old_version(self.cfg[name]['type']): #don't use encoding for old watches.list
+                    value = self.encode_password(name, value)
+                cfg[name][option] = value
+                try:
+                    f = open(self.file_name, "w")
+                    f.write(str(cfg).strip()) #write the new configuration file
+                except IOError:
+                    self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+                finally:
+                    f.close()
+        
         
 
     def remove_watch(self, name):
@@ -343,7 +541,7 @@ class Watch_io:
         try:
             cfgpr = ConfigParser()
             cfgpr.read(self.file_name)
-            cfgpr.remove_section(name)
+            cfgpr.remove_section(self.hide_brackets(name))
             f = open(self.file_name, "w")
             cfgpr.write(open(self.file_name, "w"))
         except IOError:
@@ -357,7 +555,7 @@ class Watch_io:
         """
         try:
             self.cfg = ini_namespace(file(self.file_name))
-            if not self.cfg._sections.has_key(name):
+            if not self.cfg._sections.has_key(self.hide_brackets(name)):
                 return False
             else:
                 return True
@@ -374,9 +572,11 @@ class Watch_io:
             self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
         except:
             f.close
-            
-        text = text.replace("[" + name + "]", "[" + new_name + "]")
         
+        name = self.hide_brackets(name)
+        new_name = self.hide_brackets(new_name)
+        text = text.replace("[" + name + "]", "[" + new_name + "]")
+
         if text:
             #replace and write file
             try:
@@ -386,3 +586,52 @@ class Watch_io:
                 self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
             finally:
                 f.close()
+                
+    def hide_brackets(self,name):
+        name = name.replace("[", "&brStart;")
+        name = name.replace("]", "&brEnd;")
+        return name
+        
+    def show_brackets(self,name):
+        name = name.replace("&brStart;", "[")
+        name = name.replace("&brEnd;", "]")
+        return name
+    
+    def encode_password(self, name, password):
+        if keyring == True:
+            k = Keyring(name, "Specto " + name, "network") 
+            k.set_credentials((name, password))
+            password = "**keyring**"
+        else:
+            password = base64.b64encode(password)
+        return password
+        
+    def decode_password(self, name, password):
+        if keyring == True:
+            try:
+                k = Keyring(name, "Specto " + name, "network")
+                password = k.get_credentials()[1]
+            except:
+                try:
+                    password = base64.b64decode(password)
+                except TypeError:#password was not yet encoded
+                    password = password
+        else:
+            try:
+                password = base64.b64decode(password)
+            except TypeError:#password was not yet encoded
+                password = password
+        return password
+    
+    def check_old_version(self, type):
+        old = True
+        try:
+            int(type) #type is int: old version
+            old = True
+        except ValueError:
+            old = False #type is not int: new version
+        
+        return old
+            
+
+

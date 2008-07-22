@@ -22,6 +22,7 @@
 # Boston, MA 02111-1307, USA.
 
 import sys
+import os
 import pygtk
 pygtk.require("2.0")
 import gtk
@@ -46,7 +47,7 @@ class About:
         license = str(license)
         authors = ["Jean-Francois 'Kiddo' Fortin Tam\n\t<nekohayo AT gmail DOT com>\n", 
                     "Pascal Potvin\n\t<pascal.potvin AT gmail DOT com>\n",
-                    "Wout Clymans\n\t<woutclymans AT pi DOT be>\n",
+                    "Wout Clymans\n\t<woutclymans AT gmail DOT com>\n",
                     "Giulio 'Dullboy' lotti\n\t<dullgiulio AT gmail DOT com>\n",
                     "Thomas McColgan\n\t<thomas DOT mccolgan AT gmx DOT de>\n",
                     "Conor 'majikstreet' Callahan\n\t<majikstreet AT gmail DOT com>\n",
@@ -65,6 +66,7 @@ class About:
         #self.wTree.set_comments(comments)
         self.about.set_license(license)
         #self.wTree.set_wrap_license(license)
+        gtk.about_dialog_set_url_hook(lambda about, url: self.url_show(url))
         self.about.set_website("http://specto.sourceforge.net")
         self.about.set_website_label("Specto's Website")
         self.about.set_authors(authors)
@@ -81,6 +83,8 @@ class About:
         
         self.about.show_all()
         
+    def url_show(self, url):
+        os.system(spectlib.util.return_webpage(url) + " &")
 
     def close(self):
         self.about.destroy()

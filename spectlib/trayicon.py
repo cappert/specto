@@ -33,8 +33,10 @@ class Tray:
     """
     Display a tray icon in the notification area.    
     """
-    def __init__(self, specto):
+    def __init__(self, specto, notifier):
         self.specto = specto
+        self.notifier = notifier
+        
         self.ICON_PATH = self.specto.PATH + "icons/specto_tray_1.svg"
         self.ICON2_PATH = self.specto.PATH + "icons/specto_tray_2.svg"
         # Create the tray icon object
@@ -71,74 +73,39 @@ class Tray:
         global _
         show_return = False
         updated_messages = self.specto.watch_db.count_updated_watches()
-        print updated_messages
+        message = ""
         
+        z = 0
+        y = 0
         for i in updated_messages.values():
             if i > 0:
-                self.set_icon_state_excited()
-            else:
-                self.set_icon_state_normal()
-        return        
-        if updated_messages.values() == [0,0,0,0,0,0]:
-            message = _("No updated watches.")
+                y += 1
+                if show_return == True:
+                    message += "\n"
+                message += str(i) + " " + updated_messages.keys()[z] + " "   
+                message += i18n._translation.ungettext(_("watch"), _("watches"), i)
+                show_return = True
+            z += 1
+            
+        if y > 0:
+            self.set_icon_state_excited()
         else:
-            message = _('Updated watches:\n')
-            if updated_messages[0] > 0:
-                type = i18n._translation.ungettext(_("website"), _("websites"), updated_messages[0])
-
-                message = message + "\t" + str(updated_messages[0]) + " " + type
-                show_return = True
-            #mail tooltip
-            if updated_messages[1] > 0:
-                type = i18n._translation.ungettext(_("mail account"), _("mail accounts"), updated_messages[1])
-
-                if show_return:
-                    message = message + "\n"
-                message = message + "\t" + str(updated_messages[1]) + " " + type
-                show_return = True
-            #file tooltip
-            if updated_messages[2] > 0:
-                type = i18n._translation.ungettext(_("file/folder"), _("files/folders"), updated_messages[2])
-
-                if show_return:
-                    message = message + "\n"
-                message = message + "\t" + str(updated_messages[2]) + " " + type
-            #process tooltip
-            if updated_messages[3] > 0:
-                type = i18n._translation.ungettext(_("process"), _("processes"), updated_messages[3])
-
-                if show_return:
-                    message = message + "\n"
-                message = message + "\t" + str(updated_messages[3]) + " " + type
-
-            #port tooltip
-            if updated_messages[4] > 0:
-                type = i18n._translation.ungettext(_("port"), _("ports"), updated_messages[4])
-                
-                if show_return:
-                    message = message + "\n"
-                message = message + "\t" + str(updated_messages[4]) + " " + type
+            message = _("No updated watches.")
+            self.set_icon_state_normal()
             
-            #google reader tooltip
-            if updated_messages[5] > 0:
-                type = i18n._translation.ungettext(_("GReader watch"), _("GReader watches"), updated_messages[5])
-
-                if show_return:
-                    message = message + "\n"
-                message = message + "\t" + str(updated_messages[5]) + " " + type                
         self.tray.set_tooltip(message)
-            
+        
     def show_preferences(self, widget):
         """ Call the main function to show the preferences window. """
-        self.specto.show_preferences() 
+        self.notifier.show_preferences() 
 
     def show_help(self, widget):
         """ Call the main function to show help. """
-        self.specto.show_help()
+        self.notifier.show_help()
         
     def show_about(self, widget):
         """ Call the main function to show the about window. """
-        self.specto.show_about()
+        self.notifier.show_about()
         
     def show_notifier(self, widget):
         """ Call the main function to show the notifier window. """

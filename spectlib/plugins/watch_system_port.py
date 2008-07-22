@@ -2,7 +2,7 @@
 
 # Specto , Unobtrusive event notifier
 #
-#       watch_port.py
+#       watch_system_port.py
 #
 # Copyright (c) 2005-2007, Jean-François Fortin Tam
 
@@ -22,68 +22,61 @@
 # Boston, MA 02111-1307, USA.
 
 from spectlib.watch import Watch
+import spectlib.config
 from spectlib.i18n import _
 
-import thread
-import gtk, time
 import os
 
-class Port_watch(Watch):
+type = "Watch_system_port"
+type_desc = "Port"
+icon = 'network-transmit-receive'
+
+
+def get_add_gui_info():
+    return [
+            ("port", spectlib.gtkconfig.Spinbutton("Port", value=21))
+           ]
+
+class Watch_system_port(Watch):
     """ 
     Watch class that will check if a connection was established on a certain port 
     """
-    updated = False
-    type = 4
-    
-    def __init__(self, refresh, port, specto, id,  name = _("Unknown Process Watch")):
-        Watch.__init__(self, specto)
-        self.name = name
-        self.refresh = refresh
-        self.port = port
-        self.id = id
-        self.error = False
-        self.actually_updated=False
+        
+    def __init__(self, specto, id, values):
+        watch_values = [ 
+                        ( "port", spectlib.config.Integer(True) )
+                       ]
+        
+        self.icon = icon
+        self.open_command = ''
+        self.type_desc = type_desc
+        self.status = ""
+                
+        #Init the superclass and set some specto values
+        Watch.__init__(self, specto, id, values, watch_values)
+        
         self.running = self.check_port()
 
-    def dict_values(self):
-        return { 'name': self.name, 'refresh': self.refresh, 'port': self.port, 'type':4 }
-       
-    def start_watch(self):
-        """ Start the watch. """
-        self.thread_update()
-        
-    def thread_update(self):
-        lock = thread.allocate_lock()
-        lock.acquire()
-        t=thread.start_new_thread(self.update,(lock,))
-        while lock.locked():
-            while gtk.events_pending():
-                gtk.main_iteration()
-            time.sleep(0.05)
-        while gtk.events_pending():
-            gtk.main_iteration()  
-                
-    def update(self, lock):
-        """ See if a socket was opened or closed. """
-        self.error = False
-        self.specto.mark_watch_busy(True, self.id)
-        self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
-        
+    def update(self):
+        """ See if a socket was opened or closed. """        
         try:
             established = self.check_port()
             if self.running and established == False:
                 self.running = False
                 self.actually_updated = True
+                self.status = "Closed"
             elif self.running == False and established == True:
                 self.running = True 
                 self.actually_updated = True
-            else: self.actually_updated=False
+                self.status = "Open"
+            else: 
+                self.actually_updated = False
+                self.status = "Unknown"
         except:
             self.error = True
             self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
         
-        self.specto.mark_watch_busy(False, self.id)
-        Watch.update(self, lock)
+        Watch.timer_update(self)
         
     def check_port(self):
         """ see if there is a connection on the port or not """
@@ -110,5 +103,11 @@ class Port_watch(Watch):
         else:
             return False
         
-    def set_port(self, port):
-        self.port = port
+    def get_gui_info(self):
+        return [ 
+                ('Name', self.name),
+                ('Last updated', self.last_updated),
+                ('Port', self.port),
+                ('Status', self.status)
+                ]
+        

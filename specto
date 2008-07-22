@@ -22,17 +22,9 @@
 # Boston, MA 02111-1307, USA.
 
 import os
+from spectlib.main import Specto
 
 app_name = "specto"
-app_version = "0.2"
+app_version = "0.3"
 
-#create the specto user directory for caching and all that jazz
-spectoDirectory__ = os.environ['HOME'] + "/.specto"
-if not os.path.exists(spectoDirectory__):
-    os.mkdir(spectoDirectory__)
-cacheSubDir__ = spectoDirectory__ + "/cache/"
-if not os.path.exists(cacheSubDir__):
-    os.mkdir(cacheSubDir__)    
-
-from spectlib.main import Specto
 specto = Specto()

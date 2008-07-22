@@ -22,7 +22,7 @@
 # Boston, MA 02111-1307, USA.
 from spectlib.i18n import _
 import os
-from spectlib.iniparser import ini_namespace
+from spectlib.watch import Watch_io, Watch_collection
 
 try:
     import pygtk
@@ -42,15 +42,25 @@ class Import_watch:
     Class to create the import/export watch dialog.
     """
     
-    def __init__(self, specto, action):
+    def __init__(self, specto, notifier):
         self.specto = specto
+        self.notifier = notifier
+
+        self.save = Save_dialog(self.specto, self, None)
+    
+    def create_import_window(self):
         #create tree
         gladefile= self.specto.PATH + 'glade/import_export.glade' 
         windowname= "import_export"
         self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
-        self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_INT)
-        self.action = action
+        self.import_watch=self.wTree.get_widget("import_export")
+        
+        self.import_watch.set_title(_("Import watches"))
+        self.wTree.get_widget("button_action").set_label(_("Import watches"))
 
+        self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_STRING)
+        self.new_watch_db = {}
+                
         #catch some events
         dic= { "on_button_select_all_clicked": self.select_all,
             "on_button_deselect_all_clicked": self.deselect_all,
@@ -60,18 +70,9 @@ class Import_watch:
         #attach the events
         self.wTree.signal_autoconnect(dic)
 
-        self.import_watch=self.wTree.get_widget("import_export")
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
         self.import_watch.set_icon(icon)
-        
-        if action == True:
-            self.save = Save_dialog(self.specto, True, None)
-            self.import_watch.set_title(_("Import watches"))
-            self.wTree.get_widget("button_action").set_label(_("Import watches"))
-        else:
-            self.import_watch.set_title(_("Export watches"))
-            self.wTree.get_widget("button_action").set_label(_("Export watches"))
-        
+                        
         self.treeview=self.wTree.get_widget("treeview")
         self.treeview.set_model(self.model)
         self.treeview.set_flags(gtk.TREE_MODEL_ITERS_PERSIST)
@@ -81,28 +82,19 @@ class Import_watch:
         self.renderer = gtk.CellRendererToggle()
         self.renderer.set_property("activatable", True)
         self.renderer.connect("toggled", self.check_clicked, self.model)
-        self.columnCheck = gtk.TreeViewColumn(_("Active"), self.renderer, active=0)
-        #self.columnCheck.connect("clicked", self.sort_column_active)
-        #self.columnCheck.set_sort_column_id(0)
-        #self.column.set_resizable(True)
+        self.columnCheck = gtk.TreeViewColumn(_("Select"), self.renderer, active=0)
         self.treeview.append_column(self.columnCheck)
 
         ### Icon
         self.renderer = gtk.CellRendererPixbuf()
         self.columnIcon = gtk.TreeViewColumn(_("Type"), self.renderer, pixbuf=1)
-        #self.columnIcon.set_clickable(True)
-        #self.columnIcon.connect("clicked", self.sort_column_type)
         self.treeview.append_column(self.columnIcon)
 
         ### Titre
         self.renderer = gtk.CellRendererText()
-        #self.renderer.set_property("editable", True)
-        #self.renderer.connect('edited', self.change_entry_name)
         self.columnTitel = gtk.TreeViewColumn(_("Name"), self.renderer, markup=2)
-        #self.columnTitel.connect("clicked", self.sort_column_name)
         self.columnTitel.set_expand(True)
         self.columnTitel.set_resizable(True)
-        #self.columnTitel.set_sort_column_id(2)
         self.treeview.append_column(self.columnTitel)
         
         ### ID
@@ -118,26 +110,55 @@ class Import_watch:
         self.columnType.set_visible(False)
         #self.columnType.set_sort_column_id(4)
         self.treeview.append_column(self.columnType)
-        
-        
-        for i in self.specto.watch_db:
-            watch = self.specto.watch_db[i]
-            self.add_watch_entry(watch.name, watch.type, watch.id)
 
         
     def select_all(self, widget):
-        for i in self.specto.watch_db:
-            self.model.set_value(self.iter[i], 0, 1)
+        db = self.new_watch_db
+        
+        for watch in db:
+            if watch.deleted == False:
+                self.model.set_value(self.iter[watch.id], 0, 1)
         
     def deselect_all(self, widget):
-        for i in self.specto.watch_db:
-            self.model.set_value(self.iter[i], 0, 0)
+        db = self.new_watch_db
+            
+        for watch in db:
+            if watch.deleted == False:
+                self.model.set_value(self.iter[watch.id], 0, 0)
         
     def do_action(self, widget):
-        if self.action == True:
-            pass
-        else:
-            self.save = Save_dialog(self.specto, False, self.get_selected_watches())
+        self.import_watch.hide_all()
+
+        watches = self.get_selected_watches()
+        all_values = {}
+        for i in watches:
+            values = {}
+            watch = self.new_watch_db[watches[i].id]
+            values.update(self.new_watch_db[watches[i].id].get_values())
+            
+            values['name'] = watch.name
+            if self.specto.watch_io.is_unique_watch(values['name']):
+                i = 1
+                while self.specto.watch_io.is_unique_watch(values['name'] + str(i)):
+                    i += 1
+                values['name'] = values['name'] + str(i)
+                
+            values['type'] = watch.type
+            values['refresh'] = watch.refresh
+            values['active'] = True
+            values['last_updated'] = watch.last_updated  
+            values['updated'] = False              
+            all_values[i] = values
+        _id = self.specto.watch_db.create(all_values)
+        
+        for values in all_values.values():
+            self.specto.watch_io.write_watch(values)
+            
+        for id in _id: #create notifier entries
+            self.specto.notifier.add_notifier_entry(id)
+            
+        for id in _id: #start the new watches
+            self.specto.watch_db[id].start()
         
     def delete_event(self, widget, *args):
         """ Destroy the window. """
@@ -146,37 +167,31 @@ class Import_watch:
     
     def get_selected_watches(self):
         selected_watches_db = {}
-        
-        for i in self.specto.watch_db:
-            if self.model.get_value(self.iter[i], 0) == True:
-                id = len(selected_watches_db)
-                selected_watches_db[id] = self.specto.watch_db[i]
+        i = 0
+        watch_db = self.new_watch_db
+
+        for watch in watch_db:
+            if watch.deleted == False:
+                if self.model.get_value(self.iter[watch.id], 0) == True:
+                    selected_watches_db[i] = watch
+                    i += 1
         return selected_watches_db
        
     
-    def add_watch_entry(self, name, type, id):
+    def add_watch_entry(self, id):
         """ Add an entry to the notifier list. """
-        i = id
-
-        icon = self.specto.icon_theme.load_icon("error", 22, 0)
-        if type == 0:#website
-            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
-        elif type == 1:#email
-            icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
-        elif type == 2:#file/folder
-            icon = self.specto.icon_theme.load_icon("folder", 22, 0)
-        elif type == 3:#system process
-            icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
-        elif type == 4:#port
-            icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
-
-        self.iter[i] = self.model.insert_before(None, None)
-        self.model.set_value(self.iter[i], 0, 0)
-        self.model.set_value(self.iter[i], 1, icon)#self.specto.notifier.make_transparent(icon, 50))#does not need transparency here
-        self.model.set_value(self.iter[i], 2, name)
-        self.model.set_value(self.iter[i], 3, id)
-        self.model.set_value(self.iter[i], 4, type)
-        #self.watches = self.watches + 1 #this line was in notifier.py. Should it be here also?
+        watch = self.new_watch_db[id]
+        entry_name = watch.name.replace("&", "&amp;")
+        icon = self.notifier.get_icon(watch.icon, 50, False)
+        self.iter[id] = self.model.insert_before(None, None)
+        self.model.set_value(self.iter[id], 0, 0)
+        self.model.set_value(self.iter[id], 1, icon)#self.specto.notifier.make_transparent(icon, 50))#does not need transparency here
+        self.model.set_value(self.iter[id], 2, entry_name)
+        self.model.set_value(self.iter[id], 3, watch.id)
+        self.model.set_value(self.iter[id], 4, watch.type)
+        
+    def set_new_watch_db(self, watch_db):
+        self.new_watch_db = watch_db
         
     def check_clicked(self, object, path, model):
         """ Call the main function to start/stop the selected watch. """
@@ -197,19 +212,14 @@ class Save_dialog:
     Class for displaying the save as dialog.
     """
         
-    def __init__(self, specto, action_type, watches_db):
+    def __init__(self, specto, _import, watches_db):
         self.specto = specto
+        self._import = _import
         #create tree
         gladefile= self.specto.PATH + 'glade/import_export.glade' 
         windowname= "filechooser"
         self.wTree=gtk.glade.XML(gladefile,windowname)        
         self.save_dialog = self.wTree.get_widget("filechooser")
-        self.action_type = action_type
-        
-        if action_type == False: 
-            self.save_dialog.set_action(gtk.FILE_CHOOSER_ACTION_SAVE)
-            self.wTree.get_widget("button_save").set_label("gtk-save") 
-            self.watches_db = watches_db   
             
         dic={
         "on_button_cancel_clicked": self.cancel,
@@ -228,39 +238,38 @@ class Save_dialog:
         
     def save(self, *args):
         """ Save the file. """
-        file_name = self.save_dialog.get_filename()
-        
-        if self.action_type == True:
-            print "not implemented yet!"
-        else:
-            for i in self.watches_db:
-                values =  self.watches_db[i].dict_values()
-                self.write_options(file_name,values)
-        
+        self.save_dialog.hide_all()
+        self._import.create_import_window()
+        file_name = self.save_dialog.get_filename()        
+        self.read_options(file_name)
+        self._import.import_watch.show()
         self.save_dialog.destroy()
         
-    def write_options(self, file_name, values):
-        """
-        Write or change the watch options in a configuration file.
-        Values has to be a dictionary with the name from the options and the value. example: { 'name':'value', 'name':'value' }
-        If the name is not found, a new watch will be added, else the excisting watch will be changed.
-        """
-        if not os.path.exists(file_name):
-            f = open(file_name, "w")
-            f.close()
-        self.cfg = ini_namespace(file(file_name))
-        name = values['name']
-
-        if not self.cfg._sections.has_key(name):
-            self.cfg.new_namespace(name) #add a new watch
-
-        del values['name']
-        for option, value  in values.iteritems():
-            self.cfg[name][option] = value
-
-        f = open(file_name, "w")
-        f.write(str(self.cfg).strip()) #write the new configuration file
-        f.close()
+    def read_options(self, file_name):
+        watch_io = Watch_io(file_name)
+        values = watch_io.read_all_watches()
+        for i in values:
+            try:
+                int(values[i]['type'])
+            except:
+                pass
+            else:
+                values[i]['open_command'] = ""
+                values[i]['last_updated'] = ""
+            if values[i]['type'] == "0":
+                values[i]['type'] = "Watch_web_static"
+            if values[i]['type'] == "1":
+                if values[i]['prot'] == "1":
+                    values[i]['type'] = "Watch_mail_pop3"
+                if values[i]['prot'] == "2":
+                    values[i]['type'] = "Watch_mail_gmail"                    
+                    del values[i]['prot']
+        watch_collection = Watch_collection(self.specto)
+        watch_collection.create(values)
+        self._import.set_new_watch_db(watch_collection)
+        for watch in watch_collection:
+            self._import.add_watch_entry(watch.id)
+        
         
 if __name__ == "__main__":
     #run the gui

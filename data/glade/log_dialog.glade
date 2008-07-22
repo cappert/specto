@@ -3,6 +3,7 @@
 <!--*- mode: xml -*-->
 <glade-interface>
   <widget class="GtkDialog" id="log_dialog">
+    <property name="width_request">700</property>
     <property name="visible">True</property>
     <property name="border_width">12</property>
     <property name="title" translatable="yes">Logs</property>
@@ -163,12 +164,12 @@ Critical</property>
     </child>
   </widget>
   <widget class="GtkFileChooserDialog" id="file_chooser">
-    <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <property name="visible">True</property>
     <property name="title" translatable="yes">Save As</property>
     <property name="resizable">False</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox2">
         <property name="visible">True</property>
