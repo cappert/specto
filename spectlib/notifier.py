@@ -52,12 +52,12 @@ class Notifier:
         """
         self.specto = specto
         self.iter = {}
-        self.watches = 0
+        #self.watches = 0
         #create tree
         gladefile= self.specto.PATH + 'glade/notifier.glade' 
         windowname= "notifier"
         self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
-        self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_INT, pango.Weight)
+        self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_STRING, pango.Weight)
         #__icon_size  = gtk.icon_size_lookup (gtk.ICON_SIZE_BUTTON) [0] #needed, otherwise gtk.image will not take into account the icon size no matter what you specify. ###uh no, it's not, actually it was a gnome-icon-theme 2.17 bug. I guess this line should be removed.
         #catch some events
         dic= {
@@ -65,7 +65,7 @@ class Notifier:
         "on_edit_activate": self.show_edit_watch,
         "on_clear_all_activate": self.clear_all,
         "on_preferences_activate": self.show_preferences,
-        "on_refresh_activate": self.refresh,
+        "on_refresh_activate": self.refresh_all_watches,
         "on_close_activate": self.delete_event,
         "on_import_watches_activate": self.import_watches,
         "on_export_watches_activate": self.export_watches,
@@ -89,6 +89,8 @@ class Notifier:
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.svg' )
         self.notifier.set_icon(icon)
         
+        self.specto.notifier_initialized = True
+        
         #create the gui
         self.create_notifier_gui()
 
@@ -110,64 +112,30 @@ class Notifier:
         except:
             model, iter = self.treeview.get_selection().get_selected()
             id = int(model.get_value(iter, 3))          
-            
-            
-        type = self.specto.watch_db[id].type
-        self.specto.clear_watch(id)
-        self.model.set(self.iter[id], 2, self.specto.watch_db[id].name, 5, pango.WEIGHT_NORMAL)
-        
-        icon = self.specto.icon_theme.load_icon("error", 22, 0)
-        if type == 0:#website
-            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
-        elif type == 1:#email
-            icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
-        elif type == 2:#file/folder
-            icon = self.specto.icon_theme.load_icon("folder", 22, 0)
-        elif type == 3:#system process
-            icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
-        elif type == 4:#port
-            icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
-        elif type == 5:#google reader
-            icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
+        watch = self.specto.watch_db[id]    
+        watch.clear()
+        self.model.set(self.iter[id], 2, watch.name, 5, pango.WEIGHT_NORMAL)
         
         if self.model.iter_is_valid(self.iter[id]):
-            self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 50))
+            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50))
         
-        if self.specto.watch_db[id].updated == False:
+        if watch.updated == False:
             self.wTree.get_widget("btnClear").set_sensitive(False)
         else:
             self.wTree.get_widget("btnClear").set_sensitive(True)
 
     def clear_all(self, widget):
         """ Call the main function to clear all watches and reset the name in the notifier. """
-        self.specto.toggle_all_cleared()
+        #self.specto.toggle_all_cleared()
         self.wTree.get_widget("btnClear").set_sensitive(False)
         self.wTree.get_widget("button_clear_all").set_sensitive(False)
         self.wTree.get_widget("clear_all1").set_sensitive(False)
         
-        icon = self.specto.icon_theme.load_icon("error", 22, 0)
-        for i in self.specto.watch_db:
-            if self.model.iter_is_valid(self.iter[i]):
-                self.model.set(self.iter[i], 2, "%s" % self.specto.watch_db[i].name, 5, pango.WEIGHT_NORMAL)
-                type = self.specto.watch_db[i].type
+        for watch in self.specto.watch_db:
+            if self.model.iter_is_valid(self.iter[watch.id]):
+                self.clear_watch("", watch.id)
 
-                icon = self.specto.icon_theme.load_icon("error", 22, 0)
-                if type == 0:#website
-                    icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
-                elif type == 1:#email
-                    icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
-                elif type == 2:#file/folder
-                    icon = self.specto.icon_theme.load_icon("folder", 22, 0)
-                elif type == 3:#system process
-                    icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
-                elif type == 4:#port
-                    icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
-                elif type == 5:#google reader
-                    icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
-                    
-                self.model.set_value(self.iter[i], 1, self.make_transparent(icon, 50))
-
-    def refresh(self, *widget):
+    def refresh_all_watches(self, *widget):
         """ Call the main funcion to refresh all active watches and change refresh icon to stop. """
         if self.wTree.get_widget("button_refresh").get_stock_id() == "gtk-refresh":
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-stop") #menu item, does not allow changing label
@@ -188,10 +156,10 @@ class Notifier:
 
                 if self.specto.watch_db[id].active == True:
                     try:
-                        self.specto.stop_watch(id)
+                        self.specto.watch_db[id].stop()
                     except:
                         pass
-                    self.specto.start_watch(id)    
+                    self.specto.watch_db[id].start()    
                     
                 if self.specto.GTK:
                     while gtk.events_pending():
@@ -210,109 +178,70 @@ class Notifier:
 
     def toggle_updated(self, id):
         """ Change the name and icon from the watch in the notifier window. """
-        self.model.set(self.iter[id], 2, "%s" % self.specto.watch_db[id].name, 5, pango.WEIGHT_BOLD)
+        watch = self.specto.watch_db[id]
+        self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_BOLD)
         self.wTree.get_widget("button_clear_all").set_sensitive(True)
         self.wTree.get_widget("clear_all1").set_sensitive(True)
-
-        type = self.specto.watch_db[id].type
-        icon = self.specto.icon_theme.load_icon("error", 22, 0)
-        if type == 0:#website
-            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
-        elif type == 1:#email
-            icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
-        elif type == 2:#file/folder
-            icon = self.specto.icon_theme.load_icon("folder", 22, 0)
-        elif type == 3:#system process
-            icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
-        elif type == 4:#port
-            icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
-        elif type == 5:#google reader
-            icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
-            
+                    
         if self.model.iter_is_valid(self.iter[id]):
-            self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 0))
+            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 0))
         
         if self.treeview.get_selection().get_selected():
             model, iter = self.treeview.get_selection().get_selected()
             if iter != None:
                 i = int(model.get_value(iter, 3))
-                if self.specto.watch_db[i].name == self.specto.watch_db[id].name:
+                if self.specto.watch_db[i].name == watch.name:
                     self.show_watch_info()
                     
-    def toggle_updating(self,progress, id):
-        """ If progress is True, a refresh icon is shown, else the type icon is shown. """ 
-        icon = self.specto.icon_theme.load_icon("error", 22, 0)
-        if progress == True:
-            icon = self.specto.icon_theme.load_icon("reload", 22, 0)
-            self.model.set_value(self.iter[id], 1, icon) #do not use transparency here, it's useless and dangerous
+    def mark_watch_status(self,status, id):
+        """ show the right icon for the status from the watch. """ 
+        watch = self.specto.watch_db[id]
+        icon = self.get_icon("error", 50)
+        if status == "updating":
+            icon = self.get_icon("reload", 0)
+            #self.model.set_value(self.iter[id], 1, icon) #do not use transparency here, it's useless and dangerous
             if self.specto.GTK:
                 while gtk.events_pending():#this is to refresh the UI and display the "refresh" icon properly. It works! :)
                     gtk.main_iteration_do(False)
-        else:
-            if self.specto.watch_db[id].error == True:
-                icon = self.specto.icon_theme.load_icon("error", 22, 0)
+        elif status == "idle":
+            if watch.error == True:
+                #icon = self.get_icon("error", 50)
+                pass
             else:
-                type = self.specto.watch_db[id].type
-                icon = self.specto.icon_theme.load_icon("error", 22, 0)
-                if type == 0:#website
-                    icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
-                elif type == 1:#email
-                    icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
-                elif type == 2:#file/folder
-                    icon = self.specto.icon_theme.load_icon("folder", 22, 0)
-                elif type == 3:#system process
-                    icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
-                elif type == 4:#port
-                    icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
-                elif type == 5:#google reader
-                    icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
-                    
-            if self.model.iter_is_valid(self.iter[id]):
-                if self.specto.watch_db[id].updated == False:
-                    self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 50))#we must keep it faded, exceptionally
-                    self.show_watch_info()
-                else:
-                    #self.model.set_value(self.iter[id], 1, self.make_transparent(icon, 0)) #do not use transparency here, it's useless and dangerous
-                    self.model.set_value(self.iter[id], 1, icon)
-        
+                icon = self.get_icon(watch.icon, 50)
+        elif status == "updated":
+            self.toggle_updated(id)
+            self.specto.tray.show_tooltip()
+            icon = self.get_icon(watch.icon, 0)
+            
+        self.model.set_value(self.iter[id], 1, icon)     
+            
     def deactivate(self, id):
         """ Disable the checkbox from the watch. """
         self.model.set_value(self.iter[id], 0, 0)#TODO: make the text label in the "Name" column and the buttons insensitive
         
-    def make_transparent(self, pixbuf, percent):
+    def get_icon(self, icon, percent):
         """ Calculate the alpha and return a transparent pixbuf. The input percentage is the 'transparency' percentage. 0 means no transparency. """
-        pixbuf = pixbuf.add_alpha(False, '0', '0', '0')
-        for row in pixbuf.get_pixels_array():
+        if icon == "":
+            icon = "dialog-information"
+        icon = self.specto.icon_theme.load_icon(icon, 22, 0)
+        icon = icon.add_alpha(False, '0', '0', '0')
+        for row in icon.get_pixels_array():
             for pix in row:
                 pix[3] = min(int(pix[3]), 255 - (percent * 0.01 * 255))#note: we must *0.01, NOT /100, otherwise it won't work
-        return pixbuf
+        return icon
             
-    def add_notifier_entry(self, name, type, id):
+    def add_notifier_entry(self, id):
         """ Add an entry to the notifier list. """
-        i = id
-
-        icon = self.specto.icon_theme.load_icon("error", 22, 0)
-        if type == 0:#website
-            icon = self.specto.icon_theme.load_icon("applications-internet", 22, 0)
-        elif type == 1:#email
-            icon = self.specto.icon_theme.load_icon("emblem-mail", 22, 0)
-        elif type == 2:#file/folder
-            icon = self.specto.icon_theme.load_icon("folder", 22, 0)
-        elif type == 3:#system process
-            icon = self.specto.icon_theme.load_icon("applications-system", 22, 0)
-        elif type == 4:#port
-            icon = self.specto.icon_theme.load_icon("network-transmit-receive", 22, 0)
-        elif type == 5:#google reader
-            icon = self.specto.icon_theme.load_icon("internet-news-reader", 22, 0)
+        watch = self.specto.watch_db[id]
         
-        self.iter[i] = self.model.insert_before(None, None)
-        self.model.set_value(self.iter[i], 0, 1)
-        self.model.set_value(self.iter[i], 1, self.make_transparent(icon, 50))
-        self.model.set_value(self.iter[i], 2, name)
-        self.model.set_value(self.iter[i], 3, id)
-        self.model.set_value(self.iter[i], 4, type)
-        self.model.set(self.iter[i], 5, pango.WEIGHT_NORMAL)#make sure the text is not fuzzy on startup
-        self.watches = self.watches + 1
+        self.iter[id] = self.model.insert_before(None, None)
+        self.model.set_value(self.iter[id], 0, 1)
+        self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50))
+        self.model.set_value(self.iter[id], 2, watch.name)
+        self.model.set_value(self.iter[id], 3, watch.id)
+        self.model.set_value(self.iter[id], 4, watch.type)
+        self.model.set(self.iter[id], 5, pango.WEIGHT_NORMAL)#make sure the text is not fuzzy on startup
         
     def check_clicked(self, object, path, model):
         """ Call the main function to start/stop the selected watch. """
@@ -351,6 +280,7 @@ class Notifier:
             #hide the tip of the day and show the buttons
             self.lblTip.hide()
             self.wTree.get_widget("vbox_panel_buttons").show()
+            self.wTree.get_widget("notebook1").show()
 
             #hide all the tables
             self.notebook_info.hide()
@@ -420,7 +350,8 @@ class Notifier:
                 self.wTree.get_widget("imgWatch").set_from_pixbuf(self.specto.icon_theme.load_icon("internet-news-reader", 64, 0))                
             elif selected.type == 6:###this need to be updated!
                 pass
-                
+            self.wTree.get_widget("notebook1").set_current_page(0)
+            self.wTree.get_widget("lblExtraInfo").set_label(selected.get_extra_information())              
         else:
             self.wTree.get_widget("edit").set_sensitive(False)
 
@@ -681,6 +612,7 @@ class Notifier:
         
         self.wTree.get_widget("edit").set_sensitive(False)
         self.notebook_info = self.wTree.get_widget("notebook_info")
+        self.wTree.get_widget("notebook1").hide()
 
         
     def show_add_watch(self, widget):

@@ -66,11 +66,19 @@ class Tray:
         else:
             self.tray.set_from_file( self.ICON_PATH )
 
-    def show_tooltip(self, updated_messages):
+    def show_tooltip(self):
         """ Create the tooltip message and show the tooltip. """
         global _
         show_return = False
+        updated_messages = self.specto.watch_db.count_updated_watches()
+        print updated_messages
         
+        for i in updated_messages.values():
+            if i > 0:
+                self.set_icon_state_excited()
+            else:
+                self.set_icon_state_normal()
+        return        
         if updated_messages.values() == [0,0,0,0,0,0]:
             message = _("No updated watches.")
         else:
@@ -169,10 +177,10 @@ class Tray:
         
         self.sub_menu.append(gtk.SeparatorMenuItem())
         
-        for i in self.specto.watch_db:
-            if self.specto.watch_db[i].updated == True:
-                self.sub_item_clear = gtk.MenuItem(self.specto.watch_db[i].name, True)
-                self.sub_item_clear.connect('activate', self.specto.notifier.clear_watch, self.specto.watch_db[i].id)
+        for watch in self.specto.watch_db:
+            if watch.updated == True:
+                self.sub_item_clear = gtk.MenuItem(watch.name, True)
+                self.sub_item_clear.connect('activate', self.specto.notifier.clear_watch, watch.id)
                 self.sub_menu.append( self.sub_item_clear)
                 
         self.sub_menu.show_all()        

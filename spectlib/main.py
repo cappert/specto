@@ -32,7 +32,7 @@ import os, sys
 from datetime import datetime
 
 import spectlib.util as util
-from spectlib.watch import Watch_io
+from spectlib.watch import Watch_io, Watch_collection
 from spectlib.logger import Logger
 from spectlib.specto_gconf import Specto_gconf
 from spectlib.i18n import _
@@ -95,9 +95,16 @@ class Specto:
         if GTK:
             self.tray = Tray(self)
             self.icon_theme = gtk.icon_theme_get_default()
-        self.watch_db = {}
-        self.watch_io = Watch_io()
-        watch_value_db = self.watch_io.read_options() 
+            
+        self.watch_io = Watch_io(os.environ['HOME'] + "/.specto/" + "watches.list")
+        
+        #read all the watches from a file        
+        values = self.watch_io.read_all_watches()
+        
+        #create the watch collection and add the watches
+        self.watch_db = Watch_collection()
+        self.watch_db.add(self, values)
+                
         self.preferences_initialized = False
         self.notifier_initialized = False        
         #listen for gconf keys
@@ -106,6 +113,7 @@ class Specto:
         self.connection_manager = conmgr.get_net_listener()
 
         if GTK:
+            self.create_notifier_entries()
             if self.specto_gconf.get_entry("always_show_icon") == False:
                 #if the user has not requested the tray icon to be shown at all times, it's impossible that the notifier is hidden on startup, so we must show it.
                 self.notifier_keep_hidden = False
@@ -119,10 +127,7 @@ class Specto:
                 self.notifier_keep_hidden = False
             else:#just in case the entry was never created in gconf
                 self.notifier_keep_hidden = False
-                self.toggle_notifier()
-                
-        self.create_all_watches(watch_value_db)
-        
+                self.toggle_notifier()        
         if GTK:
             gtk.main()
         else:
@@ -191,7 +196,7 @@ class Specto:
         except:pass
         self.tray = ""
         self.tray = Tray(self)
-        self.count_updated_watches()
+        self.watch_db.count_updated_watches()
 
     def create_all_watches(self, value_db):
         """
@@ -211,76 +216,27 @@ class Specto:
         if self.notifier_initialized:            
             self.notifier.refresh()
             
-    def create_watch(self, values):
+    def create_notifier_entries(self):
+        for watch in self.watch_db:
+            self.create_notifier_entry(watch)
+            
+    def create_notifier_entry(self, watch):
         """ Add a watch to the watches repository. """
-        id = len(self.watch_db)
-        
-        if values['type'] == 0: #add a website
-            from spectlib.watch_web_static import Web_watch
-            self.watch_db[id] = Web_watch(self, values['name'], values['refresh'], values['uri'], id, values['error_margin']) #TODO: Authentication
-
-        elif values['type'] == 1: #add an email
-            if int(values['prot']) == 0: #check if pop3, imap or gmail is used
-                import spectlib.watch_mail_pop3
-                self.watch_db[id] = spectlib.watch_mail_pop3.Mail_watch(values['refresh'], values['host'], values['username'], values['password'], values['ssl'], self, id, values['name'])
-
-            elif int(values['prot']) == 1:
-                import spectlib.watch_mail_imap
-                self.watch_db[id] = spectlib.watch_mail_imap.Mail_watch(values['refresh'], values['host'], values['username'], values['password'], values['ssl'], self, id, values['name'])
-            else:
-                import spectlib.watch_mail_gmail
-                self.watch_db[id] = spectlib.watch_mail_gmail.Mail_watch(values['refresh'], values['username'], values['password'], self, id, values['name'])
-
-        elif values['type'] == 2: #add a file
-            from spectlib.watch_file import File_watch
-            self.watch_db[id] = File_watch(values['refresh'], values['file'], values['mode'], self, id, values['name'])
-            
-        elif values['type'] == 3: #add a process watch
-            from spectlib.watch_process import Process_watch
-            self.watch_db[id] = Process_watch(values['refresh'], values['process'], self, id, values['name'])
- 
-        elif values['type'] == 4: #add a port watch
-            from spectlib.watch_port import Port_watch
-            self.watch_db[id] = Port_watch(values['refresh'], values['port'], self, id, values['name'])
-            
-        elif values['type'] == 5: #add a google reader account
-            from spectlib.watch_web_greader import Google_reader
-            self.watch_db[id] = Google_reader(values['refresh'], values['username'], values['password'], self, id, values['name'])
- 
-           
-        try:
-            self.watch_db[id].updated = values['updated']
-        except:
-            self.watch_db[id].updated = False
-            
-        try:
-            self.watch_db[id].active = values['active']
-        except:
-            self.watch_db[id].active = True
-        
-        try:
-            self.watch_db[id].last_updated = values['last_updated']
-        except:
-            self.watch_db[id].last_updated = _("No updates yet.")
-            
-        if GTK:
-            if not self.notifier_initialized:
-                self.notifier = Notifier(self)
-                #self.notifier.restore_size_and_position()#fixme: is this necessary? this makes specto output stuff for nothing.
-            self.notifier.add_notifier_entry(values['name'], values['type'], id)
-            try:
-                if values['updated']:
-                    self.toggle_updated(id)
-            except:
-                pass
-                
-            try:
-                if values['active'] == False:
-                    self.notifier.deactivate(id)
-            except:
-                pass
-                
-        return id
+        if not self.notifier_initialized:
+            self.notifier = Notifier(self)
+            #self.notifier.restore_size_and_position()#fixme: is this necessary? this makes specto output stuff for nothing.
+        self.notifier.add_notifier_entry(watch.id)
+##        try:
+##            if watch.updated:
+##                self.toggle_updated(watch.id)
+##        except:
+##            pass
+##            
+##        try:
+##            if watch.active == False:
+##                self.notifier.deactivate(watch.id)
+##        except:
+##            pass
     
     def clear_watch(self, id):
         """ Mark a watch as not updated. """
@@ -292,9 +248,9 @@ class Specto:
     
         self.count_updated_watches()
         
-    def mark_watch_busy(self, progress, id):
-        """ Display a refresh icon when updating watches. """
-        self.notifier.toggle_updating(progress, id)
+    def mark_watch_status(self, status, id):
+        """ get the watch status (updating, updated, idle) """
+        self.notifier.mark_watch_status(status, id)
 
     def set_status(self, id, status):
         """ Set the status from a watch (active/not active). """
@@ -408,28 +364,9 @@ class Specto:
         self.count_updated_watches()
         self.watch_io.remove_watch(name)#do not clear the watch after removing it or it will mess up the watches.list
         self.notifier.model.remove(self.notifier.iter[id])
-    
-    def find_watch(self, name):
-        """
-        Returns the key of a watch or None if it doesn't exists.
-        """
-        k = -1
-        for key in self.watch_db.iterkeys():
-            if self.watch_db[key].name == name: 
-                k = key
-                break
-        return k
-    
-    def check_unique_watch(self, name):
-        """ Check if the watch name is unique. """
-        if self.watch_io.search_watch(name) and GTK:
-            return False
-        else:
-            return True
         
     def count_updated_watches(self):
         """ Count the number of updated watches for the tooltip. """
-        tooltip_updated_watches = { 0:0,1:0,2:0,3:0,4:0,5:0 }#don't forget to update this if you are implementing a new type of watch
         for i in self.watch_db:
             if self.watch_db[i].updated == True:
                 self.tray.set_icon_state_excited()#change the tray icon color to orange

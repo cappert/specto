@@ -20,72 +20,36 @@
 # License along with this program; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-
 from spectlib.watch import Watch
-
-from spectlib.gmailatom import GmailAtom
-import os
 from spectlib.i18n import _
-import thread
-import gtk, time
+from spectlib.gmailatom import GmailAtom
 
-class Mail_watch(Watch):
+type = "Mail_watch_gmail"
+
+class Mail_watch_gmail(Watch):
     """
     this watch will check if you have a new mail on your gmail account
     """
-    updated = False
-    actually_updated = False
-    oldMsg = 0
-    newMsg = 0
-    type = 1
-    prot = 2 #gmail protocol
-    mail_info = []
-    
-    def __init__(self, refresh, username, password, specto, id,  name = _("Unknown Mail Watch")):
-        Watch.__init__(self, specto)
-        self.name = name
-        self.refresh = refresh
-        if "@" not in username:
-            self.user = username + "@gmail.com"
+    use_network = True
+    icon = "emblem-mail"
+
+    def __init__(self,specto, id, values):
+        Watch.__init__(self, specto, id, values['name'], int(values['refresh']), values['type'])
+        self.oldMsg = 0
+        self.newMsg = 0
+        self.mail_info = []
+        
+        if "@" not in values['username']:
+            self.user = values['username'] + "@gmail.com"
         else:
-            self.user = username
-        self.password = password
-        self.id = id
-        self.error = False
+            self.user = values['username']
+        self.password = values['password']
         
     def dict_values(self):
         return { 'name': self.name, 'refresh': self.refresh, 'username': self.user, 'password':self.password, 'type':1, 'prot':2 }
         
-    def start_watch(self):
-        """ Start the watch. """
-        self.thread_update()
-        
-    def _real_update(self):
-        lock = thread.allocate_lock()
-        lock.acquire()
-        t=thread.start_new_thread(self.update,(lock,))
-        while lock.locked():
-            while gtk.events_pending():
-                gtk.main_iteration()
-            time.sleep(0.05)
-        while gtk.events_pending():
-            gtk.main_iteration()
-        
-    def thread_update(self):
-        if not self.specto.connection_manager.connected():
-            self.specto.logger.log(_("No network connection detected"),
-                                   "info", self.__class__)
-            self.specto.connection_manager.add_callback(self._real_update)
-            self.specto.mark_watch_busy(False, self.id)
-        else :
-            self._real_update()
-        
-    def update(self, lock):
+    def update(self):
         """ Check for new mails on your gmail account. """
-        self.error = False
-        self.specto.mark_watch_busy(True, self.id)
-        self.specto.logger.log(_("Updating watch: \"%s\"") % self.name, "info", self.__class__)
-        
         try:
             s = GmailAtom(self.user, self.password)
             s.refreshInfo()
@@ -97,7 +61,7 @@ class Mail_watch(Watch):
             else:
                 i=0
                 while i < self.oldMsg:
-                    info = s.getMsgAuthorName(i) + s.getMsgTitle(i) + s.getMsgSummary(i) #create unique info
+                    info = str(s.getMsgAuthorName(i) + "|" + s.getMsgTitle(i) + "|" + s.getMsgSummary(i)) #create unique info
                     if info not in self.mail_info: #check if it is a new email or just unread
                         self.actually_updated=True
                         self.mail_info.append(info)
@@ -106,9 +70,8 @@ class Mail_watch(Watch):
         except:
             self.error = True
             self.specto.logger.log(_("Watch: \"%s\" has error: wrong username/password") % self.name, "error", self.__class__)
-            
-        self.specto.mark_watch_busy(False, self.id)
-        Watch.update(self, lock)
+        print "update gedaan"
+        Watch.timer_update(self)
         
     def set_username(self, username):
         """ Set the username for the watch. """
@@ -117,3 +80,39 @@ class Mail_watch(Watch):
     def set_password(self, password):
         """ Set the password for the watch. """
         self.password = password
+        
+    def get_balloon_text(self):
+        """ create the text for the balloon """
+        if self.newMsg == 1:
+            text = ("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, self.mail_info[self.oldMsg-1].split("|")[0], self.newMsg)
+        else:
+            i = self.newMsg - self.oldMsg
+            y = 0 #show max 4 mails
+            author_info = ""
+            while i < len(self.mail_info) and y < 5:
+                author_info += self.mail_info[i].split("|")[0] + ", "
+                i+=1
+                y+=1
+                if y == 5:
+                    author_info += "and others..."
+            
+            author_info = author_info.rstrip(", ")    
+            text = ("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, author_info, self.newMsg)    
+        return text
+    
+    def get_extra_information(self):
+        i = self.newMsg - self.oldMsg
+        y = 0
+        author_info = ""
+        while i < len(self.mail_info) and y < 5:
+            author_info += "<i>" + self.mail_info[i].split("|")[1] + "</i> From <b>" + self.mail_info[i].split("|")[0] + "</b>\n"
+            i += 1
+            y += 1
+            if y == 5:
+                author_info += "and others..."
+        text = "<b>New messages:</b>\n" + author_info
+        return text
+ 
+def get_gui_info(self):
+    return {"Name": self.name}
+

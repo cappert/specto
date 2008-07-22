@@ -277,3 +277,22 @@ class Web_watch(Watch):
     def set_error_margin(self, error_margin):
         """ Set the error margin for the watch. """
         self.error_margin = error_margin
+        
+    def get_balloon_text(self):
+        """ create the text for the balloon """  
+        text = ("The website, <b>%s</b>, has been updated.\n%d\n%s") % (self.name, self.to_be_stored_filesize, str(self.filesize_difference)[:5])
+        return text
+    
+    def get_extra_information(self):
+        pass
+##        i = self.newMsg - self.oldMsg
+##        y = 0
+##        author_info = ""
+##        while i < len(self.mail_info) and y < 5:
+##            author_info += "<i>" + self.mail_info[i].split("|")[1] + "</i> From <b>" + self.mail_info[i].split("|")[0] + "</b>\n"
+##            i += 1
+##            y += 1
+##            if y == 5:
+##                author_info += "and others..."
+##        text = "<b>New messages:</b>\n" + author_info
+##        return text
