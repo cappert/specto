@@ -35,7 +35,7 @@ import  time
 
     
 type = "Watch_web_static"
-type_desc = "Webpage/feed"
+type_desc = _("Webpage/feed")
 open_command = ""
 icon = 'applications-internet'
 
@@ -70,7 +70,6 @@ class Watch_web_static(Watch):
         self.filesize_difference = 0.0
         self.icon = icon
         
-#        self.error_margin = self.error_margin       
         self.open_command = self.open_command.replace("&","\&")    
         self.url_ = self.uri
         self.diff = ""
@@ -99,7 +98,7 @@ class Watch_web_static(Watch):
             response = urllib2.urlopen(request)
         except (urllib2.URLError, BadStatusLine), e:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has error: ") % self.name + str(e), "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)
         else:
             self.info_ = response.info()
             self.url2_ = response.geturl()
@@ -213,7 +212,7 @@ class Watch_web_static(Watch):
             try:
                 f = open(self.cacheFullPath2_, "r")
             except:
-                self.specto.logger.log(_("There was an error reader the file %s") % self.cacheFullPath2_, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cacheFullPath2_, "critical", self.__class__)
             else:
                 size = f.read()
                 if size != "":
@@ -268,16 +267,16 @@ class Watch_web_static(Watch):
             
     def get_gui_info(self):
         return [
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Url', self.url_),
-                ("Error margin", str(self.error_margin) + "%")
+                (_('Name'), self.name),
+                (_('Last updated'), self.last_updated),
+                (_('URL'), self.url_),
+                (_('Error margin'), str(self.error_margin) + "%")
                 ]
 
 def get_add_gui_info():
     return [
-            ("uri", spectlib.gtkconfig.Entry("Url")),
-            ("error_margin", spectlib.gtkconfig.Scale("Error margin (%)",value=2.0,upper=50,step_incr=0.1,page_incr=1.0))
+            ("uri", spectlib.gtkconfig.Entry(_("URL"))),
+            ("error_margin", spectlib.gtkconfig.Scale(_("Error margin (%)"),value=2.0,upper=50,step_incr=0.1,page_incr=1.0))
             ]
 
 """HTML Diff: http://www.aaronsw.com/2002/diff

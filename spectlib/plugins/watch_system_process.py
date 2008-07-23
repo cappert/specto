@@ -26,12 +26,12 @@ import spectlib.config
 from spectlib.i18n import _
 
 type = "Watch_system_process"
-type_desc = "Process"
+type_desc = _("Process")
 icon = 'applications-system'
 
 def get_add_gui_info():
     return [
-            ("process", spectlib.gtkconfig.Entry("Process"))
+            ("process", spectlib.gtkconfig.Entry(_("Process")))
            ]
 
 
@@ -65,17 +65,17 @@ class Watch_system_process(Watch):
                 self.running = False
                 self.updated = True
                 self.actually_updated = True
-                self.status = "Not running"
+                self.status = _("Not running")
             elif self.running == False and process == True:
                 self.running = True 
                 self.actually_updated = True
-                self.status = "Running"
+                self.status = _("Running")
             else: 
                 self.actually_updated=False
-                self.status = "Unknown"
+                self.status = _("Unknown")
         except:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
         
         Watch.timer_update(self)
         
@@ -90,10 +90,10 @@ class Watch_system_process(Watch):
         
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Process', self.process),
-                ('Status', self.status)
+                (_('Name'), self.name),
+                (_('Last updated'), self.last_updated),
+                (_('Process'), self.process),
+                (_('Status'), self.status)
                 ]
         
 

@@ -28,13 +28,13 @@ from spectlib.i18n import _
 import os
 
 type = "Watch_system_port"
-type_desc = "Port"
+type_desc = _("Port")
 icon = 'network-transmit-receive'
 
 
 def get_add_gui_info():
     return [
-            ("port", spectlib.gtkconfig.Spinbutton("Port", value=21))
+            ("port", spectlib.gtkconfig.Spinbutton(_("Port"), value=21))
            ]
 
 class Watch_system_port(Watch):
@@ -64,17 +64,17 @@ class Watch_system_port(Watch):
             if self.running and established == False:
                 self.running = False
                 self.actually_updated = True
-                self.status = "Closed"
+                self.status = _("Closed")
             elif self.running == False and established == True:
                 self.running = True 
                 self.actually_updated = True
-                self.status = "Open"
+                self.status = _("Open")
             else: 
                 self.actually_updated = False
-                self.status = "Unknown"
+                self.status = _("Unknown")
         except:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
         
         Watch.timer_update(self)
         
@@ -105,9 +105,9 @@ class Watch_system_port(Watch):
         
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Port', self.port),
-                ('Status', self.status)
+                (_('Name'), self.name),
+                (_('Last updated'), self.last_updated),
+                (_('Port'), self.port),
+                (_('Status'), self.status)
                 ]
         

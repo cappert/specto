@@ -652,8 +652,8 @@ class Notifier:
         except:
             pass
         else:
-            dialog = spectlib.gtkconfig.RemoveDialog("Remove a watch", 
-            "<big>Remove the watch \"" + self.specto.watch_db[id].name + " \"?</big>\nThis operation cannot be undone.")
+            dialog = spectlib.gtkconfig.RemoveDialog(_("Remove a watch"), 
+            (_('<big>Remove the watch "%s"?</big>\nThis operation cannot be undone.') % self.specto.watch_db[id].name))
             answer = dialog.show()
             if answer == True:
                 self.remove_notifier_entry(id)

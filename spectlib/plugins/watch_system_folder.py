@@ -29,12 +29,12 @@ import os, re
 from stat import *
 
 type = "Watch_system_folder"
-type_desc = "Folder"
+type_desc = _("Folder")
 icon = 'folder'
 
 def get_add_gui_info():
     return [
-            ("folder", spectlib.gtkconfig.FolderChooser("Folder"))
+            ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
            ]
 
 
@@ -80,7 +80,7 @@ class Watch_system_folder(Watch):
                 self.update_cache_file()#write the values (with the removed lines) to the cache file
             else:
                 self.error = True
-                self.specto.logger.log(_("Watch: \"%s\" is not set to a folder") % self.name, "error", self.__class__)
+                self.specto.logger.log(_('Watch: "%s" is not set to a folder') % self.name, "error", self.__class__)
                 
             #first time don't mark as updated
             if self.first_time == True:
@@ -88,7 +88,7 @@ class Watch_system_folder(Watch):
                 self.first_time = False            
         except:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
 
         Watch.timer_update(self)
                 
@@ -164,22 +164,22 @@ class Watch_system_folder(Watch):
         created = self.info['created'][0]
         removed = self.info['removed'][0]
         modified = self.info['modified'][0]
-        text = "<b>%s</b> has changed:\n" % self.name
+        text = _("<b>%s</b> has changed:\n") % self.name
         if created > 0:
             if created == 1:
-                text += "1 new file was created.\n"
+                text += _("1 new file was created.\n")
             else:
-                text += str(created) + " new files were created.\n"
+                text += str(created) + _(" new files were created.\n")
         if removed > 0:
             if removed == 1:
-                text += "1 file was removed.\n"
+                text += _("1 file was removed.\n")
             else:
-                text += str(removed) + " files were removed.\n"
+                text += str(removed) + _(" files were removed.\n")
         if modified > 0:
             if modified == 1:
-                text += "1 file was modified.\n"
+                text += _("1 file was modified.\n")
             else:
-                text += str(modified) + " files were modified.\n"
+                text += str(modified) + _(" files were modified.\n")
         
         return text
     
@@ -239,7 +239,7 @@ class Watch_system_folder(Watch):
 
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Folder', self.folder),
+                (_('Name'), self.name),
+                (_('Last updated'), self.last_updated),
+                (_('Folder'), self.folder),
                 ]

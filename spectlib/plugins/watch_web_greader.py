@@ -26,14 +26,14 @@ from spectlib.i18n import _
 import spectlib.util
 
 type = "Watch_web_greader"
-type_desc = "Google Reader"
+type_desc = _("Google Reader")
 url = "http://www.google.com/reader/"
 icon = 'internet-news-reader'
 
 def get_add_gui_info():
     return [
-            ("username", spectlib.gtkconfig.Entry("Username")),
-            ("password", spectlib.gtkconfig.PasswordEntry("Password"))
+            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
             ]
 
 
@@ -74,7 +74,7 @@ class Watch_web_greader(Watch):
             unread, info_friends, info = greader.refresh()
             if unread[0] == -1:
                 self.error = True
-                self.specto.logger.log(_("Watch: \"%s\" has error: %s") % (self.name, unread[1]), "error", self.__class__)
+                self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, unread[1]), "error", self.__class__)
             elif unread[0] == 1:#no unread items, we need to clear the watch
                     self.unreadMsg = unread[1]
                     self.actually_updated = False
@@ -84,7 +84,7 @@ class Watch_web_greader(Watch):
                 self.unreadMsg = int(unread[1])
                                 
                 if self.unreadMsg == 1000:
-                    self.or_more = " or more"
+                    self.or_more = _(" or more")
 
                 self.news_info.clear_old()
    
@@ -99,32 +99,32 @@ class Watch_web_greader(Watch):
                     
         except:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has an unknown error") % self.name, "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, "unknown error"), "error", self.__class__)
         Watch.timer_update(self)
         
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Username', self.username),
-                ("Unread messages", str(self.unreadMsg) + self.or_more)
+                (_('Name'), self.name),
+                (_('Last updated'), self.last_updated),
+                (_('Username'), self.username),
+                (_('Unread messages'), str(self.unreadMsg) + self.or_more)
                 ]
                 
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.news_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = ("<b>%s</b> has a new newsitems in <b>%s</b>\n\n <b>totalling %s</b> unread items.") % (self.name, unread_messages[0].name, str(self.unreadMsg) + self.or_more)
+            text = _("<b>%s</b> has a new newsitems in <b>%s</b>\n\n <b>totalling %s</b> unread items.") % (self.name, unread_messages[0].name, str(self.unreadMsg) + self.or_more)
         else:
             i = 0 #show max 4 feeds
             feed_info = ""
             while i < len(unread_messages) and i < 4:
                 feed_info += unread_messages[i].name + ", "
                 if i == 3 and i < len(unread_messages) - 1:
-                    feed_info += "and others..."
+                    feed_info += _("and others...")
                 i += 1            
             feed_info = feed_info.rstrip(", ")    
-            text = ("<b>%s</b> has received %d new newsitems in <b>%s</b>\n\n <b>totalling %s</b> unread items.") % (self.name, self.newMsg, feed_info, str(self.unreadMsg)  + self.or_more)    
+            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>\n\n <b>totalling %s</b> unread items.") % (self.name, self.newMsg, feed_info, str(self.unreadMsg)  + self.or_more)    
         return text
     
     def get_extra_information(self):        
@@ -133,7 +133,7 @@ class Watch_web_greader(Watch):
         while i < len(self.news_info) and i < 4:
             feed_info += "<b>" + self.news_info[i].name + "</b>: <i>" + str(self.news_info[i].messages) + "</i>\n"
             if i == 3 and i < len(self.news_info) - 1:
-                feed_info += "and others..."
+                feed_info += _("and others...")
             i += 1            
         return feed_info
                 
@@ -143,10 +143,10 @@ class Watch_web_greader(Watch):
             try:
                 f = open(self.cache_file, "r")
             except:
-                self.specto.logger.log(_("There was an error reader the file %s") % self.cache_file, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
             else:
                 for line in f:
-                    info = line.split("&Seperator;")
+                    info = line.split("&Separator;")
                     feed = Feed(info[0], info[1].replace("\n", ""))
                     self.news_info.add(feed)
 
@@ -160,7 +160,7 @@ class Watch_web_greader(Watch):
             self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
         else:
             for feed in self.news_info:
-                f.write(feed.name + "&Seperator;" + str(feed.messages) + "\n")
+                f.write(feed.name + "&Separator;" + str(feed.messages) + "\n")
         finally:
             f.close()
             
@@ -492,21 +492,21 @@ class Greader():
         if (cookies == 1):
             cookies = getUnreadItems()
         if (cookies == 0):
-            info = -1, 'Wrong username or password'
+            info = -1, _('Wrong username or password')
             extra_info = ''
         if (cookies == 2 ):
-            info = -1, 'Could not establish a connection to server'
+            info = -1, _('Could not establish a connection to server')
             extra_info = ''
         if (cookies == 3):
-            info = -1, 'Could not get cookies'
+            info = -1, _('Could not get cookies')
             extra_info = ''
         if (cookies != 1):
             cookies = getcookies()
 
         if (unread == '-1'):
-            info = 1, 'You are not subscribed to any feeds'
+            info = 1, _('You are not subscribed to any feeds')
         elif (unread == '0'):
-            info = 1, 'No unread items'
+            info = 1, _('No unread items')
         elif (unread >= '1'):
             info = 2, unread
             

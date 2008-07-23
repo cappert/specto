@@ -226,7 +226,7 @@ class Watch:
                 self.open_command = ""
             
         if self.last_updated == "":
-            self.last_updated = "No updates yet"
+            self.last_updated = _("No updates yet")
                 
         if len(error_fields) <> 0:
             error_fields = error_fields.lstrip(",")
@@ -239,7 +239,7 @@ class Watch:
         return "No message specified yet!"
     
     def get_extra_information(self):
-        return "No extra information available."
+        return _("No extra information available.")
     
     def remove_cache_files(self):
         return ""
@@ -419,7 +419,7 @@ class Watch_io:
             try:
                 f = open(self.file_name, "w")
             except:
-                self.specto.logger.log(_("There was an error creating the file %s") % self.file_name, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
             finally:
                 f.close()
         os.chmod(self.file_name, 0600)#This is important for security purposes, we make the file read-write to the owner only, otherwise everyone can read passwords.
@@ -501,7 +501,7 @@ class Watch_io:
                     f = open(self.file_name, "w")
                     f.write(str(cfg).strip()) #write the new configuration file
                 except IOError:
-                    self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+                    self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
                 finally:
                     f.close()
 
@@ -530,7 +530,7 @@ class Watch_io:
                     f = open(self.file_name, "w")
                     f.write(str(cfg).strip()) #write the new configuration file
                 except IOError:
-                    self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+                    self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
                 finally:
                     f.close()
         
@@ -545,7 +545,7 @@ class Watch_io:
             f = open(self.file_name, "w")
             cfgpr.write(open(self.file_name, "w"))
         except IOError:
-            self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
         finally:
             f.close()
         
@@ -569,7 +569,7 @@ class Watch_io:
             f = open(self.file_name, "r")
             text = f.read()
         except IOError:
-            self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
         except:
             f.close
         
@@ -583,7 +583,7 @@ class Watch_io:
                 f = open(self.file_name, "w")
                 f.write(text)
             except IOError:
-                self.specto.logger.log(_("There was an error writing to %s") % self.file_name, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
             finally:
                 f.close()
                 

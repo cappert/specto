@@ -180,8 +180,8 @@ class Edit_watch:
             
     def remove_clicked(self,widget):
         """ Remove the watch. """
-        dialog = spectlib.gtkconfig.RemoveDialog("Remove a watch", 
-        "<big>Remove the watch \"" + self.watch.name + " \"?</big>\nThis operation cannot be undone.")
+        dialog = spectlib.gtkconfig.RemoveDialog(_("Remove a watch"), 
+        _('<big>Remove the watch "%s"?</big>\nThis operation cannot be undone.' % self.watch.name))
         answer = dialog.show()
         if answer == True:
             self.edit_watch.destroy()
@@ -193,7 +193,7 @@ class Edit_watch:
     def clear_clicked(self,widget):
         """ Clear the log window. """
         self.specto.logger.remove_watch_log(self.watch.name)
-        self.specto.logger.log(_("removed logs from watch: \"%s\"") % self.watch.name, "info", self.__class__)
+        self.specto.logger.log(_('Removed logs for watch: "%s"') % self.watch.name, "info", self.__class__)
         self.log = self.specto.logger.watch_log(self.watch.name)
         self.logwindow.set_text(self.log)
         

@@ -32,7 +32,7 @@ class Console:
             if args == "--only-updates":
                 self.only_updates = True
             elif args == "--help":
-                print _("\nSpecto console version\n\nUse \"specto --console --only-updates\" to show only updates.\n\n")
+                print _('\nSpecto console version\n\nUse "specto --console --only-updates" to show only updates.\n\n')
                 sys.exit(0)
                 
     def start_watches(self):
