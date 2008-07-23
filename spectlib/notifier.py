@@ -172,7 +172,7 @@ class Notifier:
         """ Call the main funcion to refresh all active watches and change refresh icon to stop. """
         if self.wTree.get_widget("button_refresh").get_stock_id() == "gtk-refresh":
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-stop") #menu item, does not allow changing label
-            self.wTree.get_widget("button_refresh").set_label("Stop")
+            self.wTree.get_widget("button_refresh").set_label(_("Stop"))
             self.wTree.get_widget("button_add").set_sensitive(False)
             self.wTree.get_widget("btnEdit").set_sensitive(False)
             for i in self.iter:
@@ -195,7 +195,7 @@ class Notifier:
                     self.specto.watch_db[id].start()
                     
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-refresh") #menu item, does not allow changing label
-            self.wTree.get_widget("button_refresh").set_label("Refresh All")
+            self.wTree.get_widget("button_refresh").set_label(_("Refresh All"))
             self.wTree.get_widget("button_add").set_sensitive(True) 
             self.wTree.get_widget("btnEdit").set_sensitive(True)           
         else:
@@ -419,7 +419,7 @@ class Notifier:
             if watch.updated == False:
                 self.wTree.get_widget("clear").set_sensitive(False)
                 self.wTree.get_widget("btnClear").set_sensitive(False)
-                self.wTree.get_widget("lblExtraInfo").set_label("No extra information available.")
+                self.wTree.get_widget("lblExtraInfo").set_label(_("No extra information available."))
             else:
                 self.wTree.get_widget("clear").set_sensitive(True)
                 self.wTree.get_widget("btnClear").set_sensitive(True)
@@ -850,7 +850,7 @@ class Notifier:
         self.error_log_window = gtk.ScrolledWindow()
         self.error_log_window.add_with_viewport(self.error_log)
         self.error_log_window.show()
-        self.label_error_log = gtk.Label("Error log")
+        self.label_error_log = gtk.Label(_("Error log"))
         self.error_log.show()
         self.label_error_log.show()
         

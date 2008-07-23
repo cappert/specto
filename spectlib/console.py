@@ -32,7 +32,7 @@ class Console:
             if args == "--only-updates":
                 self.only_updates = True
             elif args == "--help":
-                print "\nSpecto console version\n\nUse \"specto --console --only-updates\" to show only updates.\n\n"
+                print _("\nSpecto console version\n\nUse \"specto --console --only-updates\" to show only updates.\n\n")
                 sys.exit(0)
                 
     def start_watches(self):
@@ -43,17 +43,17 @@ class Console:
         watch = self.specto.watch_db[id]
 
         if status == "updated":
-            print "Watch \"" + watch.name + "\" is updated!"
+            print _("Watch %s is updated!" %(watch.name))
             print watch.get_extra_information()
         elif self.only_updates:
             return
         elif status == "updating":
-            print "Watch \"" + watch.name + "\" started updating."
+            print _("Watch %s started updating." %(watch.name))
         elif status == "idle":
-            print "Watch \"" + watch.name + "\" has finished updating."                
+            print _("Watch %s has finished updating." %(watch.name))
         elif status == "no-network":
-            print "The network connection has failed, network watches will not update."
+            print _("The network connection has failed, network watches will not update.")
         elif status == "network":
-            print "Network connection detected."
+            print _("Network connection detected.")
         elif status == "error":
-            print "Watch \"" + watch.name + "\" has an error."                
+            print _("Watch %s encountered an error." %(watch.name))
