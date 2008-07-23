@@ -285,7 +285,7 @@ class Watch_collection:
             try:
                 mod = self.plugin_dict[type]
             except:
-                print "Please enable plugin \""+ type + "\", if you want to use the watch: "+ values[i]["name"] + "."
+                self.specto.logger.log(_('Please enable plugin "%s" if you want to use the watch "%s".') % (type, values[i]["name"]), "critical", self.__class__)
             
             if mod:  
                 obj = getattr(mod, type)

@@ -164,7 +164,6 @@ class Watch_web_static(Watch):
                 #if there is a previous filesize
                     #calculate the % changed filesize
                     self.filesize_difference = (fabs(int(self.new_filesize) - int(self.old_filesize)) / int(self.old_filesize))*100
-                    #if self.specto.DEBUG: print "\tCached filesize: ", self.old_filesize, "\tFilesize difference percentage:", str(self.filesize_difference)[:5], "%"
                     #self.specto.logger.log(_("Difference percentage:%s (Watch: \"%s\")") % (str(self.filesize_difference)[:5], self.name), "info", self.__class__)
                     if self.cached and self.diff and (self.filesize_difference  >= float(self.error_margin)*100) and (self.filesize_difference != 0.0): #and (self.infoB_['md5sum'] == self.info_['md5sum']):
                         self.to_be_stored_filesize = self.new_filesize
@@ -174,12 +173,10 @@ class Watch_web_static(Watch):
                         #we want to stay close to the original, because replacing the filesize each time
                         #if the watch is not updated would create a lot of fluctuations
                         self.to_be_stored_filesize = self.old_filesize
-                        #if self.specto.DEBUG: print "\tSaved filesize: ", self.to_be_stored_filesize
                         self.actually_updated = False
                 else:
                 #if there is NO previously stored filesize
                     self.to_be_stored_filesize = self.new_filesize
-                    #if self.specto.DEBUG: print "\tSaved filesize: ", self.to_be_stored_filesize
 
             if (self.url2_ != self.url_) and self.redirect == True:
                 self.write_uri()#it's uri, not url.

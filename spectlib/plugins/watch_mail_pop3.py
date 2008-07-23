@@ -203,10 +203,8 @@ class Email():
         self.author = author
         #FIXME: change date to "year month day time"
         #date = date.split(" ")
-        #print date
         #month = time.strptime(date[1], "%b")
         #self.date = date[2] + " " + str(month[1]) + " " + date[0] + " " + date[3]
-        #print self.date #time.strptime(date, "%d/%m/%Y")
         self.date = date
         self.found = False
         self.new = False
