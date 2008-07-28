@@ -32,7 +32,7 @@ except:
 try:
     import gtk
     import gtk.glade
-    import spectlib.gtkutil
+    import spectlib.gtkconfig
 except:
     pass
 

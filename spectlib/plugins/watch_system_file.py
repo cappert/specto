@@ -78,7 +78,8 @@ class Watch_system_file(Watch):
                 i = 0
                 while i < len(info):
                     self.info.append(str(info[i]).strip())
-                    self.old_info[i] = str(self.old_info[i]).strip()
+                    if not self.first_time:
+                        self.old_info[i] = str(self.old_info[i]).strip()
                     i += 1
                     
                 if self.old_info != self.info and not self.first_time:
