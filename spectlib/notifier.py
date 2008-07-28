@@ -86,7 +86,7 @@ class Notifier:
 
         #catch some events
         dic= {
-        "on_add_activate": self.show_add_watch,
+        "on_add_activate": self.show_add_watch_menu,
         "on_edit_activate": self.show_edit_watch,
         "on_clear_all_activate": self.clear_all,
         "on_preferences_activate": self.show_preferences,
@@ -946,9 +946,33 @@ class Notifier:
             self.pref=Preferences(self.specto, self)
         else:
             self.pref.show()
-            
+
+    def position_add_watch_menu_correctly(self, *args):
+        """ This is a hack, so that the popup menu appears left-aligned, right below the Add button """
+        current_window_xy = self.wTree.get_widget("notifier").window.get_origin()#here's the trick to not getting screwed by the window manager. get_origin from the window property returns the root x coordinates
+        current_window_x = current_window_xy[0]
+        current_window_y = current_window_xy[1]
+        button_x = self.wTree.get_widget("button_add").get_allocation().x
+        button_y = self.wTree.get_widget("button_add").get_allocation().y
+        button_height = self.wTree.get_widget("button_add").get_allocation().height
+        coordinates = (current_window_x+button_x, current_window_y+button_y+button_height, False)
+        return coordinates
+    def show_add_watch_menu(self, *args):
+        """ When the user clicks on the button part of the GTK Toolbar Menu Button, show the menu instead """
+        menu = self.wTree.get_widget("add-watch-menu")
+        #menu.detach()#detach it from the real menubar ("add")
+        #menu.attach_to_widget(self.wTree.get_widget("button_add"), self.hide_add_watch_menu)
+        menu.popup(None, None, self.position_add_watch_menu_correctly, 3, 0)
+    def hide_add_watch_menu(self, *args):
+#        menu = self.wTree.get_widget("add-watch-menu")
+
+#        menu.detach()#detach it from the real menubar ("add")
+#        menu.attach_to_widget(self.wTree.get_widget("add"), self.hide_add_watch_menu)
+        pass
+                    
     def show_add_watch(self, *args):
         """ Show the add watch window. """
+        #TODO needs to be refactored
         if self.add_w == "":
             self.add_w= Add_watch(self.specto, self)
         elif self.add_w.add_watch.flags() & gtk.MAPPED:
