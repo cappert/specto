@@ -103,10 +103,10 @@ class Watch_mail_gmail(Watch):
         
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Username', self.username),
-                ("Unread messages", self.oldMsg)
+                (_("Name"), self.name),
+                (_("Last updated"), self.last_updated),
+                (_("Username"), self.username),
+                (_("Unread messages"), self.oldMsg)
                 ]        
         
     def get_balloon_text(self):

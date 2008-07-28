@@ -225,7 +225,7 @@ class Watch:
             except:
                 self.open_command = ""
             
-        if self.last_updated == "":
+        if self.last_updated == "" or self.last_updated == _("No updates yet") or self.last_updated == "No updates yet": #otherwise, it will be saved untranslated in the watch list
             self.last_updated = _("No updates yet")
                 
         if len(error_fields) <> 0:
