@@ -236,7 +236,7 @@ class Watch:
                 self.values = values
         
     def get_balloon_text(self):        
-        return "No message specified yet!"
+        return "No message specified yet!" #no need to translate this, if users get to see this, it's no good
     
     def get_extra_information(self):
         return _("No extra information available.")
