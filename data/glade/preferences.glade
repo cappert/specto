@@ -39,7 +39,7 @@
                           <widget class="GtkCheckButton" id="chk_libnotify">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">Pop toasts from the tray icon when a watch is updated</property>
+                            <property name="label" translatable="yes">Show balloons from the notification icon when a watch has changed</property>
                             <property name="use_underline">True</property>
                             <property name="active">True</property>
                             <property name="draw_indicator">True</property>
@@ -160,7 +160,7 @@
                           <widget class="GtkCheckButton" id="chkSoundUpdate">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">A watch is updated</property>
+                            <property name="label" translatable="yes">Play this sound when a watch is updated:</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_chkSoundUpdate_toggled"/>
@@ -174,7 +174,7 @@
                           <widget class="GtkCheckButton" id="chkSoundProblem">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">A problem occured</property>
+                            <property name="label" translatable="yes">Play this sound when a problem occurs</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_chkSoundProblem_toggled"/>
