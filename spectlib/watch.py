@@ -53,17 +53,17 @@ class Watch:
         watch_values.extend([('name', spectlib.config.String(True)),
                             ('refresh', spectlib.config.Integer(True)),
                             ('type', spectlib.config.String(True)),
-                            ('updated', spectlib.config.Boolean(False)),
+                            ('changed', spectlib.config.Boolean(False)),
                             ('command', spectlib.config.String(False)),
                             ('active', spectlib.config.Boolean(False)),
-                            ('last_updated', spectlib.config.String(False)),
+                            ('last_changed', spectlib.config.String(False)),
                             ('open_command', spectlib.config.String(False))
                             ])
 
         self.id = id
         self.use_network = False
         self.error = False
-        self.actually_updated = False
+        self.actually_changed = False
         self.timer_id = -1
         self.deleted = False
 
@@ -79,7 +79,7 @@ class Watch:
         try:            
             self.active = True
             self.watch_io.write_option(self.name, 'active', self.active)
-            self.start_update()
+            self.start_checking()
         except:
             self.error = True
             self.specto.logger.log(_("There was an error starting the watch"), "error", self.name)
@@ -97,8 +97,8 @@ class Watch:
     def clear(self):
         """ clear the watch """
         try:
-            self.updated = False
-            self.watch_io.write_option(self.name, 'updated', self.updated)
+            self.changed = False
+            self.watch_io.write_option(self.name, 'changed', self.changed)
             if not self.error:
                 self.specto.mark_watch_status("idle-clear", self.id)
         except:
@@ -111,53 +111,53 @@ class Watch:
             self.stop()
         self.start()        
         
-    def start_update(self):
+    def start_checking(self):
         try:
-            if self.updated == True:
-                self.specto.mark_watch_status("mark-updated", self.id)
+            if self.changed == True:
+                self.specto.mark_watch_status("mark-changed", self.id)
             if self.use_network:
                 if not self.check_connection():
                     return 
-            self.specto.logger.log("Started update.", "debug", self.name)   
-            self.specto.mark_watch_status("updating", self.id)
+            self.specto.logger.log("Watch started checking.", "debug", self.name)   
+            self.specto.mark_watch_status("checking", self.id)
             self.error = False
-            self.actually_updated = False
-            #self.update()
+            self.actually_changed = False
+            #self.check()
             #return
             self.lock = thread.allocate_lock()
             self.lock.acquire()
-            thread.start_new_thread(self.update,())
+            thread.start_new_thread(self.check,())
             while self.lock.locked():
                 while gtk.events_pending():
                     gtk.main_iteration()
                 time.sleep(0.05)
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error starting to update the watch"), "error", self.name)
+            self.specto.logger.log(_("There was an error checking the watch"), "error", self.name)
 
                 
                         
-    def watch_updated(self):
+    def watch_changed(self):
         try:
-            self.specto.logger.log("Watch is updated!", "info", self.name)   
-            self.actually_updated = False
-            self.updated = True            
-            self.last_updated = datetime.today().strftime("%A %d %b %Y %H:%M")
-            self.watch_io.write_option(self.name, 'updated', self.updated)
-            self.watch_io.write_option(self.name, 'last_updated', self.last_updated)
-            self.specto.mark_watch_status("updated", self.id)
-            if self.command != "": #run watch specific updated commando
+            self.specto.logger.log(_("Watch has changed."), "info", self.name)   
+            self.actually_changed = False
+            self.changed = True            
+            self.last_changed = datetime.today().strftime("%A %d %b %Y %H:%M")
+            self.watch_io.write_option(self.name, 'changed', self.changed)
+            self.watch_io.write_option(self.name, 'last_changed', self.last_changed)
+            self.specto.mark_watch_status("changed", self.id)
+            if self.command != "": #run watch specific "changed" command
                 os.system(self.command + " &")
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error marking the watch as updated"), "error", self.name)
+            self.specto.logger.log(_("There was an error marking the watch as changed"), "error", self.name)
                 
         
     def timer_update(self):
         """ update the timer """
         try:
-            if self.actually_updated == True:
-                self.watch_updated()
+            if self.actually_changed == True:
+                self.watch_changed()
             elif self.error == True:
                 self.specto.mark_watch_status("error", self.id)
             elif self.active == False:
@@ -166,17 +166,17 @@ class Watch:
                 self.specto.mark_watch_status("idle", self.id)
             try:
                 self.lock.release()
-                self.timer_id = gobject.timeout_add(self.refresh, self.start_update)
+                self.timer_id = gobject.timeout_add(self.refresh, self.start_checking)
             except:
-                self.timer_id = gobject.timeout_add(self.refresh, self.update)
+                self.timer_id = gobject.timeout_add(self.refresh, self.check)
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error updating the watch"), "error", self.name)
+            self.specto.logger.log(_("There was an error checking the watch"), "error", self.name)
 
     def check_connection(self):
         if  not self.specto.connection_manager.connected():
             self.specto.logger.log(_("No network connection detected"), "warning", self.name)
-            self.specto.connection_manager.add_callback(self.start_update)
+            self.specto.connection_manager.add_callback(self.start_checking)
             self.specto.mark_watch_status("no-network", self.id)
             return False
         else :
@@ -225,8 +225,8 @@ class Watch:
             except:
                 self.open_command = ""
             
-        if self.last_updated == "" or self.last_updated == _("No updates yet") or self.last_updated == "No updates yet": #otherwise, it will be saved untranslated in the watch list
-            self.last_updated = _("No updates yet")
+        if self.last_changed == "" or self.last_changed == _("No changes yet") or self.last_changed == "No changes yet": #otherwise, it will be saved untranslated in the watch list
+            self.last_changed = _("No changes yet")
                 
         if len(error_fields) <> 0:
             error_fields = error_fields.lstrip(",")
@@ -306,7 +306,7 @@ class Watch_collection:
     def remove(self, id):
         """ remove the watch from the collection """
         self.watch_db[id].stop()
-        self.watch_db[id].updated = False   
+        self.watch_db[id].changed = False   
         self.watch_db[id].deleted = True
         try:
             self.watch_db[id].remove_cache_files()
@@ -319,7 +319,7 @@ class Watch_collection:
         return self.watch_db[id]
     
     def clear_all_watches(self):
-        """ mark all watches as not updated """
+        """ mark all watches as not changed """
         for watch in self.watch_db:
             watch.clear()
         
@@ -343,20 +343,20 @@ class Watch_collection:
         """ return the length from the collection """
         return len(self.watch_db)
     
-    def count_updated_watches(self):
-        """ Count the number of updated watches for the tooltip. """
-        count_updates = {}
+    def count_changed_watches(self):
+        """ Count the number of changed watches for the tooltip. """
+        count_changed = {}
         for watch in self.watch_db:
             try:
-                count_updates[watch.type_desc]
+                count_changed[watch.type_desc]
             except KeyError:
-                count_updates[watch.type_desc] = 0
+                count_changed[watch.type_desc] = 0
             
-            if watch.updated == True:
-                updates = count_updates[watch.type_desc]
-                count_updates[watch.type_desc] = updates + 1
+            if watch.changed == True:
+                changes = count_changed[watch.type_desc]
+                count_changed[watch.type_desc] = changes + 1
         
-        return count_updates
+        return count_changed
     
     def find_watch(self, name):
         """
@@ -371,7 +371,7 @@ class Watch_collection:
     
     def set_interval(self, refresh, refresh_unit):
         """
-        Set the interval between the update checks.
+        Set the interval between the checks.
         refresh = number
         refresh_unit = days, hours, minutes,... in values of 0, 1, 2, 3.
         """
@@ -388,7 +388,7 @@ class Watch_collection:
         return new_refresh
         
     def get_interval(self, value):
-        """ Get the interval between 2 updates. """
+        """ Get the interval between 2 checks. """
         if ((value / 60) / 60) / 24 / 1000 > 0:
             refresh_value = ((value / 60) / 60) / 24 / 1000
             type = 3

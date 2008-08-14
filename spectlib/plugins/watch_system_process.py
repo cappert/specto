@@ -57,21 +57,21 @@ class Watch_system_process(Watch):
         self.running = self.check_process()
 
 
-    def update(self):
+    def check(self):
         """ See if a file was modified or created. """        
         try:
             process = self.check_process()
             if self.running and process == False:
                 self.running = False
-                self.updated = True
-                self.actually_updated = True
+                self.changed = True
+                self.actually_changed = True
                 self.status = _("Not running")
             elif self.running == False and process == True:
                 self.running = True 
-                self.actually_updated = True
+                self.actually_changed = True
                 self.status = _("Running")
             else: 
-                self.actually_updated=False
+                self.actually_changed=False
                 self.status = _("Unknown")
         except:
             self.error = True
@@ -91,7 +91,7 @@ class Watch_system_process(Watch):
     def get_gui_info(self):
         return [ 
                 (_('Name'), self.name),
-                (_('Last updated'), self.last_updated),
+                (_('Last changed'), self.last_changed),
                 (_('Process'), self.process),
                 (_('Status'), self.status)
                 ]

@@ -74,7 +74,7 @@ class Watch_web_static(Watch):
         self.url_ = self.uri
         self.diff = ""
         
-    def update(self):
+    def check(self):
         """ See if a http or rss page changed. """
         # Create a unique name for each url.
         if self.uri[:7] != "http://" and self.uri[:8] != "https://" and self.uri[:6] != "ftp://":
@@ -166,13 +166,13 @@ class Watch_web_static(Watch):
                     #self.specto.logger.log(_("Difference percentage:%s (Watch: \"%s\")") % (str(self.filesize_difference)[:5], self.name), "info", self.__class__)
                     if self.cached and self.diff and (self.filesize_difference  >= float(self.error_margin)*100) and (self.filesize_difference != 0.0): #and (self.infoB_['md5sum'] == self.info_['md5sum']):
                         self.to_be_stored_filesize = self.new_filesize
-                        self.actually_updated = True
+                        self.actually_changed = True
                     else:
                         #we don't want to juggle with all the possible filesizes, 
                         #we want to stay close to the original, because replacing the filesize each time
-                        #if the watch is not updated would create a lot of fluctuations
+                        #if the watch is not changed would create a lot of fluctuations
                         self.to_be_stored_filesize = self.old_filesize
-                        self.actually_updated = False
+                        self.actually_changed = False
                 else:
                 #if there is NO previously stored filesize
                     self.to_be_stored_filesize = self.new_filesize
@@ -256,7 +256,7 @@ class Watch_web_static(Watch):
             
     def get_balloon_text(self):
         """ create the text for the balloon """  
-        text = ("The website, <b>%s</b>, has been updated.\nDifference percentage: %s percent") % (self.name, str(self.filesize_difference)[:5])
+        text = ("The website, <b>%s</b>, has changed.\nDifference percentage: %s percent") % (self.name, str(self.filesize_difference)[:5])
         return text
     
     def get_extra_information(self):
@@ -268,7 +268,7 @@ class Watch_web_static(Watch):
     def get_gui_info(self):
         return [
                 (_('Name'), self.name),
-                (_('Last updated'), self.last_updated),
+                (_('Last changed'), self.last_changed),
                 (_('URL'), self.url_),
                 (_('Error margin'), str(self.error_margin) + "%")
                 ]

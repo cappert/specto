@@ -54,7 +54,7 @@ class Tray:
             gtk.main_iteration(True)
 
     def set_icon_state_excited(self):
-        """ Change the tray icon to updated. """
+        """ Change the tray icon to "changed". """
         if self.specto.specto_gconf.get_entry("always_show_icon") == False:
             self.tray.set_from_file( self.ICON2_PATH )
             self.tray.set_visible(True)#we need to show the tray again
@@ -62,7 +62,7 @@ class Tray:
             self.tray.set_from_file( self.ICON2_PATH )
         
     def set_icon_state_normal(self):
-        """ Change the tray icon to not updated. If the user requested to always show the tray, it will change its icon but not disappear. Otherwise, it will be removed."""
+        """ Change the tray icon to "not changed". If the user requested to always show the tray, it will change its icon but not disappear. Otherwise, it will be removed."""
         if self.specto.specto_gconf.get_entry("always_show_icon") == False:
             self.tray.set_visible(False)
         else:
@@ -72,17 +72,17 @@ class Tray:
         """ Create the tooltip message and show the tooltip. """
         global _
         show_return = False
-        updated_messages = self.specto.watch_db.count_updated_watches()
+        changed_messages = self.specto.watch_db.count_changed_watches()
         message = ""
         
         z = 0
         y = 0
-        for i in updated_messages.values():
+        for i in changed_messages.values():
             if i > 0:
                 y += 1
                 if show_return == True:
                     message += "\n"
-                message += str(i) + " " + updated_messages.keys()[z] + " "   
+                message += str(i) + " " + changed_messages.keys()[z] + " "   
                 message += i18n._translation.ungettext(_("watch"), _("watches"), i)
                 show_return = True
             z += 1
@@ -90,7 +90,7 @@ class Tray:
         if y > 0:
             self.set_icon_state_excited()
         else:
-            message = _("No updated watches.")
+            message = _("No changed watches.")
             self.set_icon_state_normal()
             
         self.tray.set_tooltip(message)
@@ -135,7 +135,7 @@ class Tray:
         self.item_quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         self.item_clear = gtk.ImageMenuItem(gtk.STOCK_CLEAR)
         
-        #create submenu for updated watches
+        #create submenu for changed watches
         self.sub_menu = gtk.Menu()
 
         self.sub_item_clear = gtk.MenuItem(_("_Clear All"), True)
@@ -145,7 +145,7 @@ class Tray:
         self.sub_menu.append(gtk.SeparatorMenuItem())
         
         for watch in self.specto.watch_db:
-            if watch.updated == True:
+            if watch.changed == True:
                 self.sub_item_clear = gtk.MenuItem(watch.name, True)
                 self.sub_item_clear.connect('activate', self.specto.notifier.clear_watch, watch.id)
                 self.sub_menu.append( self.sub_item_clear)

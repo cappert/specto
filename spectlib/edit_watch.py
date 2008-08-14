@@ -129,10 +129,10 @@ class Edit_watch:
         refresh_unit =  self.wTree.get_widget("refresh_unit").get_active()
         values['refresh'] = self.specto.watch_db.set_interval(refresh_value, refresh_unit)        
         values['active'] = self.watch.active
-        values['last_updated'] = self.watch.last_updated
+        values['last_changed'] = self.watch.last_changed
         
         if self.wTree.get_widget("check_command").get_active() == True:
-            values['command'] = self.wTree.get_widget("entry_update_command").get_text()            
+            values['command'] = self.wTree.get_widget("entry_changed_command").get_text()            
             
         if self.wTree.get_widget("check_open").get_active() == True:
             values['open_command'] = self.wTree.get_widget("entry_open_command").get_text()
@@ -219,10 +219,10 @@ class Edit_watch:
         watch_values = self.watch.get_values()
                 
         if watch_values['command'] != "":
-            self.wTree.get_widget("entry_update_command").set_text(watch_values['command'])
+            self.wTree.get_widget("entry_changed_command").set_text(watch_values['command'])
             self.wTree.get_widget("check_command").set_active(True)
         else:
-            self.wTree.get_widget("entry_update_command").set_text("")
+            self.wTree.get_widget("entry_changed_command").set_text("")
             self.wTree.get_widget("check_command").set_active(False)
             
         if watch_values['open_command'] != "":
@@ -255,7 +255,7 @@ class Edit_watch:
         
     def command_toggled(self, widget):
         sensitive = self.wTree.get_widget("check_command").get_active()
-        self.wTree.get_widget("entry_update_command").set_sensitive(sensitive)
+        self.wTree.get_widget("entry_changed_command").set_sensitive(sensitive)
         
     def open_toggled(self, widget):
         sensitive = self.wTree.get_widget("check_open").get_active()

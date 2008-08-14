@@ -66,7 +66,7 @@ class Watch_web_greader(Watch):
         
         self.read_cache_file()        
         
-    def update(self):
+    def check(self):
         """ Check for new news on your greader account. """
         try:
             self.newMsg = 0
@@ -77,7 +77,7 @@ class Watch_web_greader(Watch):
                 self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, unread[1]), "error", self.__class__)
             elif unread[0] == 1:#no unread items, we need to clear the watch
                     self.unreadMsg = unread[1]
-                    self.actually_updated = False
+                    self.actually_changed = False
                     self.specto.mark_watch_status("clear", self.id)
                     self.news_info = Feed_collection()
             else:
@@ -91,7 +91,7 @@ class Watch_web_greader(Watch):
                 for feed in info:
                     _feed = Feed(feed, info[feed])
                     if self.news_info.add(_feed):
-                        self.actually_updated = True
+                        self.actually_changed = True
                         self.newMsg+=1
             
                 self.news_info.remove_old()
@@ -105,7 +105,7 @@ class Watch_web_greader(Watch):
     def get_gui_info(self):
         return [ 
                 (_('Name'), self.name),
-                (_('Last updated'), self.last_updated),
+                (_('Last changed'), self.last_changed),
                 (_('Username'), self.username),
                 (_('Unread messages'), str(self.unreadMsg) + self.or_more)
                 ]
@@ -182,12 +182,12 @@ class Feed_collection():
         
     def add(self, feed):            
         self.new = True
-        self.updated = False
+        self.changed = False
         for _feed in self.feed_collection:
             if feed.name == _feed.name:
                 if feed.messages > _feed.messages:
                     self.new = False
-                    self.updated = True
+                    self.changed = True
                     _feed.messages = feed.messages
                     _feed.found = True
                 else:
@@ -200,7 +200,7 @@ class Feed_collection():
             feed.new = True
             self.feed_collection.append(feed)
             return True
-        elif self.updated == True:
+        elif self.changed == True:
             feed.found = True
             feed.updated = True
             return True

@@ -72,7 +72,7 @@ class Watch_mail_pop3(Watch):
         self.read_cache_file()
         
 
-    def update(self):
+    def check(self):
         """ Check for new mails on your pop3 account. """        
         try:
             if self.ssl == True:
@@ -104,7 +104,7 @@ class Watch_mail_pop3(Watch):
                         id = string.split(s.uidl(i))[2] #get unique info
                         mail = Email(id, msg["From"].replace("\n", ""), msg["Subject"].replace("\n", ""), msg["date"])
                         if self.mail_info.add(mail): #check if it is a new email or just unread
-                            self.actually_updated=True
+                            self.actually_changed=True
                             self.newMsg+=1
                         i+=1
                     self.mail_info.sort()
@@ -159,7 +159,7 @@ class Watch_mail_pop3(Watch):
     def get_gui_info(self):
         return [ 
                 (_('Name'), self.name),
-                (_('Last updated'), self.last_updated),
+                (_('Last changed'), self.last_changed),
                 (_('Username'), self.username),
                 (_('Unread messages'), self.unreadMsg)
                 ] 

@@ -66,7 +66,7 @@ class Watch_system_folder(Watch):
         self.info['created'] = [0, ""]
         self.info['modified'] = [0, ""]
 
-    def update(self):
+    def check(self):
         """ See if a file was modified or created. """        
         try:
             self.old_values = self.read_cache_file()
@@ -82,9 +82,9 @@ class Watch_system_folder(Watch):
                 self.error = True
                 self.specto.logger.log(_('Watch: "%s" is not set to a folder') % self.name, "error", self.__class__)
                 
-            #first time don't mark as updated
+            #first time don't mark as changed
             if self.first_time == True:
-                self.actually_updated = False
+                self.actually_changed = False
                 self.first_time = False            
         except:
             self.error = True
@@ -124,13 +124,13 @@ class Watch_system_folder(Watch):
                 self.old_values = self.old_values.replace(file_ + ":separator:" + str(old_size), file_ + ":separator:" + str(size))
                 self.info['modified'][0] += 1
                 self.info['modified'][1] += file_ + "\n"
-                self.actually_updated = True
+                self.actually_changed = True
         elif (size or size ==0) and not old_size:
             #add the file to the list
             self.old_values += file_ + ":separator:" + str(size) + "\n"
             self.info['created'][0] += 1
             self.info['created'][1] += file_ + "\n"
-            self.actually_updated = True
+            self.actually_changed = True
             
     def get_dir(self, dir_):
         """ Recursively walk a directory. """
@@ -154,7 +154,7 @@ class Watch_system_folder(Watch):
             if file_ not in self.new_files:#see if a old file still exists in the new files list
                 self.info['removed'][0] += 1
                 self.info['removed'][1] += file_ + "\n"
-                self.actually_updated = True
+                self.actually_changed = True
             else:
                 self.old_values += old_values_[y] + "\n"
             y+=1
@@ -240,6 +240,6 @@ class Watch_system_folder(Watch):
     def get_gui_info(self):
         return [ 
                 (_('Name'), self.name),
-                (_('Last updated'), self.last_updated),
+                (_('Last changed'), self.last_changed),
                 (_('Folder'), self.folder),
                 ]

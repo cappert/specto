@@ -62,7 +62,7 @@ class Watch_system_file(Watch):
         self.file_info = []
         
 
-    def update(self):
+    def check(self):
         """ See if a file was modified or created. """        
         try:
             self.info = []
@@ -70,7 +70,7 @@ class Watch_system_file(Watch):
             try:
                 info = tuple(os.stat(self.file)) #mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime = info
             except OSError:
-                self.actually_updated = True
+                self.actually_changed = True
                 self.file_info.append(_("The file was removed"))
             else:
                 self.old_info = self.old_info.replace("L", "").replace("[", "").replace("]","").replace("'", "").split(",")
@@ -83,7 +83,7 @@ class Watch_system_file(Watch):
                     i += 1
                     
                 if self.old_info != self.info and not self.first_time:
-                    self.actually_updated = True  
+                    self.actually_changed = True  
 
                     #if str(self.info[0]) != self.old_info[0].strip():
                     #    self.file_info.append("Inode protection mode changed")
@@ -166,6 +166,6 @@ class Watch_system_file(Watch):
     def get_gui_info(self):
         return [ 
                 (_('Name'), self.name),
-                (_('Last updated'), self.last_updated),
+                (_('Last changed'), self.last_changed),
                 (_('File'), self.file),
                 ]

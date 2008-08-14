@@ -57,20 +57,20 @@ class Watch_system_port(Watch):
         
         self.running = self.check_port()
 
-    def update(self):
+    def check(self):
         """ See if a socket was opened or closed. """        
         try:
             established = self.check_port()
             if self.running and established == False:
                 self.running = False
-                self.actually_updated = True
+                self.actually_changed = True
                 self.status = _("Closed")
             elif self.running == False and established == True:
                 self.running = True 
-                self.actually_updated = True
+                self.actually_changed = True
                 self.status = _("Open")
             else: 
-                self.actually_updated = False
+                self.actually_changed = False
                 self.status = _("Unknown")
         except:
             self.error = True
@@ -106,7 +106,7 @@ class Watch_system_port(Watch):
     def get_gui_info(self):
         return [ 
                 (_('Name'), self.name),
-                (_('Last updated'), self.last_updated),
+                (_('Last changed'), self.last_changed),
                 (_('Port'), self.port),
                 (_('Status'), self.status)
                 ]
