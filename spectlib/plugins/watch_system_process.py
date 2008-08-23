@@ -28,6 +28,7 @@ from spectlib.i18n import _
 type = "Watch_system_process"
 type_desc = "Process"
 icon = 'applications-system'
+category = _("System") 
 
 def get_add_gui_info():
     return [

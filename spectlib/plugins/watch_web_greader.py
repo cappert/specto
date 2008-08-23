@@ -27,8 +27,8 @@ import spectlib.util
 
 type = "Watch_web_greader"
 type_desc = "Google Reader"
-url = "http://www.google.com/reader/"
 icon = 'internet-news-reader'
+category = _("Internet") 
 
 def get_add_gui_info():
     return [
@@ -48,6 +48,7 @@ class Watch_web_greader(Watch):
                         ( "password", spectlib.config.String(True) ) 
                         ]
 
+        url = "http://www.google.com/reader/"
         self.standard_open_command = spectlib.util.return_webpage(url)
                 
         #Init the superclass and set some specto values

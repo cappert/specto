@@ -30,7 +30,7 @@ import os
 type = "Watch_system_port"
 type_desc = "Port"
 icon = 'network-transmit-receive'
-
+category = _("System") 
 
 def get_add_gui_info():
     return [

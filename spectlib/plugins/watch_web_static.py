@@ -36,8 +36,8 @@ import  time
     
 type = "Watch_web_static"
 type_desc = "Webpage/feed"
-open_command = ""
 icon = 'applications-internet'
+category = _("Internet")
 
 class Watch_web_static(Watch):
     """ 

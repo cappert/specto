@@ -84,7 +84,6 @@
                         <property name="label">gtk-add</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_add_activate"/>
                       </widget>
                     </child>
                     <child>
@@ -322,14 +321,16 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkToolButton" id="button_add">
+              <widget class="GtkMenuToolButton" id="button_add">
                 <property name="visible">True</property>
                 <property name="is_important">True</property>
                 <property name="stock_id">gtk-add</property>
+                <property name="menu"></property>
                 <signal name="clicked" handler="on_add_activate"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
+                <property name="homogeneous">False</property>
               </packing>
             </child>
           </widget>
