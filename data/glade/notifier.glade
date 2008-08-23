@@ -84,140 +84,6 @@
                         <property name="label">gtk-add</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        
-                        
-                        
-                        <child>
-                        <widget class="GtkMenu" id="add-watch-menu">
-                            <property name="visible">True</property>
-                            <child>
-                              <widget class="GtkImageMenuItem" id="E-Mail">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">E-Mail</property>
-                                <property name="use_underline">True</property>
-                                <child>
-                                  <widget class="GtkMenu" id="menu2">
-                                    <property name="visible">True</property>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem2">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Google</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem3">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">IMAP</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem4">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">POP3</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                  </widget>
-                                </child>
-                                <child internal-child="image">
-                                  <widget class="GtkImage" id="menu-item-image11">
-                                    <property name="visible">True</property>
-                                    <property name="icon_name">mail-message-new</property>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkImageMenuItem" id="menuitem7">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">System</property>
-                                <property name="use_underline">True</property>
-                                <child>
-                                  <widget class="GtkMenu" id="menu4">
-                                    <property name="visible">True</property>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem8">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Process</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem9">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Port</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem10">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">File</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem11">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Folder</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                  </widget>
-                                </child>
-                                <child internal-child="image">
-                                  <widget class="GtkImage" id="menu-item-image12">
-                                    <property name="visible">True</property>
-                                    <property name="icon_name">applications-system</property>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkImageMenuItem" id="Web">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Web</property>
-                                <property name="use_underline">True</property>
-                                <child>
-                                  <widget class="GtkMenu" id="menu3">
-                                    <property name="visible">True</property>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem5">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Google Reader</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkMenuItem" id="menuitem6">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Website or syndication feed</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                  </widget>
-                                </child>
-                                <child internal-child="image">
-                                  <widget class="GtkImage" id="menu-item-image13">
-                                    <property name="visible">True</property>
-                                    <property name="icon_name">web-browser</property>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                        </child>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                       </widget>
                     </child>
                     <child>
@@ -464,6 +330,7 @@
               </widget>
               <packing>
                 <property name="expand">False</property>
+                <property name="homogeneous">False</property>
               </packing>
             </child>
           </widget>

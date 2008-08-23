@@ -30,6 +30,7 @@ import spectlib.util
 type = "Watch_mail_gmail"
 type_desc = "GMail"
 icon = 'emblem-mail'
+category = _("Mail") 
 
 def get_add_gui_info():
     return [

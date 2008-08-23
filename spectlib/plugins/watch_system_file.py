@@ -30,6 +30,7 @@ import os
 type = "Watch_system_file"
 type_desc = "File"
 icon = 'gnome-mime-text'
+category = _("System")
 
 def get_add_gui_info():
     return [
