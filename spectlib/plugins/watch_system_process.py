@@ -153,4 +153,5 @@ class ProcessList(object):
                 pass
     def named(self, name):
         """Returns a list of processes with the given name"""
+        name = name[:15]
         return self.by_command.get(name, [])
