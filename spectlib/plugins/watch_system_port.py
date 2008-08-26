@@ -110,4 +110,12 @@ class Watch_system_port(Watch):
                 ('Port', self.port),
                 ('Status', self.status)
                 ]
-        
+                
+    def get_balloon_text(self):
+        """ create the text for the balloon """
+        text = ""
+        if self.running == True:
+            text = _("The connection, <b>%s</b>, was established.") % self.name
+        else:
+            text = _("The connection, <b>%s</b>, was closed.") % self.name
+        return text

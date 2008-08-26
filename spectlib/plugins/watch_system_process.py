@@ -89,6 +89,15 @@ class Watch_system_process(Watch):
         else:
             return False
         
+    def get_balloon_text(self):
+        """ create the text for the balloon """
+        text = ""
+        if self.running == True:
+            text = _("The process, <b>%s</b>, has started.") % self.name
+        else:
+            text = _("The process, <b>%s</b>, has stopped.") % self.name
+        return text
+    
     def get_gui_info(self):
         return [ 
                 ('Name', self.name),
@@ -97,7 +106,6 @@ class Watch_system_process(Watch):
                 ('Status', self.status)
                 ]
         
-
 
 """
 Nick Craig-Wood <nick at craig-wood.com> -- http://www.craig-wood.com/nick
