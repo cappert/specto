@@ -32,6 +32,7 @@ from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
 from spectlib.i18n import _
 import  time
+import socket #to add a timeout to the global process
 
     
 type = "Watch_web_static"
@@ -85,6 +86,7 @@ class Watch_web_static(Watch):
         cacheFileName = "".join(["%02x" % (ord(c),) for c in digest])
         self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
         self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
+        socket.setdefaulttimeout(10)# set globally the timeout to 10 seconds
         request = urllib2.Request(self.uri, None, {"Accept-encoding" : "gzip"})
         cache_res = ""
         if (self.cached == 1) or (os.path.exists(self.cacheFullPath_)):
