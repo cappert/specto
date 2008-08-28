@@ -256,7 +256,7 @@ class Watch_web_static(Watch):
             
     def get_balloon_text(self):
         """ create the text for the balloon """  
-        text = ("The website, <b>%s</b>, has changed.\nDifference percentage: %s percent") % (self.name, str(self.filesize_difference)[:5])
+        text = _("The website, <b>%s</b>, has changed.\nDifference percentage: %s percent") % (self.name, str(self.filesize_difference)[:5])
         return text
     
     def get_extra_information(self):

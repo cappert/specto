@@ -67,7 +67,7 @@ class Watch_system_folder(Watch):
         self.info['modified'] = [0, ""]
 
     def check(self):
-        """ See if a file was modified or created. """        
+        """ See if a folder's contents were modified or created. """        
         try:
             self.old_values = self.read_cache_file()
             mode = os.stat(self.folder)[ST_MODE]
