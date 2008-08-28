@@ -82,8 +82,8 @@ class Tray:
                 y += 1
                 if show_return == True:
                     message += "\n"
-                message += str(i) + " " + changed_messages.keys()[z] + " "   
-                message += i18n._translation.ungettext(_("watch"), _("watches"), i)
+                message += str(i) + " " + changed_messages.keys()[z]
+                #message += i18n._translation.ungettext(_("watch"), _("watches"), i) #disabled, because it is redundant and not properly translatable
                 show_return = True
             z += 1
             
