@@ -21,7 +21,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys, os
+import sys
+import os
 from random import randrange
 from datetime import datetime
 
@@ -224,18 +225,16 @@ class Notifier:
         try:
             if status == "checking":
                 icon = self.get_icon("reload", 0, False)
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" is checking."))            
-                        
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" is checking.') % watch.name))
             elif status == "idle":
                 self.tray.show_tooltip() #check if all watches are cleared
                 if watch.changed == True:
                     icon = self.get_icon(watch.icon, 0, False)
                 else:
-                    icon = self.get_icon(watch.icon, 50, False)
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" is idle."))            
-            
+                    icon = self.get_icon(watch.icon, 50, False) 
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" is idle.') % watch.name))
             elif status == "no-network":
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The network connection seems to be down, network watches will not check until then."))             
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The network connection seems to be down, networked watches will not check until then.')))
                 self.tray.show_tooltip()
                 icon = self.get_icon(watch.icon, 50, False)
                 
@@ -246,7 +245,7 @@ class Notifier:
                 self.tray.show_tooltip() #check if all watches are cleared
                 if watch.changed == True:
                     icon = self.get_icon(watch.icon, 0, False)
-                    statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" is cleared."))            
+                    statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" is cleared.') % watch.name))
                 else:
                     icon = self.get_icon(watch.icon, 50, False)
                 
@@ -255,7 +254,7 @@ class Notifier:
                 icon = self.get_icon(watch.icon, 50, False)            
                 
             elif status == "error":
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" has a problem."))            
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" has a problem.') % watch.name))           
                 balloon_icon = self.get_icon("error", 50, True)
                 icon = self.get_icon("error", 50, False)
                 self.balloon.show_toast( _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % watch.name, balloon_icon, urgency="critical")
@@ -264,7 +263,7 @@ class Notifier:
                     gnome.sound_play(problem_sound)
                 
             elif status == "changed":
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" has changed."))                        
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" has changed.') % watch.name))
                 self.toggle_changed(id)
                 self.tray.show_tooltip()
                 balloon_icon = self.get_icon(watch.icon, 0, True)
@@ -374,7 +373,7 @@ class Notifier:
     def connected_message(self, connected):
         return
         if not connected:
-            self.wTree.get_widget("statusbar1").push(0, _("The network connection seems to be down, watches will not check until then."))
+            self.wTree.get_widget("statusbar1").push(0, _("The network connection seems to be down, networked watches will not check until then."))
             self.wTree.get_widget("statusbar1").show()
         else:
             self.wTree.get_widget("statusbar1").hide()
