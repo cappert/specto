@@ -21,7 +21,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys, os
+import sys
+import os
 from random import randrange
 from datetime import datetime
 
@@ -144,18 +145,18 @@ class Notifier:
         if self.model.iter_is_valid(self.iter[id]) and not watch.error:
             self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50, False))
         
-        if watch.updated == False:
+        if watch.changed == False:
             self.wTree.get_widget("btnClear").set_sensitive(False)
         else:
             self.wTree.get_widget("btnClear").set_sensitive(True)
         
         #check if all watches has been cleared
-        updated_watches = False
-        updates = self.specto.watch_db.count_updated_watches()
-        for updated in updates.values():
-            if updated > 0:
-                updated_watches = True
-        if updated_watches == False:
+        changed_watches = False
+        changes = self.specto.watch_db.count_changed_watches()
+        for changed in changes.values():
+            if changed > 0:
+                changed_watches = True
+        if changed_watches == False:
             self.wTree.get_widget("button_clear_all").set_sensitive(False)
 
     def clear_all(self, widget):
@@ -172,7 +173,7 @@ class Notifier:
         """ Call the main funcion to refresh all active watches and change refresh icon to stop. """
         if self.wTree.get_widget("button_refresh").get_stock_id() == "gtk-refresh":
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-stop") #menu item, does not allow changing label
-            self.wTree.get_widget("button_refresh").set_label("Stop")
+            self.wTree.get_widget("button_refresh").set_label(_("Stop"))
             self.wTree.get_widget("button_add").set_sensitive(False)
             self.wTree.get_widget("btnEdit").set_sensitive(False)
             for i in self.iter:
@@ -195,13 +196,13 @@ class Notifier:
                     self.specto.watch_db[id].start()
                     
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-refresh") #menu item, does not allow changing label
-            self.wTree.get_widget("button_refresh").set_label("Refresh All")
+            self.wTree.get_widget("button_refresh").set_label(_("Refresh All"))
             self.wTree.get_widget("button_add").set_sensitive(True) 
             self.wTree.get_widget("btnEdit").set_sensitive(True)           
         else:
             self.stop_refresh = True    
                 
-    def toggle_updated(self, id):
+    def toggle_changed(self, id):
         """ Change the name and icon from the watch in the notifier window. """
         watch = self.specto.watch_db[id]
         self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_BOLD)
@@ -222,20 +223,18 @@ class Notifier:
         icon = self.get_icon("error", 50, False)
         
         try:
-            if status == "updating":
+            if status == "checking":
                 icon = self.get_icon("reload", 0, False)
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" started updating."))            
-                        
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" is checking.') % watch.name))
             elif status == "idle":
                 self.tray.show_tooltip() #check if all watches are cleared
-                if watch.updated == True:
+                if watch.changed == True:
                     icon = self.get_icon(watch.icon, 0, False)
                 else:
-                    icon = self.get_icon(watch.icon, 50, False)
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" finished updating."))            
-            
+                    icon = self.get_icon(watch.icon, 50, False) 
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" is idle.') % watch.name))
             elif status == "no-network":
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The network connection seems to be down, network watches will not update until then."))             
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The network connection seems to be down, networked watches will not check until then.')))
                 self.tray.show_tooltip()
                 icon = self.get_icon(watch.icon, 50, False)
                 
@@ -244,9 +243,9 @@ class Notifier:
                 
             elif status == "idle-clear":
                 self.tray.show_tooltip() #check if all watches are cleared
-                if watch.updated == True:
+                if watch.changed == True:
                     icon = self.get_icon(watch.icon, 0, False)
-                    statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" is cleared."))            
+                    statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" is cleared.') % watch.name))
                 else:
                     icon = self.get_icon(watch.icon, 50, False)
                 
@@ -255,7 +254,7 @@ class Notifier:
                 icon = self.get_icon(watch.icon, 50, False)            
                 
             elif status == "error":
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" has a problem."))            
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" has a problem.') % watch.name))           
                 balloon_icon = self.get_icon("error", 50, True)
                 icon = self.get_icon("error", 50, False)
                 self.balloon.show_toast( _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % watch.name, balloon_icon, urgency="critical")
@@ -263,19 +262,19 @@ class Notifier:
                     problem_sound = self.specto.specto_gconf.get_entry("problem_sound")
                     gnome.sound_play(problem_sound)
                 
-            elif status == "updated":
-                statusbar.push(0, _(datetime.today().strftime("%H:%M") + ": The watch \"" + watch.name + "\" is updated."))                        
-                self.toggle_updated(id)
+            elif status == "changed":
+                statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" has changed.') % watch.name))
+                self.toggle_changed(id)
                 self.tray.show_tooltip()
                 balloon_icon = self.get_icon(watch.icon, 0, True)
                 self.balloon.show_toast(watch.get_balloon_text(), balloon_icon, name=watch.name)                
                 icon = self.get_icon(watch.icon, 0, False)
-                if self.specto.specto_gconf.get_entry("use_update_sound"):
-                    update_sound = self.specto.specto_gconf.get_entry("update_sound")
-                    gnome.sound_play(update_sound)
+                if self.specto.specto_gconf.get_entry("use_changed_sound"):
+                    changed_sound = self.specto.specto_gconf.get_entry("changed_sound")
+                    gnome.sound_play(changed_sound)
                     
-            elif status == "mark-updated":
-                self.toggle_updated(id)
+            elif status == "mark-changed":
+                self.toggle_changed(id)
                 self.tray.show_tooltip()
                 icon = self.get_icon(watch.icon, 0, False)
             
@@ -361,7 +360,7 @@ class Notifier:
         
         if model.get_value(iter,0):
             model.set_value(iter, 0, 0)
-            if watch.updated:
+            if watch.changed:
                 self.clear_watch("", id)
             self.mark_watch_status("idle", id)
             watch.stop()
@@ -374,7 +373,7 @@ class Notifier:
     def connected_message(self, connected):
         return
         if not connected:
-            self.wTree.get_widget("statusbar1").push(0, _("The network connection seems to be down, watches will not update until then."))
+            self.wTree.get_widget("statusbar1").push(0, _("The network connection seems to be down, networked watches will not check until then."))
             self.wTree.get_widget("statusbar1").show()
         else:
             self.wTree.get_widget("statusbar1").hide()
@@ -416,10 +415,10 @@ class Notifier:
                 for line in log_text:
                     self.log_buffer.insert_with_tags_by_name(iter, line[1], line[0])
                                                                             
-            if watch.updated == False:
+            if watch.changed == False:
                 self.wTree.get_widget("clear").set_sensitive(False)
                 self.wTree.get_widget("btnClear").set_sensitive(False)
-                self.wTree.get_widget("lblExtraInfo").set_label("No extra information available.")
+                self.wTree.get_widget("lblExtraInfo").set_label(_("No extra information available."))
             else:
                 self.wTree.get_widget("clear").set_sensitive(True)
                 self.wTree.get_widget("btnClear").set_sensitive(True)
@@ -462,12 +461,12 @@ class Notifier:
 
     def open_watch_callback(self, *args):
         """
-        Opens the selected watch and mark it is not updated anymore
+        Opens the selected watch and mark it as unchanged
         """
         model, iter = self.treeview.get_selection().get_selected()
         id = int(model.get_value(iter, 3))
         self.open_watch(id)
-        if self.specto.watch_db[id].updated == True:
+        if self.specto.watch_db[id].changed == True:
             self.clear_watch(None, id)
             
     def show_watch_popup(self, treeview, event, data=None):
@@ -499,7 +498,7 @@ class Notifier:
         watch = self.specto.watch_db[id]
         
         self.deactivate(id)
-        if watch.updated:
+        if watch.changed:
             self.clear_watch("", id)
             
         if not self.wTree.get_widget("display_all_watches").active:
@@ -533,7 +532,7 @@ class Notifier:
         watch = self.specto.watch_db[id]
         menu = gtk.Menu()
         
-        menuItem = gtk.ImageMenuItem("Start watch")
+        menuItem = gtk.ImageMenuItem(_("Activate"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_OK, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
@@ -543,7 +542,7 @@ class Notifier:
         menu.append(menuItem)
 
                         
-        menuItem = gtk.ImageMenuItem("Stop watch")
+        menuItem = gtk.ImageMenuItem(_("Deactivate"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
@@ -552,7 +551,7 @@ class Notifier:
             menuItem.set_sensitive(False)            
         menu.append(menuItem)    
         
-        menuItem = gtk.ImageMenuItem("Refresh watch")
+        menuItem = gtk.ImageMenuItem(_("Refresh"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
@@ -562,19 +561,19 @@ class Notifier:
         menu.append(menuItem)
             
             
-        menuItem = gtk.ImageMenuItem("Edit watch")
+        menuItem = gtk.ImageMenuItem(_("Edit"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
         menuItem.connect('activate',self.edit_watch)  
         menu.append(menuItem)
 
-        menuItem = gtk.ImageMenuItem("Clear watch")
+        menuItem = gtk.ImageMenuItem(_("Clear"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
         menuItem.connect('activate',self._clear_watch)            
-        if watch.updated == False:
+        if watch.changed == False:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
 
@@ -589,7 +588,7 @@ class Notifier:
         self.change_name(args[2], id)
         
     def change_name(self, new_name, id):
-        if self.specto.watch_db[id].updated == True:
+        if self.specto.watch_db[id].changed == True:
             weight = pango.WEIGHT_BOLD
         else:
             weight = pango.WEIGHT_NORMAL
@@ -652,8 +651,8 @@ class Notifier:
         except:
             pass
         else:
-            dialog = spectlib.gtkconfig.RemoveDialog("Remove a watch", 
-            "<big>Remove the watch \"" + self.specto.watch_db[id].name + " \"?</big>\nThis operation cannot be undone.")
+            dialog = spectlib.gtkconfig.RemoveDialog(_("Remove a watch"), 
+            (_('<big>Remove the watch "%s"?</big>\nThis operation cannot be undone.') % self.specto.watch_db[id].name))
             answer = dialog.show()
             if answer == True:
                 self.remove_notifier_entry(id)
@@ -850,7 +849,7 @@ class Notifier:
         self.error_log_window = gtk.ScrolledWindow()
         self.error_log_window.add_with_viewport(self.error_log)
         self.error_log_window.show()
-        self.label_error_log = gtk.Label("Error log")
+        self.label_error_log = gtk.Label(_("Error log"))
         self.error_log.show()
         self.label_error_log.show()
         
@@ -938,7 +937,7 @@ class Notifier:
         except:pass
         self.tray = ""
         self.tray = Tray(self.specto, self)
-        self.specto.watch_db.count_updated_watches()
+        self.specto.watch_db.count_changed_watches()
 
     def show_preferences(self, *args):
         """ Show the preferences window. """

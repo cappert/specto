@@ -299,7 +299,7 @@
               <widget class="GtkToolButton" id="button_refresh">
                 <property name="visible">True</property>
                 <property name="is_important">True</property>
-                <property name="label">_Refresh All</property>
+                <property name="label" translatable="yes">_Refresh All</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-refresh</property>
                 <signal name="clicked" handler="on_refresh_activate"/>
@@ -312,7 +312,7 @@
               <widget class="GtkToolButton" id="button_clear_all">
                 <property name="visible">True</property>
                 <property name="is_important">True</property>
-                <property name="label">_Clear All</property>
+                <property name="label" translatable="yes">_Clear All</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-clear</property>
                 <signal name="clicked" handler="on_clear_all_activate"/>
@@ -608,7 +608,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label" translatable="yes">Send bug report</property>
+                <property name="label" translatable="yes">Visit the issue tracker</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="on_send_clicked"/>
               </widget>
@@ -638,7 +638,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="label">gtk-ok</property>
                 <property name="use_stock">True</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="on_ok_clicked"/>

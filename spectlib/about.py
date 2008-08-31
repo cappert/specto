@@ -55,7 +55,7 @@ class About:
                    ]
         logo = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_about.png' )
 
-        translator_credits = _("translator-credits")
+        translator_credits = _("translator-credits-your-names-go-here")
 
         #create tree
         self.about=gtk.AboutDialog()
@@ -68,7 +68,7 @@ class About:
         #self.wTree.set_wrap_license(license)
         gtk.about_dialog_set_url_hook(lambda about, url: self.url_show(url))
         self.about.set_website("http://specto.sourceforge.net")
-        self.about.set_website_label("Specto's Website")
+        self.about.set_website_label(_("Specto's Website"))
         self.about.set_authors(authors)
         #self.about.set_documenters(documenters)
         #self.about.set_artists(artists)

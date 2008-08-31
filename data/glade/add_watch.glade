@@ -245,7 +245,7 @@ Days</property>
                     <property name="column_spacing">6</property>
                     <property name="homogeneous">True</property>
                     <child>
-                      <widget class="GtkEntry" id="entry_update_command">
+                      <widget class="GtkEntry" id="entry_changed_command">
                         <property name="visible">True</property>
                         <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
@@ -262,7 +262,7 @@ Days</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                        <property name="label" translatable="yes">When a watch is updated:</property>
+                        <property name="label" translatable="yes">When this watch has changed</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="check_command_toggled"/>
                       </widget>
@@ -315,7 +315,7 @@ Days</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                        <property name="label" translatable="yes">When you open a watch:</property>
+                        <property name="label" translatable="yes">When you open this watch</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="check_open_toggled"/>
                       </widget>

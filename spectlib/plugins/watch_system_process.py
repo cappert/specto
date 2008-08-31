@@ -26,12 +26,12 @@ import spectlib.config
 from spectlib.i18n import _
 
 type = "Watch_system_process"
-type_desc = "Process"
+type_desc = _("Process")
 icon = 'applications-system'
 
 def get_add_gui_info():
     return [
-            ("process", spectlib.gtkconfig.Entry("Process"))
+            ("process", spectlib.gtkconfig.Entry(_("Process")))
            ]
 
 
@@ -54,29 +54,28 @@ class Watch_system_process(Watch):
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
-        self.running = self.check_process()
+        self.running_initially = self.check_process()
 
 
-    def update(self):
-        """ See if a file was modified or created. """        
+    def check(self):
+        """ See if a process was started or stopped. """        
         try:
-            process = self.check_process()
-            if self.running and process == False:
-                self.running = False
-                self.updated = True
-                self.actually_updated = True
-                self.status = "Not running"
-            elif self.running == False and process == True:
-                self.running = True 
-                self.actually_updated = True
-                self.status = "Running"
-            else: 
-                self.actually_updated=False
-                self.status = "Unknown"
+            running_now = self.check_process()
+            if self.running_initially and running_now == False:
+                self.running_initially = False
+                self.changed = True
+                self.actually_changed = True
+                self.status = _("Not running")
+            elif self.running_initially == False and running_now == True:
+                self.running_initially = True 
+                self.actually_changed = True
+                self.status = _("Running")
+            else:
+                self.actually_changed=False
+                self.status = _("Unknown")
         except:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
-        
+            self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
         Watch.timer_update(self)
         
     def check_process(self):
@@ -90,13 +89,19 @@ class Watch_system_process(Watch):
         
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Process', self.process),
-                ('Status', self.status)
+                (_('Name'), self.name),
+                (_('Last changed'), self.last_changed),
+                (_('Process'), self.process),
+                (_('Status'), self.status)
                 ]
         
-
+    def get_balloon_text(self):
+        """ create the text for the balloon """  
+        if self.check_process():
+            text = _("The system process, <b>%s</b>, has started.") % self.name
+        elif self.check_process()==False:#the process check returned false, which means the process is not running
+            text = _("The system process, <b>%s</b>, has stopped.") % self.name
+        return text
 
 """
 Nick Craig-Wood <nick at craig-wood.com> -- http://www.craig-wood.com/nick
@@ -142,6 +147,7 @@ class ProcessList(object):
             if f.isdigit():
                 process = Process(int(f))
                 self.by_pid[process.pid] = process
+                #print process.command#FIXME ah-ha! there's a bug here, process names are truncated
                 self.by_command.setdefault(process.command, []).append(process)
         for process in self.by_pid.values():
             try:

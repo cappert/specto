@@ -129,10 +129,10 @@ class Edit_watch:
         refresh_unit =  self.wTree.get_widget("refresh_unit").get_active()
         values['refresh'] = self.specto.watch_db.set_interval(refresh_value, refresh_unit)        
         values['active'] = self.watch.active
-        values['last_updated'] = self.watch.last_updated
+        values['last_changed'] = self.watch.last_changed
         
         if self.wTree.get_widget("check_command").get_active() == True:
-            values['command'] = self.wTree.get_widget("entry_update_command").get_text()            
+            values['command'] = self.wTree.get_widget("entry_changed_command").get_text()            
             
         if self.wTree.get_widget("check_open").get_active() == True:
             values['open_command'] = self.wTree.get_widget("entry_open_command").get_text()
@@ -180,8 +180,8 @@ class Edit_watch:
             
     def remove_clicked(self,widget):
         """ Remove the watch. """
-        dialog = spectlib.gtkconfig.RemoveDialog("Remove a watch", 
-        "<big>Remove the watch \"" + self.watch.name + " \"?</big>\nThis operation cannot be undone.")
+        dialog = spectlib.gtkconfig.RemoveDialog(_("Remove a watch"), 
+        _('<big>Remove the watch "%s"?</big>\nThis operation cannot be undone.' % self.watch.name))
         answer = dialog.show()
         if answer == True:
             self.edit_watch.destroy()
@@ -193,7 +193,7 @@ class Edit_watch:
     def clear_clicked(self,widget):
         """ Clear the log window. """
         self.specto.logger.remove_watch_log(self.watch.name)
-        self.specto.logger.log(_("removed logs from watch: \"%s\"") % self.watch.name, "info", self.__class__)
+        self.specto.logger.log(_('Removed logs for watch: "%s"') % self.watch.name, "info", self.__class__)
         self.log = self.specto.logger.watch_log(self.watch.name)
         self.logwindow.set_text(self.log)
         
@@ -219,10 +219,10 @@ class Edit_watch:
         watch_values = self.watch.get_values()
                 
         if watch_values['command'] != "":
-            self.wTree.get_widget("entry_update_command").set_text(watch_values['command'])
+            self.wTree.get_widget("entry_changed_command").set_text(watch_values['command'])
             self.wTree.get_widget("check_command").set_active(True)
         else:
-            self.wTree.get_widget("entry_update_command").set_text("")
+            self.wTree.get_widget("entry_changed_command").set_text("")
             self.wTree.get_widget("check_command").set_active(False)
             
         if watch_values['open_command'] != "":
@@ -255,7 +255,7 @@ class Edit_watch:
         
     def command_toggled(self, widget):
         sensitive = self.wTree.get_widget("check_command").get_active()
-        self.wTree.get_widget("entry_update_command").set_sensitive(sensitive)
+        self.wTree.get_widget("entry_changed_command").set_sensitive(sensitive)
         
     def open_toggled(self, widget):
         sensitive = self.wTree.get_widget("check_open").get_active()

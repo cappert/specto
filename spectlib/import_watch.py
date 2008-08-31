@@ -146,8 +146,8 @@ class Import_watch:
             values['type'] = watch.type
             values['refresh'] = watch.refresh
             values['active'] = True
-            values['last_updated'] = watch.last_updated  
-            values['updated'] = False              
+            values['last_changed'] = watch.last_changed  
+            values['changed'] = False              
             all_values[i] = values
         _id = self.specto.watch_db.create(all_values)
         
@@ -255,7 +255,7 @@ class Save_dialog:
                 pass
             else:
                 values[i]['open_command'] = ""
-                values[i]['last_updated'] = ""
+                values[i]['last_changed'] = ""
             if values[i]['type'] == "0":
                 values[i]['type'] = "Watch_web_static"
             if values[i]['type'] == "1":

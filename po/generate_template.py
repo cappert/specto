@@ -4,7 +4,7 @@
 print "Specto's custom string extractor script\n"
 
 import os, glob
-paths = ["../spectlib", "../data/glade"]
+paths = ["../spectlib", "../spectlib/tools", "../spectlib/plugins", "../data/glade"]
 extensions = [".py", ".h"]
 arguments = ""
 
