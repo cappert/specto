@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Specto\n"
-"POT-Creation-Date: Thu Aug 28 23:23:12 2008\n"
-"PO-Revision-Date: 2008-08-28 23:42-0500\n"
+"POT-Creation-Date: Sun Aug 31 15:02:56 2008\n"
+"PO-Revision-Date: 2008-08-31 15:04-0500\n"
 "Last-Translator: Jeff Fortin <nekohayo ~at~ gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -92,15 +92,11 @@ msgstr ""
 "Si vous voulez en créer un nouveau, vous devez choisir un nom différent."
 
 #: ../data/glade/add_watch.glade.h:21
-msgid "Watch Type:"
-msgstr "Type d'observateur :"
-
-#: ../data/glade/add_watch.glade.h:22
 #: ../data/glade/edit_watch.glade.h:14
 msgid "When this watch has changed"
 msgstr "Lorsque cet observateur a changé"
 
-#: ../data/glade/add_watch.glade.h:23
+#: ../data/glade/add_watch.glade.h:22
 #: ../data/glade/edit_watch.glade.h:15
 msgid "When you open this watch"
 msgstr "Lorsque j'ouvre cet observateur"
@@ -382,15 +378,15 @@ msgstr "Type"
 #: ../spectlib/export_watch.py:91
 #: ../spectlib/import_watch.py:95
 #: ../spectlib/notifier.py:774
-#: ../spectlib/plugins/watch_mail_gmail.py:106
-#: ../spectlib/plugins/watch_mail_imap.py:179
-#: ../spectlib/plugins/watch_mail_pop3.py:161
+#: ../spectlib/plugins/watch_mail_gmail.py:107
+#: ../spectlib/plugins/watch_mail_imap.py:180
+#: ../spectlib/plugins/watch_mail_pop3.py:162
 #: ../spectlib/plugins/watch_system_file.py:168
-#: ../spectlib/plugins/watch_system_folder.py:242
+#: ../spectlib/plugins/watch_system_folder.py:243
 #: ../spectlib/plugins/watch_system_port.py:108
-#: ../spectlib/plugins/watch_system_process.py:92
-#: ../spectlib/plugins/watch_web_greader.py:107
-#: ../spectlib/plugins/watch_web_static.py:270
+#: ../spectlib/plugins/watch_system_process.py:93
+#: ../spectlib/plugins/watch_web_greader.py:108
+#: ../spectlib/plugins/watch_web_static.py:272
 msgid "Name"
 msgstr "Nom"
 
@@ -559,51 +555,57 @@ msgstr "Astuce du jour :"
 msgid "GMail"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:36
-#: ../spectlib/plugins/watch_mail_gmail.py:108
-#: ../spectlib/plugins/watch_mail_imap.py:37
-#: ../spectlib/plugins/watch_mail_imap.py:181
-#: ../spectlib/plugins/watch_mail_pop3.py:40
-#: ../spectlib/plugins/watch_mail_pop3.py:163
+#: ../spectlib/plugins/watch_mail_gmail.py:33
+#: ../spectlib/plugins/watch_mail_imap.py:34
+#: ../spectlib/plugins/watch_mail_pop3.py:37
+msgid "Mail"
+msgstr "Courrier"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:37
+#: ../spectlib/plugins/watch_mail_gmail.py:109
+#: ../spectlib/plugins/watch_mail_imap.py:38
+#: ../spectlib/plugins/watch_mail_imap.py:182
+#: ../spectlib/plugins/watch_mail_pop3.py:41
+#: ../spectlib/plugins/watch_mail_pop3.py:164
 #: ../spectlib/plugins/watch_web_greader.py:35
-#: ../spectlib/plugins/watch_web_greader.py:109
+#: ../spectlib/plugins/watch_web_greader.py:110
 msgid "Username"
 msgstr "Utilisateur"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:37
-#: ../spectlib/plugins/watch_mail_imap.py:38
-#: ../spectlib/plugins/watch_mail_pop3.py:41
+#: ../spectlib/plugins/watch_mail_gmail.py:38
+#: ../spectlib/plugins/watch_mail_imap.py:39
+#: ../spectlib/plugins/watch_mail_pop3.py:42
 #: ../spectlib/plugins/watch_web_greader.py:36
 msgid "Password"
 msgstr "Mot de passe"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:101
-#: ../spectlib/plugins/watch_web_greader.py:495
+#: ../spectlib/plugins/watch_mail_gmail.py:102
+#: ../spectlib/plugins/watch_web_greader.py:496
 msgid "Wrong username or password"
 msgstr "Mauvais utilisateur/mot de passe"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:107
-#: ../spectlib/plugins/watch_mail_imap.py:180
-#: ../spectlib/plugins/watch_mail_pop3.py:162
+#: ../spectlib/plugins/watch_mail_gmail.py:108
+#: ../spectlib/plugins/watch_mail_imap.py:181
+#: ../spectlib/plugins/watch_mail_pop3.py:163
 #: ../spectlib/plugins/watch_system_file.py:169
-#: ../spectlib/plugins/watch_system_folder.py:243
+#: ../spectlib/plugins/watch_system_folder.py:244
 #: ../spectlib/plugins/watch_system_port.py:109
-#: ../spectlib/plugins/watch_system_process.py:93
-#: ../spectlib/plugins/watch_web_greader.py:108
-#: ../spectlib/plugins/watch_web_static.py:271
+#: ../spectlib/plugins/watch_system_process.py:94
+#: ../spectlib/plugins/watch_web_greader.py:109
+#: ../spectlib/plugins/watch_web_static.py:273
 msgid "Last changed"
 msgstr "Dernier changement"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:109
-#: ../spectlib/plugins/watch_mail_imap.py:182
-#: ../spectlib/plugins/watch_mail_pop3.py:164
-#: ../spectlib/plugins/watch_web_greader.py:110
+#: ../spectlib/plugins/watch_mail_gmail.py:110
+#: ../spectlib/plugins/watch_mail_imap.py:183
+#: ../spectlib/plugins/watch_mail_pop3.py:165
+#: ../spectlib/plugins/watch_web_greader.py:111
 msgid "Unread messages"
 msgstr "Messages non lus"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:116
-#: ../spectlib/plugins/watch_mail_imap.py:148
-#: ../spectlib/plugins/watch_mail_pop3.py:130
+#: ../spectlib/plugins/watch_mail_gmail.py:117
+#: ../spectlib/plugins/watch_mail_imap.py:149
+#: ../spectlib/plugins/watch_mail_pop3.py:131
 msgid ""
 "<b>%s</b> has received a new message from <b>%s</b>\n"
 "\n"
@@ -613,9 +615,9 @@ msgstr ""
 "\n"
 " <b>pour un total de %d</b> courriels non lus."
 
-#: ../spectlib/plugins/watch_mail_gmail.py:126
-#: ../spectlib/plugins/watch_mail_imap.py:160
-#: ../spectlib/plugins/watch_mail_pop3.py:142
+#: ../spectlib/plugins/watch_mail_gmail.py:127
+#: ../spectlib/plugins/watch_mail_imap.py:161
+#: ../spectlib/plugins/watch_mail_pop3.py:143
 msgid ""
 "<b>%s</b> has received %d new messages from <b>%s</b>\n"
 "\n"
@@ -625,25 +627,25 @@ msgstr ""
 "\n"
 " <b>pour un total de %d</b> courriels non lus."
 
-#: ../spectlib/plugins/watch_mail_gmail.py:135
-#: ../spectlib/plugins/watch_mail_imap.py:172
-#: ../spectlib/plugins/watch_mail_pop3.py:137
-#: ../spectlib/plugins/watch_mail_pop3.py:154
-#: ../spectlib/plugins/watch_web_greader.py:124
-#: ../spectlib/plugins/watch_web_greader.py:136
+#: ../spectlib/plugins/watch_mail_gmail.py:136
+#: ../spectlib/plugins/watch_mail_imap.py:173
+#: ../spectlib/plugins/watch_mail_pop3.py:138
+#: ../spectlib/plugins/watch_mail_pop3.py:155
+#: ../spectlib/plugins/watch_web_greader.py:125
+#: ../spectlib/plugins/watch_web_greader.py:137
 msgid "and others..."
 msgstr "et autres..."
 
-#: ../spectlib/plugins/watch_mail_gmail.py:144
-#: ../spectlib/plugins/watch_mail_gmail.py:158
-#: ../spectlib/plugins/watch_mail_imap.py:190
-#: ../spectlib/plugins/watch_mail_pop3.py:172
+#: ../spectlib/plugins/watch_mail_gmail.py:145
+#: ../spectlib/plugins/watch_mail_gmail.py:159
+#: ../spectlib/plugins/watch_mail_imap.py:191
+#: ../spectlib/plugins/watch_mail_pop3.py:173
 #: ../spectlib/plugins/watch_system_file.py:146
-#: ../spectlib/plugins/watch_system_folder.py:234
-#: ../spectlib/plugins/watch_web_greader.py:146
-#: ../spectlib/plugins/watch_web_greader.py:160
-#: ../spectlib/plugins/watch_web_static.py:203
-#: ../spectlib/plugins/watch_web_static.py:215
+#: ../spectlib/plugins/watch_system_folder.py:235
+#: ../spectlib/plugins/watch_web_greader.py:147
+#: ../spectlib/plugins/watch_web_greader.py:161
+#: ../spectlib/plugins/watch_web_static.py:205
+#: ../spectlib/plugins/watch_web_static.py:217
 msgid "There was an error opening the file %s"
 msgstr "Une erreur est survenue en tentant d'ouvrir le fichier %s"
 
@@ -651,45 +653,45 @@ msgstr "Une erreur est survenue en tentant d'ouvrir le fichier %s"
 msgid "IMAP"
 msgstr "IMAP"
 
-#: ../spectlib/plugins/watch_mail_imap.py:39
-#: ../spectlib/plugins/watch_mail_pop3.py:42
+#: ../spectlib/plugins/watch_mail_imap.py:40
+#: ../spectlib/plugins/watch_mail_pop3.py:43
 msgid "Host"
 msgstr "Hôte"
 
-#: ../spectlib/plugins/watch_mail_imap.py:40
-#: ../spectlib/plugins/watch_mail_pop3.py:43
+#: ../spectlib/plugins/watch_mail_imap.py:41
+#: ../spectlib/plugins/watch_mail_pop3.py:44
 msgid "Use SSL"
 msgstr "Activer SSL"
 
-#: ../spectlib/plugins/watch_mail_imap.py:88
-#: ../spectlib/plugins/watch_mail_imap.py:136
-#: ../spectlib/plugins/watch_mail_pop3.py:90
-#: ../spectlib/plugins/watch_mail_pop3.py:118
-#: ../spectlib/plugins/watch_web_greader.py:77
-#: ../spectlib/plugins/watch_web_greader.py:102
-#: ../spectlib/plugins/watch_web_static.py:101
+#: ../spectlib/plugins/watch_mail_imap.py:89
+#: ../spectlib/plugins/watch_mail_imap.py:137
+#: ../spectlib/plugins/watch_mail_pop3.py:91
+#: ../spectlib/plugins/watch_mail_pop3.py:119
+#: ../spectlib/plugins/watch_web_greader.py:78
+#: ../spectlib/plugins/watch_web_greader.py:103
+#: ../spectlib/plugins/watch_web_static.py:103
 msgid "Watch: \"%s\" encountered an error: %s"
 msgstr "Observateur : \"%s\" a causé une erreur : %s"
 
-#: ../spectlib/plugins/watch_mail_imap.py:138
-#: ../spectlib/plugins/watch_mail_pop3.py:120
+#: ../spectlib/plugins/watch_mail_imap.py:139
+#: ../spectlib/plugins/watch_mail_pop3.py:121
 #: ../spectlib/plugins/watch_system_file.py:121
-#: ../spectlib/plugins/watch_system_folder.py:91
+#: ../spectlib/plugins/watch_system_folder.py:92
 #: ../spectlib/plugins/watch_system_port.py:77
-#: ../spectlib/plugins/watch_system_process.py:78
+#: ../spectlib/plugins/watch_system_process.py:79
 msgid "Watch: \"%s\" encountered an error"
 msgstr "Observateur: \"%s\" a causé une erreur"
 
-#: ../spectlib/plugins/watch_mail_imap.py:204
-#: ../spectlib/plugins/watch_mail_pop3.py:186
+#: ../spectlib/plugins/watch_mail_imap.py:205
+#: ../spectlib/plugins/watch_mail_pop3.py:187
 #: ../spectlib/plugins/watch_system_file.py:131
-#: ../spectlib/plugins/watch_system_folder.py:214
-#: ../spectlib/watch.py:422
-#: ../spectlib/watch.py:504
-#: ../spectlib/watch.py:533
-#: ../spectlib/watch.py:548
-#: ../spectlib/watch.py:572
-#: ../spectlib/watch.py:586
+#: ../spectlib/plugins/watch_system_folder.py:215
+#: ../spectlib/watch.py:429
+#: ../spectlib/watch.py:511
+#: ../spectlib/watch.py:540
+#: ../spectlib/watch.py:555
+#: ../spectlib/watch.py:579
+#: ../spectlib/watch.py:593
 msgid "There was an error writing to the file %s"
 msgstr "Une erreur est survenue en tentant d'écrire dans le fichier %s"
 
@@ -698,76 +700,83 @@ msgid "POP3"
 msgstr "POP3"
 
 #: ../spectlib/plugins/watch_system_file.py:31
-#: ../spectlib/plugins/watch_system_file.py:36
+#: ../spectlib/plugins/watch_system_file.py:37
 #: ../spectlib/plugins/watch_system_file.py:170
 msgid "File"
 msgstr "Fichier"
 
-#: ../spectlib/plugins/watch_system_file.py:74
+#: ../spectlib/plugins/watch_system_file.py:33
+#: ../spectlib/plugins/watch_system_folder.py:34
+#: ../spectlib/plugins/watch_system_port.py:33
+#: ../spectlib/plugins/watch_system_process.py:31
+msgid "System"
+msgstr "Système"
+
+#: ../spectlib/plugins/watch_system_file.py:73
 msgid "The file was removed"
 msgstr "Le fichier a été enlevé"
 
-#: ../spectlib/plugins/watch_system_file.py:101
+#: ../spectlib/plugins/watch_system_file.py:100
 msgid "User id of the owner changed"
 msgstr "Le ID du propriétaire a changé"
 
-#: ../spectlib/plugins/watch_system_file.py:104
+#: ../spectlib/plugins/watch_system_file.py:103
 msgid "Group id of the owner changed"
 msgstr "Le ID du groupe du propriétaire a changé"
 
-#: ../spectlib/plugins/watch_system_file.py:107
+#: ../spectlib/plugins/watch_system_file.py:106
 msgid "File size changed"
 msgstr "La taille du fichier a changé"
 
-#: ../spectlib/plugins/watch_system_file.py:110
+#: ../spectlib/plugins/watch_system_file.py:109
 msgid "Time of last access changed"
 msgstr "Le moment de dernier accès a changé"
 
-#: ../spectlib/plugins/watch_system_file.py:113
+#: ../spectlib/plugins/watch_system_file.py:112
 msgid "Time of last modification changed"
 msgstr "Le moment de dernière modification a changé"
 
 #: ../spectlib/plugins/watch_system_file.py:153
 #: ../spectlib/plugins/watch_system_file.py:160
-#: ../spectlib/plugins/watch_system_folder.py:167
+#: ../spectlib/plugins/watch_system_folder.py:168
 msgid "<b>%s</b> has changed:\n"
 msgstr "<b>%s</b> a changé:\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:32
-#: ../spectlib/plugins/watch_system_folder.py:37
-#: ../spectlib/plugins/watch_system_folder.py:244
+#: ../spectlib/plugins/watch_system_folder.py:38
+#: ../spectlib/plugins/watch_system_folder.py:245
 msgid "Folder"
 msgstr "Dossier"
 
-#: ../spectlib/plugins/watch_system_folder.py:83
+#: ../spectlib/plugins/watch_system_folder.py:84
 msgid "Watch: \"%s\" is not set to a folder"
 msgstr "Observateur: \"%s\" n'est pas un dossier"
 
-#: ../spectlib/plugins/watch_system_folder.py:146
+#: ../spectlib/plugins/watch_system_folder.py:147
 msgid "Skipping %s"
 msgstr "Sauter %s"
 
-#: ../spectlib/plugins/watch_system_folder.py:170
+#: ../spectlib/plugins/watch_system_folder.py:171
 msgid "1 new file was created.\n"
 msgstr "1 nouveau fichier a été créé.\n"
 
-#: ../spectlib/plugins/watch_system_folder.py:172
+#: ../spectlib/plugins/watch_system_folder.py:173
 msgid " new files were created.\n"
 msgstr " nouveaux fichiers ont été créés.\n"
 
-#: ../spectlib/plugins/watch_system_folder.py:175
+#: ../spectlib/plugins/watch_system_folder.py:176
 msgid "1 file was removed.\n"
 msgstr "1 fichier a été enlevé.\n"
 
-#: ../spectlib/plugins/watch_system_folder.py:177
+#: ../spectlib/plugins/watch_system_folder.py:178
 msgid " files were removed.\n"
 msgstr " fichiers ont été enlevés.\n"
 
-#: ../spectlib/plugins/watch_system_folder.py:180
+#: ../spectlib/plugins/watch_system_folder.py:181
 msgid "1 file was modified.\n"
 msgstr "1 fichier a été modifié.\n"
 
-#: ../spectlib/plugins/watch_system_folder.py:182
+#: ../spectlib/plugins/watch_system_folder.py:183
 msgid " files were modified.\n"
 msgstr " fichiers ont été modifiés.\n"
 
@@ -786,26 +795,34 @@ msgid "Open"
 msgstr "Ouvert"
 
 #: ../spectlib/plugins/watch_system_port.py:74
-#: ../spectlib/plugins/watch_system_process.py:75
+#: ../spectlib/plugins/watch_system_process.py:76
 msgid "Unknown"
 msgstr "Inconnu"
 
 #: ../spectlib/plugins/watch_system_port.py:111
-#: ../spectlib/plugins/watch_system_process.py:95
+#: ../spectlib/plugins/watch_system_process.py:96
 msgid "Status"
 msgstr "État"
 
+#: ../spectlib/plugins/watch_system_port.py:118
+msgid "The connection, <b>%s</b>, was established."
+msgstr "La connexion, <b>%s</b>, a été établie."
+
+#: ../spectlib/plugins/watch_system_port.py:120
+msgid "The connection, <b>%s</b>, was closed."
+msgstr "La connexion, <b>%s</b>, s'est interrompue."
+
 #: ../spectlib/plugins/watch_system_process.py:29
-#: ../spectlib/plugins/watch_system_process.py:34
-#: ../spectlib/plugins/watch_system_process.py:94
+#: ../spectlib/plugins/watch_system_process.py:35
+#: ../spectlib/plugins/watch_system_process.py:95
 msgid "Process"
 msgstr "Processus"
 
-#: ../spectlib/plugins/watch_system_process.py:68
+#: ../spectlib/plugins/watch_system_process.py:69
 msgid "Not running"
 msgstr "Pas en exécution"
 
-#: ../spectlib/plugins/watch_system_process.py:72
+#: ../spectlib/plugins/watch_system_process.py:73
 msgid "Running"
 msgstr "En exécution"
 
@@ -821,11 +838,16 @@ msgstr "Le site processus système, <b>%s</b>, s'est arrêté."
 msgid "Google Reader"
 msgstr ""
 
-#: ../spectlib/plugins/watch_web_greader.py:87
+#: ../spectlib/plugins/watch_web_greader.py:31
+#: ../spectlib/plugins/watch_web_static.py:41
+msgid "Internet"
+msgstr "Internet"
+
+#: ../spectlib/plugins/watch_web_greader.py:88
 msgid " or more"
 msgstr " ou plus"
 
-#: ../spectlib/plugins/watch_web_greader.py:117
+#: ../spectlib/plugins/watch_web_greader.py:118
 msgid ""
 "<b>%s</b> has a new newsitems in <b>%s</b>\n"
 "\n"
@@ -835,7 +857,7 @@ msgstr ""
 "\n"
 " <b>pour un total de %s</b> brèves non lues."
 
-#: ../spectlib/plugins/watch_web_greader.py:127
+#: ../spectlib/plugins/watch_web_greader.py:128
 msgid ""
 "<b>%s</b> has received %d new newsitems in <b>%s</b>\n"
 "\n"
@@ -845,27 +867,27 @@ msgstr ""
 "\n"
 " <b>pour un total de %s</b> brèves non lues."
 
-#: ../spectlib/plugins/watch_web_greader.py:498
+#: ../spectlib/plugins/watch_web_greader.py:499
 msgid "Could not establish a connection to server"
 msgstr "La connexion vers le serveur n'a pas pu être établie"
 
-#: ../spectlib/plugins/watch_web_greader.py:501
+#: ../spectlib/plugins/watch_web_greader.py:502
 msgid "Could not get cookies"
 msgstr "Impossible d'obtenir les cookies"
 
-#: ../spectlib/plugins/watch_web_greader.py:507
+#: ../spectlib/plugins/watch_web_greader.py:508
 msgid "You are not subscribed to any feeds"
 msgstr "Vous n'êtes pas inscrit à aucun flux de syndication"
 
-#: ../spectlib/plugins/watch_web_greader.py:509
+#: ../spectlib/plugins/watch_web_greader.py:510
 msgid "No unread items"
 msgstr "Aucuns items non lus"
 
-#: ../spectlib/plugins/watch_web_static.py:38
+#: ../spectlib/plugins/watch_web_static.py:39
 msgid "Webpage/feed"
 msgstr "Page web ou flux de syndication"
 
-#: ../spectlib/plugins/watch_web_static.py:259
+#: ../spectlib/plugins/watch_web_static.py:261
 msgid ""
 "The website, <b>%s</b>, has changed.\n"
 "Difference percentage: %s percent"
@@ -873,16 +895,16 @@ msgstr ""
 "Le site Internet, <b>%s</b>, a changé.\n"
 "Pourcentage de différence : %s pourcent"
 
-#: ../spectlib/plugins/watch_web_static.py:272
-#: ../spectlib/plugins/watch_web_static.py:278
+#: ../spectlib/plugins/watch_web_static.py:274
+#: ../spectlib/plugins/watch_web_static.py:280
 msgid "URL"
 msgstr "URL"
 
-#: ../spectlib/plugins/watch_web_static.py:273
+#: ../spectlib/plugins/watch_web_static.py:275
 msgid "Error margin"
 msgstr "Marge d'erreur"
 
-#: ../spectlib/plugins/watch_web_static.py:279
+#: ../spectlib/plugins/watch_web_static.py:281
 msgid "Error margin (%)"
 msgstr "Marge d'erreur (%)"
 
@@ -923,16 +945,18 @@ msgstr "Une erreur est survenue en signalant l'observateur comme \"changé\""
 msgid "No changes yet"
 msgstr "Rien à signaler."
 
-#: ../spectlib/watch.py:288
+#: ../spectlib/watch.py:295
 msgid "Please enable plugin \"%s\" if you want to use the watch \"%s\"."
 msgstr "Veuillez activer le plugin \"%s\" pour utiliser l'observateur \"%s\"."
 
-#: ../spectlib/watch.py:429
-#: ../spectlib/watch.py:441
-#: ../spectlib/watch.py:459
+#: ../spectlib/watch.py:436
+#: ../spectlib/watch.py:448
+#: ../spectlib/watch.py:466
 msgid "There was an error initializing config file %s"
 msgstr "Une erreur est survenue en tentant d'initialiser le fichier de configuration %s"
 
+#~ msgid "Watch Type:"
+#~ msgstr "Type d'observateur :"
 #~ msgid ""
 #~ ": The network connection seems to be down, networked watches will not "
 #~ "check until then."
@@ -1087,10 +1111,6 @@ msgstr "Une erreur est survenue en tentant d'initialiser le fichier de configura
 #~ msgstr "Votre compte de courriel, <b>%s</b>, a nouveau message."
 #~ msgid "The file/folder, <b>%s</b>, has been updated."
 #~ msgstr "Le fichier/dossier, <b>%s</b>, a été mis à jour."
-#~ msgid "The connection, <b>%s</b>, was closed."
-#~ msgstr "La connexion, <b>%s</b>, s'est interrompue."
-#~ msgid "The connection, <b>%s</b>, was established."
-#~ msgstr "La connexion, <b>%s</b>, a été établie."
 #~ msgid "Not implemented yet"
 #~ msgstr "Pas encore implémenté"
 #~ msgid "Unknown File Watch"

@@ -157,5 +157,5 @@ class ProcessList(object):
                 pass
     def named(self, name):
         """Returns a list of processes with the given name"""
-        name = name[:15]
+        name = name[:15]#FIXME: this is a hack around the bug found a few lines ago, not a real solution
         return self.by_command.get(name, [])
