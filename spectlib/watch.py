@@ -247,6 +247,7 @@ class Watch:
 class Watch_collection:
     def __init__(self, specto):
         self.watch_db = []
+        self.plugin_menu = {}
         self.id = 0
         self.plugin_dict = {}
         self.disabl_plugin_dict = {}
@@ -266,7 +267,13 @@ class Watch_collection:
                 obj = sys.modules[_file]
 
                 self.plugin_dict[obj.type] = mod
-
+                
+                #create the plugin dict for add menu
+                menu1 = obj.category
+                menu2 = [obj.type_desc, obj.icon, obj.type]
+                if not self.plugin_menu.has_key(menu1):
+                    self.plugin_menu.update({menu1:[]})
+                self.plugin_menu[menu1].append(menu2)
                 
     def create(self, values):
         """ read the content from the dictionary and create the watch """      

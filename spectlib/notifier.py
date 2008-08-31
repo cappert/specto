@@ -87,7 +87,7 @@ class Notifier:
 
         #catch some events
         dic= {
-        "on_add_activate": self.show_add_watch,
+        "on_add_activate": self.show_add_watch_menu,
         "on_edit_activate": self.show_edit_watch,
         "on_clear_all_activate": self.clear_all,
         "on_preferences_activate": self.show_preferences,
@@ -863,6 +863,9 @@ class Notifier:
         self.wTree.get_widget("statusbar1").show()
 
         self.wTree.get_widget("notebook1").hide()
+        
+        self.generate_add_menu()
+
 
 ### Sort functions ###
 
@@ -946,14 +949,54 @@ class Notifier:
         else:
             self.pref.show()
             
-    def show_add_watch(self, *args):
+    def generate_add_menu(self):
+        menu_dict = self.specto.watch_db.plugin_menu
+        self.add_menu = gtk.Menu()
+        
+        for parent in menu_dict.keys():
+            menuItem = gtk.MenuItem(parent)
+            menuItem.show()
+            
+            self.add_menu.append(menuItem)
+            
+            childmenu = gtk.Menu()        
+            for child in menu_dict[parent]:
+                childmenuItem = gtk.ImageMenuItem(child[0])
+                childmenu.append(childmenuItem)
+                img = gtk.Image()
+                image = self.get_icon(child[1], 0, False)
+                img.set_from_pixbuf(image)
+                childmenuItem.set_image(img)
+                childmenuItem.connect('activate', self.show_add_watch, child[2])
+                childmenuItem.show()
+            menuItem.set_submenu(childmenu)
+        self.wTree.get_widget("button_add").set_menu(self.add_menu)
+        self.wTree.get_widget("add").set_submenu(self.add_menu) 
+
+    def position_add_watch_menu_correctly(self, *args):
+        """ This is a hack, so that the popup menu appears left-aligned, right below the Add button """
+        current_window_xy = self.wTree.get_widget("notifier").window.get_origin()#here's the trick to not getting screwed by the window manager. get_origin from the window property returns the root x coordinates
+        current_window_x = current_window_xy[0]
+        current_window_y = current_window_xy[1]
+        button_x = self.wTree.get_widget("button_add").get_allocation().x
+        button_y = self.wTree.get_widget("button_add").get_allocation().y
+        button_height = self.wTree.get_widget("button_add").get_allocation().height
+        coordinates = (current_window_x+button_x, current_window_y+button_y+button_height, False)
+        return coordinates
+    
+    def show_add_watch_menu(self, *args):
+        """ When the user clicks on the button part of the GTK Toolbar Menu Button, show the menu instead """
+        self.add_menu.popup(None, None, self.position_add_watch_menu_correctly, 3, 0)
+        return 1
+                    
+    def show_add_watch(self, widget, watch_type):
         """ Show the add watch window. """
         if self.add_w == "":
-            self.add_w= Add_watch(self.specto, self)
+            self.add_w= Add_watch(self.specto, self, watch_type)
         elif self.add_w.add_watch.flags() & gtk.MAPPED:
             pass
         else:
-            self.add_w= Add_watch(self.specto, self)
+            self.add_w= Add_watch(self.specto, self, watch_type)
 
     def show_edit_watch(self, widget, *args):
         """ Show the edit watch window. """

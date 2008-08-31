@@ -37,8 +37,8 @@ import socket #to add a timeout to the global process
     
 type = "Watch_web_static"
 type_desc = _("Webpage/feed")
-open_command = ""
 icon = 'applications-internet'
+category = _("Internet")
 
 class Watch_web_static(Watch):
     """ 

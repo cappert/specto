@@ -30,6 +30,7 @@ import os
 type = "Watch_system_file"
 type_desc = _("File")
 icon = 'gnome-mime-text'
+category = _("System")
 
 def get_add_gui_info():
     return [
@@ -56,16 +57,14 @@ class Watch_system_file(Watch):
         Watch.__init__(self, specto, id, values, watch_values)
         
         self.cache_file = os.path.join(self.specto.CACHE_DIR, "file" + self.file.replace("/","_") + ".cache")                
-        self.first_time = False
-        self.info = ""
-        self.old_info = ""
-        self.file_info = []
-        
+        self.first_time = False        
 
     def check(self):
         """ See if a file was modified or created. """        
         try:
             self.info = []
+            self.file_info = []
+            self.old_info = []
             self.read_cache_file()
             try:
                 info = tuple(os.stat(self.file)) #mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime = info
@@ -81,7 +80,7 @@ class Watch_system_file(Watch):
                     if not self.first_time:
                         self.old_info[i] = str(self.old_info[i]).strip()
                     i += 1
-                    
+
                 if self.old_info != self.info and not self.first_time:
                     self.actually_changed = True  
 
@@ -115,7 +114,8 @@ class Watch_system_file(Watch):
                     #if self.info[9] != self.old_info[9]:
                     #    self.file_info.append("Metadata changed")
                     
-                self.update_cache_file()     
+                self.update_cache_file()
+                self.first_time = False     
         except:
             self.error = True
             self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)

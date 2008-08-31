@@ -31,6 +31,7 @@ from stat import *
 type = "Watch_system_folder"
 type_desc = _("Folder")
 icon = 'folder'
+category = _("System")
 
 def get_add_gui_info():
     return [

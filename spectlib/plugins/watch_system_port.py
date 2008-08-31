@@ -30,7 +30,7 @@ import os
 type = "Watch_system_port"
 type_desc = _("Port")
 icon = 'network-transmit-receive'
-
+category = _("System") 
 
 def get_add_gui_info():
     return [
@@ -110,4 +110,12 @@ class Watch_system_port(Watch):
                 (_('Port'), self.port),
                 (_('Status'), self.status)
                 ]
-        
+                
+    def get_balloon_text(self):
+        """ create the text for the balloon """
+        text = ""
+        if self.running == True:
+            text = _("The connection, <b>%s</b>, was established.") % self.name
+        else:
+            text = _("The connection, <b>%s</b>, was closed.") % self.name
+        return text

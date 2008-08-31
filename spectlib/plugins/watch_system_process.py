@@ -28,6 +28,7 @@ from spectlib.i18n import _
 type = "Watch_system_process"
 type_desc = _("Process")
 icon = 'applications-system'
+category = _("System") 
 
 def get_add_gui_info():
     return [
@@ -94,7 +95,6 @@ class Watch_system_process(Watch):
                 (_('Process'), self.process),
                 (_('Status'), self.status)
                 ]
-        
     def get_balloon_text(self):
         """ create the text for the balloon """  
         if self.check_process():
@@ -102,7 +102,6 @@ class Watch_system_process(Watch):
         elif self.check_process()==False:#the process check returned false, which means the process is not running
             text = _("The system process, <b>%s</b>, has stopped.") % self.name
         return text
-
 """
 Nick Craig-Wood <nick at craig-wood.com> -- http://www.craig-wood.com/nick
 
@@ -158,4 +157,5 @@ class ProcessList(object):
                 pass
     def named(self, name):
         """Returns a list of processes with the given name"""
+        name = name[:15]
         return self.by_command.get(name, [])

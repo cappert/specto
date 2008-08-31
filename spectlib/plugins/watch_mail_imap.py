@@ -31,6 +31,7 @@ from spectlib.i18n import _
 type = "Watch_mail_imap"
 type_desc = _("IMAP")
 icon = 'emblem-mail'
+category = _("Mail") 
 
 def get_add_gui_info():
     return [

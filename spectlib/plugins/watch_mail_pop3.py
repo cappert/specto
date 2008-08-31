@@ -34,6 +34,7 @@ import string
 type = "Watch_mail_pop3"
 type_desc = _("POP3")
 icon =  'emblem-mail'
+category = _("Mail") 
 
 def get_add_gui_info():
     return [
