@@ -32,16 +32,16 @@ import time
 import string
 
 type = "Watch_mail_pop3"
-type_desc = "POP3"
+type_desc = _("POP3")
 icon =  'emblem-mail'
 category = _("Mail") 
 
 def get_add_gui_info():
     return [
-            ("username", spectlib.gtkconfig.Entry("Username")),
-            ("password", spectlib.gtkconfig.PasswordEntry("Password")),
-            ("host", spectlib.gtkconfig.Entry("Host")),
-            ("ssl", spectlib.gtkconfig.CheckButton("Ssl"))
+            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
+            ("host", spectlib.gtkconfig.Entry(_("Host"))),
+            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))
             ]
 
 
@@ -73,7 +73,7 @@ class Watch_mail_pop3(Watch):
         self.read_cache_file()
         
 
-    def update(self):
+    def check(self):
         """ Check for new mails on your pop3 account. """        
         try:
             if self.ssl == True:
@@ -88,7 +88,7 @@ class Watch_mail_pop3(Watch):
                     s = poplib.POP3(self.host)
         except poplib.error_protoerror, e:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has error: ") % (self.name, str(e)), "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)
         else:
             try:
                 s.user(self.username)
@@ -105,7 +105,7 @@ class Watch_mail_pop3(Watch):
                         id = string.split(s.uidl(i))[2] #get unique info
                         mail = Email(id, msg["From"].replace("\n", ""), msg["Subject"].replace("\n", ""), msg["date"])
                         if self.mail_info.add(mail): #check if it is a new email or just unread
-                            self.actually_updated=True
+                            self.actually_changed=True
                             self.newMsg+=1
                         i+=1
                     self.mail_info.sort()
@@ -116,9 +116,9 @@ class Watch_mail_pop3(Watch):
                                         
             except poplib.error_proto, e:
                 self.error = True
-                self.specto.logger.log(_("Watch: \"%s\" has error: %s ") % (self.name, str(e)), "error", self.__class__)                
+                self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)                
             except:
-                self.specto.logger.log(_("Watch: \"%s\" has an error: ") % self.name, "error", self.__class__)
+                self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
@@ -128,19 +128,19 @@ class Watch_mail_pop3(Watch):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = ("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author.split(":")[0], self.unreadMsg)
+            text = _("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author.split(":")[0], self.unreadMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
             while i < len(unread_messages) and i < 4:
                 author_info += self.mail_info[i].author + ", "
                 if i == 3 and i < len(unread_messages) - 1:
-                    author_info += "and others..."
+                    author_info += _("and others...")
                 i+=1
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")
-            text = ("<b>%s</b> has received %d new messages from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)    
+            text = _("<b>%s</b> has received %d new messages from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)    
         return text
     
     def get_extra_information(self):
@@ -152,17 +152,17 @@ class Watch_mail_pop3(Watch):
             subject =  self.mail_info[i].subject
             author_info += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
-                author_info += "and others..."
+                author_info += _("and others...")
             i += 1
                 
         return author_info
         
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Username', self.username),
-                ("Unread messages", self.unreadMsg)
+                (_('Name'), self.name),
+                (_('Last changed'), self.last_changed),
+                (_('Username'), self.username),
+                (_('Unread messages'), self.unreadMsg)
                 ] 
                 
     def read_cache_file(self):
@@ -170,10 +170,10 @@ class Watch_mail_pop3(Watch):
             try:
                 f = open(self.cache_file, "r")
             except:
-                self.specto.logger.log(_("There was an error reader the file %s") % self.cache_file, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
             else:
                 for line in f:
-                    info = line.split("&Seperator;")
+                    info = line.split("&Separator;")
                     email = Email(info[0], info[1], info[2], info[3].replace("\n", ""))
                     self.mail_info.add(email)
             finally:
@@ -184,10 +184,10 @@ class Watch_mail_pop3(Watch):
         try:
             f = open(self.cache_file, "w")
         except:
-            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.__class__)
         else:
             for email in self.mail_info:
-                f.write(email.id + "&Seperator;" + email.author + "&Seperator;" + email.subject + "&Seperator;" + email.date + "\n")    
+                f.write(email.id + "&Separator;" + email.author + "&Separator;" + email.subject + "&Separator;" + email.date + "\n")    
             
         finally:
             f.close()
@@ -204,10 +204,8 @@ class Email():
         self.author = author
         #FIXME: change date to "year month day time"
         #date = date.split(" ")
-        #print date
         #month = time.strptime(date[1], "%b")
         #self.date = date[2] + " " + str(month[1]) + " " + date[0] + " " + date[3]
-        #print self.date #time.strptime(date, "%d/%m/%Y")
         self.date = date
         self.found = False
         self.new = False

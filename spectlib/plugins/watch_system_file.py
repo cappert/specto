@@ -28,13 +28,13 @@ from spectlib.i18n import _
 import os
 
 type = "Watch_system_file"
-type_desc = "File"
+type_desc = _("File")
 icon = 'gnome-mime-text'
 category = _("System")
 
 def get_add_gui_info():
     return [
-            ("file", spectlib.gtkconfig.FileChooser("File"))
+            ("file", spectlib.gtkconfig.FileChooser(_("File")))
            ]
 
 
@@ -59,7 +59,7 @@ class Watch_system_file(Watch):
         self.cache_file = os.path.join(self.specto.CACHE_DIR, "file" + self.file.replace("/","_") + ".cache")                
         self.first_time = False        
 
-    def update(self):
+    def check(self):
         """ See if a file was modified or created. """        
         try:
             self.info = []
@@ -69,8 +69,8 @@ class Watch_system_file(Watch):
             try:
                 info = tuple(os.stat(self.file)) #mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime = info
             except OSError:
-                self.actually_updated = True
-                self.file_info.append("File is removed")
+                self.actually_changed = True
+                self.file_info.append(_("The file was removed"))
             else:
                 self.old_info = self.old_info.replace("L", "").replace("[", "").replace("]","").replace("'", "").split(",")
 
@@ -82,7 +82,7 @@ class Watch_system_file(Watch):
                     i += 1
 
                 if self.old_info != self.info and not self.first_time:
-                    self.actually_updated = True  
+                    self.actually_changed = True  
 
                     #if str(self.info[0]) != self.old_info[0].strip():
                     #    self.file_info.append("Inode protection mode changed")
@@ -97,19 +97,19 @@ class Watch_system_file(Watch):
                     #    self.file_info.append("Number of links to the inode changed")
 
                     if self.info[4] != self.old_info[4]:
-                        self.file_info.append("User id of the owner changed")
+                        self.file_info.append(_("User id of the owner changed"))
 
                     if self.info[5] != self.old_info[5]:
-                        self.file_info.append("Group id of the owner changed")
+                        self.file_info.append(_("Group id of the owner changed"))
 
                     if self.info[6] != self.old_info[6]:
-                        self.file_info.append("File size changed")
+                        self.file_info.append(_("File size changed"))
 
                     if self.info[7] != self.old_info[7]:
-                        self.file_info.append("Time of last access changed")
+                        self.file_info.append(_("Time of last access changed"))
 
                     if self.info[8] != self.old_info[8]:
-                        self.file_info.append("Time of last modification changed")
+                        self.file_info.append(_("Time of last modification changed"))
                         
                     #if self.info[9] != self.old_info[9]:
                     #    self.file_info.append("Metadata changed")
@@ -118,7 +118,7 @@ class Watch_system_file(Watch):
                 self.first_time = False     
         except:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
         
         Watch.timer_update(self)
         
@@ -150,14 +150,14 @@ class Watch_system_file(Watch):
         
     def get_balloon_text(self):
         """ create the text for the balloon """
-        text = "<b>%s</b> has changed:\n" % self.file
+        text = _("<b>%s</b> has changed:\n") % self.file
         for line in self.file_info:
             text += line + "\n"
         
         return text
     
     def get_extra_information(self):
-        text = "<b>%s</b> has changed:\n" % self.file
+        text = _("<b>%s</b> has changed:\n") % self.file
         for line in self.file_info:
             text += line + "\n"
         
@@ -165,7 +165,7 @@ class Watch_system_file(Watch):
                 
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('File', self.file),
+                (_('Name'), self.name),
+                (_('Last changed'), self.last_changed),
+                (_('File'), self.file),
                 ]

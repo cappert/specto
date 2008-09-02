@@ -53,7 +53,7 @@ class Preferences:
         "on_preferences_delete_event": self.delete_event,
         "on_save_clicked": self.save_clicked,
         "on_help_clicked": self.help_clicked,
-        "on_chkSoundUpdate_toggled": self.chkSoundUpdate_toggled,
+        "on_chkSoundChanged_toggled": self.chkSoundChanged_toggled,
         "on_chkSoundProblem_toggled": self.chkSoundProblem_toggled,
         "on_chk_libnotify_toggled": self.chkLibnotify_toggled,
         "on_button_log_clear_clicked": self.specto.logger.clear_log,
@@ -74,12 +74,12 @@ class Preferences:
         self.set_preferences()
         self.notifier.show_watch_info()        
 
-    def chkSoundUpdate_toggled(self, widget):
+    def chkSoundChanged_toggled(self, widget):
         """ Make the filechooser sensitive or insensitive. """
         if widget.get_active():
-            self.wTree.get_widget("soundUpdate").set_property('sensitive', 1)
+            self.wTree.get_widget("soundChanged").set_property('sensitive', 1)
         else:
-            self.wTree.get_widget("soundUpdate").set_property('sensitive', 0)
+            self.wTree.get_widget("soundChanged").set_property('sensitive', 0)
 
     def chkSoundProblem_toggled(self, widget):
         """ Make the filechooser sensitive or insensitive. """
@@ -99,12 +99,12 @@ class Preferences:
         """ Save the preferences in gconf. """
         self.specto.logger.log(_("Preferences saved."), "info", self.__class__)
 
-        #save the path from the update sound
-        if self.wTree.get_widget("soundUpdate").get_property('sensitive') == 1:
-            self.specto.specto_gconf.set_entry("update_sound", self.wTree.get_widget("soundUpdate").get_filename())
-            self.specto.specto_gconf.set_entry("use_update_sound", True)
+        #save the path for the "changed" sound
+        if self.wTree.get_widget("soundChanged").get_property('sensitive') == 1:
+            self.specto.specto_gconf.set_entry("changed_sound", self.wTree.get_widget("soundChanged").get_filename())
+            self.specto.specto_gconf.set_entry("use_changed_sound", True)
         else:
-            self.specto.specto_gconf.unset_entry("use_update_sound")
+            self.specto.specto_gconf.unset_entry("use_changed_sound")
 
         #save the path from the problem sound
         if self.wTree.get_widget("soundProblem").get_property('sensitive') == 1:
@@ -170,12 +170,12 @@ class Preferences:
         else:
             self.wTree.get_widget("chk_tray").set_active(False)
         
-        #check update sound
-        if self.specto.specto_gconf.get_entry("use_update_sound"):
-            self.wTree.get_widget("chkSoundUpdate").set_active(True)
+        #check "changed" sound
+        if self.specto.specto_gconf.get_entry("use_changed_sound"):
+            self.wTree.get_widget("chkSoundChanged").set_active(True)
             
-        if self.specto.specto_gconf.get_entry("update_sound"):
-            self.wTree.get_widget("soundUpdate").set_filename(self.specto.specto_gconf.get_entry("update_sound"))
+        if self.specto.specto_gconf.get_entry("changed_sound"):
+            self.wTree.get_widget("soundChanged").set_filename(self.specto.specto_gconf.get_entry("changed_sound"))
 
         #check problem sound
         if self.specto.specto_gconf.get_entry("use_problem_sound"):

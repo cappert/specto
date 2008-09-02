@@ -149,9 +149,9 @@ class Specto:
         """ This is used to set the default settings properly the first time Specto is run, without using gconf schemas """
         #check if the ekiga sounds exists
         if os.path.exists("/usr/share/sounds/ekiga/voicemail.wav"):
-            update_sound = "/usr/share/sounds/ekiga/voicemail.wav"
+            changed_sound = "/usr/share/sounds/ekiga/voicemail.wav"
         else:
-            update_sound = ""
+            changed_sound = ""
             
         self.default_settings=(
             ["always_show_icon", False], #having it True would be against the HIG!
@@ -165,8 +165,8 @@ class Specto:
             ["show_toolbar", True],
             ["sort_function", "name"],
             ["sort_order", "asc"],
-            ["update_sound", update_sound],
-            ["use_update_sound", False],
+            ["changed_sound", changed_sound],
+            ["use_changed_sound", False],
             ["window_notifier_height", 500],
             ["window_notifier_width", 500]
             )
@@ -199,7 +199,7 @@ class Specto:
         f.close()        
                 
     def mark_watch_status(self, status, id):
-        """ get the watch status (updating, updated, idle) """
+        """ get the watch status (checking, changed, idle) """
         if self.GTK:
             self.notifier.mark_watch_status(status, id)
         elif self.CONSOLE:
@@ -250,7 +250,7 @@ class Specto:
             dialog.label_hbox.pack_start(icon, True, True, 6)
             icon.show()
 
-            label = gtk.Label(_('<b><big>Specto is currently busy and cannot quit yet.</big></b>\n\nThis may be because it is checking for watch updates.\nHowever, you can try forcing it to quit by clicking the murder button.'))
+            label = gtk.Label(_('<b><big>Specto is currently busy and cannot quit yet.</big></b>\n\nThis may be because it is checking for watch changes.\nHowever, you can try forcing it to quit by clicking the murder button.'))
             label.set_use_markup(True)
             dialog.label_hbox.pack_start(label, True, True, 6)#here, pack means "cram the label right at the start of the vbox before the buttons"
             label.show()

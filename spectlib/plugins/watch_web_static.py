@@ -32,10 +32,11 @@ from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
 from spectlib.i18n import _
 import  time
+import socket #to add a timeout to the global process
 
     
 type = "Watch_web_static"
-type_desc = "Webpage/feed"
+type_desc = _("Webpage/feed")
 icon = 'applications-internet'
 category = _("Internet")
 
@@ -70,12 +71,11 @@ class Watch_web_static(Watch):
         self.filesize_difference = 0.0
         self.icon = icon
         
-#        self.error_margin = self.error_margin       
         self.open_command = self.open_command.replace("&","\&")    
         self.url_ = self.uri
         self.diff = ""
         
-    def update(self):
+    def check(self):
         """ See if a http or rss page changed. """
         # Create a unique name for each url.
         if self.uri[:7] != "http://" and self.uri[:8] != "https://" and self.uri[:6] != "ftp://":
@@ -85,6 +85,7 @@ class Watch_web_static(Watch):
         cacheFileName = "".join(["%02x" % (ord(c),) for c in digest])
         self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
         self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
+        socket.setdefaulttimeout(10)# set globally the timeout to 10 seconds
         request = urllib2.Request(self.uri, None, {"Accept-encoding" : "gzip"})
         cache_res = ""
         if (self.cached == 1) or (os.path.exists(self.cacheFullPath_)):
@@ -99,7 +100,7 @@ class Watch_web_static(Watch):
             response = urllib2.urlopen(request)
         except (urllib2.URLError, BadStatusLine), e:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has error: ") % self.name + str(e), "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)
         else:
             self.info_ = response.info()
             self.url2_ = response.geturl()
@@ -164,22 +165,19 @@ class Watch_web_static(Watch):
                 #if there is a previous filesize
                     #calculate the % changed filesize
                     self.filesize_difference = (fabs(int(self.new_filesize) - int(self.old_filesize)) / int(self.old_filesize))*100
-                    #if self.specto.DEBUG: print "\tCached filesize: ", self.old_filesize, "\tFilesize difference percentage:", str(self.filesize_difference)[:5], "%"
                     #self.specto.logger.log(_("Difference percentage:%s (Watch: \"%s\")") % (str(self.filesize_difference)[:5], self.name), "info", self.__class__)
                     if self.cached and self.diff and (self.filesize_difference  >= float(self.error_margin)*100) and (self.filesize_difference != 0.0): #and (self.infoB_['md5sum'] == self.info_['md5sum']):
                         self.to_be_stored_filesize = self.new_filesize
-                        self.actually_updated = True
+                        self.actually_changed = True
                     else:
                         #we don't want to juggle with all the possible filesizes, 
                         #we want to stay close to the original, because replacing the filesize each time
-                        #if the watch is not updated would create a lot of fluctuations
+                        #if the watch is not changed would create a lot of fluctuations
                         self.to_be_stored_filesize = self.old_filesize
-                        #if self.specto.DEBUG: print "\tSaved filesize: ", self.to_be_stored_filesize
-                        self.actually_updated = False
+                        self.actually_changed = False
                 else:
                 #if there is NO previously stored filesize
                     self.to_be_stored_filesize = self.new_filesize
-                    #if self.specto.DEBUG: print "\tSaved filesize: ", self.to_be_stored_filesize
 
             if (self.url2_ != self.url_) and self.redirect == True:
                 self.write_uri()#it's uri, not url.
@@ -216,7 +214,7 @@ class Watch_web_static(Watch):
             try:
                 f = open(self.cacheFullPath2_, "r")
             except:
-                self.specto.logger.log(_("There was an error reader the file %s") % self.cacheFullPath2_, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cacheFullPath2_, "critical", self.__class__)
             else:
                 size = f.read()
                 if size != "":
@@ -260,7 +258,7 @@ class Watch_web_static(Watch):
             
     def get_balloon_text(self):
         """ create the text for the balloon """  
-        text = ("The website, <b>%s</b>, has been updated.\nDifference percentage: %s percent") % (self.name, str(self.filesize_difference)[:5])
+        text = _("The website, <b>%s</b>, has changed.\nDifference percentage: %s percent") % (self.name, str(self.filesize_difference)[:5])
         return text
     
     def get_extra_information(self):
@@ -271,16 +269,16 @@ class Watch_web_static(Watch):
             
     def get_gui_info(self):
         return [
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Url', self.url_),
-                ("Error margin", str(self.error_margin) + "%")
+                (_('Name'), self.name),
+                (_('Last changed'), self.last_changed),
+                (_('URL'), self.url_),
+                (_('Error margin'), str(self.error_margin) + "%")
                 ]
 
 def get_add_gui_info():
     return [
-            ("uri", spectlib.gtkconfig.Entry("Url")),
-            ("error_margin", spectlib.gtkconfig.Scale("Error margin (%)",value=2.0,upper=50,step_incr=0.1,page_incr=1.0))
+            ("uri", spectlib.gtkconfig.Entry(_("URL"))),
+            ("error_margin", spectlib.gtkconfig.Scale(_("Error margin (%)"),value=2.0,upper=50,step_incr=0.1,page_incr=1.0))
             ]
 
 """HTML Diff: http://www.aaronsw.com/2002/diff

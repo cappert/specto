@@ -26,13 +26,13 @@ class Console:
     
     def __init__(self, specto, args):
         self.specto = specto
-        self.only_updates = False
+        self.only_changed = False
         
         if args:
-            if args == "--only-updates":
-                self.only_updates = True
+            if args == "--only-changed":
+                self.only_changed = True
             elif args == "--help":
-                print "\nSpecto console version\n\nUse \"specto --console --only-updates\" to show only updates.\n\n"
+                print _('\nSpecto console version\n\nUse "specto --console --only-changed" to show only watch changes notifications.\n\n')
                 sys.exit(0)
                 
     def start_watches(self):
@@ -42,18 +42,16 @@ class Console:
         """ show the right icon for the status from the watch. """ 
         watch = self.specto.watch_db[id]
 
-        if status == "updated":
-            print "Watch \"" + watch.name + "\" is updated!"
+        if status == "changed":
+            print watch.name, "-", _("Watch has changed.")
             print watch.get_extra_information()
-        elif self.only_updates:
+        elif self.only_changed:
             return
-        elif status == "updating":
-            print "Watch \"" + watch.name + "\" started updating."
+        elif status == "checking":
+            print watch.name, "-", _("Watch started checking.")
         elif status == "idle":
-            print "Watch \"" + watch.name + "\" has finished updating."                
+            print watch.name, "-", _("Watch is idle.")
         elif status == "no-network":
-            print "The network connection has failed, network watches will not update."
-        elif status == "network":
-            print "Network connection detected."
+            print _("No network connection detected")
         elif status == "error":
-            print "Watch \"" + watch.name + "\" has an error."                
+            print watch.name, "-", _("There was an error checking the watch")

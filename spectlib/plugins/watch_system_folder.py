@@ -29,13 +29,13 @@ import os, re
 from stat import *
 
 type = "Watch_system_folder"
-type_desc = "Folder"
+type_desc = _("Folder")
 icon = 'folder'
 category = _("System")
 
 def get_add_gui_info():
     return [
-            ("folder", spectlib.gtkconfig.FolderChooser("Folder"))
+            ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
            ]
 
 
@@ -67,8 +67,8 @@ class Watch_system_folder(Watch):
         self.info['created'] = [0, ""]
         self.info['modified'] = [0, ""]
 
-    def update(self):
-        """ See if a file was modified or created. """        
+    def check(self):
+        """ See if a folder's contents were modified or created. """        
         try:
             self.old_values = self.read_cache_file()
             mode = os.stat(self.folder)[ST_MODE]
@@ -81,15 +81,15 @@ class Watch_system_folder(Watch):
                 self.update_cache_file()#write the values (with the removed lines) to the cache file
             else:
                 self.error = True
-                self.specto.logger.log(_("Watch: \"%s\" is not set to a folder") % self.name, "error", self.__class__)
+                self.specto.logger.log(_('Watch: "%s" is not set to a folder') % self.name, "error", self.__class__)
                 
-            #first time don't mark as updated
+            #first time don't mark as changed
             if self.first_time == True:
-                self.actually_updated = False
+                self.actually_changed = False
                 self.first_time = False            
         except:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has an error") % self.name, "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
 
         Watch.timer_update(self)
                 
@@ -125,13 +125,13 @@ class Watch_system_folder(Watch):
                 self.old_values = self.old_values.replace(file_ + ":separator:" + str(old_size), file_ + ":separator:" + str(size))
                 self.info['modified'][0] += 1
                 self.info['modified'][1] += file_ + "\n"
-                self.actually_updated = True
+                self.actually_changed = True
         elif (size or size ==0) and not old_size:
             #add the file to the list
             self.old_values += file_ + ":separator:" + str(size) + "\n"
             self.info['created'][0] += 1
             self.info['created'][1] += file_ + "\n"
-            self.actually_updated = True
+            self.actually_changed = True
             
     def get_dir(self, dir_):
         """ Recursively walk a directory. """
@@ -155,7 +155,7 @@ class Watch_system_folder(Watch):
             if file_ not in self.new_files:#see if a old file still exists in the new files list
                 self.info['removed'][0] += 1
                 self.info['removed'][1] += file_ + "\n"
-                self.actually_updated = True
+                self.actually_changed = True
             else:
                 self.old_values += old_values_[y] + "\n"
             y+=1
@@ -165,22 +165,22 @@ class Watch_system_folder(Watch):
         created = self.info['created'][0]
         removed = self.info['removed'][0]
         modified = self.info['modified'][0]
-        text = "<b>%s</b> has changed:\n" % self.name
+        text = _("<b>%s</b> has changed:\n") % self.name
         if created > 0:
             if created == 1:
-                text += "1 new file was created.\n"
+                text += _("1 new file was created.\n")
             else:
-                text += str(created) + " new files were created.\n"
+                text += str(created) + _(" new files were created.\n")
         if removed > 0:
             if removed == 1:
-                text += "1 file was removed.\n"
+                text += _("1 file was removed.\n")
             else:
-                text += str(removed) + " files were removed.\n"
+                text += str(removed) + _(" files were removed.\n")
         if modified > 0:
             if modified == 1:
-                text += "1 file was modified.\n"
+                text += _("1 file was modified.\n")
             else:
-                text += str(modified) + " files were modified.\n"
+                text += str(modified) + _(" files were modified.\n")
         
         return text
     
@@ -240,7 +240,7 @@ class Watch_system_folder(Watch):
 
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Folder', self.folder),
+                (_('Name'), self.name),
+                (_('Last changed'), self.last_changed),
+                (_('Folder'), self.folder),
                 ]

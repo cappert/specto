@@ -318,10 +318,10 @@ class ErrorDialog():
         self.wTree.get_widget("image").set_from_stock(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG)
 
         self.wTree.get_widget("label4").set_use_markup(True)
-        self.wTree.get_widget("label4").set_label("<b>Specto had an error!</b>\nPlease fill a bug report so we can fix it!") 
+        self.wTree.get_widget("label4").set_label(_("<b>Specto encountered an error</b>\nPlease verify if this bug has been entered in our issue tracker, and if not, file a bug report so we can fix it."))
         
     def send(self, *args):
-        url = "http://code.google.com/p/specto/issues/entry"
+        url = "http://code.google.com/p/specto/issues/list"
         os.system(spectlib.util.return_webpage(url) + " &")
         
     def delete_event(self, widget, *args):

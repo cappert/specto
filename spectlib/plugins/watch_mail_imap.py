@@ -29,16 +29,16 @@ import os
 from spectlib.i18n import _
 
 type = "Watch_mail_imap"
-type_desc = "IMAP"
+type_desc = _("IMAP")
 icon = 'emblem-mail'
 category = _("Mail") 
 
 def get_add_gui_info():
     return [
-            ("username", spectlib.gtkconfig.Entry("Username")),
-            ("password", spectlib.gtkconfig.PasswordEntry("Password")),
-            ("host", spectlib.gtkconfig.Entry("Host")),
-            ("ssl", spectlib.gtkconfig.CheckButton("Ssl"))
+            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
+            ("host", spectlib.gtkconfig.Entry(_("Host"))),
+            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))
             ]
 
 
@@ -70,7 +70,7 @@ class Watch_mail_imap(Watch):
 
         self.read_cache_file() 
         
-    def update(self):
+    def check(self):
         """ Check for new mails on your pop3 account. """
         try:        
             if self.ssl == True:
@@ -86,7 +86,7 @@ class Watch_mail_imap(Watch):
             server.login(self.username, self.password)                
         except imaplib.IMAP4.error, e:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" has error: %s") % (self.name, str(e)), "error", self.__class__)
+            self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)
         else:
             try:
                 if folder <> "":
@@ -125,7 +125,7 @@ class Watch_mail_imap(Watch):
                                     sender = sender.replace("From: ", "")
                                     mail = Email(id, sender, subject)
                                     if self.mail_info.add(mail): #check if it is a new email or just unread
-                                        self.actually_updated=True
+                                        self.actually_changed=True
                                         self.newMsg+=1
                     self.mail_info.remove_old()
                     self.write_cache_file()
@@ -134,9 +134,9 @@ class Watch_mail_imap(Watch):
                                         
             except imaplib.IMAP4.error, e:
                 self.error = True
-                self.specto.logger.log(_("Watch: \"%s\" has error: %s ") % self.name + str(e), "error", self.__class__)                
+                self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)                
             except:
-                self.specto.logger.log(_("Watch: \"%s\" has an error: ") % self.name, "error", self.__class__)
+                self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
@@ -146,7 +146,7 @@ class Watch_mail_imap(Watch):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = ("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author.split(":")[0], self.unreadMsg)
+            text = _("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author.split(":")[0], self.unreadMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
@@ -158,7 +158,7 @@ class Watch_mail_imap(Watch):
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")
-            text = ("<b>%s</b> has received %d new messages from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)    
+            text = _("<b>%s</b> has received %d new messages from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)    
         return text
     
     def get_extra_information(self):
@@ -170,17 +170,17 @@ class Watch_mail_imap(Watch):
             subject =  self.mail_info[i].subject
             author_info += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
-                author_info += "and others..."
+                author_info += _("and others...")
             i += 1
                 
         return author_info
             
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Username', self.username),
-                ("Unread messages", self.unreadMsg)
+                (_('Name'), self.name),
+                (_('Last changed'), self.last_changed),
+                (_('Username'), self.username),
+                (_('Unread messages'), self.unreadMsg)
                 ] 
                 
     def read_cache_file(self):
@@ -188,10 +188,10 @@ class Watch_mail_imap(Watch):
             try:
                 f = open(self.cache_file, "r")
             except:
-                self.specto.logger.log(_("There was an error reader the file %s") % self.cache_file, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
             else:
                 for line in f:
-                    info = line.split("&Seperator;")
+                    info = line.split("&Separator;")
                     email = Email(info[0], info[1], info[2].replace("\n", ""))
                     self.mail_info.add(email)
             finally:
@@ -202,10 +202,10 @@ class Watch_mail_imap(Watch):
         try:
             f = open(self.cache_file, "w")
         except:
-            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.__class__)
         else:
             for email in self.mail_info:
-                f.write(email.id + "&Seperator;" + email.author + "&Seperator;" + email.subject + "\n")    
+                f.write(email.id + "&Separator;" + email.author + "&Separator;" + email.subject + "\n")    
             
         finally:
             f.close()

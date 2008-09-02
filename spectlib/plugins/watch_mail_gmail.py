@@ -28,14 +28,14 @@ from spectlib.i18n import _
 import spectlib.util
 
 type = "Watch_mail_gmail"
-type_desc = "GMail"
+type_desc = _("GMail")
 icon = 'emblem-mail'
 category = _("Mail") 
 
 def get_add_gui_info():
     return [
-            ("username", spectlib.gtkconfig.Entry("Username")),
-            ("password", spectlib.gtkconfig.PasswordEntry("Password"))
+            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
             ]
 
 
@@ -74,7 +74,7 @@ class Watch_mail_gmail(Watch):
         self.read_cache_file()
         
         
-    def update(self):
+    def check(self):
         """ Check for new mails on your gmail account. """
         try:
             if "@" not in self.username:
@@ -85,14 +85,14 @@ class Watch_mail_gmail(Watch):
             self.newMsg = 0
             self.mail_info.clear_old()
             if self.oldMsg == 0:#no unread messages, we need to clear the watch
-                self.actually_updated = False
+                self.actually_changed = False
                 self.specto.mark_watch_status("clear", self.id)
             else:
                 i=0
                 while i < self.oldMsg and i < 20: # i < 20 is a hack around the gmail limitation of metadata retrieval (does not affect message count)
                     info = Email(s.getMsgAuthorName(i), s.getMsgTitle(i),s.getMsgSummary(i))
                     if self.mail_info.add(info): #check if it is a new email or just unread
-                        self.actually_updated = True
+                        self.actually_changed = True
                         self.newMsg+=1
                     i+=1
             self.mail_info.remove_old()
@@ -104,17 +104,17 @@ class Watch_mail_gmail(Watch):
         
     def get_gui_info(self):
         return [ 
-                ('Name', self.name),
-                ('Last updated', self.last_updated),
-                ('Username', self.username),
-                ("Unread messages", self.oldMsg)
+                (_("Name"), self.name),
+                (_("Last changed"), self.last_changed),
+                (_("Username"), self.username),
+                (_("Unread messages"), self.oldMsg)
                 ]        
         
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = ("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author, self.oldMsg)
+            text = _("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author, self.oldMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
@@ -124,7 +124,7 @@ class Watch_mail_gmail(Watch):
                     author_info += "and others..."
                 i += 1            
             author_info = author_info.rstrip(", ")    
-            text = ("<b>%s</b> has received %d new messages from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.oldMsg)    
+            text = _("<b>%s</b> has received %d new messages from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.oldMsg)    
         return text
     
     def get_extra_information(self):        
@@ -133,7 +133,7 @@ class Watch_mail_gmail(Watch):
         while i < len(self.mail_info) and i < 4:
             author_info += "<b>" + self.mail_info[i].author + "</b>: <i>" + self.mail_info[i].subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
-                author_info += "and others..."
+                author_info += _("and others...")
             i += 1            
         return author_info
     
@@ -142,10 +142,10 @@ class Watch_mail_gmail(Watch):
             try:
                 f = open(self.cache_file, "r")
             except:
-                self.specto.logger.log(_("There was an error reader the file %s") % self.cache_file, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
             else:
                 for line in f:
-                    info = line.split("&Seperator;")
+                    info = line.split("&Separator;")
                     email = Email(info[0], info[1], info[2].replace("\n", ""))
                     self.mail_info.add(email)
             finally:
@@ -159,7 +159,7 @@ class Watch_mail_gmail(Watch):
             self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
         else:
             for email in self.mail_info:
-                f.write(email.author + "&Seperator;" + email.subject + "&Seperator;" + email.summary + "\n")    
+                f.write(email.author + "&Separator;" + email.subject + "&Separator;" + email.summary + "\n")    
             
         finally:
             f.close()
