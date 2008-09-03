@@ -21,6 +21,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 import os
+import urllib2
+
 from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
@@ -97,9 +99,12 @@ class Watch_mail_gmail(Watch):
                     i+=1
             self.mail_info.remove_old()
             self.write_cache_file()
+        except urllib2.URLError, e:
+            self.error = True
+            self.specto.logger.log(_('%s') % str(e), "error", self.name)
         except:
             self.error = True
-            self.specto.logger.log(_("Wrong username or password"), "warning", self.name)
+            self.specto.logger.log(_("Error in watch"), "error", self.name)
         Watch.timer_update(self)
         
     def get_gui_info(self):
@@ -254,7 +259,6 @@ class Email_collection():
 
 from xml.sax.handler import ContentHandler
 from xml import sax
-import urllib2
 
 # Auxiliar structure
 class Mail:
