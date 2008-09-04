@@ -80,7 +80,7 @@ class Log_dialog:
     def save(self, widget):
         """ Save the text in the logwindow. """
         text = self.logwindow.get_text(self.logwindow.get_start_iter(), self.logwindow.get_end_iter())     
-        self.save = Save_dialog(self, text)
+        self.save = Save_dialog(self.specto, text)
         
     def clear(self, widget):
         """ Clear the text in the log window and from the log file. """
@@ -100,20 +100,20 @@ class Log_dialog:
             self.logwindow.set_text(self.log)
         else:
             if level == 1:
-                pattern = ("\w*\s*-\s*DEBUG\s*-\s*\w*\s*-\s*\w*")
+                pattern = ("DEBUG")
             elif level == 2:
-                pattern = ("\w*\s*-\s*INFO\s*-\s*\w*\s*-\s*\w*")
+                pattern = ("INFO")
             elif level == 3:
-                pattern = ("\w*\s*-\s*WARNING\s*-\s*\w*\s*-\s*\w*")
+                pattern = ("WARNING")
             elif level == 4:
-                pattern = ("\w*\s*-\s*ERROR\s*-\s*\w*\s*-\s*\w*")
+                pattern = ("ERROR")
             elif level == 5:
-                pattern = ("\w*\s*-\s*CRITICAL\s*-\s*\w*\s*-\s*\w*")
+                pattern = ("CRITICAL")
             elif level == -1:
                 pattern = self.wTree.get_widget("combo_level").child.get_text()
                 
             for i in buffer_log:
-                if re.search(pattern, i):
+                if re.search(pattern, i, re.IGNORECASE):
                     filtered_log += i + "\n"
                     
             self.logwindow.set_text(filtered_log)
