@@ -64,7 +64,7 @@ class Watch_system_file(Watch):
         try:
             self.info = []
             self.file_info = []
-            self.old_info = []
+            self.old_info = ""
             self.read_cache_file()
             try:
                 info = tuple(os.stat(self.file)) #mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime = info
