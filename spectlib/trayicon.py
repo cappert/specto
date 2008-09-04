@@ -178,19 +178,19 @@ class Tray:
 
     #grab the x and y position of the tray icon and make the balloon emerge from it
     def get_x(self):
-        x = self.tray.get_geometry()[1][0]
         if self.tray.get_visible()==True:
+            x = self.tray.get_geometry()[1][0]
             x += int(self.tray.get_size() / 2) #add half the icon's width
         else:
-            x -= int(self.tray.get_size() / 2) #remove half the icon's width
+            x = 0 #remove half the icon's width
             #FIXME: I don't know why that one does not work
         return x
     def get_y(self):
-        y = self.tray.get_geometry()[1][1]
         if self.tray.get_visible()==True:
+            y = self.tray.get_geometry()[1][1]
             y += int(self.tray.get_size() / 2) #add half the icon's height
         else:
-            y -= int(self.tray.get_size() / 2) #remove half the icon's height
+            y = 0 #remove half the icon's height
             #FIXME: I don't know why that one does not work
         return y
 
