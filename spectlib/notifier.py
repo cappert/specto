@@ -255,8 +255,8 @@ class Notifier:
                 
             elif status == "error":
                 statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" has a problem.') % watch.name))           
-                balloon_icon = self.get_icon("error", 50, True)
-                icon = self.get_icon("error", 0, False)
+                balloon_icon = self.get_icon("error", 0, True)
+                icon = self.get_icon("error", 50, False)
                 self.balloon.show_toast( _("The watch, <b>%s</b>, has a problem. You may need to check the error log.") % watch.name, balloon_icon, urgency="critical")
                 if self.specto.specto_gconf.get_entry("use_problem_sound"):            
                     problem_sound = self.specto.specto_gconf.get_entry("problem_sound")
@@ -967,11 +967,10 @@ class Notifier:
                 image = self.get_icon(child[1], 0, False)
                 img.set_from_pixbuf(image)
                 childmenuItem.set_image(img)
-                childmenuItem.connect('activate', self.show_add_watch, child[2])
+                childmenuItem.connect('button-press-event', self.show_add_watch, child[2])
                 childmenuItem.show()
             menuItem.set_submenu(childmenu)
         self.wTree.get_widget("button_add").set_menu(self.add_menu)
-        self.wTree.get_widget("add").set_submenu(self.add_menu) 
 
     def position_add_watch_menu_correctly(self, *args):
         """ This is a hack, so that the popup menu appears left-aligned, right below the Add button """
@@ -989,8 +988,9 @@ class Notifier:
         self.add_menu.popup(None, None, self.position_add_watch_menu_correctly, 3, 0)
         return 1
                     
-    def show_add_watch(self, widget, watch_type):
+    def show_add_watch(self, event, *args):
         """ Show the add watch window. """
+        watch_type = args[1]
         if self.add_w == "":
             self.add_w= Add_watch(self.specto, self, watch_type)
         elif self.add_w.add_watch.flags() & gtk.MAPPED:
