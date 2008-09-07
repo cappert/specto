@@ -1046,7 +1046,7 @@ class Notifier:
     def import_watches(self, *widget):
         if self.import_watch == "":
             self.import_watch = Import_watch(self.specto, self)
-        elif self.import_watch.save.save_dialog.flags() & gtk.MAPPED:
+        elif self.import_watch.open.open_dialog.flags() & gtk.MAPPED:
             pass
         else:
             self.import_watch = Import_watch(self.specto, self)        

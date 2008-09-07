@@ -46,7 +46,7 @@ class Import_watch:
         self.specto = specto
         self.notifier = notifier
 
-        self.save = Save_dialog(self.specto, self, None)
+        self.open = Open_dialog(self.specto, self, None)
     
     def create_import_window(self):
         #create tree
@@ -64,7 +64,7 @@ class Import_watch:
         #catch some events
         dic= { "on_button_select_all_clicked": self.select_all,
             "on_button_deselect_all_clicked": self.deselect_all,
-            "on_button_action_clicked": self.do_action,
+            "on_button_action_clicked": self.import_watches,
             "on_button_close_clicked": self.delete_event}
 
         #attach the events
@@ -126,7 +126,7 @@ class Import_watch:
             if watch.deleted == False:
                 self.model.set_value(self.iter[watch.id], 0, 0)
         
-    def do_action(self, widget):
+    def import_watches(self, widget):
         self.import_watch.hide_all()
 
         watches = self.get_selected_watches()
@@ -138,10 +138,10 @@ class Import_watch:
             
             values['name'] = watch.name
             if self.specto.watch_io.is_unique_watch(values['name']):
-                i = 1
-                while self.specto.watch_io.is_unique_watch(values['name'] + str(i)):
-                    i += 1
-                values['name'] = values['name'] + str(i)
+                y = 1
+                while self.specto.watch_io.is_unique_watch(values['name'] + str(y)):
+                    y += 1
+                values['name'] = values['name'] + str(y)
                 
             values['type'] = watch.type
             values['refresh'] = watch.refresh
@@ -151,6 +151,7 @@ class Import_watch:
             all_values[i] = values
         _id = self.specto.watch_db.create(all_values)
         
+        print all_values.values()
         for values in all_values.values():
             self.specto.watch_io.write_watch(values)
             
@@ -207,9 +208,9 @@ class Import_watch:
             model.set_value(iter, 0, 1)
             
             
-class Save_dialog:
+class Open_dialog:
     """ 
-    Class for displaying the save as dialog.
+    Class for displaying the open dialog.
     """
         
     def __init__(self, specto, _import, watches_db):
@@ -219,34 +220,37 @@ class Save_dialog:
         gladefile= self.specto.PATH + 'glade/import_export.glade' 
         windowname= "filechooser"
         self.wTree=gtk.glade.XML(gladefile,windowname)        
-        self.save_dialog = self.wTree.get_widget("filechooser")
+        self.open_dialog = self.wTree.get_widget("filechooser")
             
         dic={
         "on_button_cancel_clicked": self.cancel,
-        "on_button_save_clicked": self.save
+        "on_button_save_clicked": self.open
         }
         #attach the events
         self.wTree.signal_autoconnect(dic)
             
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
-        self.save_dialog.set_icon(icon)
-        self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
+        self.open_dialog.set_icon(icon)
+        self.open_dialog.set_filename(os.environ['HOME'] + "/ ")
         
     def cancel(self, *args):
         """ Close the save as dialog. """
-        self.save_dialog.destroy()
+        self.open_dialog.destroy()
         
-    def save(self, *args):
+    def open(self, *args):
         """ Save the file. """
-        self.save_dialog.hide_all()
+        self.open_dialog.hide_all()
         self._import.create_import_window()
-        file_name = self.save_dialog.get_filename()        
+        file_name = self.open_dialog.get_filename()        
         self.read_options(file_name)
         self._import.import_watch.show()
-        self.save_dialog.destroy()
+        self.open_dialog.destroy()
         
     def read_options(self, file_name):
-        watch_io = Watch_io(file_name)
+        watch_io = Watch_io(self.specto, file_name)
+        if watch_io.valid == False:
+            return False
+        
         values = watch_io.read_all_watches()
         for i in values:
             try:
@@ -256,14 +260,31 @@ class Save_dialog:
             else:
                 values[i]['open_command'] = ""
                 values[i]['last_changed'] = ""
+                
+            #import from specto 0.2
             if values[i]['type'] == "0":
                 values[i]['type'] = "Watch_web_static"
-            if values[i]['type'] == "1":
-                if values[i]['prot'] == "1":
+            elif values[i]['type'] == "1":
+                if values[i]['prot'] == "0":
                     values[i]['type'] = "Watch_mail_pop3"
+                if values[i]['prot'] == "1":
+                    values[i]['type']= "Watch_mail_imap"
                 if values[i]['prot'] == "2":
                     values[i]['type'] = "Watch_mail_gmail"                    
-                    del values[i]['prot']
+                del values[i]['prot']
+            elif values[i]['type'] == "2":
+                if values[i]['mode'] == "file":
+                    values[i]['type'] = "Watch_system_file"
+                else:
+                    values[i]['type'] = "Watch_system_folder"
+                del values[i]['mode']
+            elif values[i]['type'] == "3":
+                values[i]['type'] = "Watch_system_process"
+            elif values[i]['type'] == "4":
+                values[i]['type'] = "Watch_system_port"
+            elif values[i]['type'] == "5":
+                values[i]['type'] = "Watch_web_greader"
+            print values[i]['type']        
         watch_collection = Watch_collection(self.specto)
         watch_collection.create(values)
         self._import.set_new_watch_db(watch_collection)

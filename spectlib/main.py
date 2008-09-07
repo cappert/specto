@@ -84,7 +84,7 @@ class Specto:
         
         #create the watch collection and add the watches
         self.watch_db = Watch_collection(self)
-        self.watch_io = Watch_io(self.FILE)
+        self.watch_io = Watch_io(self, self.FILE)
         values = self.watch_io.read_all_watches()
         try:
             self.watch_db.create(values)
