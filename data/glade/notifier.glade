@@ -325,7 +325,6 @@
                 <property name="visible">True</property>
                 <property name="is_important">True</property>
                 <property name="stock_id">gtk-add</property>
-                <property name="menu"></property>
                 <signal name="clicked" handler="on_add_activate"/>
               </widget>
               <packing>
@@ -344,6 +343,7 @@
           <widget class="GtkScrolledWindow" id="scrolledwindow">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="border_width">6</property>
             <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
             <child>
               <widget class="GtkTreeView" id="treeview">
