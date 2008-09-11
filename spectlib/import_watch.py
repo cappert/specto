@@ -151,7 +151,6 @@ class Import_watch:
             all_values[i] = values
         _id = self.specto.watch_db.create(all_values)
         
-        print all_values.values()
         for values in all_values.values():
             self.specto.watch_io.write_watch(values)
             
@@ -284,7 +283,6 @@ class Open_dialog:
                 values[i]['type'] = "Watch_system_port"
             elif values[i]['type'] == "5":
                 values[i]['type'] = "Watch_web_greader"
-            print values[i]['type']        
         watch_collection = Watch_collection(self.specto)
         watch_collection.create(values)
         self._import.set_new_watch_db(watch_collection)
