@@ -343,8 +343,9 @@
           <widget class="GtkScrolledWindow" id="scrolledwindow">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="border_width">6</property>
             <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
+            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+            <property name="shadow_type">GTK_SHADOW_IN</property>
             <child>
               <widget class="GtkTreeView" id="treeview">
                 <property name="visible">True</property>

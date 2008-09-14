@@ -21,7 +21,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 import os
-import urllib2
+from urllib2 import URLError
+import spectlib.tools.web_proxy as web_proxy
 
 from spectlib.watch import Watch
 import spectlib.config
@@ -350,13 +351,13 @@ class GmailAtom:
 	def __init__(self, user, pswd):
 		self.m = MailHandler()
 		# initialize authorization handler
-		auth_handler = urllib2.HTTPBasicAuthHandler()
+		auth_handler = web_proxy.urllib2.HTTPBasicAuthHandler()
 		auth_handler.add_password( self.realm, self.host, user, pswd)
-		opener = urllib2.build_opener(auth_handler)
-		urllib2.install_opener(opener)
+		opener = web_proxy.urllib2.build_opener(auth_handler)
+		web_proxy.urllib2.install_opener(opener)
 
 	def sendRequest(self):
-		return urllib2.urlopen(self.url)
+		return web_proxy.urllib2.urlopen(self.url)
 
 	def refreshInfo(self):
 		# get the page and parse it

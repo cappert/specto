@@ -181,14 +181,6 @@ class Watch:
             return False
         else :
             self.specto.mark_watch_status("network", self.id)
-            #proxy support
-            self.specto.specto_gconf.set_directory("/system/http_proxy")
-            http_proxy = "http://%s:%s" % (self.specto.specto_gconf.get_entry("host"),
-            self.specto.specto_gconf.get_entry("port")) 
-            https_proxy = "https://%s:%s" % (self.specto.specto_gconf.get_entry("secure_host"),
-            self.specto.specto_gconf.get_entry("secure_port")) 
-            proxies = {"http": http_proxy, "https": https_proxy} 
-            self.specto.specto_gconf.set_directory("")            
             return True
         
     def get_values(self):
