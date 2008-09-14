@@ -133,12 +133,12 @@ class Tray:
         self.item_help = gtk.ImageMenuItem(gtk.STOCK_HELP)
         self.item_about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
         self.item_quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-        self.item_clear = gtk.ImageMenuItem(gtk.STOCK_CLEAR)
+        self.item_clear = gtk.MenuItem(_("Mark as read"), True)
         
         #create submenu for changed watches
         self.sub_menu = gtk.Menu()
 
-        self.sub_item_clear = gtk.MenuItem(_("_Clear All"), True)
+        self.sub_item_clear = gtk.MenuItem(_("_Mark all read"), True)
         self.sub_item_clear.connect('activate', self.specto.notifier.clear_all)
         self.sub_menu.append(self.sub_item_clear)
         
