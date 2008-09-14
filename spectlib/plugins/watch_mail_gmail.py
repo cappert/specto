@@ -101,10 +101,10 @@ class Watch_mail_gmail(Watch):
             self.write_cache_file()
         except urllib2.URLError, e:
             self.error = True
-            self.specto.logger.log(_('%s') % str(e), "error", self.name)
+            self.specto.logger.log( ('%s') % str(e), "error", self.name)#this string is not translated
         except:
             self.error = True
-            self.specto.logger.log(_("Error in watch"), "error", self.name)
+            self.specto.logger.log(_("Watch: \"%s\" encountered an error"), "error", self.name)
         Watch.timer_update(self)
         
     def get_gui_info(self):
@@ -119,7 +119,7 @@ class Watch_mail_gmail(Watch):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("<b>%s</b> has received a new message from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author, self.oldMsg)
+            text = _("<b>%s</b> has received a new message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author, self.oldMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
@@ -129,7 +129,7 @@ class Watch_mail_gmail(Watch):
                     author_info += "and others..."
                 i += 1            
             author_info = author_info.rstrip(", ")    
-            text = _("<b>%s</b> has received %d new messages from <b>%s</b>\n\n <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.oldMsg)    
+            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.oldMsg)    
         return text
     
     def get_extra_information(self):        

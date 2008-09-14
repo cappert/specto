@@ -115,7 +115,7 @@ class Watch_web_greader(Watch):
         """ create the text for the balloon """
         unread_messages = self.news_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("<b>%s</b> has a new newsitems in <b>%s</b>\n\n <b>totalling %s</b> unread items.") % (self.name, unread_messages[0].name, str(self.unreadMsg) + self.or_more)
+            text = _("<b>%s</b> has a new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") % (self.name, unread_messages[0].name, str(self.unreadMsg) + self.or_more)
         else:
             i = 0 #show max 4 feeds
             feed_info = ""
@@ -125,7 +125,7 @@ class Watch_web_greader(Watch):
                     feed_info += _("and others...")
                 i += 1            
             feed_info = feed_info.rstrip(", ")    
-            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>\n\n <b>totalling %s</b> unread items.") % (self.name, self.newMsg, feed_info, str(self.unreadMsg)  + self.or_more)    
+            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") % (self.name, self.newMsg, feed_info, str(self.unreadMsg)  + self.or_more)    
         return text
     
     def get_extra_information(self):        

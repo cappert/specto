@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Specto\n"
-"POT-Creation-Date: Sun Aug 31 15:02:56 2008\n"
-"PO-Revision-Date: 2008-08-31 15:04-0500\n"
-"Last-Translator: Jeff Fortin <nekohayo ~at~ gmail.com>\n"
+"POT-Creation-Date: Fri Sep  5 10:37:22 2008\n"
+"PO-Revision-Date: 2008-09-05 10:37-0500\n"
+"Last-Translator: Jean-François Fortin Tam\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -378,7 +378,7 @@ msgstr "Type"
 #: ../spectlib/export_watch.py:91
 #: ../spectlib/import_watch.py:95
 #: ../spectlib/notifier.py:774
-#: ../spectlib/plugins/watch_mail_gmail.py:107
+#: ../spectlib/plugins/watch_mail_gmail.py:112
 #: ../spectlib/plugins/watch_mail_imap.py:180
 #: ../spectlib/plugins/watch_mail_pop3.py:162
 #: ../spectlib/plugins/watch_system_file.py:168
@@ -551,18 +551,18 @@ msgstr "Actif"
 msgid "Tip of the Day:"
 msgstr "Astuce du jour :"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:31
+#: ../spectlib/plugins/watch_mail_gmail.py:33
 msgid "GMail"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:33
+#: ../spectlib/plugins/watch_mail_gmail.py:35
 #: ../spectlib/plugins/watch_mail_imap.py:34
 #: ../spectlib/plugins/watch_mail_pop3.py:37
 msgid "Mail"
 msgstr "Courrier"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:37
-#: ../spectlib/plugins/watch_mail_gmail.py:109
+#: ../spectlib/plugins/watch_mail_gmail.py:39
+#: ../spectlib/plugins/watch_mail_gmail.py:114
 #: ../spectlib/plugins/watch_mail_imap.py:38
 #: ../spectlib/plugins/watch_mail_imap.py:182
 #: ../spectlib/plugins/watch_mail_pop3.py:41
@@ -572,19 +572,24 @@ msgstr "Courrier"
 msgid "Username"
 msgstr "Utilisateur"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:38
+#: ../spectlib/plugins/watch_mail_gmail.py:40
 #: ../spectlib/plugins/watch_mail_imap.py:39
 #: ../spectlib/plugins/watch_mail_pop3.py:42
 #: ../spectlib/plugins/watch_web_greader.py:36
 msgid "Password"
 msgstr "Mot de passe"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:102
-#: ../spectlib/plugins/watch_web_greader.py:496
-msgid "Wrong username or password"
-msgstr "Mauvais utilisateur/mot de passe"
+#: ../spectlib/plugins/watch_mail_gmail.py:107
+#: ../spectlib/plugins/watch_mail_imap.py:139
+#: ../spectlib/plugins/watch_mail_pop3.py:121
+#: ../spectlib/plugins/watch_system_file.py:121
+#: ../spectlib/plugins/watch_system_folder.py:92
+#: ../spectlib/plugins/watch_system_port.py:77
+#: ../spectlib/plugins/watch_system_process.py:79
+msgid "Watch: \"%s\" encountered an error"
+msgstr "Observateur: \"%s\" a causé une erreur"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:108
+#: ../spectlib/plugins/watch_mail_gmail.py:113
 #: ../spectlib/plugins/watch_mail_imap.py:181
 #: ../spectlib/plugins/watch_mail_pop3.py:163
 #: ../spectlib/plugins/watch_system_file.py:169
@@ -596,38 +601,38 @@ msgstr "Mauvais utilisateur/mot de passe"
 msgid "Last changed"
 msgstr "Dernier changement"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:110
+#: ../spectlib/plugins/watch_mail_gmail.py:115
 #: ../spectlib/plugins/watch_mail_imap.py:183
 #: ../spectlib/plugins/watch_mail_pop3.py:165
 #: ../spectlib/plugins/watch_web_greader.py:111
 msgid "Unread messages"
 msgstr "Messages non lus"
 
-#: ../spectlib/plugins/watch_mail_gmail.py:117
+#: ../spectlib/plugins/watch_mail_gmail.py:122
 #: ../spectlib/plugins/watch_mail_imap.py:149
 #: ../spectlib/plugins/watch_mail_pop3.py:131
 msgid ""
-"<b>%s</b> has received a new message from <b>%s</b>\n"
+"<b>%s</b> has received a new message from <b>%s</b>...\n"
 "\n"
-" <b>totalling %d</b> unread mails."
+"... <b>totalling %d</b> unread mails."
 msgstr ""
-"<b>%s</b> a reçu un nouveau message de <b>%s</b>\n"
+"<b>%s</b> a reçu un nouveau message de <b>%s</b>...\n"
 "\n"
-" <b>pour un total de %d</b> courriels non lus."
+"... <b>pour un total de %d</b> courriels non lus."
 
-#: ../spectlib/plugins/watch_mail_gmail.py:127
+#: ../spectlib/plugins/watch_mail_gmail.py:132
 #: ../spectlib/plugins/watch_mail_imap.py:161
 #: ../spectlib/plugins/watch_mail_pop3.py:143
 msgid ""
-"<b>%s</b> has received %d new messages from <b>%s</b>\n"
+"<b>%s</b> has received %d new messages from <b>%s</b>...\n"
 "\n"
-" <b>totalling %d</b> unread mails."
+"... <b>totalling %d</b> unread mails."
 msgstr ""
-"<b>%s</b> a reçu %d nouveaux messages de <b>%s</b>\n"
+"<b>%s</b> a reçu %d nouveaux messages de <b>%s</b>...\n"
 "\n"
-" <b>pour un total de %d</b> courriels non lus."
+"... <b>pour un total de %d</b> courriels non lus."
 
-#: ../spectlib/plugins/watch_mail_gmail.py:136
+#: ../spectlib/plugins/watch_mail_gmail.py:141
 #: ../spectlib/plugins/watch_mail_imap.py:173
 #: ../spectlib/plugins/watch_mail_pop3.py:138
 #: ../spectlib/plugins/watch_mail_pop3.py:155
@@ -636,8 +641,8 @@ msgstr ""
 msgid "and others..."
 msgstr "et autres..."
 
-#: ../spectlib/plugins/watch_mail_gmail.py:145
-#: ../spectlib/plugins/watch_mail_gmail.py:159
+#: ../spectlib/plugins/watch_mail_gmail.py:150
+#: ../spectlib/plugins/watch_mail_gmail.py:164
 #: ../spectlib/plugins/watch_mail_imap.py:191
 #: ../spectlib/plugins/watch_mail_pop3.py:173
 #: ../spectlib/plugins/watch_system_file.py:146
@@ -672,15 +677,6 @@ msgstr "Activer SSL"
 #: ../spectlib/plugins/watch_web_static.py:103
 msgid "Watch: \"%s\" encountered an error: %s"
 msgstr "Observateur : \"%s\" a causé une erreur : %s"
-
-#: ../spectlib/plugins/watch_mail_imap.py:139
-#: ../spectlib/plugins/watch_mail_pop3.py:121
-#: ../spectlib/plugins/watch_system_file.py:121
-#: ../spectlib/plugins/watch_system_folder.py:92
-#: ../spectlib/plugins/watch_system_port.py:77
-#: ../spectlib/plugins/watch_system_process.py:79
-msgid "Watch: \"%s\" encountered an error"
-msgstr "Observateur: \"%s\" a causé une erreur"
 
 #: ../spectlib/plugins/watch_mail_imap.py:205
 #: ../spectlib/plugins/watch_mail_pop3.py:187
@@ -849,23 +845,27 @@ msgstr " ou plus"
 
 #: ../spectlib/plugins/watch_web_greader.py:118
 msgid ""
-"<b>%s</b> has a new newsitems in <b>%s</b>\n"
+"<b>%s</b> has a new newsitems in <b>%s</b>...\n"
 "\n"
-" <b>totalling %s</b> unread items."
+"... <b>totalling %s</b> unread items."
 msgstr ""
-"<b>%s</b> a de nouvelles brèves dans <b>%s</b>\n"
+"<b>%s</b> a de nouvelles brèves dans <b>%s</b>...\n"
 "\n"
-" <b>pour un total de %s</b> brèves non lues."
+"... <b>pour un total de %s</b> brèves non lues."
 
 #: ../spectlib/plugins/watch_web_greader.py:128
 msgid ""
-"<b>%s</b> has received %d new newsitems in <b>%s</b>\n"
+"<b>%s</b> has received %d new newsitems in <b>%s</b>...\n"
 "\n"
-" <b>totalling %s</b> unread items."
+"... <b>totalling %s</b> unread items."
 msgstr ""
-"<b>%s</b> a reçu %d nouvelles brèves dans <b>%s</b>\n"
+"<b>%s</b> a reçu %d nouvelles brèves dans <b>%s</b>...\n"
 "\n"
-" <b>pour un total de %s</b> brèves non lues."
+"... <b>pour un total de %s</b> brèves non lues."
+
+#: ../spectlib/plugins/watch_web_greader.py:496
+msgid "Wrong username or password"
+msgstr "Mauvais utilisateur/mot de passe"
 
 #: ../spectlib/plugins/watch_web_greader.py:499
 msgid "Could not establish a connection to server"
