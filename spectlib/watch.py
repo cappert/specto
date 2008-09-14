@@ -610,13 +610,10 @@ class Watch_io:
         return name
     
     def encode_password(self, name, password):
-        print self.keyring
         if self.keyring == True:
             k = Keyring(name, "Specto " + name, "network") 
             k.set_credentials((name, password))
             password = "**keyring**"
-        else:
-            password = base64.b64encode(password)
         return password
         
     def decode_password(self, name, password):
@@ -625,14 +622,6 @@ class Watch_io:
                 k = Keyring(name, "Specto " + name, "network")
                 password = k.get_credentials()[1]
             except:
-                try:
-                    password = base64.b64decode(password)
-                except TypeError:#password was not yet encoded
-                    password = password
-        else:
-            try:
-                password = base64.b64decode(password)
-            except TypeError:#password was not yet encoded
                 password = password
         return password
     

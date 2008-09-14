@@ -82,7 +82,6 @@ class Watch_mail_gmail(Watch):
         try:
             if "@" not in self.username:
                 self.username += "@gmail.com"
-            print self.password
             s = GmailAtom(self.username, self.password)
             s.refreshInfo()
             self.oldMsg = s.getUnreadMsgCount()
