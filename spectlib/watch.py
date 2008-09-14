@@ -396,8 +396,7 @@ class Watch_collection:
             type = 0
             
         return refresh_value, type
-
-        
+    
     def __getitem__(self, i):
         return self.watch_db[i]
 
@@ -410,6 +409,13 @@ class Watch_io:
         self.specto = specto
         self.file_name = file_name
         self.valid = True
+        
+        #use keyring
+        if self.specto.use_keyring == True and keyring == True:
+            self.keyring = True
+        else:
+            self.keyring = False
+            
         if not os.path.exists(self.file_name):
             try:
                 f = open(self.file_name, "w")
@@ -604,7 +610,8 @@ class Watch_io:
         return name
     
     def encode_password(self, name, password):
-        if keyring == True:
+        print self.keyring
+        if self.keyring == True:
             k = Keyring(name, "Specto " + name, "network") 
             k.set_credentials((name, password))
             password = "**keyring**"
@@ -613,7 +620,7 @@ class Watch_io:
         return password
         
     def decode_password(self, name, password):
-        if keyring == True:
+        if self.keyring == True:
             try:
                 k = Keyring(name, "Specto " + name, "network")
                 password = k.get_credentials()[1]

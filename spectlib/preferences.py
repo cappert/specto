@@ -143,6 +143,13 @@ class Preferences:
             self.specto.specto_gconf.set_entry("debug_mode", False)
             self.specto.DEBUG = False
             
+        if True == False:
+            self.specto.specto_gconf.set_entry("use_keyring", True)
+            self.specto.set_passwords(True)
+        else:
+            self.specto.specto_gconf.set_entry("use_keyring", False)
+            self.specto.set_passwords(False)
+            
     def get_preferences(self):
         """ Get the preferences from gconf. """
         #check toast

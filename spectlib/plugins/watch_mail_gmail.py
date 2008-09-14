@@ -82,6 +82,7 @@ class Watch_mail_gmail(Watch):
         try:
             if "@" not in self.username:
                 self.username += "@gmail.com"
+            print self.password
             s = GmailAtom(self.username, self.password)
             s.refreshInfo()
             self.oldMsg = s.getUnreadMsgCount()
@@ -100,7 +101,7 @@ class Watch_mail_gmail(Watch):
                     i+=1
             self.mail_info.remove_old()
             self.write_cache_file()
-        except urllib2.URLError, e:
+        except URLError, e:
             self.error = True
             self.specto.logger.log( ('%s') % str(e), "error", self.name)#this string is not translated
         except:
