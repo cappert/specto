@@ -971,6 +971,7 @@ class Notifier:
                 childmenuItem.show()
             menuItem.set_submenu(childmenu)
         self.wTree.get_widget("button_add").set_menu(self.add_menu)
+        self.wTree.get_widget("add").set_submenu(self.add_menu)
 
     def position_add_watch_menu_correctly(self, *args):
         """ This is a hack, so that the popup menu appears left-aligned, right below the Add button """
