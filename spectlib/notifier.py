@@ -483,28 +483,7 @@ class Notifier:
                 menu.popup(None, None, None, 3, time)
 
             return 1
-        
-    def start_watch(self, widget):
-        model, iter = self.treeview.get_selection().get_selected()
-        id = int(model.get_value(iter, 3))
-        watch = self.specto.watch_db[id]
-        
-        self.activate(id)
-        watch.start()
-        
-    def stop_watch(self, widget):
-        model, iter = self.treeview.get_selection().get_selected()
-        id = int(model.get_value(iter, 3))
-        watch = self.specto.watch_db[id]
-        
-        self.deactivate(id)
-        if watch.changed:
-            self.clear_watch("", id)
             
-        if not self.wTree.get_widget("display_all_watches").active:
-            self.remove_notifier_entry(id)        
-        watch.stop()
-    
     def _clear_watch(self, *widget):
         try:
             model, iter = self.treeview.get_selection().get_selected()
@@ -524,33 +503,13 @@ class Notifier:
         model, iter = self.treeview.get_selection().get_selected()
         id = int(model.get_value(iter, 3))
         self.show_edit_watch(self, widget, id)
-        
 
     def create_menu(self, window,event, data=None):
         model, iter = self.treeview.get_selection().get_selected()
         id = int(model.get_value(iter, 3))
         watch = self.specto.watch_db[id]
         menu = gtk.Menu()
-        
-        menuItem = gtk.ImageMenuItem(_("Activate"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_OK, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate',self.start_watch)
-        if watch.active == True:
-            menuItem.set_sensitive(False)
-        menu.append(menuItem)
-
-                        
-        menuItem = gtk.ImageMenuItem(_("Deactivate"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate',self.stop_watch)
-        if watch.active == False:
-            menuItem.set_sensitive(False)            
-        menu.append(menuItem)    
-        
+                
         menuItem = gtk.ImageMenuItem(_("Refresh"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
@@ -576,6 +535,14 @@ class Notifier:
         if watch.changed == False:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
+        
+        menuItem = gtk.ImageMenuItem(_("Remove"))
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU)
+        menuItem.set_image(image)
+        menuItem.connect('activate',self.remove_watch)            
+        menu.append(menuItem)
+        
 
         menu.show_all()
         return menu
