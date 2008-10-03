@@ -181,8 +181,7 @@ class Watch_web_static(Watch):
                 #if there is NO previously stored filesize
                     self.to_be_stored_filesize = self.new_filesize
 
-            if (self.url2_ != self.url_) and self.redirect == True:
-                self.write_uri()#it's uri, not url.
+            ### NOTE: do not write the redirect url in a config file!
             self.write_filesize()
             
         Watch.timer_update(self)
@@ -229,11 +228,6 @@ class Watch_web_static(Watch):
             return 0
         
         
-    def write_uri(self):
-        """ Write the uri in the watch list. """
-        self.specto.watch_io.write_option(self.name, 'uri', self.url2_)
-        self.url_ = self.url2_
-
     def remove_cache_files(self):
         os.unlink(self.cacheFullPath_)
         os.unlink(self.cacheFullPath2_)        
