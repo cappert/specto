@@ -230,7 +230,7 @@ class Save_dialog:
         Values has to be a dictionary with the name from the options and the value. example: { 'name':'value', 'name':'value' }
         If the name is not found, a new watch will be added, else the excisting watch will be changed.
         """
-        watch_io = Watch_io(file_name)
+        watch_io = Watch_io(self.specto, file_name)
         watch_io.write_watch(values)
         
 if __name__ == "__main__":
