@@ -70,7 +70,7 @@ class Watch:
         self.watch_values = watch_values
         self.set_values(values)
                 
-        self.watch_io = Watch_io(self.specto.FILE)
+        self.watch_io = Watch_io(self.specto, self.specto.FILE)
         
         global _
                     
@@ -181,14 +181,6 @@ class Watch:
             return False
         else :
             self.specto.mark_watch_status("network", self.id)
-            #proxy support
-            self.specto.specto_gconf.set_directory("/system/http_proxy")
-            http_proxy = "http://%s:%s" % (self.specto.specto_gconf.get_entry("host"),
-            self.specto.specto_gconf.get_entry("port")) 
-            https_proxy = "https://%s:%s" % (self.specto.specto_gconf.get_entry("secure_host"),
-            self.specto.specto_gconf.get_entry("secure_port")) 
-            proxies = {"http": http_proxy, "https": https_proxy} 
-            self.specto.specto_gconf.set_directory("")            
             return True
         
     def get_values(self):
@@ -279,12 +271,6 @@ class Watch_collection:
         """ read the content from the dictionary and create the watch """      
         _id = []
         for i in values:
-            if values[i]['type'] == "0":
-                values[i]['type'] = "Web_watch"
-            if values[i]['type'] == "1":
-                if values[i]['prot'] == "2":
-                    values[i]['type'] = "Mail_watch_gmail"                    
-
             type = values[i]['type']
                         
             #get the right object and create the watch object
@@ -292,7 +278,7 @@ class Watch_collection:
             try:
                 mod = self.plugin_dict[type]
             except:
-                self.specto.logger.log(_('Please enable plugin "%s" if you want to use the watch "%s".') % (type, values[i]["name"]), "critical", self.__class__)
+                self.specto.logger.log(_('Please enable plugin "%s" if you want to use the watch "%s".') % (type, values[i]["name"]), "critical", "specto")
             
             if mod:  
                 obj = getattr(mod, type)
@@ -410,8 +396,7 @@ class Watch_collection:
             type = 0
             
         return refresh_value, type
-
-        
+    
     def __getitem__(self, i):
         return self.watch_db[i]
 
@@ -419,21 +404,32 @@ class Watch_io:
     """
     A class for managing watches.
     """
-    def __init__(self, file_name):
+    def __init__(self, specto, file_name):
         #read the watch from file using the iniparser module
+        self.specto = specto
         self.file_name = file_name
+        self.valid = True
+        
+        #use keyring
+        if self.specto.use_keyring == True and keyring == True:
+            self.keyring = True
+        else:
+            self.keyring = False
+            
         if not os.path.exists(self.file_name):
             try:
                 f = open(self.file_name, "w")
             except:
-                self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
+                self.valid = False
+                self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", "specto")
             finally:
                 f.close()
         os.chmod(self.file_name, 0600)#This is important for security purposes, we make the file read-write to the owner only, otherwise everyone can read passwords.
         try:
             self.cfg = ini_namespace(file(self.file_name))
         except:
-            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", self.__class__)
+            self.valid = False
+            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
         
     def read_all_watches(self):
         """
@@ -445,7 +441,8 @@ class Watch_io:
         try:
             self.cfg = ini_namespace(file(self.file_name))
         except:
-            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
+            return False
   
         names = self.cfg._sections.keys()
         i = 0
@@ -463,7 +460,8 @@ class Watch_io:
         try:
             self.cfg = ini_namespace(file(self.file_name))
         except:
-            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
+            return False
         
         name = self.hide_brackets(name)    
         options = self.cfg._sections[name]._options.keys()
@@ -498,7 +496,8 @@ class Watch_io:
         try:
             cfg = ini_namespace(file(self.file_name))
         except:
-            return 0
+            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
+            return False
         
         if cfg:
             name = self.hide_brackets(values['name'])
@@ -508,7 +507,8 @@ class Watch_io:
                     f = open(self.file_name, "w")
                     f.write(str(cfg).strip()) #write the new configuration file
                 except IOError:
-                    self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
+                    self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", "specto")
+                    return False
                 finally:
                     f.close()
 
@@ -523,7 +523,8 @@ class Watch_io:
         try:
             cfg = ini_namespace(file(self.file_name))
         except:
-            return 0
+            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
+            return False
         
         if cfg:
             name = self.hide_brackets(name)
@@ -537,7 +538,8 @@ class Watch_io:
                     f = open(self.file_name, "w")
                     f.write(str(cfg).strip()) #write the new configuration file
                 except IOError:
-                    self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
+                    self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", "specto")
+                    return False
                 finally:
                     f.close()
         
@@ -552,7 +554,8 @@ class Watch_io:
             f = open(self.file_name, "w")
             cfgpr.write(open(self.file_name, "w"))
         except IOError:
-            self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", "specto")
+            return False
         finally:
             f.close()
         
@@ -567,6 +570,7 @@ class Watch_io:
             else:
                 return True
         except IOError:
+            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
             return False #this has to be an error
         
     def replace_name(self, name, new_name):
@@ -576,7 +580,7 @@ class Watch_io:
             f = open(self.file_name, "r")
             text = f.read()
         except IOError:
-            self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", "specto")
         except:
             f.close
         
@@ -590,7 +594,8 @@ class Watch_io:
                 f = open(self.file_name, "w")
                 f.write(text)
             except IOError:
-                self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", "specto")
+                return False
             finally:
                 f.close()
                 
@@ -605,28 +610,18 @@ class Watch_io:
         return name
     
     def encode_password(self, name, password):
-        if keyring == True:
+        if self.keyring == True:
             k = Keyring(name, "Specto " + name, "network") 
             k.set_credentials((name, password))
             password = "**keyring**"
-        else:
-            password = base64.b64encode(password)
         return password
         
     def decode_password(self, name, password):
-        if keyring == True:
+        if self.keyring == True:
             try:
                 k = Keyring(name, "Specto " + name, "network")
                 password = k.get_credentials()[1]
             except:
-                try:
-                    password = base64.b64decode(password)
-                except TypeError:#password was not yet encoded
-                    password = password
-        else:
-            try:
-                password = base64.b64decode(password)
-            except TypeError:#password was not yet encoded
                 password = password
         return password
     

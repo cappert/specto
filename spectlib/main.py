@@ -81,10 +81,11 @@ class Specto:
         self.GTK = GTK
                 
         self.connection_manager = conmgr.get_net_listener()
-        
+        self.use_keyring = self.specto_gconf.get_entry("use_keyring")
+
         #create the watch collection and add the watches
         self.watch_db = Watch_collection(self)
-        self.watch_io = Watch_io(self.FILE)
+        self.watch_io = Watch_io(self, self.FILE)
         values = self.watch_io.read_all_watches()
         try:
             self.watch_db.create(values)
@@ -111,7 +112,7 @@ class Specto:
             
         #listen for gconf keys
         self.specto_gconf.notify_entry("debug_mode", self.key_changed, "debug")
-
+        
         if self.GTK:
             if self.specto_gconf.get_entry("always_show_icon") == False:
                 #if the user has not requested the tray icon to be shown at all times, it's impossible that the notifier is hidden on startup, so we must show it.
@@ -168,12 +169,21 @@ class Specto:
             ["changed_sound", changed_sound],
             ["use_changed_sound", False],
             ["window_notifier_height", 500],
-            ["window_notifier_width", 500]
+            ["window_notifier_width", 500],
+            ["use_keyring", True]
             )
         for default_setting in self.default_settings:
             if self.specto_gconf.get_entry(default_setting[0]) == None: #the key has no user-defined value or does not exist
                 self.specto_gconf.set_entry(default_setting[0], default_setting[1])
 
+    def set_passwords(self, use_keyring):
+        self.watch_io.keyring = use_keyring
+        for watch in self.watch_db:
+            try:
+                self.watch_io.write_option(watch.name, "password", watch.password)
+            except:
+                pass
+                
     def check_instance(self):
         """ Check if specto is already running. """
         pidfile = self.SPECTO_DIR + "/" + "specto.pid"

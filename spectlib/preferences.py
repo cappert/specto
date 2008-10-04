@@ -142,6 +142,14 @@ class Preferences:
         else:
             self.specto.specto_gconf.set_entry("debug_mode", False)
             self.specto.DEBUG = False
+        
+        #use keyring?    
+        if self.wTree.get_widget("chkUseKeyring").get_active():
+            self.specto.specto_gconf.set_entry("use_keyring", True)
+            self.specto.set_passwords(True)
+        else:
+            self.specto.specto_gconf.set_entry("use_keyring", False)
+            self.specto.set_passwords(False)
             
     def get_preferences(self):
         """ Get the preferences from gconf. """
@@ -189,6 +197,11 @@ class Preferences:
             self.wTree.get_widget("chk_debug").set_active(True)
         else:
             self.wTree.get_widget("chk_debug").set_active(False)
+            
+        if self.specto.specto_gconf.get_entry("use_keyring") == True:
+            self.wTree.get_widget("chkUseKeyring").set_active(True)
+        else:
+            self.wTree.get_widget("chkUseKeyring").set_active(False)
     
     def help_clicked(self, widget):
         """ Show the help webpage. """

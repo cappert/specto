@@ -24,12 +24,14 @@
 from spectlib.watch import Watch
 import spectlib.gtkconfig
 import spectlib.util
+import spectlib.tools.web_proxy as web_proxy
 
 import StringIO, gzip
-import os, md5, urllib2, difflib, pprint
+import os, md5, difflib, pprint
 from httplib import HTTPMessage, BadStatusLine
 from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
+from urllib2 import URLError
 from spectlib.i18n import _
 import  time
 import socket #to add a timeout to the global process
@@ -86,7 +88,7 @@ class Watch_web_static(Watch):
         self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
         self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
         socket.setdefaulttimeout(10)# set globally the timeout to 10 seconds
-        request = urllib2.Request(self.uri, None, {"Accept-encoding" : "gzip"})
+        request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding" : "gzip"})
         cache_res = ""
         if (self.cached == 1) or (os.path.exists(self.cacheFullPath_)):
             self.cached = 1
@@ -97,10 +99,10 @@ class Watch_web_static(Watch):
             except:
                 cache_res = ""
         try:
-            response = urllib2.urlopen(request)
-        except (urllib2.URLError, BadStatusLine), e:
+            response = web_proxy.urllib2.urlopen(request)
+        except (URLError, BadStatusLine), e:
             self.error = True
-            self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)
+            self.specto.logger.log(_('%s') % str(e), "error", self.name)
         else:
             self.info_ = response.info()
             self.url2_ = response.geturl()
@@ -179,8 +181,7 @@ class Watch_web_static(Watch):
                 #if there is NO previously stored filesize
                     self.to_be_stored_filesize = self.new_filesize
 
-            if (self.url2_ != self.url_) and self.redirect == True:
-                self.write_uri()#it's uri, not url.
+            ### NOTE: do not write the redirect url in a config file!
             self.write_filesize()
             
         Watch.timer_update(self)
@@ -227,11 +228,6 @@ class Watch_web_static(Watch):
             return 0
         
         
-    def write_uri(self):
-        """ Write the uri in the watch list. """
-        self.specto.watch_io.write_option(self.name, 'uri', self.url2_)
-        self.url_ = self.url2_
-
     def remove_cache_files(self):
         os.unlink(self.cacheFullPath_)
         os.unlink(self.cacheFullPath2_)        
