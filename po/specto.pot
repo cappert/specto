@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: Fri Sep  5 10:37:22 2008\n"
+"POT-Creation-Date: Sat Oct  4 08:34:54 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgstr ""
 msgid "<b>Watch options</b>"
 msgstr ""
 
-#: ../data/glade/edit_watch.glade.h:5 ../spectlib/notifier.py:852
+#: ../data/glade/edit_watch.glade.h:5 ../spectlib/notifier.py:819
 msgid "Error log"
 msgstr ""
 
@@ -164,20 +164,21 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: ../data/glade/notifier.glade.h:10
-msgid "Notifications"
+#: ../data/glade/notifier.glade.h:10 ../spectlib/notifier.py:530
+#: ../spectlib/trayicon.py:136
+msgid "Mark as read"
 msgstr ""
 
 #: ../data/glade/notifier.glade.h:11
-msgid "Sorting"
+msgid "Notifications"
 msgstr ""
 
 #: ../data/glade/notifier.glade.h:12
-msgid "Visit the issue tracker"
+msgid "Sorting"
 msgstr ""
 
-#: ../data/glade/notifier.glade.h:13 ../spectlib/trayicon.py:141
-msgid "_Clear All"
+#: ../data/glade/notifier.glade.h:13
+msgid "Visit the issue tracker"
 msgstr ""
 
 #: ../data/glade/notifier.glade.h:14
@@ -204,11 +205,15 @@ msgstr ""
 msgid "_Import Watches"
 msgstr ""
 
-#: ../data/glade/notifier.glade.h:20
-msgid "_Refresh All"
+#: ../data/glade/notifier.glade.h:20 ../spectlib/trayicon.py:141
+msgid "_Mark all read"
 msgstr ""
 
 #: ../data/glade/notifier.glade.h:21
+msgid "_Refresh All"
+msgstr ""
+
+#: ../data/glade/notifier.glade.h:22
 msgid "_View"
 msgstr ""
 
@@ -221,51 +226,59 @@ msgid "<b>Display</b>"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:3
-msgid "<b>Sounds</b>"
+msgid "<b>Security</b>"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:4
-msgid "Always show the icon in the notification area"
+msgid "<b>Sounds</b>"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:5
-msgid "Display the notification window in the window list"
+msgid "Always show the icon in the notification area"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:6
-msgid "Duration (in seconds):"
+msgid "Display the notification window in the window list"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:7
-msgid "Enable debug mode and logging"
+msgid "Duration (in seconds):"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:8
-msgid "If activated, you will receive more information when running Specto from a terminal, and more information will be printed to the logs."
+msgid "Enable debug mode and logging"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:9
-msgid "Play this sound when a problem occurs:"
+msgid "If activated, you will receive more information when running Specto from a terminal, and more information will be printed to the logs."
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:10
-msgid "Play this sound when a watch has changed:"
+msgid "It is strongly recommended to use keyring password encryption. If you disable this option, your passwords will be saved in <b>plain text, unencrypted</b> in your watch list, and could be read by anyone gaining access to your system user account."
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:11
-msgid "Preferences"
+msgid "Play this sound when a problem occurs:"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:12
-msgid "Select a File"
+msgid "Play this sound when a watch has changed:"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:13
-msgid "Show balloons from the notification icon when a watch has changed"
+msgid "Preferences"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:14
-msgid "While in debug mode, Specto will provide more information in order to help you diagnose problems. Logging will save all this information to a log file. You can use this to help developers improve Specto."
+msgid "Select a File"
+msgstr ""
+
+#: ../data/glade/preferences.glade.h:15
+msgid "Show balloons from the notification icon when a watch has changed"
+msgstr ""
+
+#: ../data/glade/preferences.glade.h:16
+msgid "Use GNOME keyring to store passwords in encrypted format"
 msgstr ""
 
 #: ../spectlib/about.py:58
@@ -309,11 +322,11 @@ msgstr ""
 msgid "Edit watch: "
 msgstr ""
 
-#: ../spectlib/edit_watch.py:183 ../spectlib/notifier.py:654
+#: ../spectlib/edit_watch.py:183 ../spectlib/notifier.py:621
 msgid "Remove a watch"
 msgstr ""
 
-#: ../spectlib/edit_watch.py:184 ../spectlib/notifier.py:655
+#: ../spectlib/edit_watch.py:184 ../spectlib/notifier.py:622
 msgid ""
 "<big>Remove the watch \"%s\"?</big>\n"
 "This operation cannot be undone."
@@ -332,12 +345,12 @@ msgid "Select"
 msgstr ""
 
 #: ../spectlib/export_watch.py:86 ../spectlib/import_watch.py:90
-#: ../spectlib/notifier.py:765
+#: ../spectlib/notifier.py:732
 msgid "Type"
 msgstr ""
 
 #: ../spectlib/export_watch.py:91 ../spectlib/import_watch.py:95
-#: ../spectlib/notifier.py:774 ../spectlib/plugins/watch_mail_gmail.py:112
+#: ../spectlib/notifier.py:741 ../spectlib/plugins/watch_mail_gmail.py:113
 #: ../spectlib/plugins/watch_mail_imap.py:180
 #: ../spectlib/plugins/watch_mail_pop3.py:162
 #: ../spectlib/plugins/watch_system_file.py:168
@@ -345,17 +358,17 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_port.py:108
 #: ../spectlib/plugins/watch_system_process.py:93
 #: ../spectlib/plugins/watch_web_greader.py:108
-#: ../spectlib/plugins/watch_web_static.py:272
+#: ../spectlib/plugins/watch_web_static.py:268
 msgid "Name"
 msgstr ""
 
 #: ../spectlib/export_watch.py:98 ../spectlib/import_watch.py:102
-#: ../spectlib/notifier.py:783
+#: ../spectlib/notifier.py:750
 msgid "ID"
 msgstr ""
 
 #: ../spectlib/export_watch.py:105 ../spectlib/import_watch.py:109
-#: ../spectlib/notifier.py:790
+#: ../spectlib/notifier.py:757
 msgid "TYPE"
 msgstr ""
 
@@ -381,19 +394,19 @@ msgstr ""
 msgid "no GTK, activating console mode"
 msgstr ""
 
-#: ../spectlib/main.py:193
+#: ../spectlib/main.py:203
 msgid "Specto is already running!"
 msgstr ""
 
-#: ../spectlib/main.py:238
+#: ../spectlib/main.py:248
 msgid "Cannot quit yet"
 msgstr ""
 
-#: ../spectlib/main.py:242
+#: ../spectlib/main.py:252
 msgid "Murder!"
 msgstr ""
 
-#: ../spectlib/main.py:253
+#: ../spectlib/main.py:263
 msgid ""
 "<b><big>Specto is currently busy and cannot quit yet.</big></b>\n"
 "\n"
@@ -441,7 +454,7 @@ msgstr ""
 msgid "There was an error marking the watch status"
 msgstr ""
 
-#: ../spectlib/notifier.py:421 ../spectlib/watch.py:242
+#: ../spectlib/notifier.py:421 ../spectlib/watch.py:234
 msgid "No extra information available."
 msgstr ""
 
@@ -453,62 +466,54 @@ msgstr ""
 msgid "watch opened"
 msgstr ""
 
-#: ../spectlib/notifier.py:535
-msgid "Activate"
-msgstr ""
-
-#: ../spectlib/notifier.py:545
-msgid "Deactivate"
-msgstr ""
-
-#: ../spectlib/notifier.py:554
+#: ../spectlib/notifier.py:513
 msgid "Refresh"
 msgstr ""
 
-#: ../spectlib/notifier.py:564
+#: ../spectlib/notifier.py:523
 msgid "Edit"
 msgstr ""
 
-#: ../spectlib/notifier.py:571
-msgid "Clear"
+#: ../spectlib/notifier.py:539
+msgid "Remove"
 msgstr ""
 
-#: ../spectlib/notifier.py:606
+#: ../spectlib/notifier.py:573
 msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
 msgstr ""
 
-#: ../spectlib/notifier.py:607
+#: ../spectlib/notifier.py:574
 msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
 msgstr ""
 
-#: ../spectlib/notifier.py:608
+#: ../spectlib/notifier.py:575
 msgid "Single-click an existing watch to display information, and double-click it to open the content."
 msgstr ""
 
-#: ../spectlib/notifier.py:609
+#: ../spectlib/notifier.py:576
 msgid "Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers."
 msgstr ""
 
-#: ../spectlib/notifier.py:758
+#: ../spectlib/notifier.py:725
 msgid "Active"
 msgstr ""
 
-#: ../spectlib/notifier.py:807
+#: ../spectlib/notifier.py:774
 msgid "Tip of the Day:"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:33
+#: ../spectlib/plugins/watch_mail_gmail.py:34
 msgid "GMail"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:35
+#: ../spectlib/plugins/watch_mail_gmail.py:36
 #: ../spectlib/plugins/watch_mail_imap.py:34
 #: ../spectlib/plugins/watch_mail_pop3.py:37
 msgid "Mail"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:39
-#: ../spectlib/plugins/watch_mail_gmail.py:114
+#: ../spectlib/plugins/watch_mail_gmail.py:40
+#: ../spectlib/plugins/watch_mail_gmail.py:115
 #: ../spectlib/plugins/watch_mail_imap.py:38
 #: ../spectlib/plugins/watch_mail_imap.py:182
 #: ../spectlib/plugins/watch_mail_pop3.py:41
@@ -518,14 +523,14 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:40
+#: ../spectlib/plugins/watch_mail_gmail.py:41
 #: ../spectlib/plugins/watch_mail_imap.py:39
 #: ../spectlib/plugins/watch_mail_pop3.py:42
 #: ../spectlib/plugins/watch_web_greader.py:36
 msgid "Password"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:107
+#: ../spectlib/plugins/watch_mail_gmail.py:108
 #: ../spectlib/plugins/watch_mail_imap.py:139
 #: ../spectlib/plugins/watch_mail_pop3.py:121
 #: ../spectlib/plugins/watch_system_file.py:121
@@ -535,7 +540,7 @@ msgstr ""
 msgid "Watch: \"%s\" encountered an error"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:113
+#: ../spectlib/plugins/watch_mail_gmail.py:114
 #: ../spectlib/plugins/watch_mail_imap.py:181
 #: ../spectlib/plugins/watch_mail_pop3.py:163
 #: ../spectlib/plugins/watch_system_file.py:169
@@ -543,18 +548,18 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_port.py:109
 #: ../spectlib/plugins/watch_system_process.py:94
 #: ../spectlib/plugins/watch_web_greader.py:109
-#: ../spectlib/plugins/watch_web_static.py:273
+#: ../spectlib/plugins/watch_web_static.py:269
 msgid "Last changed"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:115
+#: ../spectlib/plugins/watch_mail_gmail.py:116
 #: ../spectlib/plugins/watch_mail_imap.py:183
 #: ../spectlib/plugins/watch_mail_pop3.py:165
 #: ../spectlib/plugins/watch_web_greader.py:111
 msgid "Unread messages"
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:122
+#: ../spectlib/plugins/watch_mail_gmail.py:123
 #: ../spectlib/plugins/watch_mail_imap.py:149
 #: ../spectlib/plugins/watch_mail_pop3.py:131
 msgid ""
@@ -563,7 +568,7 @@ msgid ""
 "... <b>totalling %d</b> unread mails."
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:132
+#: ../spectlib/plugins/watch_mail_gmail.py:133
 #: ../spectlib/plugins/watch_mail_imap.py:161
 #: ../spectlib/plugins/watch_mail_pop3.py:143
 msgid ""
@@ -572,7 +577,7 @@ msgid ""
 "... <b>totalling %d</b> unread mails."
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:141
+#: ../spectlib/plugins/watch_mail_gmail.py:142
 #: ../spectlib/plugins/watch_mail_imap.py:173
 #: ../spectlib/plugins/watch_mail_pop3.py:138
 #: ../spectlib/plugins/watch_mail_pop3.py:155
@@ -581,16 +586,16 @@ msgstr ""
 msgid "and others..."
 msgstr ""
 
-#: ../spectlib/plugins/watch_mail_gmail.py:150
-#: ../spectlib/plugins/watch_mail_gmail.py:164
+#: ../spectlib/plugins/watch_mail_gmail.py:151
+#: ../spectlib/plugins/watch_mail_gmail.py:165
 #: ../spectlib/plugins/watch_mail_imap.py:191
 #: ../spectlib/plugins/watch_mail_pop3.py:173
 #: ../spectlib/plugins/watch_system_file.py:146
 #: ../spectlib/plugins/watch_system_folder.py:235
 #: ../spectlib/plugins/watch_web_greader.py:147
 #: ../spectlib/plugins/watch_web_greader.py:161
-#: ../spectlib/plugins/watch_web_static.py:205
-#: ../spectlib/plugins/watch_web_static.py:217
+#: ../spectlib/plugins/watch_web_static.py:206
+#: ../spectlib/plugins/watch_web_static.py:218
 msgid "There was an error opening the file %s"
 msgstr ""
 
@@ -614,16 +619,15 @@ msgstr ""
 #: ../spectlib/plugins/watch_mail_pop3.py:119
 #: ../spectlib/plugins/watch_web_greader.py:78
 #: ../spectlib/plugins/watch_web_greader.py:103
-#: ../spectlib/plugins/watch_web_static.py:103
 msgid "Watch: \"%s\" encountered an error: %s"
 msgstr ""
 
 #: ../spectlib/plugins/watch_mail_imap.py:205
 #: ../spectlib/plugins/watch_mail_pop3.py:187
 #: ../spectlib/plugins/watch_system_file.py:131
-#: ../spectlib/plugins/watch_system_folder.py:215 ../spectlib/watch.py:429
-#: ../spectlib/watch.py:511 ../spectlib/watch.py:540 ../spectlib/watch.py:555
-#: ../spectlib/watch.py:579 ../spectlib/watch.py:593
+#: ../spectlib/plugins/watch_system_folder.py:215 ../spectlib/watch.py:424
+#: ../spectlib/watch.py:510 ../spectlib/watch.py:541 ../spectlib/watch.py:557
+#: ../spectlib/watch.py:583 ../spectlib/watch.py:597
 msgid "There was an error writing to the file %s"
 msgstr ""
 
@@ -778,7 +782,7 @@ msgid "Google Reader"
 msgstr ""
 
 #: ../spectlib/plugins/watch_web_greader.py:31
-#: ../spectlib/plugins/watch_web_static.py:41
+#: ../spectlib/plugins/watch_web_static.py:43
 msgid "Internet"
 msgstr ""
 
@@ -820,26 +824,26 @@ msgstr ""
 msgid "No unread items"
 msgstr ""
 
-#: ../spectlib/plugins/watch_web_static.py:39
+#: ../spectlib/plugins/watch_web_static.py:41
 msgid "Webpage/feed"
 msgstr ""
 
-#: ../spectlib/plugins/watch_web_static.py:261
+#: ../spectlib/plugins/watch_web_static.py:257
 msgid ""
 "The website, <b>%s</b>, has changed.\n"
 "Difference percentage: %s percent"
 msgstr ""
 
-#: ../spectlib/plugins/watch_web_static.py:274
-#: ../spectlib/plugins/watch_web_static.py:280
+#: ../spectlib/plugins/watch_web_static.py:270
+#: ../spectlib/plugins/watch_web_static.py:276
 msgid "URL"
 msgstr ""
 
-#: ../spectlib/plugins/watch_web_static.py:275
+#: ../spectlib/plugins/watch_web_static.py:271
 msgid "Error margin"
 msgstr ""
 
-#: ../spectlib/plugins/watch_web_static.py:281
+#: ../spectlib/plugins/watch_web_static.py:277
 msgid "Error margin (%)"
 msgstr ""
 
@@ -875,15 +879,16 @@ msgstr ""
 msgid "There was an error marking the watch as changed"
 msgstr ""
 
-#: ../spectlib/watch.py:228 ../spectlib/watch.py:229
+#: ../spectlib/watch.py:220 ../spectlib/watch.py:221
 msgid "No changes yet"
 msgstr ""
 
-#: ../spectlib/watch.py:295
+#: ../spectlib/watch.py:281
 msgid "Please enable plugin \"%s\" if you want to use the watch \"%s\"."
 msgstr ""
 
-#: ../spectlib/watch.py:436 ../spectlib/watch.py:448 ../spectlib/watch.py:466
+#: ../spectlib/watch.py:432 ../spectlib/watch.py:444 ../spectlib/watch.py:463
+#: ../spectlib/watch.py:499 ../spectlib/watch.py:526 ../spectlib/watch.py:573
 msgid "There was an error initializing config file %s"
 msgstr ""
 

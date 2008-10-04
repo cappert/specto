@@ -102,7 +102,7 @@ class Watch_web_static(Watch):
             response = web_proxy.urllib2.urlopen(request)
         except (URLError, BadStatusLine), e:
             self.error = True
-            self.specto.logger.log(_('%s') % str(e), "error", self.name)
+            self.specto.logger.log(('%s') % str(e), "error", self.name)
         else:
             self.info_ = response.info()
             self.url2_ = response.geturl()
