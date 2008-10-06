@@ -518,15 +518,7 @@ class Notifier:
         if watch.active == False:
             menuItem.set_sensitive(False)            
         menu.append(menuItem)
-            
-            
-        menuItem = gtk.ImageMenuItem(_("Edit"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate',self.edit_watch)  
-        menu.append(menuItem)
-
+        
         menuItem = gtk.ImageMenuItem(_("Clear"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
@@ -536,14 +528,23 @@ class Notifier:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
         
+        separator = gtk.SeparatorMenuItem()
+        menu.append(separator)
+             
+        menuItem = gtk.ImageMenuItem(_("Edit"))
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
+        menuItem.set_image(image)
+        menuItem.connect('activate',self.edit_watch)  
+        menu.append(menuItem)
+
         menuItem = gtk.ImageMenuItem(_("Remove"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
         menuItem.connect('activate',self.remove_watch)            
         menu.append(menuItem)
-        
-
+    
         menu.show_all()
         return menu
                 
