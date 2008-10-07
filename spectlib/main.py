@@ -175,14 +175,6 @@ class Specto:
         for default_setting in self.default_settings:
             if self.specto_gconf.get_entry(default_setting[0]) == None: #the key has no user-defined value or does not exist
                 self.specto_gconf.set_entry(default_setting[0], default_setting[1])
-
-    def set_passwords(self, use_keyring):
-        self.watch_io.keyring = use_keyring
-        for watch in self.watch_db:
-            try:
-                self.watch_io.write_option(watch.name, "password", watch.password)
-            except:
-                pass
                 
     def check_instance(self):
         """ Check if specto is already running. """

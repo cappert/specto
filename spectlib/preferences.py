@@ -146,10 +146,10 @@ class Preferences:
         #use keyring?    
         if self.wTree.get_widget("chkUseKeyring").get_active():
             self.specto.specto_gconf.set_entry("use_keyring", True)
-            self.specto.set_passwords(True)
+            self.specto.watch_db.convert_passwords(True)
         else:
             self.specto.specto_gconf.set_entry("use_keyring", False)
-            self.specto.set_passwords(False)
+            self.specto.watch_db.convert_passwords(False)
             
     def get_preferences(self):
         """ Get the preferences from gconf. """

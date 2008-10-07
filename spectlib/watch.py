@@ -379,7 +379,17 @@ class Watch_collection:
             new_refresh = ((refresh * 60) * 60) * 24 *1000
         
         return new_refresh
-        
+    
+    def convert_passwords(self, use_keyring):
+        self.specto.use_keyring = use_keyring
+        for watch in self.watch_db:
+            try:
+                watch.password
+            except:
+                pass
+            else:
+                self.specto.watch_io.write_option(watch.name, 'password', watch.password)
+            
     def get_interval(self, value):
         """ Get the interval between 2 checks. """
         if ((value / 60) / 60) / 24 / 1000 > 0:
@@ -409,12 +419,6 @@ class Watch_io:
         self.specto = specto
         self.file_name = file_name
         self.valid = True
-        
-        #use keyring
-        if self.specto.use_keyring == True and keyring == True:
-            self.keyring = True
-        else:
-            self.keyring = False
             
         if not os.path.exists(self.file_name):
             try:
@@ -547,6 +551,11 @@ class Watch_io:
 
     def remove_watch(self, name):
         """ Remove a watch from the configuration file. """
+        #try:
+        if self.specto.use_keyring == True and keyring == True:
+            k = Keyring(name, "Specto " + name, "network") 
+            k.remove_keyring(name)
+            
         try:
             cfgpr = ConfigParser()
             cfgpr.read(self.file_name)
@@ -610,14 +619,14 @@ class Watch_io:
         return name
     
     def encode_password(self, name, password):
-        if self.keyring == True:
+        if self.specto.use_keyring == True and keyring == True:
             k = Keyring(name, "Specto " + name, "network") 
             k.set_credentials((name, password))
             password = "**keyring**"
         return password
         
     def decode_password(self, name, password):
-        if self.keyring == True:
+        if self.specto.use_keyring == True and keyring == True:
             try:
                 k = Keyring(name, "Specto " + name, "network")
                 password = k.get_credentials()[1]
