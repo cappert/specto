@@ -81,7 +81,7 @@ class Watch_system_folder(Watch):
                 self.update_cache_file()#write the values (with the removed lines) to the cache file
             else:
                 self.error = True
-                self.specto.logger.log(_('Watch: "%s" is not set to a folder') % self.name, "error", self.__class__)
+                self.specto.logger.log(_('watch is not set to a folder'), "error", self.name)
                 
             #first time don't mark as changed
             if self.first_time == True:
@@ -89,7 +89,7 @@ class Watch_system_folder(Watch):
                 self.first_time = False            
         except:
             self.error = True
-            self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
+            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
 
         Watch.timer_update(self)
                 
@@ -144,7 +144,7 @@ class Watch_system_folder(Watch):
                 self.new_files.append(pathname)
                 self.get_file(pathname)
             else: # Unknown file type
-                self.specto.logger.log(_("Skipping %s") % pathname, "debug", self.__class__)
+                self.specto.logger.log(_("Skipping %s") % pathname, "debug", self.name)
                 
     def get_removed_files(self):
         """ Get the removed files. """
@@ -212,7 +212,7 @@ class Watch_system_folder(Watch):
             f = file(self.cache_file, "w")
             f.write(str(self.old_values))
         except:
-            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.name)
         finally:
             f.close()
         
@@ -232,7 +232,7 @@ class Watch_system_folder(Watch):
                 
             return text                
         except:
-            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
             
     def remove_cache_files(self):
         os.unlink(self.cache_file)          

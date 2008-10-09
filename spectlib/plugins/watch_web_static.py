@@ -102,7 +102,7 @@ class Watch_web_static(Watch):
             response = web_proxy.urllib2.urlopen(request)
         except (URLError, BadStatusLine), e:
             self.error = True
-            self.specto.logger.log(_('%s') % str(e), "error", self.name)
+            self.specto.logger.log(_('%s') % str(e), "warning", self.name)
         else:
             self.info_ = response.info()
             self.url2_ = response.geturl()
@@ -203,7 +203,7 @@ class Watch_web_static(Watch):
         try:
             f = open(self.cacheFullPath2_, "w")
         except:
-            self.specto.logger.log(_("There was an error opening the file %s") % self.cacheFullPath2_, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error opening the file %s") % self.cacheFullPath2_, "critical", self.name)
         else:
             f.write(str(self.to_be_stored_filesize))
             
@@ -215,7 +215,7 @@ class Watch_web_static(Watch):
             try:
                 f = open(self.cacheFullPath2_, "r")
             except:
-                self.specto.logger.log(_("There was an error opening the file %s") % self.cacheFullPath2_, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cacheFullPath2_, "critical", self.name)
             else:
                 size = f.read()
                 if size != "":

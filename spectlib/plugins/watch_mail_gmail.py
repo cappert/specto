@@ -102,10 +102,10 @@ class Watch_mail_gmail(Watch):
             self.write_cache_file()
         except URLError, e:
             self.error = True
-            self.specto.logger.log( ('%s') % str(e), "error", self.name)#this string is not translated
+            self.specto.logger.log( ('%s') % str(e), "warning", self.name)#this string is not translated
         except:
             self.error = True
-            self.specto.logger.log(_("Watch: \"%s\" encountered an error"), "error", self.name)
+            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
         Watch.timer_update(self)
         
     def get_gui_info(self):
@@ -148,7 +148,7 @@ class Watch_mail_gmail(Watch):
             try:
                 f = open(self.cache_file, "r")
             except:
-                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
             else:
                 for line in f:
                     info = line.split("&Separator;")
@@ -162,7 +162,7 @@ class Watch_mail_gmail(Watch):
         try:
             f = open(self.cache_file, "w")
         except:
-            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
         else:
             for email in self.mail_info:
                 f.write(email.author + "&Separator;" + email.subject + "&Separator;" + email.summary + "\n")    

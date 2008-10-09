@@ -97,8 +97,6 @@ class Preferences:
 
     def set_preferences(self):
         """ Save the preferences in gconf. """
-        self.specto.logger.log(_("Preferences saved."), "info", self.__class__)
-
         #save the path for the "changed" sound
         if self.wTree.get_widget("soundChanged").get_property('sensitive') == 1:
             self.specto.specto_gconf.set_entry("changed_sound", self.wTree.get_widget("soundChanged").get_filename())

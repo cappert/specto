@@ -453,7 +453,7 @@ class Notifier:
         try:
             watch = self.specto.watch_db[id]
             if watch.open_command != "":
-                self.specto.logger.log(_("watch opened"), "info", self.specto.watch_db[id].name)
+                self.specto.logger.log(_("Watch opened"), "info", self.specto.watch_db[id].name)
                 os.system(watch.open_command + " &")
         except:
             res = False

@@ -75,7 +75,7 @@ class Watch_web_greader(Watch):
             unread, info_friends, info = greader.refresh()
             if unread[0] == -1:
                 self.error = True
-                self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, unread[1]), "error", self.__class__)
+                self.specto.logger.log(('%s') % unread[1]), "error", self.name)
             elif unread[0] == 1:#no unread items, we need to clear the watch
                     self.unreadMsg = unread[1]
                     self.actually_changed = False
@@ -100,7 +100,7 @@ class Watch_web_greader(Watch):
                     
         except:
             self.error = True
-            self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, "unknown error"), "error", self.__class__)
+            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
         Watch.timer_update(self)
         
     def get_gui_info(self):
@@ -144,7 +144,7 @@ class Watch_web_greader(Watch):
             try:
                 f = open(self.cache_file, "r")
             except:
-                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
             else:
                 for line in f:
                     info = line.split("&Separator;")
@@ -158,7 +158,7 @@ class Watch_web_greader(Watch):
         try:
             f = open(self.cache_file, "w")
         except:
-            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
         else:
             for feed in self.news_info:
                 f.write(feed.name + "&Separator;" + str(feed.messages) + "\n")

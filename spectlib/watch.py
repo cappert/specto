@@ -518,10 +518,7 @@ class Watch_io:
             del values['name']
             for option, value  in values.iteritems():
                 self.write_option(name, option, value)
-                
-            #except:
-            #    self.specto.logger.log(_("There was an reading the watches from %s") % self.file_name, "critical", self.__class__)
-                
+                          
     def write_option(self, name, option, value):
         try:
             cfg = ini_namespace(file(self.file_name))
