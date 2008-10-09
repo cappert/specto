@@ -383,11 +383,9 @@ class Watch_collection:
     def convert_passwords(self, use_keyring):
         self.specto.use_keyring = use_keyring
         for watch in self.watch_db:
-            try:
-                watch.password
-            except:
-                pass
-            else:
+            if 'password' in watch.values:
+                if use_keyring == False:
+                    self.specto.watch_io.remove_keyring(watch.name)
                 self.specto.watch_io.write_option(watch.name, 'password', watch.password)
             
     def get_interval(self, value):
@@ -486,8 +484,9 @@ class Watch_io:
     
     def read_option(self, name, option):
         """ Read one option from a watch """
+        cfg = ini_namespace(file(self.file_name))
         try:
-            return self.cfg[name][option]
+            return cfg[name][option]
         except:
             return 0
         
@@ -546,15 +545,18 @@ class Watch_io:
                     return False
                 finally:
                     f.close()
-        
-        
+                    
+    def remove_keyring(self, name):
+        try:
+            k = Keyring(name, "Specto " + name, "network")
+            password = self.read_option(name, "password")
+            k.remove_keyring(password)
+        except:
+            pass
 
     def remove_watch(self, name):
         """ Remove a watch from the configuration file. """
-        #try:
-        if self.specto.use_keyring == True and keyring == True:
-            k = Keyring(name, "Specto " + name, "network") 
-            k.remove_keyring(name)
+        self.remove_keyring(name)
             
         try:
             cfgpr = ConfigParser()
@@ -621,8 +623,8 @@ class Watch_io:
     def encode_password(self, name, password):
         if self.specto.use_keyring == True and keyring == True:
             k = Keyring(name, "Specto " + name, "network") 
-            k.set_credentials((name, password))
-            password = "**keyring**"
+            id = k.set_credentials((name, password))
+            password = "keyring:" + str(id)
         return password
         
     def decode_password(self, name, password):

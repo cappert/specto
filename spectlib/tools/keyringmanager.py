@@ -50,12 +50,16 @@ class Keyring(object):
 		attrs = {"server": self._server, "protocol": self._protocol}
 		items = gkey.find_items_sync(gkey.ITEM_NETWORK_PASSWORD, attrs)
 		return (items[0].attributes["user"], items[0].secret)
+		
+	def remove_keyring(self, password):
+		id = password.split(":")[1]
+		gkey.item_delete_sync(self._keyring, int(id))
 
 	def set_credentials(self, (user, pw)):
 		attrs = {
 			"user": user,
 			"server": self._server,
 			"protocol": self._protocol,
-        }
-		gkey.item_create_sync(gkey.get_default_keyring_sync(),
-			gkey.ITEM_NETWORK_PASSWORD, self._name, attrs, pw, True)	
+        	}
+		id = gkey.item_create_sync(gkey.get_default_keyring_sync(), gkey.ITEM_NETWORK_PASSWORD, self._name, attrs, pw, True)
+		return id
