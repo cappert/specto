@@ -86,7 +86,7 @@ class Watch_mail_imap(Watch):
             server.login(self.username, self.password)                
         except imaplib.IMAP4.error, e:
             self.error = True
-            self.specto.logger.log(('%s') % str(e)), "warning", self.name)
+            self.specto.logger.log(('%s') % str(e), "warning", self.name)
         else:
             try:
                 if folder <> "":

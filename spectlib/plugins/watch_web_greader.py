@@ -75,7 +75,7 @@ class Watch_web_greader(Watch):
             unread, info_friends, info = greader.refresh()
             if unread[0] == -1:
                 self.error = True
-                self.specto.logger.log(('%s') % unread[1]), "error", self.name)
+                self.specto.logger.log(('%s') % unread[1], "error", self.name)
             elif unread[0] == 1:#no unread items, we need to clear the watch
                     self.unreadMsg = unread[1]
                     self.actually_changed = False
