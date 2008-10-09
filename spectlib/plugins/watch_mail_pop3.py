@@ -77,18 +77,20 @@ class Watch_mail_pop3(Watch):
         """ Check for new mails on your pop3 account. """        
         try:
             if self.ssl == True:
-                if port <> -1:
+                if self.port <> -1:
                     s = poplib.POP3_SSL(self.host, self.port)
                 else:
                     s = poplib.POP3_SSL(self.host)
             else:
-                if port <> -1:
+                if self.port <> -1:
                     s = poplib.POP3(self.host, self.port)
                 else:
                     s = poplib.POP3(self.host)
         except poplib.error_protoerror, e:
             self.error = True
             self.specto.logger.log( ('%s') % str(e), "warning", self.name)
+        except:
+            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
         else:
             try:
                 s.user(self.username)
