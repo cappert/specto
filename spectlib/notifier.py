@@ -518,8 +518,8 @@ class Notifier:
         if watch.active == False:
             menuItem.set_sensitive(False)            
         menu.append(menuItem)
-        
-        menuItem = gtk.ImageMenuItem(_("Clear"))
+
+        menuItem = gtk.ImageMenuItem(_("Mark as read"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
