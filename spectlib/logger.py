@@ -242,6 +242,7 @@ class Logger:
                 self.log_error()
             else:
                 log.critical(message)
+                self.log_error()
                                 
     def read_log(self):
         """ Read the log file. """

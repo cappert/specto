@@ -118,7 +118,7 @@ class Watch_system_file(Watch):
                 self.first_time = False     
         except:
             self.error = True
-            self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
+            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
         
         Watch.timer_update(self)
         
@@ -128,7 +128,7 @@ class Watch_system_file(Watch):
             f = file(self.cache_file, "w")
             f.write(str(self.info))
         except:
-            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "error", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "error", self.name)
         finally:
             f.close()
         
@@ -143,7 +143,7 @@ class Watch_system_file(Watch):
                 self.first_time = True
                 
         except:
-            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
             
     def remove_cache_files(self):
         os.unlink(self.cache_file)

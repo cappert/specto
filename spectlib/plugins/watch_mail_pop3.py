@@ -77,18 +77,20 @@ class Watch_mail_pop3(Watch):
         """ Check for new mails on your pop3 account. """        
         try:
             if self.ssl == True:
-                if port <> -1:
+                if self.port <> -1:
                     s = poplib.POP3_SSL(self.host, self.port)
                 else:
                     s = poplib.POP3_SSL(self.host)
             else:
-                if port <> -1:
+                if self.port <> -1:
                     s = poplib.POP3(self.host, self.port)
                 else:
                     s = poplib.POP3(self.host)
         except poplib.error_protoerror, e:
             self.error = True
-            self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)
+            self.specto.logger.log( ('%s') % str(e), "warning", self.name)
+        except:
+            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
         else:
             try:
                 s.user(self.username)
@@ -116,9 +118,9 @@ class Watch_mail_pop3(Watch):
                                         
             except poplib.error_proto, e:
                 self.error = True
-                self.specto.logger.log(_('Watch: "%s" encountered an error: %s') % (self.name, str(e)), "error", self.__class__)                
+                self.specto.logger.log( ('%s') % str(e), "warning", self.name)                
             except:
-                self.specto.logger.log(_('Watch: "%s" encountered an error') % self.name, "error", self.__class__)
+                self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
@@ -170,7 +172,7 @@ class Watch_mail_pop3(Watch):
             try:
                 f = open(self.cache_file, "r")
             except:
-                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.__class__)
+                self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
             else:
                 for line in f:
                     info = line.split("&Separator;")
@@ -184,7 +186,7 @@ class Watch_mail_pop3(Watch):
         try:
             f = open(self.cache_file, "w")
         except:
-            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.__class__)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.name)
         else:
             for email in self.mail_info:
                 f.write(email.id + "&Separator;" + email.author + "&Separator;" + email.subject + "&Separator;" + email.date + "\n")    

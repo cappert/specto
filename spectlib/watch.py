@@ -379,7 +379,15 @@ class Watch_collection:
             new_refresh = ((refresh * 60) * 60) * 24 *1000
         
         return new_refresh
-        
+    
+    def convert_passwords(self, use_keyring):
+        self.specto.use_keyring = use_keyring
+        for watch in self.watch_db:
+            if 'password' in watch.values:
+                if use_keyring == False:
+                    self.specto.watch_io.remove_keyring(watch.name)
+                self.specto.watch_io.write_option(watch.name, 'password', watch.password)
+            
     def get_interval(self, value):
         """ Get the interval between 2 checks. """
         if ((value / 60) / 60) / 24 / 1000 > 0:
@@ -409,12 +417,6 @@ class Watch_io:
         self.specto = specto
         self.file_name = file_name
         self.valid = True
-        
-        #use keyring
-        if self.specto.use_keyring == True and keyring == True:
-            self.keyring = True
-        else:
-            self.keyring = False
             
         if not os.path.exists(self.file_name):
             try:
@@ -482,8 +484,9 @@ class Watch_io:
     
     def read_option(self, name, option):
         """ Read one option from a watch """
+        cfg = ini_namespace(file(self.file_name))
         try:
-            return self.cfg[name][option]
+            return cfg[name][option]
         except:
             return 0
         
@@ -515,10 +518,7 @@ class Watch_io:
             del values['name']
             for option, value  in values.iteritems():
                 self.write_option(name, option, value)
-                
-            #except:
-            #    self.specto.logger.log(_("There was an reading the watches from %s") % self.file_name, "critical", self.__class__)
-                
+                          
     def write_option(self, name, option, value):
         try:
             cfg = ini_namespace(file(self.file_name))
@@ -542,11 +542,19 @@ class Watch_io:
                     return False
                 finally:
                     f.close()
-        
-        
+                    
+    def remove_keyring(self, name):
+        try:
+            k = Keyring(name, "Specto " + name, "network")
+            password = self.read_option(name, "password")
+            k.remove_keyring(password)
+        except:
+            pass
 
     def remove_watch(self, name):
         """ Remove a watch from the configuration file. """
+        self.remove_keyring(name)
+            
         try:
             cfgpr = ConfigParser()
             cfgpr.read(self.file_name)
@@ -610,14 +618,14 @@ class Watch_io:
         return name
     
     def encode_password(self, name, password):
-        if self.keyring == True:
+        if self.specto.use_keyring == True and keyring == True:
             k = Keyring(name, "Specto " + name, "network") 
-            k.set_credentials((name, password))
-            password = "**keyring**"
+            id = k.set_credentials((name, password))
+            password = "keyring:" + str(id)
         return password
         
     def decode_password(self, name, password):
-        if self.keyring == True:
+        if self.specto.use_keyring == True and keyring == True:
             try:
                 k = Keyring(name, "Specto " + name, "network")
                 password = k.get_credentials()[1]

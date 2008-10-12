@@ -90,11 +90,11 @@ class Specto:
         try:
             self.watch_db.create(values)
         except AttributeError, error_fields:
-            self.logger.log("Specto could not create a corrupted watch.", "critical", "Specto")
+            self.logger.log("Specto could not create a corrupted watch.", "critical", "specto")
 
         if sys.argv[1:]:
             if "--console" in sys.argv[1:][0]:
-                self.logger.log("Console mode enabled.", "debug", "Specto")
+                self.logger.log("Console mode enabled.", "debug", "specto")
                 self.GTK = False
                 self.CONSOLE = True
                 try:
@@ -175,14 +175,6 @@ class Specto:
         for default_setting in self.default_settings:
             if self.specto_gconf.get_entry(default_setting[0]) == None: #the key has no user-defined value or does not exist
                 self.specto_gconf.set_entry(default_setting[0], default_setting[1])
-
-    def set_passwords(self, use_keyring):
-        self.watch_io.keyring = use_keyring
-        for watch in self.watch_db:
-            try:
-                self.watch_io.write_option(watch.name, "password", watch.password)
-            except:
-                pass
                 
     def check_instance(self):
         """ Check if specto is already running. """
@@ -200,7 +192,7 @@ class Specto:
             p=os.system("ps --no-heading --pid " + pid)
             p_name=os.popen("ps -f --pid " + pid).read()
             if p == 0 and "specto" in p_name:
-                self.logger.log(_("Specto is already running!"), "critical", self.__class__)
+                self.logger.log(_("Specto is already running!"), "critical", "specto")
                 sys.exit(0)
             
         #write the pid file

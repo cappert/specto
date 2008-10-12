@@ -453,7 +453,7 @@ class Notifier:
         try:
             watch = self.specto.watch_db[id]
             if watch.open_command != "":
-                self.specto.logger.log(_("watch opened"), "info", self.specto.watch_db[id].name)
+                self.specto.logger.log(_("Watch opened"), "info", self.specto.watch_db[id].name)
                 os.system(watch.open_command + " &")
         except:
             res = False
@@ -518,14 +518,6 @@ class Notifier:
         if watch.active == False:
             menuItem.set_sensitive(False)            
         menu.append(menuItem)
-            
-            
-        menuItem = gtk.ImageMenuItem(_("Edit"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate',self.edit_watch)  
-        menu.append(menuItem)
 
         menuItem = gtk.ImageMenuItem(_("Mark as read"))
         image = gtk.Image()
@@ -536,14 +528,23 @@ class Notifier:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
         
+        separator = gtk.SeparatorMenuItem()
+        menu.append(separator)
+             
+        menuItem = gtk.ImageMenuItem(_("Edit"))
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
+        menuItem.set_image(image)
+        menuItem.connect('activate',self.edit_watch)  
+        menu.append(menuItem)
+
         menuItem = gtk.ImageMenuItem(_("Remove"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
         menuItem.connect('activate',self.remove_watch)            
         menu.append(menuItem)
-        
-
+    
         menu.show_all()
         return menu
                 
@@ -919,14 +920,20 @@ class Notifier:
     def generate_add_menu(self):
         menu_dict = self.specto.watch_db.plugin_menu
         self.add_menu = gtk.Menu()
+        self.add_menu_ = gtk.Menu()
         
         for parent in menu_dict.keys():
             menuItem = gtk.MenuItem(parent)
             menuItem.show()
             
+            menuItem_ = gtk.MenuItem(parent)
+            menuItem_.show()            
+            
             self.add_menu.append(menuItem)
+            self.add_menu_.append(menuItem_)
             
             childmenu = gtk.Menu()        
+            childmenu_ = gtk.Menu()  
             for child in menu_dict[parent]:
                 childmenuItem = gtk.ImageMenuItem(child[0])
                 childmenu.append(childmenuItem)
@@ -936,9 +943,20 @@ class Notifier:
                 childmenuItem.set_image(img)
                 childmenuItem.connect('button-press-event', self.show_add_watch, child[2])
                 childmenuItem.show()
+                
+                childmenuItem_ = gtk.ImageMenuItem(child[0])
+                childmenu_.append(childmenuItem_)
+                img = gtk.Image()
+                image = self.get_icon(child[1], 0, False)
+                img.set_from_pixbuf(image)
+                childmenuItem_.set_image(img)
+                childmenuItem_.connect('button-press-event', self.show_add_watch, child[2])
+                childmenuItem_.show()                
             menuItem.set_submenu(childmenu)
+            menuItem_.set_submenu(childmenu_)
+        
         self.wTree.get_widget("button_add").set_menu(self.add_menu)
-        self.wTree.get_widget("add").set_submenu(self.add_menu)
+        self.wTree.get_widget("add").set_submenu(self.add_menu_)
 
     def position_add_watch_menu_correctly(self, *args):
         """ This is a hack, so that the popup menu appears left-aligned, right below the Add button """
