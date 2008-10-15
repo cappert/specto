@@ -84,4 +84,4 @@ class NotificationToast:
             try:
                 self.toast.show()
             except:
-                self.specto.logger.log("Can't send Notification message. Check your DBUS!", "error", self.specto)
+                self.specto.logger.log(_("Can't send Notification message. Check your DBUS!"), "error", self.specto)
