@@ -86,11 +86,6 @@ class Specto:
         #create the watch collection and add the watches
         self.watch_db = Watch_collection(self)
         self.watch_io = Watch_io(self, self.FILE)
-        values = self.watch_io.read_all_watches()
-        try:
-            self.watch_db.create(values)
-        except AttributeError, error_fields:
-            self.logger.log("Specto could not create a corrupted watch.", "critical", "specto")
 
         if sys.argv[1:]:
             if "--console" in sys.argv[1:][0]:
@@ -102,18 +97,13 @@ class Specto:
                 except:
                     args = ""
                 self.console = Console(self, args)
-                self.console.start_watches()
                                 
         elif self.GTK:
             self.GTK = True
             self.CONSOLE = False
             self.icon_theme = gtk.icon_theme_get_default()
-            self.notifier = Notifier(self)
-            
-        #listen for gconf keys
-        self.specto_gconf.notify_entry("debug_mode", self.key_changed, "debug")
-        
-        if self.GTK:
+            self.notifier = Notifier(self)        
+
             if self.specto_gconf.get_entry("always_show_icon") == False:
                 #if the user has not requested the tray icon to be shown at all times, it's impossible that the notifier is hidden on startup, so we must show it.
                 self.notifier_hide = False
@@ -123,16 +113,27 @@ class Specto:
             elif self.specto_gconf.get_entry("show_notifier")==False:
                 self.notifier_hide = True
             else:#just in case the entry was never created in gconf
-                self.notifier_keep_hidden = False
+                self.notifier_keep_hidden = False        
+    
+        #listen for gconf keys
+        self.specto_gconf.notify_entry("debug_mode", self.key_changed, "debug")
+        
+        values = self.watch_io.read_all_watches()
+        try:
+            self.watch_db.create(values)
+        except AttributeError, error_fields:
+            self.logger.log("Specto could not create a corrupted watch.", "critical", "specto")
             
+            
+        if self.GTK:    
             for watch in self.watch_db:
                 self.notifier.add_notifier_entry(watch.id)
                 
             self.notifier.refresh_all_watches()
             
-        if self.GTK:
             gtk.main()
         else:
+            self.console.start_watches()
             try:
                 self.go = gobject.MainLoop()
                 self.go.run()
