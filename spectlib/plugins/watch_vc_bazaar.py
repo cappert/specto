@@ -65,6 +65,7 @@ class Watch_vc_bazaar(Watch):
             
         self.local_branch_ = 0
         self.remote_branch_ = 0
+        self.remote_branch_label = ""
         self.local_extra = []
         self.remote_extra = []
         self.cache_file = os.path.join(self.specto.CACHE_DIR, "bazaar" + self.folder.replace("/","_") + ".cache")            
@@ -75,15 +76,16 @@ class Watch_vc_bazaar(Watch):
             self.read_cache_file()
             local_branch = Branch.open_containing(self.folder)[0]
             remote_branch = Branch.open_containing(local_branch.get_parent())[0]
-            self.local_extra, self.remote_extra = find_unmerged(local_branch,remote_branch)
+            self.remote_branch_label = local_branch.get_parent().replace("%7E", "~")
+            self.local_extra, self.remote_extra = find_unmerged(local_branch, remote_branch)
             
             if len(self.local_extra) <> 0:
-                if self.local_extra[len(self.local_extra) - 1][0] > self.local_branch_:
+                if int(self.local_extra[len(self.local_extra) - 1][0]) > self.local_branch_:
                     self.actually_changed = True
                     self.write_cache_file()
             
             if len(self.remote_extra) <> 0:
-                if self.remote_extra[len(self.remote_extra) - 1][0] > self.remote_branch_:
+                if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
                     self.actually_changed = True
                     self.write_cache_file()
                 
@@ -166,4 +168,5 @@ class Watch_vc_bazaar(Watch):
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Bazaar folder'), self.folder),
+                (_('Main branch'), self.remote_branch_label)
                 ]        
