@@ -107,6 +107,9 @@ class Tray:
         """ Call the main function to show the about window. """
         self.notifier.show_about()
         
+    def refresh(self, widget):
+        self.notifier.refresh_all_watches()        
+        
     def show_notifier(self, widget):
         """ Call the main function to show the notifier window. """
         if self.specto.specto_gconf.get_entry("always_show_icon") == True:
@@ -134,11 +137,20 @@ class Tray:
         self.item_about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
         self.item_quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         self.item_clear = gtk.MenuItem(_("Mark as read"), True)
+        self.item_refresh = gtk.ImageMenuItem(_("Refresh all"))
+        image = gtk.image_new_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
+        self.item_refresh.set_image(image)
+        image.show()
+        
         
         #create submenu for changed watches
         self.sub_menu = gtk.Menu()
 
-        self.sub_item_clear = gtk.MenuItem(_("_Mark all read"), True)
+        self.sub_item_clear = gtk.ImageMenuItem(_("_Mark all read"), True)
+        image = gtk.image_new_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
+        self.sub_item_clear.set_image(image)
+        image.show()       
+         
         self.sub_item_clear.connect('activate', self.specto.notifier.clear_all)
         self.sub_menu.append(self.sub_item_clear)
         
@@ -155,6 +167,7 @@ class Tray:
 
         # Connect the events
         self.item_show.connect( 'activate', self.show_notifier)
+        self.item_refresh.connect ('activate', self.refresh)
         self.item_pref.connect( 'activate', self.show_preferences)
         self.item_help.connect( 'activate', self.show_help)
         self.item_about.connect( 'activate', self.show_about)
@@ -166,6 +179,7 @@ class Tray:
         # Append menu items to the menu
         self.menu.append( self.item_show)
         self.menu.append( gtk.SeparatorMenuItem())
+        self.menu.append( self.item_refresh)
         self.menu.append( self.item_clear)
         self.menu.append( gtk.SeparatorMenuItem())
         self.menu.append( self.item_pref)
