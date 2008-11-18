@@ -4,7 +4,7 @@
 #
 #       watch_mail_gmail.py
 #
-# Copyright (c) 2005-2007, Jean-François Fortin Tam
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public

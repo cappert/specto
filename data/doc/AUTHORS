@@ -1,57 +1,19 @@
-Specto - unobtrusive notification
-=================================
-For general comments/concerns, you should be using the mailing list 
-(specto-devel@lists.sourceforge.net) or the "specto" room on conference.jabber.org
-See http://specto.ecchi.ca/Developers/List for a more current list. If you do not wish
-to be listed here or in the wiki, feel free to edit this file or the wiki, or email 'Kiddo'.
+Project and copyright owners
+----------------------------
+Jean-François "Kiddo" Fortin Tam
+Wout Clymans
 
-Current Developers:
--------------------------
+Developers
+-----------
+Jean-François "Kiddo" Fortin Tam
+Wout Clymans
 
-Jean-François 'Kiddo' Fortin Tam - Lead Developer
-        <nekohayo AT gmail DOT com>
-        Jabber: kiddo AT jabber DOT org
-
-Pascal Potvin - Developer
-        <pascal DOT potvin AT gmail DOT com>
-
-Wout Clymans - Developer
-        <woutclymans AT pi DOT be>
-        Jabber: woutc AT jabber DOT org
-
-Giulio Lotti - Developer
-        <dullgiulio AT gmail DOT com>
-        Jabber: dullboy AT jabber DOT org
-
-Thomas McColgan - Developer
-        <thomas DOT mccolgan AT gmx DOT de>
-        Jabber: phreeza AT jabber DOT org
-
-Christopher Halse Rogers - Developer
-        <chalserogers AT gmail DOT com>
-        Jabber: chalserogers AT gmail DOT com
-        MSN: deflectoracc AT hotmail DOT com
-        IRC: RAOF on Freenode
-
-Crazy Patch Writers:
--------------------------
-
-Conor 'majikstreet' Callahan
-        <majikstreet AT gmail DOT com>
-        Jabber: majikstreet AT jabber DOT org
-        IRC: majikstreet
-
-'Trygvebw'
-        <majikstreet AT gmail DOT com>
-        Jabber: majikstreet AT jabber DOT org
-        IRC: majikstreet
-
-Adrian 'Hikaru79' Petrescu
-
-Status Unknown:
-----------------------
-
-Daejuan Jacobs
-Jeffrey Schroeder
-Michael Mealling
-Travis B. Hartwell
+Past contributors
+-----------------
+Christopher Halse Rogers
+Pascal Potvin
+Giulio "Dullboy" Lotti
+Thomas McColgan
+Conor "Majikstreet" Callahan
+"Trygvebw"
+Adrian "Hikaru79" Petrescu
