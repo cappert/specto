@@ -137,7 +137,7 @@ class Tray:
         self.item_about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
         self.item_quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         self.item_clear = gtk.MenuItem(_("Mark as read"), True)
-        self.item_refresh = gtk.ImageMenuItem(_("Refresh all"))
+        self.item_refresh = gtk.ImageMenuItem(_("Refresh All"))
         image = gtk.image_new_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
         self.item_refresh.set_image(image)
         image.show()
@@ -158,12 +158,15 @@ class Tray:
         
         for watch in self.specto.watch_db:
             if watch.changed == True:
-                self.sub_item_clear = gtk.MenuItem(watch.name, True)
+                self.sub_item_clear = gtk.ImageMenuItem(watch.name, True)
+                image = gtk.image_new_from_pixbuf(self.notifier.get_icon(watch.icon, 0, False))
+                self.sub_item_clear.set_image(image)
                 self.sub_item_clear.connect('activate', self.specto.notifier.clear_watch, watch.id)
                 self.sub_menu.append( self.sub_item_clear)
-                
+                            
         self.sub_menu.show_all()        
         self.item_clear.set_submenu(self.sub_menu)
+        
 
         # Connect the events
         self.item_show.connect( 'activate', self.show_notifier)
