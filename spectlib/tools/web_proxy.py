@@ -21,9 +21,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 import urllib2
+import socket #to add a timeout to the global process 
 from spectlib.tools.specto_gconf import Specto_gconf
 
 proxy_gconf = Specto_gconf("/system/http_proxy")
+socket.setdefaulttimeout(10)# set globally the timeout to 10
 
 if proxy_gconf.get_entry("use_http_proxy"):
     http_proxy = "http://%s:%s" % (proxy_gconf.get_entry("host"), proxy_gconf.get_entry("port")) 

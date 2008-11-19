@@ -4,7 +4,7 @@
 #
 #       watch_sn_facebook.py
 #
-# Copyright (c) 2005-2007, Jean-François Fortin Tam
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -24,12 +24,12 @@
 from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
+import spectlib.tools.web_proxy as web_proxy
 from spectlib.i18n import _
-import sys, os
 
+import sys, os
 import formatter
 import htmllib
-import urllib2
 import re
 from cStringIO import StringIO
 
@@ -240,12 +240,12 @@ class Watch_sn_facebook(Watch):
                 
 class Facebook():
     def __init__(self, email, password):
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
-        urllib2.install_opener(opener)
-        urllib2.urlopen(urllib2.Request("https://login.facebook.com/login.php?m&amp;next=http%3A%2F%2Fm.facebook.com%2Fhome.php","email=%s&pass=%s&login=Login" % (email, password)))                                        
+        opener = web_proxy.urllib2.build_opener(web_proxy.urllib2.HTTPCookieProcessor())
+        web_proxy.urllib2.install_opener(opener)
+        web_proxy.urllib2.urlopen(web_proxy.urllib2.Request("https://login.facebook.com/login.php?m&amp;next=http%3A%2F%2Fm.facebook.com%2Fhome.php","email=%s&pass=%s&login=Login" % (email, password)))                                        
         
     def get_messages(self):
-        connection = urllib2.urlopen("http://m.facebook.com/inbox/")
+        connection = web_proxy.urllib2.urlopen("http://m.facebook.com/inbox/")
         messages_ = connection.read().split("<hr />")
         messages = []
         title = ""
@@ -299,7 +299,7 @@ class Facebook():
         
     def get_notifications(self):
         notifications = []
-        connection = urllib2.urlopen("http://m.facebook.com/notifications.php")
+        connection = web_proxy.urllib2.urlopen("http://m.facebook.com/notifications.php")
         messages = connection.read().split("<hr />")
         for line in messages:
           
@@ -317,7 +317,7 @@ class Facebook():
 
     def get_requests(self):
         requests = []
-        connection = urllib2.urlopen("http://m.facebook.com/reqs.php")
+        connection = web_proxy.urllib2.urlopen("http://m.facebook.com/reqs.php")
         messages = connection.read().split("<td class=\"sec\">")
         for line in messages:
         
@@ -334,7 +334,7 @@ class Facebook():
         
     def get_wall(self):
         walls = []
-        connection = urllib2.urlopen("http://m.facebook.com/wall.php")
+        connection = web_proxy.urllib2.urlopen("http://m.facebook.com/wall.php")
         messages = connection.read().split("<hr />")
         for line in messages:
           
