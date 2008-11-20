@@ -74,8 +74,21 @@ class Log_dialog:
         self.read_log() 
         
         self.logwindow=gtk.TextBuffer(None)
-        self.wTree.get_widget("log_field").set_buffer(self.logwindow) 
-        self.logwindow.set_text(self.log)
+        self.log_buffer = self.wTree.get_widget("log_field").get_buffer()
+        self.log_buffer.create_tag("ERROR", foreground="#a40000")
+        self.log_buffer.create_tag("INFO", foreground="#4e9a06")
+        self.log_buffer.create_tag("WARNING", foreground="#c4a000")
+        
+        start = self.log_buffer.get_start_iter()
+        end = self.log_buffer.get_end_iter()
+        self.log_buffer.delete(start, end)
+        
+        iter = self.log_buffer.get_iter_at_offset(0)   
+        self.log = self.log.split("\n")         
+        for line in self.log:
+            tag = line.split(" - ")[1].strip()
+            self.log_buffer.insert_with_tags_by_name(iter, line + "\n", tag)
+    
         
     def save(self, widget):
         """ Save the text in the logwindow. """
