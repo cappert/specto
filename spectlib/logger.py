@@ -86,8 +86,9 @@ class Log_dialog:
         iter = self.log_buffer.get_iter_at_offset(0)   
         self.log = self.log.split("\n")         
         for line in self.log:
-            tag = line.split(" - ")[1].strip()
-            self.log_buffer.insert_with_tags_by_name(iter, line + "\n", tag)
+            if line != "":
+                tag = line.split(" - ")[1].strip()
+                self.log_buffer.insert_with_tags_by_name(iter, line + "\n", tag)
     
         
     def save(self, widget):
