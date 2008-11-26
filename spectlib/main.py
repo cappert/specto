@@ -118,7 +118,7 @@ class Specto:
         #listen for gconf keys
         self.specto_gconf.notify_entry("debug_mode", self.key_changed, "debug")
         
-        values = self.watch_io.read_all_watches()
+        values = self.watch_io.read_all_watches(True)
         try:
             self.watch_db.create(values)
         except AttributeError, error_fields:

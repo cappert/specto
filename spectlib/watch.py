@@ -433,47 +433,49 @@ class Watch_io:
             self.valid = False
             self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
         
-    def read_all_watches(self):
+    def read_all_watches(self, startup=False):
         """
         Read the watch options from the config file
         and return a dictionary containing the info needed to start the watches.
         """
         watch_value_db = {}
 
-        try:
-            self.cfg = ini_namespace(file(self.file_name))
-        except:
-            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
-            return False
+        if startup == False:
+            try:
+                self.cfg = ini_namespace(file(self.file_name))
+            except:
+                self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
+                return False
   
         names = self.cfg._sections.keys()
         i = 0
         for name_ in names:
-            watch_value_db[i] = self.read_watch(name_)
+            watch_value_db[i] = self.read_watch(name_, startup)
             i += 1
         return watch_value_db
     
-    def read_watch(self,name):
+    def read_watch(self,name, startup=False):
         """
         Read the watch options from one watch.
         """
         watch_options = {}
-              
-        try:
-            self.cfg = ini_namespace(file(self.file_name))
-        except:
-            self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
-            return False
+        
+        if startup == False:            
+            try:
+                self.cfg = ini_namespace(file(self.file_name))
+            except:
+                self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
+                return False
         
         name = self.hide_brackets(name)    
         options = self.cfg._sections[name]._options.keys()
         
         for option_ in options:
             if option_ == "password" and not self.check_old_version(self.cfg[name]['type']): #don't use decoding for old watches.list
-                option = self.read_option(name, option_)
+                option = self.read_option(name, option_, startup)
                 option = self.decode_password(name, option)
             else:
-                option = self.read_option(name, option_)
+                option = self.read_option(name, option_, startup)
                 
             watch_options_ = { option_: option }
             watch_options.update(watch_options_)
@@ -482,11 +484,16 @@ class Watch_io:
                 
         return watch_options
     
-    def read_option(self, name, option):
+    def read_option(self, name, option, startup=False):
         """ Read one option from a watch """
-        cfg = ini_namespace(file(self.file_name))
+        if startup == False:            
+            try:
+                self.cfg = ini_namespace(file(self.file_name))
+            except:
+                self.specto.logger.log(_("There was an error initializing config file %s") % self.file_name, "critical", "specto")
+                return False
         try:
-            return cfg[name][option]
+            return self.cfg[name][option]
         except:
             return 0
         
