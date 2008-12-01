@@ -255,17 +255,20 @@ class Watch_collection:
                 else:
                     dir = "spectlib/plugins/"
                 _file = dir + f[:-3]
-                mod = __import__(_file, globals(), locals(), [''])
-                obj = sys.modules[_file]
-
-                self.plugin_dict[obj.type] = mod
-                
-                #create the plugin dict for add menu
-                menu1 = obj.category
-                menu2 = [obj.type_desc, obj.icon, obj.type]
-                if not self.plugin_menu.has_key(menu1):
-                    self.plugin_menu.update({menu1:[]})
-                self.plugin_menu[menu1].append(menu2)
+                try:
+                    mod = __import__(_file, globals(), locals(), [''])
+                    obj = sys.modules[_file]
+    
+                    self.plugin_dict[obj.type] = mod
+                    
+                    #create the plugin dict for add menu
+                    menu1 = obj.category
+                    menu2 = [obj.type_desc, obj.icon, obj.type]
+                    if not self.plugin_menu.has_key(menu1):
+                        self.plugin_menu.update({menu1:[]})
+                    self.plugin_menu[menu1].append(menu2)
+                except:
+                   self.specto.logger.log(_('Could not load the file: %s.') % _file, "critical", "specto") 
                 
     def create(self, values):
         """ read the content from the dictionary and create the watch """      
