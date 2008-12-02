@@ -34,10 +34,10 @@ from re import compile #this is the regex compile module to parse some stuff suc
 from urllib2 import URLError
 from spectlib.i18n import _
 import  time
-import socket #to add a timeout to the global process
 import formatter
 import htmllib
 import cStringIO
+import sys
     
 type = "Watch_web_static"
 type_desc = _("Webpage/feed")
@@ -90,7 +90,6 @@ class Watch_web_static(Watch):
             cacheFileName = "".join(["%02x" % (ord(c),) for c in digest])
             self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
             self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
-            socket.setdefaulttimeout(10)# set globally the timeout to 10 seconds
             request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding" : "gzip"})
             cache_res = ""
             if (self.cached == 1) or (os.path.exists(self.cacheFullPath_)):
@@ -169,8 +168,8 @@ class Watch_web_static(Watch):
                     #if there is a previous filesize
                         #calculate the % changed filesize
                         self.filesize_difference = (fabs(int(self.new_filesize) - int(self.old_filesize)) / int(self.old_filesize))*100
-                        #self.specto.logger.log(_("Difference percentage:%s (Watch: \"%s\")") % (str(self.filesize_difference)[:5], self.name), "info", self.__class__)
-                        if self.cached and self.diff and (self.filesize_difference  >= float(self.error_margin)*100) and (self.filesize_difference != 0.0): #and (self.infoB_['md5sum'] == self.info_['md5sum']):
+                        self.specto.logger.log(_("Filesize difference: %.2f") % self.filesize_difference, "info", self.name)
+                        if self.filesize_difference  >= float(self.error_margin) and (self.filesize_difference != 0.0): #and (self.infoB_['md5sum'] == self.info_['md5sum']):
                             self.to_be_stored_filesize = self.new_filesize
                             self.actually_changed = True
                         else:
@@ -223,7 +222,7 @@ class Watch_web_static(Watch):
             else:
                 size = f.read()
                 if size != "":
-                    return size
+                    return size.strip()
                 else:
                     return 0
             finally:
