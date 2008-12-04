@@ -155,7 +155,7 @@ class Specto:
         else:
             changed_sound = ""
             
-        self.default_settings=(
+        self.default_settings= (
             ["always_show_icon", False], #having it True would be against the HIG!
             ["debug_mode", False],
             ["follow_website_redirects", True],
@@ -171,8 +171,7 @@ class Specto:
             ["use_changed_sound", False],
             ["window_notifier_height", 500],
             ["window_notifier_width", 500],
-            ["use_keyring", True]
-            )
+            ["use_keyring", True])
         for default_setting in self.default_settings:
             if self.specto_gconf.get_entry(default_setting[0]) == None: #the key has no user-defined value or does not exist
                 self.specto_gconf.set_entry(default_setting[0], default_setting[1])
@@ -261,7 +260,7 @@ class Specto:
             dialog.vbox.pack_start(dialog.label_hbox, True, True, 12)
             dialog.label_hbox.show()
             
-            icon = gtk.gdk.pixbuf_new_from_file(self.PATH + 'icons/specto_window_icon.svg' )
+            icon = gtk.gdk.pixbuf_new_from_file(self.PATH + 'icons/specto_window_icon.svg')
             dialog.set_icon(icon)
             answer = dialog.run()
             if answer == 3:

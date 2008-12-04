@@ -36,5 +36,3 @@ if proxy_gconf.get_entry("use_http_proxy"):
 
     proxy_support = urllib2.ProxyHandler(proxy)
     opener = urllib2.build_opener(proxy_support)
-    
-    

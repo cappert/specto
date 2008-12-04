@@ -94,16 +94,16 @@ class Boolean() :
     def checkRestrictions(self, value):
         valid = False
         if value == "True" or value == 1 or value == True:
-          val = True
-          valid = True
+            val = True
+            valid = True
         if value == "False" or value == 0 or value == False:
-          val = False
-          valid = True
+            val = False
+            valid = True
           
         if valid == False:
-          return False, ""
+            return False, ""
         else:
-          return True, val
+            return True, val
     
     def getStandardValue(self):
-        return False 
+        return False

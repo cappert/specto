@@ -31,7 +31,7 @@ class Specto_gconf:
     def __init__(self, directory):
         # Get the GConf object
         self.client = gconf.client_get_default()
-        self.client.add_dir (directory, gconf.CLIENT_PRELOAD_NONE)
+        self.client.add_dir(directory, gconf.CLIENT_PRELOAD_NONE)
         self.directory = directory
         self.org_directory = directory
         
@@ -40,11 +40,11 @@ class Specto_gconf:
             if self.org_directory + dir != self.directory: #check if the dir has to change
                 self.directory = self.org_directory + dir
                 self.client = gconf.client_get_default()
-                self.client.add_dir (self.directory, gconf.CLIENT_PRELOAD_NONE)
+                self.client.add_dir(self.directory, gconf.CLIENT_PRELOAD_NONE)
         else: #change dir to original dir
             self.directory = self.org_directory
             self.client = gconf.client_get_default()
-            self.client.add_dir (self.directory, gconf.CLIENT_PRELOAD_NONE)            
+            self.client.add_dir(self.directory, gconf.CLIENT_PRELOAD_NONE)            
 
 
     def get_entry(self, key):
@@ -53,7 +53,7 @@ class Specto_gconf:
             self.set_directory(dir)
             key = key[key.index('/')+1:]
             
-        k =  self.directory + "/" + key
+        k = self.directory + "/" + key
                 
         value = self.client.get(k)
         
@@ -73,7 +73,7 @@ class Specto_gconf:
             self.set_directory(dir)
             key = key[key.index('/')+1:]
             
-        k =  self.directory + "/" + key
+        k = self.directory + "/" + key
 
         if type(entry) == type(str()): 
             self.client.set_string(k, entry)
@@ -90,7 +90,7 @@ class Specto_gconf:
             dir = "/" + key[:key.index('/')]
             self.set_directory(dir)
             key = key[key.index('/')+1:]
-        k =  self.directory + "/" + key
+        k = self.directory + "/" + key
 
         self.client.unset(k)
         
@@ -101,6 +101,6 @@ class Specto_gconf:
             self.set_directory(dir)
             key = key[key.index('/')+1:]
             
-        k =  self.directory + "/" + key
+        k = self.directory + "/" + key
         
         self.client.notify_add(k, callback, label)

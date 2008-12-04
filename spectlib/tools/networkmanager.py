@@ -57,7 +57,7 @@ class NMListener(CallbackRunner):
                    1: u'Asleep',
                    2: u'Connecting',
                    3: u'Connected',
-                   4: u'Disconnected' }
+                   4: u'Disconnected'}
     
     def __init__(self, bus):
         super(NMListener, self).__init__()
@@ -114,4 +114,3 @@ class FallbackListener(CallbackRunner) :
         self._lastConnected = self.connected()
         if (not wasConnected) and self._lastConnected :
             self._run_callbacks()
-    

@@ -331,10 +331,10 @@ class line_type(object):
 
 
 class section_line(line_type):
-    regex =  re.compile(r'^\['
-                        r'(?P<name>[^]]+)'
-                        r'\]\s*'
-                        r'((?P<csep>;|#)(?P<comment>.*))?$')
+    regex = re.compile(r'^\['
+                       r'(?P<name>[^]]+)'
+                       r'\]\s*'
+                       r'((?P<csep>;|#)(?P<comment>.*))?$')
 
     def __init__(self, name, comment=None, comment_separator=None,
                              comment_offset=-1, line=None):
@@ -744,7 +744,7 @@ class ini_namespace(namespace):
                         cur_section_name = self._sectionxform(cur_section.name)
                     else:
                         cur_section_name = cur_section.name
-                    if not self._sections.has_key(cur_section_name):
+                    if not cur_section_name in self._sections:
                         self._sections[cur_section_name] = \
                                 section(cur_section, defaults=self._defaults,
                                         optionxform=self._optionxform)
@@ -760,4 +760,3 @@ class ini_namespace(namespace):
 
         if exc:
             raise exc
-

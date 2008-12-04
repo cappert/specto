@@ -49,16 +49,15 @@ class Preferences:
         self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
         
         #catch some events
-        dic= { "on_cancel_clicked": self.delete_event,
-        "on_preferences_delete_event": self.delete_event,
-        "on_save_clicked": self.save_clicked,
-        "on_help_clicked": self.help_clicked,
-        "on_chkSoundChanged_toggled": self.chkSoundChanged_toggled,
-        "on_chkSoundProblem_toggled": self.chkSoundProblem_toggled,
-        "on_chk_libnotify_toggled": self.chkLibnotify_toggled,
-        "on_button_log_clear_clicked": self.specto.logger.clear_log,
-        "on_button_log_open_clicked": self.notifier.show_error_log
-        }
+        dic= {"on_cancel_clicked": self.delete_event,
+              "on_preferences_delete_event": self.delete_event,
+              "on_save_clicked": self.save_clicked,
+              "on_help_clicked": self.help_clicked,
+              "on_chkSoundChanged_toggled": self.chkSoundChanged_toggled,
+              "on_chkSoundProblem_toggled": self.chkSoundProblem_toggled,
+              "on_chk_libnotify_toggled": self.chkLibnotify_toggled,
+              "on_button_log_clear_clicked": self.specto.logger.clear_log,
+              "on_button_log_open_clicked": self.notifier.show_error_log}
         
         #attach the events
         self.wTree.signal_autoconnect(dic)
@@ -114,7 +113,7 @@ class Preferences:
         #see if pop toast has to be saved
         if self.wTree.get_widget("chk_libnotify").get_active():
             self.specto.specto_gconf.set_entry("pop_toast", True)
-            self.specto.specto_gconf.set_entry("pop_toast_duration", int(self.wTree.get_widget("hscale_libnotify_duration").get_value() ))#save the pop toast duration
+            self.specto.specto_gconf.set_entry("pop_toast_duration", int(self.wTree.get_widget("hscale_libnotify_duration").get_value()))#save the pop toast duration
         else:
             self.specto.specto_gconf.set_entry("pop_toast", False)
 

@@ -50,22 +50,21 @@ class Log_dialog:
         self.specto = specto
         self.notifier = notifier
         #create tree
-        gladefile= self.specto.PATH + 'glade/log_dialog.glade'
-        windowname= "log_dialog"
-        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
+        gladefile = self.specto.PATH + 'glade/log_dialog.glade'
+        windowname = "log_dialog"
+        self.wTree = gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
         
-        dic={
-        "on_button_help_clicked": self.show_help,
-        "on_button_save_clicked": self.save,
-        "on_button_clear_clicked": self.clear,
-        "on_button_close_clicked": self.delete_event,
-        "on_button_find_clicked": self.find
-        }
+        dic = {"on_button_help_clicked": self.show_help,
+               "on_button_save_clicked": self.save,
+               "on_button_clear_clicked": self.clear,
+               "on_button_close_clicked": self.delete_event,
+               "on_button_find_clicked": self.find}
+               
         #attach the events
         self.wTree.signal_autoconnect(dic)
         
         self.log_dialog=self.wTree.get_widget("log_dialog")
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.log_dialog.set_icon(icon)
         
         self.wTree.get_widget("combo_level").set_active(0)
@@ -167,10 +166,8 @@ class Save_dialog:
         self.wTree=gtk.glade.XML(gladefile,windowname)        
         self.save_dialog = self.wTree.get_widget("file_chooser")
         
-        dic={
-        "on_button_cancel_clicked": self.cancel,
-        "on_button_save_clicked": self.save
-        }
+        dic = {"on_button_cancel_clicked": self.cancel,
+               "on_button_save_clicked": self.save}
         #attach the events
         self.wTree.signal_autoconnect(dic)
             

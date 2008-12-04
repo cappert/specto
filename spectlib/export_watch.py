@@ -58,15 +58,15 @@ class Export_watch:
         self.new_watch_db = {}
                 
         #catch some events
-        dic= { "on_button_select_all_clicked": self.select_all,
-            "on_button_deselect_all_clicked": self.deselect_all,
-            "on_button_action_clicked": self.do_action,
-            "on_button_close_clicked": self.delete_event}
+        dic= {"on_button_select_all_clicked": self.select_all,
+              "on_button_deselect_all_clicked": self.deselect_all,
+              "on_button_action_clicked": self.do_action,
+              "on_button_close_clicked": self.delete_event}
 
         #attach the events
         self.wTree.signal_autoconnect(dic)
 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.export_watch.set_icon(icon)
                         
         self.treeview=self.wTree.get_widget("treeview")
@@ -195,10 +195,8 @@ class Save_dialog:
         self.wTree.get_widget("button_save").set_label("gtk-save") 
         self.watches_db = watches_db   
             
-        dic={
-        "on_button_cancel_clicked": self.cancel,
-        "on_button_save_clicked": self.save
-        }
+        dic= {"on_button_cancel_clicked": self.cancel,
+             "on_button_save_clicked": self.save}
         #attach the events
         self.wTree.signal_autoconnect(dic)
             

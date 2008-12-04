@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # Originally written by Barry Warsaw <barry@zope.com>
 #
-# Minimally patched to make it even more xgettext compatible 
+# Minimally patched to make it even more xgettext compatible
 # by Peter Funk <pf@artcom-gmbh.de>
 
 """pygettext -- Python equivalent of xgettext(1)
@@ -149,7 +149,9 @@ try:
     import fintl
     _ = fintl.gettext
 except ImportError:
-    def _(s): return s
+
+    def _(s):
+        return s
 
 __version__ = '1.4'
 
@@ -192,16 +194,15 @@ def usage(code, msg=''):
         print >> fd, msg
     sys.exit(code)
 
-
-
 escapes = []
+
 
 def make_escapes(pass_iso8859):
     global escapes
     if pass_iso8859:
-        # Allow iso-8859 characters to pass through so that e.g. 'msgid
-        # "H[o-umlaut]he"' would result not result in 'msgid "H\366he"'.
-        # Otherwise we escape any character outside the 32..126 range.
+        """Allow iso-8859 characters to pass through so that e.g. 'msgid
+         "H[o-umlaut]he"' would result not result in 'msgid "H\366he"'.
+         Otherwise we escape any character outside the 32..126 range. """
         mod = 128
     else:
         mod = 256
@@ -227,7 +228,7 @@ def escape(s):
 
 def safe_eval(s):
     # unwrap quotes, safely
-    return eval(s, {'__builtins__':{}}, {})
+    return eval(s, {'__builtins__': {}}, {})
 
 
 def normalize(s):
@@ -247,8 +248,8 @@ def normalize(s):
     return s
 
 
-
 class TokenEater:
+
     def __init__(self, options):
         self.__options = options
         self.__messages = {}
@@ -310,7 +311,7 @@ class TokenEater:
     def __openseen(self, ttype, tstring, lineno):
         if ttype == tokenize.OP and tstring == ')':
             # We've seen the last of the translatable strings.  Record the
-            # line number of the first line of the strings and update the list 
+            # line number of the first line of the strings and update the list
             # of messages seen.  Reset state for the next batch.  If there
             # were no strings inside _(), then just ignore this entry.
             if self.__data:
@@ -389,7 +390,6 @@ class TokenEater:
                 print >> fp, 'msgstr ""\n'
 
 
-
 def main():
     global default_keywords
     try:
@@ -405,9 +405,8 @@ def main():
     except getopt.error, msg:
         usage(1, msg)
 
-    # for holding option values
     class Options:
-        # constants
+        """ for holding option values  """
         GNU = 1
         SOLARIS = 2
         # defaults
@@ -425,9 +424,8 @@ def main():
         nodocstrings = {}
 
     options = Options()
-    locations = {'gnu' : options.GNU,
-                 'solaris' : options.SOLARIS,
-                 }
+    locations = {'gnu': options.GNU,
+                 'solaris': options.SOLARIS}
 
     # parse options
     for opt, arg in opts:
@@ -447,7 +445,7 @@ def main():
             default_keywords = []
         elif opt in ('-n', '--add-location'):
             options.writelocations = 1
-        elif opt in ('--no-location',):
+        elif opt in ('--no-location', ):
             options.writelocations = 0
         elif opt in ('-S', '--style'):
             options.locationstyle = locations.get(arg.lower())

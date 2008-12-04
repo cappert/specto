@@ -51,7 +51,7 @@ class Entry():
         return self.table, self.entry
     
     def set_color(self, red, blue, green):
-        self.entry.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
+        self.entry.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
         
     def grab_focus(self):
         self.entry.grab_focus()
@@ -83,7 +83,7 @@ class PasswordEntry():
         return self.table, self.entry
     
     def set_color(self, red, blue, green):
-        self.entry.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
+        self.entry.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
         
     def grab_focus(self):
         self.entry.grab_focus()
@@ -113,7 +113,7 @@ class Spinbutton():
         return self.table, self.spinbutton
 
     def set_color(self, red, blue, green):
-        self.spinbutton.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
+        self.spinbutton.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
         
     def grab_focus(self):
         self.spinbutton.grab_focus()
@@ -143,7 +143,7 @@ class CheckButton():
         return self.table, self.checkbutton
     
     def set_color(self, red, blue, green):
-        self.checkbutton.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
+        self.checkbutton.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
         
     def grab_focus(self):
         self.checkbutton.grab_focus()
@@ -174,7 +174,7 @@ class FileChooser():
         return self.table, self.filechooser
     
     def set_color(self, red, blue, green):
-        self.filechooser.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
+        self.filechooser.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
         
     def grab_focus(self):
         self.filechooser.grab_focus()
@@ -205,7 +205,7 @@ class FolderChooser():
         return self.table, self.dirchooser
     
     def set_color(self, red, blue, green):
-        self.dirchooser.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
+        self.dirchooser.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
         
     def grab_focus(self):
         self.dirchooser.grab_focus()
@@ -246,7 +246,7 @@ class Scale():
         return self.table, self.scale
     
     def set_color(self, red, blue, green):
-        self.scale.modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
+        self.scale.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red, blue, green))
         
     def grab_focus(self):
         self.scale.grab_focus()
@@ -278,7 +278,7 @@ class RemoveDialog():
         dialog.vbox.pack_start(dialog.label_hbox, True, True, 12)
         dialog.label_hbox.show()
         
-        icon = gtk.gdk.pixbuf_new_from_file(spectlib.util.get_path() + 'icons/specto_window_icon.svg' )
+        icon = gtk.gdk.pixbuf_new_from_file(spectlib.util.get_path() + 'icons/specto_window_icon.svg')
         dialog.set_icon(icon)
         self.dialog = dialog
         
@@ -308,7 +308,7 @@ class ErrorDialog():
         
         self.error_dialog = self.wTree.get_widget("error_dialog")
         self.error_dialog.show()
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.error_dialog.set_icon(icon)
                 
         self.errorwindow = gtk.TextBuffer(None)
@@ -401,7 +401,7 @@ def create_widget(table, widget_type, value, label, position):
         time_table.attach(hours, 1, 2, 1, 2)
         time_table.attach(minutes, 2, 3, 1, 2)
         #time_table.show()
-        watch_options.update({value:( hours, minutes )})
+        watch_options.update({value:(hours, minutes)})
         table.attach(time_table, 1, 2, i, i + 1)
 
     return watch_options, table
@@ -447,6 +447,6 @@ def get_widget_value(widget_type, value):
     elif widget_type == "calendar":
         result = value.values()[0].get_date()
     elif widget_type == "time":
-        result = ( value.values()[0][0].get_value(), value.values()[0][1].get_value())
+        result = (value.values()[0][0].get_value(), value.values()[0][1].get_value())
         
     return result
