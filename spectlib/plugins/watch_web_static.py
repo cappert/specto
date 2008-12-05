@@ -167,8 +167,9 @@ class Watch_web_static(Watch):
                     if self.old_filesize!=0:#if 0, that would mean that read_option could not find the filesize in watches.list
                     #if there is a previous filesize
                         #calculate the % changed filesize
-                        self.filesize_difference = (fabs(int(self.new_filesize) - int(self.old_filesize)) / int(self.old_filesize))*100
-                        self.specto.logger.log(_("Filesize difference: %.2f") % self.filesize_difference, "info", self.name)
+                        if int(self.old_filesize) != 0:
+                            self.filesize_difference = (fabs(int(self.new_filesize) - int(self.old_filesize)) / int(self.old_filesize))*100
+                            self.specto.logger.log(_("Filesize difference: %.2f") % self.filesize_difference, "info", self.name)
                         if self.filesize_difference  >= float(self.error_margin) and (self.filesize_difference != 0.0): #and (self.infoB_['md5sum'] == self.info_['md5sum']):
                             self.to_be_stored_filesize = self.new_filesize
                             self.actually_changed = True
@@ -186,6 +187,7 @@ class Watch_web_static(Watch):
                 self.write_filesize()
         except:
             self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
+            self.error = True
             
         Watch.timer_update(self)
 
