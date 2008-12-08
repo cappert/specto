@@ -21,7 +21,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys, os
+import sys
+import os
 from spectlib.i18n import _
 
 try:
@@ -36,18 +37,20 @@ try:
 except:
     pass
 
+
 class Preferences:
     """
     Display the preferences window.
     """
-    
+
     def __init__(self, specto, notifier):
         self.specto = specto
         self.notifier = notifier
         gladefile= self.specto.PATH + 'glade/preferences.glade'
         windowname= "preferences"
-        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
-        
+        self.wTree=gtk.glade.XML(gladefile, windowname, \
+                            self.specto.glade_gettext)
+
         #catch some events
         dic= {"on_cancel_clicked": self.delete_event,
               "on_preferences_delete_event": self.delete_event,
@@ -58,10 +61,10 @@ class Preferences:
               "on_chk_libnotify_toggled": self.chkLibnotify_toggled,
               "on_button_log_clear_clicked": self.specto.logger.clear_log,
               "on_button_log_open_clicked": self.notifier.show_error_log}
-        
+
         #attach the events
         self.wTree.signal_autoconnect(dic)
-        
+
         self.preferences=self.wTree.get_widget("preferences")
 
         #set the preferences
@@ -71,7 +74,7 @@ class Preferences:
         """ Save the preferences. """
         self.preferences.hide()
         self.set_preferences()
-        self.notifier.show_watch_info()        
+        self.notifier.show_watch_info()
 
     def chkSoundChanged_toggled(self, widget):
         """ Make the filechooser sensitive or insensitive. """
@@ -90,22 +93,29 @@ class Preferences:
     def chkLibnotify_toggled(self, widget):
         """ Make the slider below the libnotify checkbox insensitive or not """
         if widget.get_active():
-            self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 1)
+            self.wTree.get_widget("hbox_libnotify_duration").\
+                                        set_property('sensitive', 1)
         else:
-            self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 0)
+            self.wTree.get_widget("hbox_libnotify_duration").\
+                                        set_property('sensitive', 0)
 
     def set_preferences(self):
         """ Save the preferences in gconf. """
         #save the path for the "changed" sound
-        if self.wTree.get_widget("soundChanged").get_property('sensitive') == 1:
-            self.specto.specto_gconf.set_entry("changed_sound", self.wTree.get_widget("soundChanged").get_filename())
+        if self.wTree.get_widget("soundChanged").\
+                        get_property('sensitive') == 1:
+            self.specto.specto_gconf.set_entry("changed_sound", \
+                            self.wTree.get_widget("soundChanged")\
+                                                    .get_filename())
             self.specto.specto_gconf.set_entry("use_changed_sound", True)
         else:
             self.specto.specto_gconf.unset_entry("use_changed_sound")
 
         #save the path from the problem sound
-        if self.wTree.get_widget("soundProblem").get_property('sensitive') == 1:
-            self.specto.specto_gconf.set_entry("problem_sound", self.wTree.get_widget("soundProblem").get_filename())
+        if self.wTree.get_widget("soundProblem").\
+                        get_property('sensitive') == 1:
+            self.specto.specto_gconf.set_entry("problem_sound", \
+                        self.wTree.get_widget("soundProblem").get_filename())
             self.specto.specto_gconf.set_entry("use_problem_sound", True)
         else:
             self.specto.specto_gconf.unset_entry("use_problem_sound")
@@ -113,7 +123,9 @@ class Preferences:
         #see if pop toast has to be saved
         if self.wTree.get_widget("chk_libnotify").get_active():
             self.specto.specto_gconf.set_entry("pop_toast", True)
-            self.specto.specto_gconf.set_entry("pop_toast_duration", int(self.wTree.get_widget("hscale_libnotify_duration").get_value()))#save the pop toast duration
+            self.specto.specto_gconf.set_entry("pop_toast_duration",\
+                    int(self.wTree.get_widget("hscale_libnotify_duration").\
+                                                            get_value()))
         else:
             self.specto.specto_gconf.set_entry("pop_toast", False)
 
@@ -123,7 +135,7 @@ class Preferences:
             self.notifier.notifier.set_skip_taskbar_hint(False)
         else:
             self.specto.specto_gconf.set_entry("show_in_windowlist", False)
-            self.notifier.notifier.set_skip_taskbar_hint(True)#note, this is set_SKIP! this explains why it's False to skip.
+            self.notifier.notifier.set_skip_taskbar_hint(True)
 
         #see if tray has to be saved
         if self.wTree.get_widget("chk_tray").get_active():
@@ -139,29 +151,33 @@ class Preferences:
         else:
             self.specto.specto_gconf.set_entry("debug_mode", False)
             self.specto.DEBUG = False
-        
-        #use keyring?    
+
+        #use keyring?
         if self.wTree.get_widget("chkUseKeyring").get_active():
             self.specto.specto_gconf.set_entry("use_keyring", True)
             self.specto.watch_db.convert_passwords(True)
         else:
             self.specto.specto_gconf.set_entry("use_keyring", False)
             self.specto.watch_db.convert_passwords(False)
-            
+
     def get_preferences(self):
         """ Get the preferences from gconf. """
         #check toast
         if self.specto.specto_gconf.get_entry("pop_toast") == True:
             self.wTree.get_widget("chk_libnotify").set_active(True)
-            self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 1)
+            self.wTree.get_widget("hbox_libnotify_duration").\
+                                    set_property('sensitive', 1)
         else:
             self.wTree.get_widget("chk_libnotify").set_active(False)
-            self.wTree.get_widget("hbox_libnotify_duration").set_property('sensitive', 0)
+            self.wTree.get_widget("hbox_libnotify_duration").\
+                                    set_property('sensitive', 0)
         #set the toast duration properly
         if not self.specto.specto_gconf.get_entry("pop_toast_duration"):
             pass#nothing was set, leave the value at 5
         else:
-            self.wTree.get_widget("hscale_libnotify_duration").set_value(self.specto.specto_gconf.get_entry("pop_toast_duration"))
+            self.wTree.get_widget("hscale_libnotify_duration").\
+                     set_value(self.specto.specto_gconf.\
+                             get_entry("pop_toast_duration"))
 
         #check windowlist
         if self.specto.specto_gconf.get_entry("show_in_windowlist") == True:
@@ -174,41 +190,46 @@ class Preferences:
             self.wTree.get_widget("chk_tray").set_active(True)
         else:
             self.wTree.get_widget("chk_tray").set_active(False)
-        
+
         #check "changed" sound
         if self.specto.specto_gconf.get_entry("use_changed_sound"):
             self.wTree.get_widget("chkSoundChanged").set_active(True)
-            
+
         if self.specto.specto_gconf.get_entry("changed_sound"):
-            self.wTree.get_widget("soundChanged").set_filename(self.specto.specto_gconf.get_entry("changed_sound"))
+            self.wTree.get_widget("soundChanged").\
+                set_filename(self.specto.specto_gconf.\
+                                get_entry("changed_sound"))
 
         #check problem sound
         if self.specto.specto_gconf.get_entry("use_problem_sound"):
             self.wTree.get_widget("chkSoundProblem").set_active(True)
-            
+
         if self.specto.specto_gconf.get_entry("problem_sound"):
-            self.wTree.get_widget("soundProblem").set_filename(self.specto.specto_gconf.get_entry("problem_sound"))
-            
+            self.wTree.get_widget("soundProblem").\
+                set_filename(self.specto.specto_gconf.\
+                    get_entry("problem_sound"))
+
         #check debug
         if self.specto.specto_gconf.get_entry("debug_mode") == True:
             self.wTree.get_widget("chk_debug").set_active(True)
         else:
             self.wTree.get_widget("chk_debug").set_active(False)
-            
+
         if self.specto.specto_gconf.get_entry("use_keyring") == True:
             self.wTree.get_widget("chkUseKeyring").set_active(True)
         else:
             self.wTree.get_widget("chkUseKeyring").set_active(False)
-    
+
     def help_clicked(self, widget):
         """ Show the help webpage. """
         self.specto.show_help()
-        
+
     def delete_event(self, widget, *args):
-        """ Hide the window. """        
+        """ Hide the window. """
         self.preferences.hide()
         return True
-        
+
+
 if __name__ == "__main__":
     #run the gui
     app=preferences()

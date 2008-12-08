@@ -22,73 +22,73 @@
 # Boston, MA 02111-1307, USA.
 
 
-class Integer() :
+class Integer():
     """
     A config node containing a integer value.
 
     Supports restricting the valid values to a range.
     """
 
-    def __init__(self, mandatory, low=None, high=None) :
+    def __init__(self, mandatory, low=None, high=None):
         self.mandatory = mandatory
         self.low = low
         self.high = high
 
     def checkRestrictions(self, value):
-        try :
+        try:
             val = int(value)
-        except ValueError :
-            #self.logError('Malformed value: cannot parse "%s" as an integer' % (value, ))
+        except ValueError:
             return False, -1
         return True, val
-    
+
     def getStandardValue(self):
         return -1
-        
-class String() :
+
+
+class String():
     """
     A config node containing a string value.
     """
 
-    def __init__(self, mandatory) :
+    def __init__(self, mandatory):
         self.mandatory = mandatory
 
     def checkRestrictions(self, value):
-        try :
+        try:
             val = str(value)
-        except ValueError :
-            #self.logError('Malformed value: cannot parse "%s" as a string' % (value, ))
+        except ValueError:
             return False
         return True, val
-    
+
     def getStandardValue(self):
         return ""
-        
-class Dec() :
+
+
+class Dec():
     """
     A config node containing a decimal value.
     """
 
-    def __init__(self, mandatory) :
+    def __init__(self, mandatory):
         self.mandatory = mandatory
 
     def checkRestrictions(self, value):
-        try :
+        try:
             val = float(value)
-        except ValueError :
-            #self.logError('Malformed value: cannot parse "%s" as a decimal' % (value, ))
+        except ValueError:
             return False
         return True, val
-    
+
     def getStandardValue(self):
-        return -1    
-        
-class Boolean() :
+        return -1
+
+
+class Boolean():
     """
     A config node containing a boolean value.
     """
 
-    def __init__(self, mandatory) :
+    def __init__(self, mandatory):
         self.mandatory = mandatory
 
     def checkRestrictions(self, value):
@@ -99,11 +99,11 @@ class Boolean() :
         if value == "False" or value == 0 or value == False:
             val = False
             valid = True
-          
+
         if valid == False:
             return False, ""
         else:
             return True, val
-    
+
     def getStandardValue(self):
         return False
