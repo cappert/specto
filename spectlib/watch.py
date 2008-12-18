@@ -20,9 +20,9 @@
 # License along with this program; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-
-# The Watcher : this file should give a class intended for subclassing. It should give all the basic methods.
-import os, sys, time
+import os
+import sys
+import time
 import gobject
 import thread
 import gtk
@@ -44,10 +44,13 @@ try:
 except:
     keyring = False
 
+
 def gettext_noop(s):
-   return s
+    return s
+
 
 class Watch:
+
     def __init__(self, specto, id, values, watch_values):
         self.specto = specto
         watch_values.extend([('name', spectlib.config.String(True)),
@@ -57,8 +60,7 @@ class Watch:
                             ('command', spectlib.config.String(False)),
                             ('active', spectlib.config.Boolean(False)),
                             ('last_changed', spectlib.config.String(False)),
-                            ('open_command', spectlib.config.String(False))
-                            ])
+                            ('open_command', spectlib.config.String(False))])
 
         self.id = id
         self.use_network = False
@@ -69,21 +71,22 @@ class Watch:
 
         self.watch_values = watch_values
         self.set_values(values)
-                
+
         self.watch_io = Watch_io(self.specto, self.specto.FILE)
-        
+
         global _
-                    
+
     def start(self):
         """ Start the watch. """
-        try:            
+        try:
             self.active = True
             self.watch_io.write_option(self.name, 'active', self.active)
             self.start_checking()
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error starting the watch"), "error", self.name)
-            
+            self.specto.logger.log(_("There was an error starting the watch"),\
+                                                            "error", self.name)
+
     def stop(self):
         """ Stop the watch. """
         try:
@@ -92,7 +95,8 @@ class Watch:
             gobject.source_remove(self.timer_id)
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error stopping the watch"), "error", self.name)           
+            self.specto.logger.log(_("There was an error stopping the watch"),\
+                                                            "error", self.name)
 
     def clear(self):
         """ clear the watch """
@@ -103,22 +107,24 @@ class Watch:
                 self.specto.mark_watch_status("idle-clear", self.id)
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error clearing the watch"), "error", self.name)
+            self.specto.logger.log(_("There was an error clearing the watch"),\
+                                                            "error", self.name)
 
     def restart(self):
         """ restart the watch """
         if self.active == True:
             self.stop()
-        self.start()        
-        
+        self.start()
+
     def start_checking(self):
         try:
             if self.changed == True:
                 self.specto.mark_watch_status("mark-changed", self.id)
             if self.use_network:
                 if not self.check_connection():
-                    return 
-            self.specto.logger.log("Watch started checking.", "debug", self.name)   
+                    return
+            self.specto.logger.log("Watch started checking.",\
+                                                 "debug", self.name)
             self.specto.mark_watch_status("checking", self.id)
             self.error = False
             self.actually_changed = False
@@ -126,33 +132,33 @@ class Watch:
             #return
             self.lock = thread.allocate_lock()
             self.lock.acquire()
-            thread.start_new_thread(self.check,())
+            thread.start_new_thread(self.check, ())
             while self.lock.locked():
                 while gtk.events_pending():
                     gtk.main_iteration()
                 time.sleep(0.05)
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error checking the watch"), "error", self.name)
+            self.specto.logger.log(_("There was an error checking the watch"),\
+                                                            "error", self.name)
 
-                
-                        
     def watch_changed(self):
         try:
-            self.specto.logger.log(_("Watch has changed."), "info", self.name)   
+            self.specto.logger.log(_("Watch has changed."), "info", self.name)
             self.actually_changed = False
-            self.changed = True            
+            self.changed = True
             self.last_changed = datetime.today().strftime("%A %d %b %Y %H:%M")
             self.watch_io.write_option(self.name, 'changed', self.changed)
-            self.watch_io.write_option(self.name, 'last_changed', self.last_changed)
+            self.watch_io.write_option(self.name, 'last_changed', \
+                                                       self.last_changed)
             self.specto.mark_watch_status("changed", self.id)
             if self.command != "": #run watch specific "changed" command
                 os.system(self.command + " &")
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error marking the watch as changed"), "error", self.name)
-                
-        
+            self.specto.logger.log(_("There was an error marking the watch \
+                                            as changed"), "error", self.name)
+
     def timer_update(self):
         """ update the timer """
         try:
