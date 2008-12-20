@@ -4,7 +4,7 @@
 #
 #       watch_system_port.py
 #
-# Copyright (c) 2005-2007, Jean-François Fortin Tam
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -34,7 +34,7 @@ category = _("System")
 
 def get_add_gui_info():
     return [
-            ("port", spectlib.gtkconfig.Spinbutton(_("Port"), value=21))
+            ("port", spectlib.gtkconfig.Spinbutton(_("Port"), value=21, upper=65535))
            ]
 
 class Watch_system_port(Watch):

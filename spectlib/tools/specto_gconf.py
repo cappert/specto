@@ -4,7 +4,7 @@
 #
 #       specto_gconf.py
 #
-# Copyright (c) 2005-2007, Jean-François Fortin Tam
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -23,42 +23,43 @@
 
 import gconf
 
+
 class Specto_gconf:
     """
-    Specto gconf class. 
+    Specto gconf class.
     """
-    
+
     def __init__(self, directory):
         # Get the GConf object
         self.client = gconf.client_get_default()
-        self.client.add_dir (directory, gconf.CLIENT_PRELOAD_NONE)
+        self.client.add_dir(directory, gconf.CLIENT_PRELOAD_NONE)
         self.directory = directory
         self.org_directory = directory
-        
+
     def set_directory(self, dir):
         if dir != "": #change the dir
-            if self.org_directory + dir != self.directory: #check if the dir has to change
+            #check if the dir has to change
+            if self.org_directory + dir != self.directory:
                 self.directory = self.org_directory + dir
                 self.client = gconf.client_get_default()
-                self.client.add_dir (self.directory, gconf.CLIENT_PRELOAD_NONE)
+                self.client.add_dir(self.directory, gconf.CLIENT_PRELOAD_NONE)
         else: #change dir to original dir
             self.directory = self.org_directory
             self.client = gconf.client_get_default()
-            self.client.add_dir (self.directory, gconf.CLIENT_PRELOAD_NONE)            
-
+            self.client.add_dir(self.directory, gconf.CLIENT_PRELOAD_NONE)
 
     def get_entry(self, key):
         if "/" in key:
             dir = "/" + key[:key.index('/')]
             self.set_directory(dir)
             key = key[key.index('/')+1:]
-            
-        k =  self.directory + "/" + key
-                
+
+        k = self.directory + "/" + key
+
         value = self.client.get(k)
-        
+
         if value == None:
-            return None      
+            return None
         if value.type == gconf.VALUE_STRING:
             return value.get_string()
         elif value.type == gconf.VALUE_BOOL:
@@ -67,40 +68,40 @@ class Specto_gconf:
             return value.get_int()
 
     def set_entry(self, key, entry):
-        """ Set the value from a key. """ 
+        """ Set the value from a key. """
         if "/" in key:
             dir = "/" + key[:key.index('/')]
             self.set_directory(dir)
             key = key[key.index('/')+1:]
-            
-        k =  self.directory + "/" + key
 
-        if type(entry) == type(str()): 
+        k = self.directory + "/" + key
+
+        if type(entry) == type(str()):
             self.client.set_string(k, entry)
-        elif type(entry) == type(bool()): 
+        elif type(entry) == type(bool()):
             self.client.set_bool(k, entry)
-        elif type(entry) == type(int()): 
+        elif type(entry) == type(int()):
             self.client.set_int(k, entry)
-        elif type(entry) == type(float()): 
+        elif type(entry) == type(float()):
             self.client.set_float(k, entry)
 
-    def unset_entry(self,key):
+    def unset_entry(self, key):
         """ Unset (remove) the key. """
         if "/" in key:
             dir = "/" + key[:key.index('/')]
             self.set_directory(dir)
             key = key[key.index('/')+1:]
-        k =  self.directory + "/" + key
+        k = self.directory + "/" + key
 
         self.client.unset(k)
-        
+
     def notify_entry(self, key, callback, label):
         """ Listen for changes in a key. """
         if "/" in key:
             dir = "/" + key[:key.index('/')]
             self.set_directory(dir)
             key = key[key.index('/')+1:]
-            
-        k =  self.directory + "/" + key
-        
+
+        k = self.directory + "/" + key
+
         self.client.notify_add(k, callback, label)

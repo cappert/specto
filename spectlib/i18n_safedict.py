@@ -27,6 +27,7 @@ class SafeDict(UserDict):
 
     This is used in maketext so that editing templates is a bit more robust.
     """
+
     def __getitem__(self, key):
         try:
             return self.data[key]
@@ -41,6 +42,7 @@ class SafeDict(UserDict):
 
 
 class MsgSafeDict(SafeDict):
+
     def __init__(self, msg, dict=None):
         self.__msg = msg
         SafeDict.__init__(self, dict)

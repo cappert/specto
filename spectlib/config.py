@@ -4,7 +4,7 @@
 #
 #       config.py
 #
-# Copyright (c) 2005-2007, Jean-François Fortin Tam
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -22,88 +22,88 @@
 # Boston, MA 02111-1307, USA.
 
 
-class Integer() :
+class Integer():
     """
     A config node containing a integer value.
 
     Supports restricting the valid values to a range.
     """
 
-    def __init__(self, mandatory, low=None, high=None) :
+    def __init__(self, mandatory, low=None, high=None):
         self.mandatory = mandatory
         self.low = low
         self.high = high
 
     def checkRestrictions(self, value):
-        try :
+        try:
             val = int(value)
-        except ValueError :
-            #self.logError('Malformed value: cannot parse "%s" as an integer' % (value, ))
+        except ValueError:
             return False, -1
         return True, val
-    
+
     def getStandardValue(self):
         return -1
-        
-class String() :
+
+
+class String():
     """
     A config node containing a string value.
     """
 
-    def __init__(self, mandatory) :
+    def __init__(self, mandatory):
         self.mandatory = mandatory
 
     def checkRestrictions(self, value):
-        try :
+        try:
             val = str(value)
-        except ValueError :
-            #self.logError('Malformed value: cannot parse "%s" as a string' % (value, ))
+        except ValueError:
             return False
         return True, val
-    
+
     def getStandardValue(self):
         return ""
-        
-class Dec() :
+
+
+class Dec():
     """
     A config node containing a decimal value.
     """
 
-    def __init__(self, mandatory) :
+    def __init__(self, mandatory):
         self.mandatory = mandatory
 
     def checkRestrictions(self, value):
-        try :
+        try:
             val = float(value)
-        except ValueError :
-            #self.logError('Malformed value: cannot parse "%s" as a decimal' % (value, ))
+        except ValueError:
             return False
         return True, val
-    
+
     def getStandardValue(self):
-        return -1    
-        
-class Boolean() :
+        return -1
+
+
+class Boolean():
     """
     A config node containing a boolean value.
     """
 
-    def __init__(self, mandatory) :
+    def __init__(self, mandatory):
         self.mandatory = mandatory
 
     def checkRestrictions(self, value):
         valid = False
         if value == "True" or value == 1 or value == True:
-          val = True
-          valid = True
+            val = True
+            valid = True
         if value == "False" or value == 0 or value == False:
-          val = False
-          valid = True
-          
+            val = False
+            valid = True
+
         if valid == False:
-          return False, ""
+            return False, ""
         else:
-          return True, val
-    
+            return True, val
+
     def getStandardValue(self):
-        return False 
+        return False

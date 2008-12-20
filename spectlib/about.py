@@ -4,7 +4,7 @@
 #
 #       about.py
 #
-# Copyright (c) 2005-2007, Jean-François Fortin Tam
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -29,31 +29,43 @@ import gtk
 import spectlib.util
 from spectlib.i18n import _
 
+
 class About:
     """
-    Class to create a window with the credits and licensing information about Specto.
+    Class to create a window with the credits
+    and licensing information about Specto.
     """
-    
+
     def __init__(self, specto):
         self.specto = specto
-        version_file_path = (spectlib.util.get_path(category="doc") + 'VERSION')
+        version_file_path = (spectlib.util.get_path(category="doc") \
+                                                          + 'VERSION')
         version_file=open(version_file_path, 'r')
-        version = str(version_file.readline()[:-1]) # "[:-1]" means we omit the last character, which is "\n".
+        version = str(version_file.readline()[:-1])
         version_file.close
-        license_file_path = (spectlib.util.get_path(category="doc") + 'COPYING')
+        license_file_path = (spectlib.util.get_path(category="doc") \
+                                                          + 'COPYING')
         license_file = open(license_file_path, "r")
         license = license_file.read()
         license_file.close()
         license = str(license)
-        authors = ["Jean-Francois 'Kiddo' Fortin Tam\n\t<nekohayo AT gmail DOT com>\n", 
-                    "Pascal Potvin\n\t<pascal.potvin AT gmail DOT com>\n",
-                    "Wout Clymans\n\t<woutclymans AT gmail DOT com>\n",
-                    "Giulio 'Dullboy' lotti\n\t<dullgiulio AT gmail DOT com>\n",
-                    "Thomas McColgan\n\t<thomas DOT mccolgan AT gmx DOT de>\n",
-                    "Conor 'majikstreet' Callahan\n\t<majikstreet AT gmail DOT com>\n",
-                    "Chris 'RAOF' Halse Rogers\n\t<chalserogers AT gmail DOT com>\n"
-                   ]
-        logo = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_about.png' )
+        authors = ["Jean-Francois 'Kiddo' Fortin Tam\n\t\
+                    <nekohayo AT gmail DOT com>\n",
+                    "Wout Clymans\n\t\
+                    <woutclymans AT gmail DOT com>\n\n",
+                    "Pascal Potvin\n\t\
+                    <pascal.potvin AT gmail DOT com>\n",
+                    "Giulio 'Dullboy' lotti\n\t\
+                    <dullgiulio AT gmail DOT com>\n",
+                    "Thomas McColgan\n\t\
+                    <thomas DOT mccolgan AT gmx DOT de>\n",
+                    "Conor 'majikstreet' Callahan\n\t\
+                    <majikstreet AT gmail DOT com>\n",
+                    "Chris 'RAOF' Halse Rogers\n\t\
+                    <chalserogers AT gmail DOT com>\n"]
+
+        logo = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
+                                        'icons/specto_about.png')
 
         translator_credits = _("translator-credits-your-names-go-here")
 
@@ -74,20 +86,21 @@ class About:
         #self.about.set_artists(artists)
         self.about.set_translator_credits(translator_credits)
         self.about.set_logo(logo)
-        
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
+                                        'icons/specto_window_icon.png')
         self.about.set_icon(icon)
-        #self.wTree.set_logo_icon_name(icon_name)
-                
+
         self.about.connect("response", lambda d, r: self.close())
-        
+
         self.about.show_all()
-        
+
     def url_show(self, url):
         os.system(spectlib.util.return_webpage(url) + " &")
 
     def close(self):
         self.about.destroy()
+
 
 if __name__ == "__main__":
     #run the gui

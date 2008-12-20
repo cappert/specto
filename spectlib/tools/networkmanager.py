@@ -27,19 +27,22 @@ import urllib2
 import gobject
 import time
 
-def get_net_listener() :
+
+def get_net_listener():
     try:
         listener = NMListener(dbus.SystemBus())
-        if not listener.has_networkmanager() :
+        if not listener.has_networkmanager():
             listener = FallbackListener()
     except dbus.DBusException:
         listener = FallbackListener()
     return listener
 
+
 class CallbackRunner(object):
+
     def __init__(self):
         self.callbacks = {}
-    
+
     def add_callback(self, callback, *args, **kwargs):
         self.callbacks[callback] = (args, kwargs)
 
@@ -50,53 +53,56 @@ class CallbackRunner(object):
         for fn, (args, kwargs) in cb.iteritems():
             fn(*args, **kwargs)
             del self.callbacks[fn]
-    
+
 
 class NMListener(CallbackRunner):
     statusTable = {0: u'Unknown',
                    1: u'Asleep',
                    2: u'Connecting',
                    3: u'Connected',
-                   4: u'Disconnected' }
-    
+                   4: u'Disconnected'}
+
     def __init__(self, bus):
         super(NMListener, self).__init__()
         nmProxy = bus.get_object('org.freedesktop.NetworkManager',
                                  '/org/freedesktop/NetworkManager')
         self.nmIface = dbus.Interface(nmProxy,
                                       'org.freedesktop.NetworkManager')
-        self.nmIface.connect_to_signal('DeviceNoLongerActive', self.on_nm_event,
+        self.nmIface.connect_to_signal('DeviceNoLongerActive', \
+                                       self.on_nm_event,\
                                        'org.freedesktop.NetworkManager')
         self.nmIface.connect_to_signal('DeviceNowActive', self.on_nm_event,
                                        'org.freedesktop.NetworkManager')
         self.lastStatus = self.nmIface.state()
 
-    def on_nm_event(self, *args, **kwargs) :
+    def on_nm_event(self, *args, **kwargs):
         wasConnected = self.connected()
         self.lastStatus = self.nmIface.state()
-        if (not wasConnected) and self.connected() :
-            self._run_callbacks()            
+        if (not wasConnected) and self.connected():
+            self._run_callbacks()
 
     def connected(self):
         return self.lastStatus == 3
 
     def has_networkmanager(self):
         ### It seems that the only way of being sure the service exists
-        ### is to actually try to use it!      
+        ### is to actually try to use it!
         try:
             self.nmIface.state()
         except dbus.DBusException:
             return False
         return True
 
-class FallbackListener(CallbackRunner) :
+
+class FallbackListener(CallbackRunner):
+
     def __init__(self):
         self.last_checked = 0
         self._lastConnected = self.connected()
         self._timer_id = gobject.timeout_add(int(10*60*1000), self._callback)
-        
+
     def connected(self):
-        if (time.time() - self.last_checked) > 10*60 :
+        if (time.time() - self.last_checked) > 10*60:
             self.last_checked = time.time()
             try:
                 # try to see if google can be reached
@@ -108,10 +114,9 @@ class FallbackListener(CallbackRunner) :
                 self._lastConnected = False
 
         return self._lastConnected
-            
+
     def _callback(self):
         wasConnected = self._lastConnected
         self._lastConnected = self.connected()
-        if (not wasConnected) and self._lastConnected :
+        if (not wasConnected) and self._lastConnected:
             self._run_callbacks()
-    

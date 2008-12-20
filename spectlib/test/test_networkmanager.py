@@ -5,28 +5,30 @@ import dbus
 import urllib2
 import time
 
+
 class MockNetworkManager(object):
+
     def __init__(self):
         self.status = 0
-        self.callbacks = {'DeviceNoLongerActive' : [],
-                          'DeviceNowActive' : []}
+        self.callbacks = {'DeviceNoLongerActive': [],
+                          'DeviceNowActive': []}
 
     def state(self):
         return self.status
 
     def setConnected(self):
         self.status = 3
-        for callback in self.callbacks['DeviceNowActive'] :
+        for callback in self.callbacks['DeviceNowActive']:
             callback(dbus.String('Mock device'))
 
     def setDisconnected(self):
         self.status = 4
-        for callback in self.callbacks['DeviceNoLongerActive'] :
+        for callback in self.callbacks['DeviceNoLongerActive']:
             callback(dbus.String('Mock device'))
 
     def connect_to_signal(self, signal_name, handler_function,
                           dbus_interface=None):
-        if signal_name not in self.callbacks :
+        if signal_name not in self.callbacks:
             self.callbacks[signal_name] = []
         self.callbacks[signal_name].append(handler_function)
 
@@ -35,25 +37,30 @@ class MockNetworkManager(object):
 
     def Interface(self, *args, **kwargs):
         return self
-        
-            
+
+
 class MockFailNetworkManager(MockNetworkManager):
     excepitonMessage='The name org.freedesktop.NetworkManager was not provided\
     by any .service files'
+
     def state(self):
         raise dbus.DBusException(self.excepitonMessage)
 
+
 class LogingCallback(object):
+
     def __init__(self):
         self.log = []
 
     def __call__(self, *args, **kwargs):
         self.log.append((args, kwargs))
 
+
 class TestCallbackRunner(unittest.TestCase):
+
     def setUp(self):
         self.cbRunner = CallbackRunner()
-        
+
     def test_addingCallback(self):
         """
         Add a callback and trigger it
@@ -61,7 +68,7 @@ class TestCallbackRunner(unittest.TestCase):
         callback = LogingCallback()
         self.cbRunner.add_callback(callback)
         self.cbRunner._run_callbacks()
-        self.assertEqual([(tuple() , { })], callback.log)
+        self.assertEqual([(tuple(), {})], callback.log)
 
     def test_callbackArgs(self):
         """
@@ -70,7 +77,7 @@ class TestCallbackRunner(unittest.TestCase):
         callback = LogingCallback()
         self.cbRunner.add_callback(callback, 'foo', 'bar')
         self.cbRunner._run_callbacks()
-        self.assertEqual([(('foo', 'bar') , { })], callback.log)
+        self.assertEqual([(('foo', 'bar'), {})], callback.log)
 
     def test_callbackKWArgs(self):
         """
@@ -79,8 +86,8 @@ class TestCallbackRunner(unittest.TestCase):
         callback = LogingCallback()
         self.cbRunner.add_callback(callback, foo='bar')
         self.cbRunner._run_callbacks()
-        self.assertEqual([(tuple() , {'foo' : 'bar'})], callback.log)
-        
+        self.assertEqual([(tuple(), {'foo': 'bar'})], callback.log)
+
     def test_callbackArgsAndKWargs(self):
         """
         Add a callback, with both Args and KWArgs, and trigger it.
@@ -88,8 +95,8 @@ class TestCallbackRunner(unittest.TestCase):
         callback = LogingCallback()
         self.cbRunner.add_callback(callback, 'empathy', foo='bar')
         self.cbRunner._run_callbacks()
-        self.assertEqual([(('empathy', ) , {'foo' : 'bar'})], callback.log)
-        
+        self.assertEqual([(('empathy', ), {'foo': 'bar'})], callback.log)
+
     def test_multipleCallbacks(self):
         """
         Add two callbacks.  Each should be run with its specified arguments
@@ -99,8 +106,8 @@ class TestCallbackRunner(unittest.TestCase):
         self.cbRunner.add_callback(cb1, 'cb1 called')
         self.cbRunner.add_callback(cb2, 'cb2 called')
         self.cbRunner._run_callbacks()
-        self.assertEqual([(('cb1 called',), {})], cb1.log)
-        self.assertEqual([(('cb2 called',), {})], cb2.log)
+        self.assertEqual([(('cb1 called', ), {})], cb1.log)
+        self.assertEqual([(('cb2 called', ), {})], cb2.log)
 
     def test_registerCallbackMultipleTimes(self):
         """
@@ -111,7 +118,7 @@ class TestCallbackRunner(unittest.TestCase):
         self.cbRunner.add_callback(callback, 'foo')
         self.cbRunner.add_callback(callback, 'bar')
         self.cbRunner._run_callbacks()
-        self.assertEqual([(('bar', ) , {})], callback.log)
+        self.assertEqual([(('bar', ), {})], callback.log)
 
     def test_callbackOnlyRunOnce(self):
         """
@@ -122,19 +129,20 @@ class TestCallbackRunner(unittest.TestCase):
         self.cbRunner.add_callback(callback, 'foo')
         self.cbRunner._run_callbacks()
         self.cbRunner._run_callbacks()
-        self.assertEqual([(('foo', ) , {})], callback.log)
+        self.assertEqual([(('foo', ), {})], callback.log)
 
 
-class TestNMConnectionListener(unittest.TestCase) :
+class TestNMConnectionListener(unittest.TestCase):
+
     def setUp(self):
         self._oldDBUSInterface = dbus.Interface
         dbus.Interface = MockNetworkManager.Interface
         self.mockNM = MockNetworkManager()
         self.nmListener = NMListener(self.mockNM)
 
-    def tearDown(self) :
+    def tearDown(self):
         dbus.Interface = self._oldDBUSInterface
-        
+
     def test_connected(self):
         self.mockNM.setConnected()
         self.assertTrue(self.nmListener.connected())
@@ -174,22 +182,30 @@ class TestNMConnectionListener(unittest.TestCase) :
         self.assertEqual([(tuple(), dict())], cb.log)
 
 
-def mockFailingUrlOpen(url) :
+def mockFailingUrlOpen(url):
     raise IOError('foo')
 
-def mockWorkingUrlOpen(url) :
-    class MockUrl(object) :
-        def close(self) :
+
+def mockWorkingUrlOpen(url):
+
+    class MockUrl(object):
+
+        def close(self):
             pass
     return MockUrl()
 
+
 class MockTime(object):
+
     def __init__(self):
         self._time = 0
+
     def __call__(self):
         return self._time
 
-class TestFallbackConnectionListener(unittest.TestCase) :
+
+class TestFallbackConnectionListener(unittest.TestCase):
+
     def setUp(self):
         self.realUrlOpen = urllib2.urlopen
         self.realTime = time.time
@@ -197,7 +213,7 @@ class TestFallbackConnectionListener(unittest.TestCase) :
     def tearDown(self):
         urllib2.urlopen = self.realUrlOpen
         time.time = self.realTime
-    
+
     def test_connected(self):
         urllib2.urlopen = mockWorkingUrlOpen
         fbListener = FallbackListener()
@@ -226,13 +242,12 @@ class TestFallbackConnectionListener(unittest.TestCase) :
         mockTime = MockTime()
         mockTime._time = time.time()
         time.time = mockTime
-        
+
         fbListener = FallbackListener()
         fbListener.connected()
         urllib2.urlopen = mockFailingUrlOpen
         mockTime._time = mockTime._time + 10*60 + 1
         self.assertFalse(fbListener.connected())
-        
-        
+
 if __name__ == '__main__':
     unittest.main()
