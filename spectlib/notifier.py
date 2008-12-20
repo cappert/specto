@@ -314,7 +314,10 @@ class Notifier:
         try:
             icon = self.specto.icon_theme.load_icon(icon, size, 0)
         except gobject.GError:
-            icon = gtk.gdk.pixbuf_new_from_file_at_size(self.specto.PATH + "icons/specto_tray_1.svg", size, size)
+            try:
+                icon = gtk.gdk.pixbuf_new_from_file_at_size(self.specto.PATH + "icons/" + icon + ".svg", size, size)
+            except:
+                icon = gtk.gdk.pixbuf_new_from_file_at_size(self.specto.PATH + "icons/specto_tray_1.svg", size, size)
             
         icon = icon.add_alpha(False, '0', '0', '0')
         for row in icon.get_pixels_array():

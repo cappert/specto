@@ -34,7 +34,7 @@ category = _("System")
 
 def get_add_gui_info():
     return [
-            ("port", spectlib.gtkconfig.Spinbutton(_("Port"), value=21))
+            ("port", spectlib.gtkconfig.Spinbutton(_("Port"), value=21, upper=65535))
            ]
 
 class Watch_system_port(Watch):

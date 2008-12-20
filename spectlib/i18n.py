@@ -38,8 +38,10 @@ def set_language(language=None):
         # untranslated English.
         _translation = gettext.NullTranslations()
 
+
 def get_translation():
     return _translation
+
 
 def set_translation(translation):
     global _translation
@@ -51,8 +53,11 @@ def set_translation(translation):
 if _translation is None:
     set_language()
 
-##this small part was taken from gajim's i18n.py, because the mailman one was pure CRAP. It was impossible use strings that had % characters in them.
+
 def _(s):
+    """this small part was taken from gajim's i18n.py,
+    because the mailman one was pure CRAP.
+    It was impossible use strings that had % characters in them."""
     if s == '':
         return s
     return _translation.ugettext(s)

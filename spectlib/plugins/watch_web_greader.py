@@ -36,7 +36,6 @@ def get_add_gui_info():
             ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
             ]
 
-
 class Watch_web_greader(Watch):
     """
     this watch will check if you have new news on your google reader account
@@ -100,7 +99,7 @@ class Watch_web_greader(Watch):
                     
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
         Watch.timer_update(self)
         
     def get_gui_info(self):
@@ -153,7 +152,7 @@ class Watch_web_greader(Watch):
 
             finally:
                 f.close()
-
+            
     def write_cache_file(self):
         try:
             f = open(self.cache_file, "w")
@@ -276,68 +275,63 @@ cookies = -1
 old_unread = -1
 unread = 0
 
-################################
-#Use cookies
-#
-COOKIEFILE = os.path.join(spectlib.util.get_path('tmp'), 'cookies.lwp')
-# the path and filename to save your cookies in
-
-cj = None
-ClientCookie = None
-cookielib = None
-
-# Let's see if cookielib is available
-try:
-    import cookielib
-except ImportError:
-    # If importing cookielib fails
-    # let's try ClientCookie
+def getcookies ():
+    ################################
+    #Use cookies
+    #
+    COOKIEFILE = os.path.join(spectlib.util.get_path('tmp'), 'cookies.lwp')
+    # the path and filename to save your cookies in
+    
+    cj = None
+    ClientCookie = None
+    cookielib = None
+    
+    # Let's see if cookielib is available
     try:
-        import ClientCookie
+        import cookielib
     except ImportError:
-    # ClientCookie isn't available either
+        # If importing cookielib fails
+        # let's try ClientCookie
+        try:
+            import ClientCookie
+        except ImportError:
+        # ClientCookie isn't available either
+            urlopen = urllib2.urlopen
+            Request = urllib2.Request
+        else:
+        # imported ClientCookie
+            urlopen = ClientCookie.urlopen
+            Request = ClientCookie.Request
+            cj = ClientCookie.LWPCookieJar()
+    
+    else:
+        # importing cookielib worked
         urlopen = urllib2.urlopen
         Request = urllib2.Request
-    else:
-    # imported ClientCookie
-        urlopen = ClientCookie.urlopen
-        Request = ClientCookie.Request
-        cj = ClientCookie.LWPCookieJar()
-
-else:
-    # importing cookielib worked
-    urlopen = urllib2.urlopen
-    Request = urllib2.Request
-    cj = cookielib.LWPCookieJar()
-    # This is a subclass of FileCookieJar
-    # that has useful load and save methods
-
-if cj is not None:
-# we successfully imported
-# one of the two cookie handling modules
-    if os.path.isfile(COOKIEFILE):
-    # if we have a cookie file already saved
-    # then load the cookies into the Cookie Jar
-        cj.load(COOKIEFILE)
-
-    # Now we need to get our Cookie Jar
-    # installed in the opener;
-    # for fetching URLs
-    if cookielib is not None:
-    # if we use cookielib
-    # then we get the HTTPCookieProcessor
-    # and install the opener in urllib2
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-        urllib2.install_opener(opener)
-
-    else:
-    # if we use ClientCookie
-    # then we get the HTTPCookieProcessor
-    # and install the opener in ClientCookie
-        opener = ClientCookie.build_opener(ClientCookie.HTTPCookieProcessor(cj))
-        ClientCookie.install_opener(opener)
-        
-def getcookies ():
+        cj = cookielib.LWPCookieJar()
+        # This is a subclass of FileCookieJar
+        # that has useful load and save methods
+    
+    if cj is not None:
+    # we successfully imported
+    # one of the two cookie handling modules    
+        # Now we need to get our Cookie Jar
+        # installed in the opener;
+        # for fetching URLs
+        if cookielib is not None:
+        # if we use cookielib
+        # then we get the HTTPCookieProcessor
+        # and install the opener in urllib2
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+            urllib2.install_opener(opener)
+    
+        else:
+        # if we use ClientCookie
+        # then we get the HTTPCookieProcessor
+        # and install the opener in ClientCookie
+            opener = ClientCookie.build_opener(ClientCookie.HTTPCookieProcessor(cj))
+            ClientCookie.install_opener(opener)
+            
     url = 'https://www.google.com/accounts/ServiceLoginAuth'
     user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
     login = {'Email' : email,
@@ -368,24 +362,23 @@ def getcookies ():
 
     except IOError, e:
         return 2         #we didn't get a connection
-
-
+    
     if cj is None:        
         return 3         #we got a connection, but didn't get any cookies
     else:
         cj.save(COOKIEFILE)                     # save the cookies again
-        return 1        #everything went ok
-    
+        return 1, Request, cj        #everything went ok
+       
 ##########################
 #Get the number of unread items
 #
-def getUnreadItems():
+def getUnreadItems(Request):
     global unread, L, feeds
     LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'list.xml')
     url = 'https://www.google.com/reader/api/0/unread-count?all=true'
     try:
         req = Request(url)
-        response = urlopen(req)
+        response = urllib2.urlopen(req)
         del req
     except IOError, e:
         return 2         #we didn't get a connection
@@ -427,13 +420,13 @@ def getUnreadItems():
 ##################################
 #Set the names of feeds the user is subscribed to
 #
-def updateFeeds():
+def updateFeeds(Request):
     global names, feeds
     LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'names.xml')
     url = 'http://www.google.com/reader/api/0/subscription/list'
     try:
         req = Request(url)
-        response = urlopen(req)
+        response = urllib2.urlopen(req)
         del req
     except IOError, e:
         return 2         #we didn't get a connection
@@ -457,7 +450,7 @@ def updateFeeds():
         del document
         del feedlist[:]
         
-def readFeeds():
+def readFeeds(Request):
     global names
     LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'names.xml')
     if os.path.isfile(LISTFILE):
@@ -473,7 +466,7 @@ def readFeeds():
         del feedlist[:]
         fileHandle.close()
     else:
-        updateFeeds()
+        updateFeeds(Request)
         
 #################################
 #Compare function to sort the feeds by number of unread items
@@ -487,11 +480,14 @@ class Greader():
         global config_changed
         email = username
         passwd = password
+        request = ""
         
     def refresh(self):
         cookies = getcookies()
-        if (cookies == 1):
-            cookies = getUnreadItems()
+        if (cookies[0] == 1):
+            request = cookies[1]
+            cj = cookies[2]
+            cookies = getUnreadItems(request)
         if (cookies == 0):
             info = -1, _('Wrong username or password')
             extra_info = ''
@@ -511,7 +507,7 @@ class Greader():
         elif (unread >= '1'):
             info = 2, unread
             
-        readFeeds()
+        readFeeds(request)
         if (len(L) >= numberFeeds):
             i = numberFeeds
         else:

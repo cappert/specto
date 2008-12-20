@@ -21,25 +21,29 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 import sys
+from spectlib.i18n import _
+
 
 class Console:
-    
+
     def __init__(self, specto, args):
         self.specto = specto
         self.only_changed = False
-        
+
         if args:
             if args == "--only-changed":
                 self.only_changed = True
             elif args == "--help":
-                print _('\nSpecto console version\n\nUse "specto --console --only-changed" to show only watch changes notifications.\n\n')
+                print _('\nSpecto console version\n\nUse "specto \
+                    --console --only-changed" to show only \
+                                watch changes notifications.\n\n')
                 sys.exit(0)
-                
+
     def start_watches(self):
         self.specto.watch_db.restart_all_watches()
-        
-    def mark_watch_status(self,status, id):
-        """ show the right icon for the status from the watch. """ 
+
+    def mark_watch_status(self, status, id):
+        """ show the right icon for the status from the watch. """
         watch = self.specto.watch_db[id]
 
         if status == "changed":

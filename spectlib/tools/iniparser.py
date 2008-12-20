@@ -65,6 +65,7 @@ Convert it to ini format:
 
 
 class namespace(object):
+
     def __getitem__(self, key):
         return NotImplementedError(key)
 
@@ -115,7 +116,9 @@ class namespace(object):
             else:
                 self[name] = value
 
+
 class unknown(object):
+
     def __init__(self, name, namespace):
         object.__setattr__(self, 'name', name)
         object.__setattr__(self, 'namespace', namespace)
@@ -220,7 +223,7 @@ class basic_namespace(namespace):
         for name in keys:
             value = self._data[name]
             if isinstance(value, namespace):
-                lines.append(value.__str__(prefix='%s%s.' % (prefix,name)))
+                lines.append(value.__str__(prefix='%s%s.' % (prefix, name)))
             else:
                 if value is None:
                     lines.append('%s%s' % (prefix, name))
@@ -236,8 +239,10 @@ class basic_namespace(namespace):
     def readfp(self, fp):
         for line in fp:
             line = line.strip()
-            if not line: continue
-            if line[0] == '#': continue
+            if not line:
+                continue
+            if line[0] == '#':
+                continue
             data = line.split('=', 1)
             if len(data) == 1:
                 name = line
@@ -304,25 +309,23 @@ import re
 from sets import Set
 from ConfigParser import DEFAULTSECT, ParsingError, MissingSectionHeaderError
 
+
 class line_type(object):
+
     line = None
 
     def __init__(self, line=None):
         if line is not None:
             self.line = line.strip('\n')
 
-    # Return the original line for unmodified objects
-    # Otherwise construct using the current attribute values
     def __str__(self):
         if self.line is not None:
             return self.line
         else:
             return self.to_string()
 
-    # If an attribute is modified after initialization
-    # set line to None since it is no longer accurate.
     def __setattr__(self, name, value):
-        if hasattr(self,name):
+        if hasattr(self, name):
             self.__dict__['line'] = None
         self.__dict__[name] = value
 
@@ -331,10 +334,10 @@ class line_type(object):
 
 
 class section_line(line_type):
-    regex =  re.compile(r'^\['
-                        r'(?P<name>[^]]+)'
-                        r'\]\s*'
-                        r'((?P<csep>;|#)(?P<comment>.*))?$')
+    regex = re.compile(r'^\['
+                       r'(?P<name>[^]]+)'
+                       r'\]\s*'
+                       r'((?P<csep>;|#)(?P<comment>.*))?$')
 
     def __init__(self, name, comment=None, comment_separator=None,
                              comment_offset=-1, line=None):
@@ -363,6 +366,7 @@ class section_line(line_type):
 
 
 class option_line(line_type):
+
     def __init__(self, name, value, separator='=', comment=None,
                  comment_separator=None, comment_offset=-1, line=None):
         super(option_line, self).__init__(line)
@@ -441,12 +445,13 @@ class comment_line(line_type):
 
 
 class empty_line(line_type):
-    # could make this a singleton
+
     def to_string(self):
         return ''
 
     def parse(cls, line):
-        if line.strip(): return None
+        if line.strip():
+            return None
         return cls(line)
     parse = classmethod(parse)
 
@@ -471,17 +476,21 @@ class continuation_line(line_type):
 
 
 class line_container(object):
+
     def __init__(self, d=None):
         self.contents = []
         if d:
-            if isinstance(d, list): self.extend(d)
-            else: self.add(d)
+            if isinstance(d, list):
+                self.extend(d)
+            else:
+                self.add(d)
 
     def add(self, x):
         self.contents.append(x)
 
     def extend(self, x):
-        for i in x: self.add(i)
+        for i in x:
+            self.add(i)
 
     def get_name(self):
         return self.contents[0].name
@@ -503,7 +512,7 @@ class line_container(object):
                 self.add(continuation_line(''))
         elif linediff < 0:
             self.contents = self.contents[:linediff]
-        for i,v in enumerate(lines):
+        for i, v in enumerate(lines):
             self.contents[i].value = v
 
     name = property(get_name, set_name)
@@ -529,6 +538,7 @@ class section(namespace):
     _options = None
     _defaults = None
     _optionxform = None
+
     def __init__(self, lineobj, defaults = None, optionxform=None):
         self._lines = [lineobj]
         self._defaults = defaults
@@ -538,7 +548,8 @@ class section(namespace):
     def __getitem__(self, key):
         if key == '__name__':
             return self._lines[-1].name
-        if self._optionxform: key = self._optionxform(key)
+        if self._optionxform:
+            key = self._optionxform(key)
         try:
             return self._options[key].value
         except KeyError:
@@ -548,8 +559,10 @@ class section(namespace):
                 raise
 
     def __setitem__(self, key, value):
-        if self._optionxform: xkey = self._optionxform(key)
-        else: xkey = key
+        if self._optionxform:
+            xkey = self._optionxform(key)
+        else:
+            xkey = key
         if xkey not in self._options:
             # create a dummy object - value may have multiple lines
             obj = line_container(option_line(key, ''))
@@ -560,14 +573,17 @@ class section(namespace):
         self._options[xkey].value = value
 
     def __delitem__(self, key):
-        if self._optionxform: key = self._optionxform(key)
+        if self._optionxform:
+            key = self._optionxform(key)
         for l in self._lines:
             remaining = []
             for o in l.contents:
                 if isinstance(o, line_container):
                     n = o.name
-                    if self._optionxform: n = self._optionxform(n)
-                    if key != n: remaining.append(o)
+                    if self._optionxform:
+                        n = self._optionxform(n)
+                    if key != n:
+                        remaining.append(o)
                 else:
                     remaining.append(o)
             l.contents = remaining
@@ -606,6 +622,7 @@ class ini_namespace(namespace):
     _sectionxform = None
     _optionxform = None
     _parse_exc = None
+
     def __init__(self, fp=None, defaults = None, parse_exc=True,
                  optionxform=str.lower, sectionxform=None):
         self._data = line_container()
@@ -613,7 +630,8 @@ class ini_namespace(namespace):
         self._optionxform = optionxform
         self._sectionxform = sectionxform
         self._sections = {}
-        if defaults is None: defaults = {}
+        if defaults is None:
+            defaults = {}
         self._defaults = section(line_container(), optionxform=optionxform)
         for name, value in defaults.iteritems():
             self._defaults[name] = value
@@ -623,14 +641,16 @@ class ini_namespace(namespace):
     def __getitem__(self, key):
         if key == DEFAULTSECT:
             return self._defaults
-        if self._sectionxform: key = self._sectionxform(key)
+        if self._sectionxform:
+            key = self._sectionxform(key)
         return self._sections[key]
 
     def __setitem__(self, key, value):
         raise Exception('Values must be inside sections', key, value)
 
     def __delitem__(self, key):
-        if self._sectionxform: key = self._sectionxform(key)
+        if self._sectionxform:
+            key = self._sectionxform(key)
         self._data.contents.remove(self._sections[key]._lineobj)
         del self._sections[key]
 
@@ -647,7 +667,8 @@ class ini_namespace(namespace):
             self._data.add(empty_line())
         obj = line_container(section_line(name))
         self._data.add(obj)
-        if self._sectionxform: name = self._sectionxform(name)
+        if self._sectionxform:
+            name = self._sectionxform(name)
         if name in self._sections:
             ns = self._sections[name]
             ns._lines.append(obj)
@@ -699,7 +720,8 @@ class ini_namespace(namespace):
 
             if lineobj is None:
                 if self._parse_exc:
-                    if exc is None: exc = ParsingError(fname)
+                    if exc is None:
+                        exc = ParsingError(fname)
                     exc.append(linecount, line)
                 lineobj = make_comment(line)
 
@@ -709,7 +731,8 @@ class ini_namespace(namespace):
                 else:
                     # illegal continuation line - convert to comment
                     if self._parse_exc:
-                        if exc is None: exc = ParsingError(fname)
+                        if exc is None:
+                            exc = ParsingError(fname)
                         exc.append(linecount, line)
                     lineobj = make_comment(line)
             else:
@@ -744,12 +767,13 @@ class ini_namespace(namespace):
                         cur_section_name = self._sectionxform(cur_section.name)
                     else:
                         cur_section_name = cur_section.name
-                    if not self._sections.has_key(cur_section_name):
+                    if not cur_section_name in self._sections:
                         self._sections[cur_section_name] = \
                                 section(cur_section, defaults=self._defaults,
                                         optionxform=self._optionxform)
                     else:
-                        self._sections[cur_section_name]._lines.append(cur_section)
+                        self._sections[cur_section_name]._lines. \
+                            append(cur_section)
 
             if isinstance(lineobj, (comment_line, empty_line)):
                 pending_lines.append(lineobj)
@@ -760,4 +784,3 @@ class ini_namespace(namespace):
 
         if exc:
             raise exc
-
