@@ -52,6 +52,7 @@ class Watch_system_file(Watch):
         self.icon = icon
         self.open_command = ''
         self.type_desc = type_desc
+        self.standard_open_command = "xdg-open %s" % values['file']
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)

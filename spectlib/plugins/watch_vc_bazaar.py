@@ -54,14 +54,11 @@ class Watch_vc_bazaar(Watch):
                        ]
         
         self.icon = icon
-        self.standard_open_command = ''
+        self.standard_open_command = 'xdg-open %s' % values['folder']
         self.type_desc = type_desc 
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        if self.standard_open_command == self.open_command:
-            self.standard_open_command = "nautilus " + self.folder
-            self.open_command = self.standard_open_command
             
         self.local_branch_ = 0
         self.remote_branch_ = 0
