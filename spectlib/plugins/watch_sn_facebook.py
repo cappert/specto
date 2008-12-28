@@ -46,7 +46,7 @@ def get_add_gui_info():
            
 class Watch_sn_facebook(Watch):
     """ 
-    Watch class that will check if a bzr folder has been changed. 
+    Watch class that will check for changes in a user's Facebook account.
     """
     
     def __init__(self, specto, id, values):

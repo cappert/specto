@@ -39,7 +39,7 @@ category = _("Version control")
 
 def get_add_gui_info():
     return [
-            ("folder", spectlib.gtkconfig.FolderChooser(_("Bazaar folder")))
+            ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
            ]
            
 class Watch_vc_bazaar(Watch):
@@ -167,6 +167,6 @@ class Watch_vc_bazaar(Watch):
         return [ 
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
-                (_('Bazaar folder'), self.folder),
+                (_('Folder'), self.folder),
                 (_('Main branch'), self.remote_branch_label)
                 ]        
