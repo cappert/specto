@@ -39,29 +39,29 @@ def get_add_gui_info():
 
 
 class Watch_system_file(Watch):
-    """ 
-    Watch class that will check if a file has been changed. 
     """
-    
+    Watch class that will check if a file has been changed.
+    """
+
     def __init__(self, specto, id, values):
-        
-        watch_values = [ 
+
+        watch_values = [
                         ( "file", spectlib.config.String(True) )
                        ]
-        
+
         self.icon = icon
         self.open_command = ''
         self.type_desc = type_desc
         self.standard_open_command = "xdg-open %s" % values['file']
-                
+
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        
-        self.cache_file = os.path.join(self.specto.CACHE_DIR, "file" + self.file.replace("/","_") + ".cache")                
-        self.first_time = False        
+
+        self.cache_file = os.path.join(self.specto.CACHE_DIR, "file" + self.file.replace("/","_") + ".cache")
+        self.first_time = False
 
     def check(self):
-        """ See if a file was modified or created. """        
+        """ See if a file was modified or created. """
         try:
             self.info = []
             self.file_info = []
@@ -83,11 +83,11 @@ class Watch_system_file(Watch):
                     i += 1
 
                 if self.old_info != self.info and not self.first_time:
-                    self.actually_changed = True  
+                    self.actually_changed = True
 
                     #if str(self.info[0]) != self.old_info[0].strip():
                     #    self.file_info.append("Inode protection mode changed")
-                        
+
                     #if str(self.info[1]) != self.old_info[1].strip():
                     #    self.file_info.append("Inode number changed")
 
@@ -111,18 +111,18 @@ class Watch_system_file(Watch):
 
                     if self.info[8] != self.old_info[8]:
                         self.file_info.append(_("Time of last modification changed"))
-                        
+
                     #if self.info[9] != self.old_info[9]:
                     #    self.file_info.append("Metadata changed")
-                    
+
                 self.update_cache_file()
-                self.first_time = False     
+                self.first_time = False
         except:
             self.error = True
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
-        
+
         Watch.timer_update(self)
-        
+
     def update_cache_file(self):
         """ Write the new values in the cache file. """
         try:
@@ -132,7 +132,7 @@ class Watch_system_file(Watch):
             self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "error", self.name)
         finally:
             f.close()
-        
+
     def read_cache_file(self):
         """ Read the options from the cache file. """
         try:
@@ -142,30 +142,30 @@ class Watch_system_file(Watch):
                 f.close()
             else:
                 self.first_time = True
-                
+
         except:
             self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
-            
+
     def remove_cache_files(self):
         os.unlink(self.cache_file)
-        
+
     def get_balloon_text(self):
         """ create the text for the balloon """
         text = _("<b>%s</b> has changed:\n") % self.file
         for line in self.file_info:
             text += line + "\n"
-        
+
         return text
-    
+
     def get_extra_information(self):
         text = _("<b>%s</b> has changed:\n") % self.file
         for line in self.file_info:
             text += line + "\n"
-        
-        return text                 
-                
+
+        return text
+
     def get_gui_info(self):
-        return [ 
+        return [
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('File'), self.file),

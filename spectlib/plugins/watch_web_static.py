@@ -42,15 +42,15 @@ import formatter
 import htmllib
 import cStringIO
 import sys
-    
+
 type = "Watch_web_static"
 type_desc = _("Webpage/feed")
 icon = 'applications-internet'
 category = _("Internet")
 
 class Watch_web_static(Watch):
-    """ 
-    Watch class that will check if http or rss pages are changed. 
+    """
+    Watch class that will check if http or rss pages are changed.
     """
     type_desc = type_desc
     url_ = ""
@@ -64,25 +64,25 @@ class Watch_web_static(Watch):
     url2_ = ""
 
     def __init__(self, specto, id, values):
-        watch_values = [ 
+        watch_values = [
                         ("uri", spectlib.config.String(True)),
                         ("error_margin", spectlib.config.Dec(True)),
                         ("redirect", spectlib.config.Boolean(False))
                        ]
-        
-        self.standard_open_command = spectlib.util.return_webpage(values['uri']) 
-                       
+
+        self.standard_open_command = spectlib.util.return_webpage(values['uri'])
+
         Watch.__init__(self, specto, id, values, watch_values)
-        
+
         self.cacheSubDir__ = specto.CACHE_DIR
         self.use_network = True
         self.filesize_difference = 0.0
         self.icon = icon
-        
-        self.open_command = self.open_command.replace("&","\&")    
+
+        self.open_command = self.open_command.replace("&","\&")
         self.url_ = self.uri
         self.diff = ""
-        
+
     def check(self):
         """ See if a http or rss page changed. """
         try:
@@ -117,14 +117,14 @@ class Watch_web_static(Watch):
                 self.digest_ = md5.new(self.content_).digest()
                 self.digest_ = "".join(["%02x" % (ord(c),) for c in self.digest_])
                 self.info_['md5sum'] = self.digest_
-    
+
                 # This uncompresses the gzipped contents, if you need to parse the page. This is used to check if it is a feed for example, a few lines later.
                 self.compressedstream = StringIO.StringIO(self.content_)
                 try:
                     self.page_source = gzip.GzipFile(fileobj=self.compressedstream).read() #try uncompressing
                 except:
                     self.page_source = self.content_ #the page was not compressed
-                
+
                 self.diff = textDiff(cache_res, self.page_source)
                 try:
                     out_file = file(self.cacheFullPath_, "w")
@@ -132,7 +132,7 @@ class Watch_web_static(Watch):
                     out_file.close()
                 except:
                     pass
-                    
+
                 # This will check for the "real" website home URL when the website target is an xml feed.
                 # First, check if the web page is actually a known feed type.
                 # Here we look for three kinds of headers, where * is a wildcard:
@@ -150,18 +150,18 @@ class Watch_web_static(Watch):
                     #change the uri_real attribute
                     if self.open_command == self.standard_open_command:
                         self.standard_open_command = spectlib.util.return_webpage(self.rss_links)
-                        self.open_command = self.standard_open_command 
+                        self.open_command = self.standard_open_command
                 else:
                     #the file is not a recognized feed. We will not parse it for the <link> tag.
                     pass
-    
-    
-                # Here is stuff for filesize comparison, 
+
+
+                # Here is stuff for filesize comparison,
                 # just in case there is annoying advertising on the page,
                 # rendering the md5sum a false indicator.
                 self.new_filesize = len(str(self.content_))  # size in bytes?... will be used for the error_margin in case of annoying advertising in the page
                 #if self.specto.DEBUG:  "\tPerceived filesize is", self.new_filesize, "bytes ("+str(self.new_filesize/1024)+"KB)"  # Useful for adjusting your error_margin
-                
+
                 if int(self.new_filesize)==4:
                     # FIXME: temporary hack, not sure the etag is ALWAYS 4bytes
                     # 4 bytes means it's actually an etag reply, so there is no change. We don't care about filesize checks then.
@@ -178,7 +178,7 @@ class Watch_web_static(Watch):
                             self.to_be_stored_filesize = self.new_filesize
                             self.actually_changed = True
                         else:
-                            # We don't want to juggle with all the possible filesizes, 
+                            # We don't want to juggle with all the possible filesizes,
                             # We want to stay close to the original, because replacing the filesize each time
                             # If the watch is not changed would create a lot of fluctuations
                             self.to_be_stored_filesize = self.old_filesize
@@ -186,27 +186,27 @@ class Watch_web_static(Watch):
                     else:
                     # If there is no previously stored filesize
                         self.to_be_stored_filesize = self.new_filesize
-    
+
                 ### NOTE: do not write the redirect url in a config file!
                 self.write_filesize()
         except:
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
             self.error = True
-            
+
         Watch.timer_update(self)
 
     def content(self):
         """Get the content as a single string."""
         return self.content_
-        
+
     def info(self):
         """ Returns an HTTPMessage for manipulating headers.
-    
+
         Note that you can use this to read headers but not
         to add or change headers. Use the 'add_headers()' for
         adding/changing header values permanently in the cache."""
         return self.info_
-    
+
     def write_filesize(self):
         """ Write the filesize in the watch list. """
         try:
@@ -215,10 +215,10 @@ class Watch_web_static(Watch):
             self.specto.logger.log(_("There was an error opening the file %s") % self.cacheFullPath2_, "critical", self.name)
         else:
             f.write(str(self.to_be_stored_filesize))
-            
+
         finally:
             f.close()
-            
+
     def read_filesize(self):
         if os.path.exists(self.cacheFullPath2_):
             try:
@@ -235,12 +235,12 @@ class Watch_web_static(Watch):
                 f.close()
         else:
             return 0
-        
-        
+
+
     def remove_cache_files(self):
         os.unlink(self.cacheFullPath_)
-        os.unlink(self.cacheFullPath2_)        
-        
+        os.unlink(self.cacheFullPath2_)
+
     def _writeContent(self, response):
         content = ""
         content = response.read()
@@ -253,31 +253,31 @@ class Watch_web_static(Watch):
         If the `quotes` parameter is set to `False`, the " character is left as
         is. Escaping quotes is generally only required for strings that are to
         be used in attribute values.
-        """      
+        """
         text = str(text).replace('&', '&amp;') \
                         .replace('<', '&lt;') \
                         .replace('>', '&gt;')
         if quotes:
             text = text.replace('"', '&#34;')
         return text
-            
+
     def get_balloon_text(self):
-        """ create the text for the balloon """  
+        """ create the text for the balloon """
         text = _("The website, <b>%s</b>, has changed.\nDifference percentage: %s percent") % (self.name, str(self.filesize_difference)[:5])
         return text
-    
+
     def get_extra_information(self):
         text = ""
         if self.diff:
             self.diff = self.escape(self.diff)
             outstream = cStringIO.StringIO()
-            p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+            p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
             p.feed(self.diff)
             self.diff = outstream.getvalue()
-            outstream.close()          
+            outstream.close()
             text = self.diff.replace("&", "&amp;")
         return text
-            
+
     def get_gui_info(self):
         return [
                 (_('Name'), self.name),
@@ -329,7 +329,7 @@ def html2list(x, b=1):
     out = []
     for c in x:
         if mode == 'tag':
-            if c == '>': 
+            if c == '>':
                 if b:
                     cur += ']'
                 else:
@@ -340,7 +340,7 @@ def html2list(x, b=1):
             else:
                 cur += c
         elif mode == 'char':
-            if c == '<': 
+            if c == '<':
                 out.append(cur)
                 if b:
                     cur = '['

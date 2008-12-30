@@ -131,12 +131,12 @@ class Log_dialog:
             pattern = ("CRITICAL")
         elif level == -1:
             pattern = self.wTree.get_widget("combo_level").child.get_text()
-        
+
         start = self.log_buffer.get_start_iter()
         end = self.log_buffer.get_end_iter()
         self.log_buffer.delete(start, end)
         iter = self.log_buffer.get_iter_at_offset(0)
-        
+
         if level == 0:  # Show everything
             for line in buffer_log:
                 if line:  # If the line is not empty

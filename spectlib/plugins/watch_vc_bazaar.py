@@ -43,60 +43,60 @@ def get_add_gui_info():
             ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
            ]
 
-           
+
 class Watch_vc_bazaar(Watch):
-    """ 
-    Watch class that will check if a bzr folder has been changed. 
     """
-    
+    Watch class that will check if a bzr folder has been changed.
+    """
+
     def __init__(self, specto, id, values):
-        
-        watch_values = [ 
+
+        watch_values = [
                         ( "folder", spectlib.config.String(True) )
                        ]
-        
+
         self.icon = icon
         self.standard_open_command = 'xdg-open %s' % values['folder']
-        self.type_desc = type_desc 
-                
+        self.type_desc = type_desc
+
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-            
+
         self.local_branch_ = 0
         self.remote_branch_ = 0
         self.remote_branch_label = ""
         self.local_extra = []
         self.remote_extra = []
-        self.cache_file = os.path.join(self.specto.CACHE_DIR, "bazaar" + self.folder.replace("/","_") + ".cache")            
+        self.cache_file = os.path.join(self.specto.CACHE_DIR, "bazaar" + self.folder.replace("/","_") + ".cache")
 
     def check(self):
-        """ See if a folder's contents were modified or created. """        
+        """ See if a folder's contents were modified or created. """
         try:
             self.read_cache_file()
             local_branch = Branch.open_containing(self.folder)[0]
             remote_branch = Branch.open_containing(local_branch.get_parent())[0]
             self.remote_branch_label = local_branch.get_parent().replace("%7E", "~")
             self.local_extra, self.remote_extra = find_unmerged(local_branch, remote_branch)
-            
+
             if len(self.local_extra) <> 0:
                 if int(self.local_extra[len(self.local_extra) - 1][0]) > self.local_branch_:
                     self.actually_changed = True
                     self.write_cache_file()
-            
+
             if len(self.remote_extra) <> 0:
                 if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
                     self.actually_changed = True
                     self.write_cache_file()
-                
+
         except NotBranchError, e:
             self.error = True
             self.specto.logger.log(('%s') % str(e), "warning", self.name)  # This '%s' string here has nothing to translate
         except:
             self.error = True
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
-        
+
         Watch.timer_update(self)
-        
+
     def get_balloon_text(self):
         """ create the text for the balloon """
         msg = ""
@@ -110,10 +110,10 @@ class Watch_vc_bazaar(Watch):
                 msg = _("One new revision on the remote branch.")
             else:
                 print self.remote_extra[0]
-                msg = _("%d new revisions on the remote branch.") % len(self.remote_extra)        
+                msg = _("%d new revisions on the remote branch.") % len(self.remote_extra)
         return msg
-        
-    def get_extra_information(self):        
+
+    def get_extra_information(self):
         i = 0
         author_info = ""
         if len(self.remote_extra) <> 0:
@@ -121,15 +121,15 @@ class Watch_vc_bazaar(Watch):
                 author_info += "<b>Rev " + str(self.remote_extra[i][0]) + "</b>: <i>" + str(self.remote_extra[i][1]).split("@")[0] + "</i>\n"
                 if i == 3 and i < len(self.remote_extra) - 1:
                     author_info += _("and others...")
-                i += 1         
+                i += 1
         if len(self.local_extra) <> 0 and author_info == "":
             while i < len(self.local_extra) and i < 4:
                 author_info += "<b>Rev " + str(self.local_extra[i][0]) + "</b>: <i>" + str(self.local_extra[i][1]).split("@")[0] + "</i>\n"
                 if i == 3 and i < len(self.local_extra) - 1:
                     author_info += _("and others...")
-                i += 1            
-        return author_info    
-        
+                i += 1
+        return author_info
+
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
             try:
@@ -144,7 +144,7 @@ class Watch_vc_bazaar(Watch):
                         self.remote_branch_ = int(line.split(":")[1])
             finally:
                 f.close()
-        
+
     def write_cache_file(self):
         try:
             f = open(self.cache_file, "w")
@@ -152,19 +152,19 @@ class Watch_vc_bazaar(Watch):
             self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
         else:
             if len(self.local_extra) > 0:
-                f.write("local_branch:" + str(self.local_extra[len(self.local_extra) - 1][0]) + "\n")    
+                f.write("local_branch:" + str(self.local_extra[len(self.local_extra) - 1][0]) + "\n")
             if len(self.remote_extra) > 0:
-                f.write("remote_branch:" + str(self.remote_extra[len(self.remote_extra) - 1][0]) + "\n")            
+                f.write("remote_branch:" + str(self.remote_extra[len(self.remote_extra) - 1][0]) + "\n")
         finally:
             f.close()
-            
+
     def remove_cache_files(self):
-        os.unlink(self.cache_file)        
-        
+        os.unlink(self.cache_file)
+
     def get_gui_info(self):
-        return [ 
+        return [
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Folder'), self.folder),
                 (_('Main branch'), self.remote_branch_label)
-                ]        
+                ]

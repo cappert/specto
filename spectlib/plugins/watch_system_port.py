@@ -30,7 +30,7 @@ import os
 type = "Watch_system_port"
 type_desc = _("Port")
 icon = 'network-transmit-receive'
-category = _("System") 
+category = _("System")
 
 def get_add_gui_info():
     return [
@@ -38,27 +38,27 @@ def get_add_gui_info():
            ]
 
 class Watch_system_port(Watch):
-    """ 
-    Watch class that will check if a connection was established on a certain port 
     """
-        
+    Watch class that will check if a connection was established on a certain port
+    """
+
     def __init__(self, specto, id, values):
-        watch_values = [ 
+        watch_values = [
                         ( "port", spectlib.config.Integer(True) )
                        ]
-        
+
         self.icon = icon
         self.standard_open_command = ''
         self.type_desc = type_desc
         self.status = ""
-                
+
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        
+
         self.running = self.check_port()
 
     def check(self):
-        """ See if a socket was opened or closed. """        
+        """ See if a socket was opened or closed. """
         try:
             established = self.check_port()
             if self.running and established == False:
@@ -66,18 +66,18 @@ class Watch_system_port(Watch):
                 self.actually_changed = True
                 self.status = _("Closed")
             elif self.running == False and established == True:
-                self.running = True 
+                self.running = True
                 self.actually_changed = True
                 self.status = _("Open")
-            else: 
+            else:
                 self.actually_changed = False
                 self.status = _("Unknown")
         except:
             self.error = True
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
-        
+
         Watch.timer_update(self)
-        
+
     def check_port(self):
         """ see if there is a connection on the port or not """
         conn = False
@@ -102,15 +102,15 @@ class Watch_system_port(Watch):
             return True
         else:
             return False
-        
+
     def get_gui_info(self):
-        return [ 
+        return [
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Port'), self.port),
                 (_('Status'), self.status)
                 ]
-                
+
     def get_balloon_text(self):
         """ create the text for the balloon """
         text = ""

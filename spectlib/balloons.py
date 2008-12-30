@@ -40,24 +40,24 @@ class NotificationToast:
         'critical': pynotify.URGENCY_CRITICAL,
         'normal': pynotify.URGENCY_NORMAL
         }
-    
+
     def __open_watch(self, n, action, id):
         if self.specto.notifier.open_watch(id):
             self.specto.notifier.clear_watch('',id)
-        
+
     def __init__(self, specto, notifier):
         global notifyInitialized
-        self.specto = specto  
+        self.specto = specto
         self.notifier = notifier
-        
+
         if not notifyInitialized:
             pynotify.init(self._notifyRealm)
             notifyInitialized = True
-        
+
     def show_toast(self, body, icon=None, urgency="low", summary=_notifyRealm, name=None):
         tray_x = 0
         tray_y = 0
-        
+
         if notifyInitialized:
             sleep(0.5)  # This is an important hack :) the reason why there is a sleep of half a second is to leave time for the tray icon to appear before getting its coordinates
             tray_x = self.notifier.tray.get_x()
@@ -75,11 +75,11 @@ class NotificationToast:
             if icon:
                 #self.toast.set_property('icon-name', icon)  # We now use a pixbuf in the line below to allow themable icons
                 self.toast.set_icon_from_pixbuf(icon)
-                
+
             if tray_x != 0 and tray_y != 0:  # grab the x and y position of the tray icon and make the balloon emerge from it
                 self.toast.set_hint("x",tray_x)
                 self.toast.set_hint("y",tray_y)
-                
+
             try:
                 self.toast.show()
             except:

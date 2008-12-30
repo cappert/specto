@@ -28,7 +28,7 @@ import spectlib.util
 type = "Watch_web_greader"
 type_desc = _("Google Reader")
 icon = 'internet-news-reader'
-category = _("Internet") 
+category = _("Internet")
 
 def get_add_gui_info():
     return [
@@ -42,30 +42,30 @@ class Watch_web_greader(Watch):
     """
 
     def __init__(self, specto, id, values):
-        watch_values = [ 
+        watch_values = [
                       ("username", spectlib.config.String(True)),
-                      ("password", spectlib.config.String(True)) 
+                      ("password", spectlib.config.String(True))
                         ]
 
         url = "http://www.google.com/reader/"
         self.standard_open_command = spectlib.util.return_webpage(url)
-                
+
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
         self.use_network = True
         self.icon = icon
         self.type_desc = type_desc
-        self.cache_file = os.path.join(self.specto.CACHE_DIR, "greader" + self.username + ".cache")        
+        self.cache_file = os.path.join(self.specto.CACHE_DIR, "greader" + self.username + ".cache")
 
         #watch specific values
         self.unreadMsg = 0
         self.newMsg = 0
         self.news_info = Feed_collection()
         self.or_more = ""
-        
-        self.read_cache_file()        
-        
+
+        self.read_cache_file()
+
     def check(self):
         """ Check for new news on your greader account. """
         try:
@@ -76,40 +76,40 @@ class Watch_web_greader(Watch):
                 self.error = True
                 self.specto.logger.log(('%s') % unread[1], "error", self.name)
             elif unread[0] == 1:#no unread items, we need to clear the watch
-                    self.unreadMsg = unread[1]
-                    self.actually_changed = False
-                    self.specto.mark_watch_status("clear", self.id)
-                    self.news_info = Feed_collection()
+                self.unreadMsg = unread[1]
+                self.actually_changed = False
+                self.specto.mark_watch_status("clear", self.id)
+                self.news_info = Feed_collection()
             else:
                 self.unreadMsg = int(unread[1])
-                                
+
                 if self.unreadMsg == 1000:
                     self.or_more = _(" or more")
 
                 self.news_info.clear_old()
-   
+
                 for feed in info:
                     _feed = Feed(feed, info[feed])
                     if self.news_info.add(_feed):
                         self.actually_changed = True
                         self.newMsg+=1
-            
+
                 self.news_info.remove_old()
                 self.write_cache_file()
-                    
+
         except:
             self.error = True
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         Watch.timer_update(self)
-        
+
     def get_gui_info(self):
-        return [ 
+        return [
                (_('Name'), self.name),
                (_('Last changed'), self.last_changed),
                (_('Username'), self.username),
                (_('Unread messages'), str(self.unreadMsg) + self.or_more)
                 ]
-                
+
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.news_info.get_unread_messages()
@@ -122,22 +122,22 @@ class Watch_web_greader(Watch):
                 feed_info += unread_messages[i].name + ", "
                 if i == 3 and i < len(unread_messages) - 1:
                     feed_info += _("and others...")
-                i += 1            
-            feed_info = feed_info.rstrip(", ")    
-            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") %(self.name, self.newMsg, feed_info, str(self.unreadMsg) + self.or_more)    
+                i += 1
+            feed_info = feed_info.rstrip(", ")
+            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") %(self.name, self.newMsg, feed_info, str(self.unreadMsg) + self.or_more)
         return text
-    
-    def get_extra_information(self):        
+
+    def get_extra_information(self):
         i = 0
         feed_info = ""
         while i < len(self.news_info) and i < 4:
             feed_info += "<b>" + self.news_info[i].name + "</b>: <i>" + str(self.news_info[i].messages) + "</i>\n"
             if i == 3 and i < len(self.news_info) - 1:
                 feed_info += _("and others...")
-            i += 1            
+            i += 1
         return feed_info
-                
-                
+
+
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
             try:
@@ -152,7 +152,7 @@ class Watch_web_greader(Watch):
 
             finally:
                 f.close()
-            
+
     def write_cache_file(self):
         try:
             f = open(self.cache_file, "w")
@@ -163,24 +163,24 @@ class Watch_web_greader(Watch):
                 f.write(feed.name + "&Separator;" + str(feed.messages) + "\n")
         finally:
             f.close()
-            
+
     def remove_cache_files(self):
-        os.unlink(self.cache_file)            
-            
+        os.unlink(self.cache_file)
+
 class Feed():
-    
+
     def __init__(self, name, messages):
         self.name = name
         self.messages = int(messages)
         self.found = False
         self.new = False
-        
+
 class Feed_collection():
-    
+
     def __init__(self):
         self.feed_collection = []
-        
-    def add(self, feed):            
+
+    def add(self, feed):
         self.new = True
         self.changed = False
         for _feed in self.feed_collection:
@@ -194,7 +194,7 @@ class Feed_collection():
                     _feed.messages = feed.messages
                     self.new = False
                     _feed.found = True
-                                
+
         if self.new == True:
             feed.found = True
             feed.new = True
@@ -206,13 +206,13 @@ class Feed_collection():
             return True
         else:
             return False
-        
+
     def __getitem__(self, id):
         return self.feed_collection[id]
-    
+
     def __len__(self):
         return len(self.feed_collection)
-    
+
     def remove_old(self):
         i = 0
         collection_copy = []
@@ -221,20 +221,20 @@ class Feed_collection():
                 collection_copy.append(_feed)
             i += 1
         self.feed_collection = collection_copy
-          
+
     def clear_old(self):
         for _feed in self.feed_collection:
             _feed.found = False
             _feed.new = False
             _feed.updated = False
-            
+
     def get_unread_messages(self):
         unread = []
         for _feed in self.feed_collection:
             if _feed.new == True or _feed.updated == True:
                 unread.append(_feed)
         return unread
-        
+
 
 """
 grnotify
@@ -242,7 +242,7 @@ grnotify
 GrNotify is a simple Python written tray application that will allow you to know when there are new items in the Google Reader.
 
 GrNotify is written by Kristof Bamps
-- And maintained by Bram Bonne and Eric Lembregts 
+- And maintained by Bram Bonne and Eric Lembregts
 
 
 Dependencies
@@ -278,11 +278,11 @@ def getcookies():
     """
     COOKIEFILE = os.path.join(spectlib.util.get_path('tmp'), 'cookies.lwp')
     # the path and filename to save your cookies in
-    
+
     cj = None
     ClientCookie = None
     cookielib = None
-    
+
     # Let's see if cookielib is available
     try:
         import cookielib
@@ -300,7 +300,7 @@ def getcookies():
             urlopen = ClientCookie.urlopen
             Request = ClientCookie.Request
             cj = ClientCookie.LWPCookieJar()
-    
+
     else:
         # importing cookielib worked
         urlopen = urllib2.urlopen
@@ -308,10 +308,10 @@ def getcookies():
         cj = cookielib.LWPCookieJar()
         # This is a subclass of FileCookieJar
         # that has useful load and save methods
-    
+
     if cj is not None:
     # we successfully imported
-    # one of the two cookie handling modules    
+    # one of the two cookie handling modules
         # Now we need to get our Cookie Jar
         # installed in the opener;
         # for fetching URLs
@@ -321,14 +321,14 @@ def getcookies():
         # and install the opener in urllib2
             opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
             urllib2.install_opener(opener)
-    
+
         else:
         # if we use ClientCookie
         # then we get the HTTPCookieProcessor
         # and install the opener in ClientCookie
             opener = ClientCookie.build_opener(ClientCookie.HTTPCookieProcessor(cj))
             ClientCookie.install_opener(opener)
-            
+
     url = 'https://www.google.com/accounts/ServiceLoginAuth'
     user_agent = 'Mozilla/4.0(compatible; MSIE 5.5; Windows NT)'
     login = {'Email': email, 'Passwd': passwd}
@@ -353,18 +353,18 @@ def getcookies():
 
         handle = urlopen(req)
         # and open it to return a handle on the url
-        
+
         del req
 
     except IOError, e:
         return 2         #we didn't get a connection
-    
-    if cj is None:        
+
+    if cj is None:
         return 3         #we got a connection, but didn't get any cookies
     else:
         cj.save(COOKIEFILE)                     # save the cookies again
         return 1, Request, cj        #everything went ok
-       
+
 ##########################
 #Get the number of unread items
 #
@@ -381,7 +381,7 @@ def getUnreadItems(Request):
     testxml = response.read()
     del response
     if '<object>' in testxml:
-        fileHandle = open(LISTFILE, 'w') 
+        fileHandle = open(LISTFILE, 'w')
         fileHandle.write(testxml)
         del testxml
         fileHandle.close()
@@ -412,7 +412,7 @@ def getUnreadItems(Request):
         return 1
     else:
         return 0
-        
+
 ##################################
 #Set the names of feeds the user is subscribed to
 #
@@ -445,7 +445,7 @@ def updateFeeds(Request):
                     names.append(feedlist[j].firstChild.toxml())
         del document
         del feedlist[:]
-        
+
 def readFeeds(Request):
     global names
     LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'names.xml')
@@ -463,7 +463,7 @@ def readFeeds(Request):
         fileHandle.close()
     else:
         updateFeeds(Request)
-        
+
 #################################
 #Compare function to sort the feeds by number of unread items
 #
@@ -477,7 +477,7 @@ class Greader():
         email = username
         passwd = password
         request = ""
-        
+
     def refresh(self):
         cookies = getcookies()
         if(cookies[0] == 1):
@@ -502,7 +502,7 @@ class Greader():
             info = 1, _('No unread items')
         elif(unread >= '1'):
             info = 2, unread
-            
+
         readFeeds(request)
         if(len(L) >= numberFeeds):
             i = numberFeeds

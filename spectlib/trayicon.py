@@ -31,12 +31,12 @@ def gettext_noop(s):
 
 class Tray:
     """
-    Display a tray icon in the notification area.    
+    Display a tray icon in the notification area.
     """
     def __init__(self, specto, notifier):
         self.specto = specto
         self.notifier = notifier
-        
+
         self.ICON_PATH = self.specto.PATH + "icons/specto_tray_1.svg"
         self.ICON2_PATH = self.specto.PATH + "icons/specto_tray_2.svg"
         # Create the tray icon object
@@ -49,7 +49,7 @@ class Tray:
         if self.specto.specto_gconf.get_entry("always_show_icon") == True:
             self.tray.set_visible(True)
         else:
-            self.tray.set_visible(False)      
+            self.tray.set_visible(False)
 
         while gtk.events_pending():
             gtk.main_iteration(True)
@@ -61,7 +61,7 @@ class Tray:
             self.tray.set_visible(True)#we need to show the tray again
         else:
             self.tray.set_from_file( self.ICON2_PATH )
-        
+
     def set_icon_state_normal(self):
         """ Change the tray icon to "not changed". If the user requested to always show the tray, it will change its icon but not disappear. Otherwise, it will be removed."""
         if self.specto.specto_gconf.get_entry("always_show_icon") == False:
@@ -75,7 +75,7 @@ class Tray:
         show_return = False
         changed_messages = self.specto.watch_db.count_changed_watches()
         message = ""
-        
+
         z = 0
         y = 0
         for i in changed_messages.values():
@@ -87,30 +87,30 @@ class Tray:
                 #message += i18n._translation.ungettext(_("watch"), _("watches"), i) #disabled, because it is redundant and not properly translatable
                 show_return = True
             z += 1
-            
+
         if y > 0:
             self.set_icon_state_excited()
         else:
             message = _("No changed watches.")
             self.set_icon_state_normal()
-            
+
         self.tray.set_tooltip(message)
-        
+
     def show_preferences(self, widget):
         """ Call the main function to show the preferences window. """
-        self.notifier.show_preferences() 
+        self.notifier.show_preferences()
 
     def show_help(self, widget):
         """ Call the main function to show help. """
         self.notifier.show_help()
-        
+
     def show_about(self, widget):
         """ Call the main function to show the about window. """
         self.notifier.show_about()
-        
+
     def refresh(self, widget):
-        self.notifier.refresh_all_watches()        
-        
+        self.notifier.refresh_all_watches()
+
     def show_notifier(self, widget):
         """ Call the main function to show the notifier window. """
         if self.specto.specto_gconf.get_entry("always_show_icon") == True:
@@ -123,9 +123,9 @@ class Tray:
         Create the popupmenu
         """
         ## From the PyGTK 2.10 documentation
-        # status_icon :	the object which received the signal
-        # button :	the button that was pressed, or 0 if the signal is not emitted in response to a button press event
-        # activate_time :	the timestamp of the event that triggered the signal emission
+        # status_icon : the object which received the signal
+        # button :      the button that was pressed, or 0 if the signal is not emitted in response to a button press event
+        # activate_time :       the timestamp of the event that triggered the signal emission
         if self.specto.specto_gconf.get_entry("always_show_icon") == True and self.specto.notifier.get_state() == True:
             text = _("Hide window")
         else:
@@ -142,20 +142,20 @@ class Tray:
         image = gtk.image_new_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
         self.item_refresh.set_image(image)
         image.show()
-        
+
         #create submenu for changed watches
         self.sub_menu = gtk.Menu()
 
         self.sub_item_clear = gtk.ImageMenuItem(_("_Mark all read"), True)
         image = gtk.image_new_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
         self.sub_item_clear.set_image(image)
-        image.show()       
-         
+        image.show()
+
         self.sub_item_clear.connect('activate', self.specto.notifier.clear_all)
         self.sub_menu.append(self.sub_item_clear)
-        
+
         self.sub_menu.append(gtk.SeparatorMenuItem())
-        
+
         for watch in self.specto.watch_db:
             if watch.changed == True:
                 self.sub_item_clear = gtk.ImageMenuItem(watch.name, True)
@@ -163,10 +163,10 @@ class Tray:
                 self.sub_item_clear.set_image(image)
                 self.sub_item_clear.connect('activate', self.specto.notifier.clear_watch, watch.id)
                 self.sub_menu.append( self.sub_item_clear)
-                            
-        self.sub_menu.show_all()        
+
+        self.sub_menu.show_all()
         self.item_clear.set_submenu(self.sub_menu)
-        
+
         # Connect the events
         self.item_show.connect('activate', self.show_notifier)
         self.item_refresh.connect('activate', self.refresh)
@@ -174,10 +174,10 @@ class Tray:
         self.item_help.connect('activate', self.show_help)
         self.item_about.connect('activate', self.show_about)
         self.item_quit.connect('activate', self.quit)
-        
+
         # Create the menu
         self.menu = gtk.Menu()
-        
+
         # Append menu items to the menu
         self.menu.append( self.item_show)
         self.menu.append( gtk.SeparatorMenuItem())
@@ -212,7 +212,7 @@ class Tray:
 
     def destroy(self):
         self.tray.set_visible(False)
-        
+
     def quit(self, widget):
         """ Call the main function to quit specto. """
         self.specto.quit()

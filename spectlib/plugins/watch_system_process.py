@@ -28,7 +28,7 @@ from spectlib.i18n import _
 type = "Watch_system_process"
 type_desc = _("Process")
 icon = 'applications-system'
-category = _("System") 
+category = _("System")
 
 def get_add_gui_info():
     return [
@@ -37,21 +37,21 @@ def get_add_gui_info():
 
 
 class Watch_system_process(Watch):
-    """ 
-    Watch class that will check if a process is running or not. 
     """
-    
+    Watch class that will check if a process is running or not.
+    """
+
     def __init__(self, specto, id, values):
-        
-        watch_values = [ 
+
+        watch_values = [
                         ( "process", spectlib.config.String(True) )
                        ]
-        
+
         self.icon = icon
         self.standard_open_command = values['process']
         self.type_desc = type_desc
         self.status = ""
-                
+
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
@@ -59,7 +59,7 @@ class Watch_system_process(Watch):
 
 
     def check(self):
-        """ See if a process was started or stopped. """        
+        """ See if a process was started or stopped. """
         try:
             running_now = self.check_process()
             if self.running_initially and running_now == False:
@@ -68,7 +68,7 @@ class Watch_system_process(Watch):
                 self.actually_changed = True
                 self.status = _("Not running")
             elif self.running_initially == False and running_now == True:
-                self.running_initially = True 
+                self.running_initially = True
                 self.actually_changed = True
                 self.status = _("Running")
             else:
@@ -78,7 +78,7 @@ class Watch_system_process(Watch):
             self.error = True
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         Watch.timer_update(self)
-        
+
     def check_process(self):
         """ see if the process is running or not """
         p = ProcessList()
@@ -87,16 +87,16 @@ class Watch_system_process(Watch):
             return True
         else:
             return False
-        
+
     def get_gui_info(self):
-        return [ 
+        return [
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Process'), self.process),
                 (_('Status'), self.status)
                 ]
     def get_balloon_text(self):
-        """ create the text for the balloon """  
+        """ create the text for the balloon """
         if self.check_process():
             text = _("The system process, <b>%s</b>, has started.") % self.name
         elif self.check_process()==False:#the process check returned false, which means the process is not running
@@ -135,7 +135,7 @@ class Process(object):
             return os.readlink(os.path.join(self.proc, "cwd"))
         except OSError:
             return None
-    
+
 class ProcessList(object):
     """Represents a list of processes"""
     def __init__(self):

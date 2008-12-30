@@ -41,7 +41,7 @@ def open_gconf_application(key):
     if "mailto" in key:
         application = application.replace(" %s", "")#this is an ugly hack, because evolution really doesn't want to startup with %s
     return application
-    
+
 def open_file_watch(f):
     """ Open a file with the correct application (mime). """
     mime_type = gnomevfs.get_mime_type(f)
@@ -64,7 +64,7 @@ def get_path(category=None):
             PATH = os.path.join(os.getcwd(), "data/doc/")
         elif category=="src":
             PATH = os.path.dirname(os.path.abspath(__file__))
-            
+
     if category == "specto":
         try:
             PATH = os.path.join(os.environ['XDG_CONFIG_HOME'],
@@ -74,7 +74,7 @@ def get_path(category=None):
                                               "specto")
         if not os.path.exists(PATH):
             os.makedirs(PATH)
-            os.chmod(PATH, 0700)  # Meet XDG spec        
+            os.chmod(PATH, 0700)  # Meet XDG spec
 
     if category == "tmp":
         try:
@@ -85,7 +85,7 @@ def get_path(category=None):
                                               "specto")
         if not os.path.exists(PATH):
             os.makedirs(PATH)
-            os.chmod(PATH, 0700)  # Meet XDG spec        
+            os.chmod(PATH, 0700)  # Meet XDG spec
     return PATH
 
 

@@ -33,7 +33,7 @@ import spectlib.util
 type = "Watch_mail_gmail"
 type_desc = _("GMail")
 icon = 'emblem-mail'
-category = _("Mail") 
+category = _("Mail")
 
 
 def get_add_gui_info():
@@ -49,22 +49,22 @@ class Watch_mail_gmail(Watch):
     """
 
     def __init__(self, specto, id, values):
-        watch_values = [ 
+        watch_values = [
                         ( "username", spectlib.config.String(True) ),
                         ( "password", spectlib.config.String(True) )
                        ]
         url = "https://mail.google.com"
-        self.standard_open_command = spectlib.util.return_webpage(url)        
-        
+        self.standard_open_command = spectlib.util.return_webpage(url)
+
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        
+
         if self.open_command == self.standard_open_command: #check if google apps url has to be used
             if "@" in self.username and not "@gmail.com" in self.username:
                 url = "http://mail.google.com/a/" + self.username.split("@")[1]
                 self.standard_open_command = spectlib.util.return_webpage(url)
                 self.open_command = self.standard_open_command
-        
+
         self.use_network = True
         self.icon = icon
         self.type_desc = type_desc
@@ -74,9 +74,9 @@ class Watch_mail_gmail(Watch):
         self.oldMsg = 0
         self.newMsg = 0
         self.mail_info = Email_collection()
-        
+
         self.read_cache_file()
-                
+
     def check(self):
         """ Check for new mails on your gmail account. """
         try:
@@ -107,15 +107,15 @@ class Watch_mail_gmail(Watch):
             self.error = True
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         Watch.timer_update(self)
-        
+
     def get_gui_info(self):
-        return [ 
+        return [
                 (_("Name"), self.name),
                 (_("Last changed"), self.last_changed),
                 (_("Username"), self.username),
                 (_("Unread messages"), self.oldMsg)
-                ]        
-        
+                ]
+
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
@@ -128,21 +128,21 @@ class Watch_mail_gmail(Watch):
                 author_info += unread_messages[i].author + ", "
                 if i == 3 and i < len(unread_messages) - 1:
                     author_info += "and others..."
-                i += 1            
-            author_info = author_info.rstrip(", ")    
-            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.oldMsg)    
+                i += 1
+            author_info = author_info.rstrip(", ")
+            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.oldMsg)
         return text
-    
-    def get_extra_information(self):        
+
+    def get_extra_information(self):
         i = 0
         author_info = ""
         while i < len(self.mail_info) and i < 4:
             author_info += "<b>" + self.mail_info[i].author + "</b>: <i>" + self.mail_info[i].subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
                 author_info += _("and others...")
-            i += 1            
+            i += 1
         return author_info
-    
+
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
             try:
@@ -156,7 +156,7 @@ class Watch_mail_gmail(Watch):
                     self.mail_info.add(email)
             finally:
                 f.close()
-        
+
     def write_cache_file(self):
         try:
             f = open(self.cache_file, "w")
@@ -164,17 +164,17 @@ class Watch_mail_gmail(Watch):
             self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
         else:
             for email in self.mail_info:
-                f.write(email.author + "&Separator;" + email.subject + "&Separator;" + email.summary + "\n")    
-            
+                f.write(email.author + "&Separator;" + email.subject + "&Separator;" + email.summary + "\n")
+
         finally:
             f.close()
-            
+
     def remove_cache_files(self):
         os.unlink(self.cache_file)
-        
-    
+
+
 class Email():
-    
+
     def __init__(self, author, subject, summary):
         self.id = author + subject + summary
         self.subject = subject
@@ -182,19 +182,19 @@ class Email():
         self.summary = summary
         self.found = False
         self.new = False
-        
+
 class Email_collection():
-    
+
     def __init__(self):
         self.email_collection = []
-        
-    def add(self, email):            
+
+    def add(self, email):
         self.new = True
         for _email in self.email_collection:
             if email.id == _email.id:
                 self.new = False
                 _email.found = True
-                                
+
         if self.new == True:
             email.found = True
             email.new = True
@@ -202,13 +202,13 @@ class Email_collection():
             return True
         else:
             return False
-        
+
     def __getitem__(self, id):
         return self.email_collection[id]
-    
+
     def __len__(self):
         return len(self.email_collection)
-    
+
     def remove_old(self):
         i = 0
         collection_copy = []
@@ -217,20 +217,20 @@ class Email_collection():
                 collection_copy.append(_email)
             i += 1
         self.email_collection = collection_copy
-          
+
     def clear_old(self):
         for _email in self.email_collection:
             _email.found = False
             _email.new = False
-            
+
     def get_unread_messages(self):
         unread = []
         for _email in self.email_collection:
             if _email.new == True:
                 unread.append(_email)
         return unread
-        
-    
+
+
 # -*- coding: utf-8 -*-
 
 # gmailatom 0.0.1
@@ -269,7 +269,7 @@ class Mail:
 
 # Sax XML Handler
 class MailHandler(ContentHandler):
-    
+
     # Tags
     TAG_FEED = "feed"
     TAG_FULLCOUNT = "fullcount"
@@ -279,7 +279,7 @@ class MailHandler(ContentHandler):
     TAG_AUTHOR = "author"
     TAG_NAME = "name"
     TAG_EMAIL = "email"
-    
+
     # Path the information
     PATH_FULLCOUNT = [ TAG_FEED, TAG_FULLCOUNT ]
     PATH_TITLE = [ TAG_FEED, TAG_ENTRY, TAG_TITLE ]

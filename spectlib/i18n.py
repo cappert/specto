@@ -71,7 +71,7 @@ def N_(singular, plural, n, var_singular = None, var_plural = None):
     """
     Calculates plurals and returns the appropriate translation.
     Also replaces variables such as %s after translating.
-    
+
     Example usage:
         i18n._n(
             "Message from %s",
@@ -90,11 +90,11 @@ def N_(singular, plural, n, var_singular = None, var_plural = None):
             )
     """
     foo = _translation.ungettext(singular, plural, n)  # Get the translation
-    
+
     # Now, if the translation has variables to replace, do it.
     if n == 1 and var_singular is not None:
         foo = foo % var_singular
     elif n > 1 and var_plural is not None:
         foo = foo % var_plural
-    
+
     return foo
