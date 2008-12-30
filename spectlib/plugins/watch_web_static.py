@@ -26,14 +26,18 @@ import spectlib.gtkconfig
 import spectlib.util
 import spectlib.tools.web_proxy as web_proxy
 
-import StringIO, gzip
-import os, md5, difflib, pprint
+import StringIO
+import gzip
+import os
+import md5
+import difflib
+import pprint
 from httplib import HTTPMessage, BadStatusLine
 from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
 from urllib2 import URLError
 from spectlib.i18n import _
-import  time
+import time
 import formatter
 import htmllib
 import cStringIO
@@ -61,9 +65,9 @@ class Watch_web_static(Watch):
 
     def __init__(self, specto, id, values):
         watch_values = [ 
-                        ( "uri", spectlib.config.String(True) ),
-                        ( "error_margin", spectlib.config.Dec(True) ),
-                        ( "redirect", spectlib.config.Boolean(False) )
+                        ("uri", spectlib.config.String(True)),
+                        ("error_margin", spectlib.config.Dec(True)),
+                        ("redirect", spectlib.config.Boolean(False))
                        ]
         
         self.standard_open_command = spectlib.util.return_webpage(values['uri']) 
@@ -90,7 +94,7 @@ class Watch_web_static(Watch):
             cacheFileName = "".join(["%02x" % (ord(c),) for c in digest])
             self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
             self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
-            request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding" : "gzip"})
+            request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding": "gzip"})
             cache_res = ""
             if (self.cached == 1) or (os.path.exists(self.cacheFullPath_)):
                 self.cached = 1
@@ -155,32 +159,32 @@ class Watch_web_static(Watch):
                 # Here is stuff for filesize comparison, 
                 # just in case there is annoying advertising on the page,
                 # rendering the md5sum a false indicator.
-                self.new_filesize = len(str(self.content_))#size in bytes?... will be used for the error_margin in case of annoying advertising in the page
-                #if self.specto.DEBUG:  "\tPerceived filesize is", self.new_filesize, "bytes ("+str(self.new_filesize/1024)+"KB)"#useful for adjusting your error_margin
+                self.new_filesize = len(str(self.content_))  # size in bytes?... will be used for the error_margin in case of annoying advertising in the page
+                #if self.specto.DEBUG:  "\tPerceived filesize is", self.new_filesize, "bytes ("+str(self.new_filesize/1024)+"KB)"  # Useful for adjusting your error_margin
                 
                 if int(self.new_filesize)==4:
-                    #FIXME: temporary hack, not sure the etag is ALWAYS 4bytes
-                    #4 bytes means it's actually an etag reply, so there is no change. We don't care about filesize checks then.
+                    # FIXME: temporary hack, not sure the etag is ALWAYS 4bytes
+                    # 4 bytes means it's actually an etag reply, so there is no change. We don't care about filesize checks then.
                     self.filesize_difference = 0
                 else:
                     self.old_filesize = self.read_filesize()
                     if self.old_filesize!=0:#if 0, that would mean that read_option could not find the filesize in watches.list
-                    #if there is a previous filesize
-                        #calculate the % changed filesize
+                    # If there is a previous filesize
+                        # Calculate the % changed filesize
                         if int(self.old_filesize) != 0:
                             self.filesize_difference = (fabs(int(self.new_filesize) - int(self.old_filesize)) / int(self.old_filesize))*100
                             self.specto.logger.log(_("Filesize difference: %.2f") % self.filesize_difference, "info", self.name)
-                        if self.filesize_difference  >= float(self.error_margin) and (self.filesize_difference != 0.0): #and (self.infoB_['md5sum'] == self.info_['md5sum']):
+                        if self.filesize_difference >= float(self.error_margin) and (self.filesize_difference != 0.0): #and (self.infoB_['md5sum'] == self.info_['md5sum']):
                             self.to_be_stored_filesize = self.new_filesize
                             self.actually_changed = True
                         else:
-                            #we don't want to juggle with all the possible filesizes, 
-                            #we want to stay close to the original, because replacing the filesize each time
-                            #if the watch is not changed would create a lot of fluctuations
+                            # We don't want to juggle with all the possible filesizes, 
+                            # We want to stay close to the original, because replacing the filesize each time
+                            # If the watch is not changed would create a lot of fluctuations
                             self.to_be_stored_filesize = self.old_filesize
                             self.actually_changed = False
                     else:
-                    #if there is NO previously stored filesize
+                    # If there is no previously stored filesize
                         self.to_be_stored_filesize = self.new_filesize
     
                 ### NOTE: do not write the redirect url in a config file!
@@ -297,46 +301,55 @@ __version__ = '0.22'
 
 import difflib, string
 
-def isTag(x): return x[0] == "<" and x[-1] == ">"
+def isTag(x):
+    return x[0] == "<" and x[-1] == ">"
 
 def textDiff(a, b):
-	"""Takes in strings a and b and returns a human-readable HTML diff."""
+    """Takes in strings a and b and returns a human-readable HTML diff."""
 
-	out = []
-	a, b = html2list(a), html2list(b)
-	s = difflib.SequenceMatcher(None, a, b)
-	for e in s.get_opcodes():
-		if e[0] == "replace":
-			# @@ need to do something more complicated here
-			# call textDiff but not for html, but for some html... ugh
-			# gonna cop-out for now
-			out.append('<span foreground=\"red\">'+''.join(a[e[1]:e[2]]) + '</span><span foreground=\"green\">'+''.join(b[e[3]:e[4]])+"</span>\n")
-		elif e[0] == "delete":
-			out.append('<span foreground=\"red\">'+ ''.join(a[e[1]:e[2]]) + "</span>\n")
-		elif e[0] == "insert":
-			out.append('<span foreground=\"green\">'+''.join(b[e[3]:e[4]]) + "</span>\n")
-	return ''.join(out)
+    out = []
+    a, b = html2list(a), html2list(b)
+    s = difflib.SequenceMatcher(None, a, b)
+    for e in s.get_opcodes():
+        if e[0] == "replace":
+            # @@ need to do something more complicated here
+            # call textDiff but not for html, but for some html... ugh
+            # gonna cop-out for now
+            out.append('<span foreground=\"red\">'+''.join(a[e[1]:e[2]]) + '</span><span foreground=\"green\">'+''.join(b[e[3]:e[4]])+"</span>\n")
+        elif e[0] == "delete":
+            out.append('<span foreground=\"red\">'+ ''.join(a[e[1]:e[2]]) + "</span>\n")
+        elif e[0] == "insert":
+            out.append('<span foreground=\"green\">'+''.join(b[e[3]:e[4]]) + "</span>\n")
+    return ''.join(out)
 
 def html2list(x, b=1):
-	mode = 'char'
-	cur = ''
-	out = []
-	for c in x:
-		if mode == 'tag':
-			if c == '>': 
-				if b: cur += ']'
-				else: cur += c
-				out.append("");cur = ''; mode = 'char'
-			else: cur += c
-		elif mode == 'char':
-			if c == '<': 
-				out.append(cur)
-				if b: cur = '['
-				else: cur = c
-				mode = 'tag'
-			elif c in string.whitespace: out.append(cur+c); cur = ''
-			else: cur += c
-	out.append(cur)
-    
-	return filter(lambda x: x is not '', out)
-	
+    mode = 'char'
+    cur = ''
+    out = []
+    for c in x:
+        if mode == 'tag':
+            if c == '>': 
+                if b:
+                    cur += ']'
+                else:
+                    cur += c
+                out.append("")
+                cur = ''
+                mode = 'char'
+            else:
+                cur += c
+        elif mode == 'char':
+            if c == '<': 
+                out.append(cur)
+                if b:
+                    cur = '['
+                else:
+                    cur = c
+                mode = 'tag'
+            elif c in string.whitespace:
+                out.append(cur+c)
+                cur = ''
+            else:
+                cur += c
+    out.append(cur)
+    return filter(lambda x: x is not '', out)

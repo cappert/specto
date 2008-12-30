@@ -21,7 +21,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys, os
+import sys
+import os
 from spectlib.i18n import _
 try:
     import pygtk
@@ -41,17 +42,19 @@ class Edit_watch:
     """
     Class to create the edit watch dialog.
     """
-    #Please do not use confusing widget names such as 'lbl' and 'tbl', use full names like 'label' and 'table'.
+    # Please do not use confusing widget names such as 'lbl' and 'tbl',
+    # use full names like 'label' and 'table'.
+
     def __init__(self, specto, notifier, id):
         self.specto = specto
         self.notifier = notifier
         self.watch = self.specto.watch_db[id]
-        #create tree
+        # Create the tree
         gladefile= self.specto.PATH + 'glade/edit_watch.glade' 
         windowname= "edit_watch"
         self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
 
-        #catch some events
+        # Catch some events
         dic= { "on_button_cancel_clicked": self.cancel_clicked,
         "on_button_save_clicked": self.save_clicked,
         "on_button_remove_clicked": self.remove_clicked,
@@ -62,10 +65,10 @@ class Edit_watch:
         "check_open_toggled": self.open_toggled,        
         "on_refresh_unit_changed": self.set_refresh_values}
 
-        #attach the events
+        # Attach the events
         self.wTree.signal_autoconnect(dic)
 
-        #set the info from the watch
+        # Set the info from the watch
         self.edit_watch=self.wTree.get_widget("edit_watch")
         self.edit_watch.set_title(_("Edit watch: ") + self.watch.name)
         self.wTree.get_widget("name").set_text(self.watch.name)
@@ -77,7 +80,7 @@ class Edit_watch:
         self.wTree.get_widget("refresh_unit").set_active(refresh_unit)
         self.wTree.get_widget("refresh").set_value(refresh)
         
-        #create the gui
+        # Create the gui
         self.watch_options = {}
         self.create_edit_gui()
         
@@ -85,7 +88,7 @@ class Edit_watch:
             self.wTree.get_widget("notebook1").remove_page(2)
         else:
             if self.wTree.get_widget("notebook1").get_n_pages() == 3:
-                #put the logfile in the textview
+                # Put the logfile in the textview
                 log_text = self.specto.logger.watch_log(self.watch.name)
                 self.log_buffer = self.wTree.get_widget("error_log").get_buffer()
                 self.log_buffer.create_tag("ERROR", foreground="#a40000")
@@ -126,7 +129,7 @@ class Edit_watch:
 
         values['type'] = self.watch.type
         refresh_value = self.wTree.get_widget("refresh").get_value_as_int()
-        refresh_unit =  self.wTree.get_widget("refresh_unit").get_active()
+        refresh_unit = self.wTree.get_widget("refresh_unit").get_active()
         values['refresh'] = self.specto.watch_db.set_interval(refresh_value, refresh_unit)        
         values['active'] = self.watch.active
         values['last_changed'] = self.watch.last_changed
@@ -166,7 +169,7 @@ class Edit_watch:
         else:    
             if not self.specto.watch_io.is_unique_watch(values['name']):
                 self.specto.watch_io.replace_name(self.watch.name, values['name'])
-                #change the name in the notifier window
+                # Change the name in the notifier window
                 self.specto.notifier.change_name(values['name'], self.watch.id)
                 
             self.specto.watch_db[self.watch.id].set_values(values)    
@@ -232,7 +235,7 @@ class Edit_watch:
             self.wTree.get_widget("check_open").set_active(False)
             
         
-        #create the options gui
+        # Create the options gui
         self.table = gtk.Table(rows=len(values), columns=2, homogeneous=False)
         self.table.set_row_spacings(6)
         self.table.set_col_spacings(6)
@@ -259,9 +262,8 @@ class Edit_watch:
     def open_toggled(self, widget):
         sensitive = self.wTree.get_widget("check_open").get_active()
         self.wTree.get_widget("entry_open_command").set_sensitive(sensitive)        
-
-               
-
+        
+        
 class Save_dialog:
     """
     Class to create the save dialog.
@@ -271,7 +273,7 @@ class Save_dialog:
         """ Display the save as dialog. """
         self.specto = specto
         self.text = args[0]
-        #create tree
+        # Create the tree
         gladefile= self.specto.PATH + 'glade/edit_watch.glade' 
         windowname= "file_chooser"
         self.wTree=gtk.glade.XML(gladefile,windowname)        
@@ -281,7 +283,7 @@ class Save_dialog:
         "on_button_cancel_clicked": self.cancel,
         "on_button_save_clicked": self.save
         }
-        #attach the events
+        # Attach the events
         self.wTree.signal_autoconnect(dic)        
             
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
@@ -303,6 +305,6 @@ class Save_dialog:
         self.save_dialog.destroy()
 
 if __name__ == "__main__":
-    #run the gui
+    # Run the gui
     app=edit_watch()
     gtk.main()

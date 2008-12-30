@@ -37,6 +37,7 @@ try:
 except:
     pass
 
+
 class Import_watch:
     """
     Class to create the import/export watch dialog.
@@ -110,18 +111,15 @@ class Import_watch:
         self.columnType.set_visible(False)
         #self.columnType.set_sort_column_id(4)
         self.treeview.append_column(self.columnType)
-
         
     def select_all(self, widget):
         db = self.new_watch_db
-        
         for watch in db:
             if watch.deleted == False:
                 self.model.set_value(self.iter[watch.id], 0, 1)
         
     def deselect_all(self, widget):
         db = self.new_watch_db
-            
         for watch in db:
             if watch.deleted == False:
                 self.model.set_value(self.iter[watch.id], 0, 0)
@@ -154,10 +152,10 @@ class Import_watch:
         for values in all_values.values():
             self.specto.watch_io.write_watch(values)
             
-        for id in _id: #create notifier entries
+        for id in _id:  # Create notifier entries
             self.specto.notifier.add_notifier_entry(id)
             
-        for id in _id: #start the new watches
+        for id in _id:  # Start the new watches
             self.specto.watch_db[id].start()
         
     def delete_event(self, widget, *args):
@@ -169,15 +167,13 @@ class Import_watch:
         selected_watches_db = {}
         i = 0
         watch_db = self.new_watch_db
-
         for watch in watch_db:
             if watch.deleted == False:
                 if self.model.get_value(self.iter[watch.id], 0) == True:
                     selected_watches_db[i] = watch
                     i += 1
         return selected_watches_db
-       
-    
+        
     def add_watch_entry(self, id):
         """ Add an entry to the notifier list. """
         watch = self.new_watch_db[id]
@@ -215,7 +211,7 @@ class Open_dialog:
     def __init__(self, specto, _import, watches_db):
         self.specto = specto
         self._import = _import
-        #create tree
+        # Create the tree
         gladefile= self.specto.PATH + 'glade/import_export.glade' 
         windowname= "filechooser"
         self.wTree=gtk.glade.XML(gladefile,windowname)        
@@ -225,7 +221,7 @@ class Open_dialog:
         "on_button_cancel_clicked": self.cancel,
         "on_button_save_clicked": self.open
         }
-        #attach the events
+        # Attach the events
         self.wTree.signal_autoconnect(dic)
             
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
@@ -260,7 +256,7 @@ class Open_dialog:
                 values[i]['open_command'] = ""
                 values[i]['last_changed'] = ""
                 
-            #import from specto 0.2
+            # Import from Specto 0.2
             if values[i]['type'] == "0":
                 values[i]['type'] = "Watch_web_static"
             elif values[i]['type'] == "1":
@@ -291,6 +287,6 @@ class Open_dialog:
         
         
 if __name__ == "__main__":
-    #run the gui
+    # Run the gui
     app=import_watch()
     gtk.main()

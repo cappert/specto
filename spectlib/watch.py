@@ -141,7 +141,7 @@ class Watch:
             self.error = True
             self.specto.logger.log(_("There was an error checking the watch"),\
                                                             "error", self.name)
-
+        
     def watch_changed(self):
         try:
             self.specto.logger.log(_("Watch has changed."), "info", self.name)
@@ -157,7 +157,7 @@ class Watch:
         except:
             self.error = True
             self.specto.logger.log(_("There was an error marking the watch as changed"), "error", self.name)
-
+        
     def timer_update(self):
         """ update the timer """
         try:
@@ -177,9 +177,9 @@ class Watch:
         except:
             self.error = True
             self.specto.logger.log(_("There was an error checking the watch"), "error", self.name)
-
+        
     def check_connection(self):
-        if  not self.specto.connection_manager.connected():
+        if not self.specto.connection_manager.connected():
             self.specto.logger.log(_("No network connection detected"), "warning", self.name)
             self.specto.connection_manager.add_callback(self.start_checking)
             self.specto.mark_watch_status("no-network", self.id)
@@ -232,7 +232,7 @@ class Watch:
             if not validate:
                 self.values = values
         
-    def get_balloon_text(self):        
+    def get_balloon_text(self):
         return "No message specified yet!" #no need to translate this, if users get to see this, it's no good
     
     def get_extra_information(self):
@@ -250,7 +250,7 @@ class Watch_collection:
         self.disabl_plugin_dict = {}
         self.specto = specto
         self.load_plugins()
-                
+        
     def load_plugins(self):
         dir = self.specto.SRC_PATH + "/plugins/"  
         for f in os.listdir(dir):
@@ -263,24 +263,24 @@ class Watch_collection:
                 try:
                     mod = __import__(_file, globals(), locals(), [''])
                     obj = sys.modules[_file]
-    
+                    
                     self.plugin_dict[obj.type] = mod
                     
                     #create the plugin dict for add menu
                     menu1 = obj.category
                     menu2 = [obj.type_desc, obj.icon, obj.type]
-                    if not self.plugin_menu.has_key(menu1):
+                    if not menu1 in self.plugin_menu:
                         self.plugin_menu.update({menu1:[]})
                     self.plugin_menu[menu1].append(menu2)
                 except:
-                   self.specto.logger.log(_('There was an error opening the file %s') % _file, "critical", "specto") 
+                    self.specto.logger.log(_('There was an error opening the file %s') % _file, "critical", "specto") 
                 
     def create(self, values):
-        """ read the content from the dictionary and create the watch """      
+        """ read the content from the dictionary and create the watch """
         _id = []
         for i in values:
             type = values[i]['type']
-                        
+            
             #get the right object and create the watch object
             mod = ""
             try:
@@ -313,12 +313,12 @@ class Watch_collection:
             self.watch_db[id].remove_cache_files()
         except:
             pass
-        self.specto.logger.remove_watch_log(self.watch_db[id].name)    
+        self.specto.logger.remove_watch_log(self.watch_db[id].name)
                 
     def get(self, id):
         """ get a watch object """
         return self.watch_db[id]
-    
+        
     def clear_all_watches(self):
         """ mark all watches as not changed """
         for watch in self.watch_db:
@@ -377,15 +377,14 @@ class Watch_collection:
         refresh_unit = days, hours, minutes,... in values of 0, 1, 2, 3.
         """
         new_refresh = 0
-        if refresh_unit == 0:#seconds
+        if refresh_unit == 0:  # Seconds
             new_refresh = refresh * 1000
-        elif refresh_unit == 1:#minutes
+        elif refresh_unit == 1:  # Minutes
             new_refresh = refresh * 60 * 1000
-        elif refresh_unit == 2:#hours
+        elif refresh_unit == 2:  # Hours
             new_refresh = (refresh * 60) * 60 * 1000
-        elif refresh_unit == 3:#days
+        elif refresh_unit == 3:  # Days
             new_refresh = ((refresh * 60) * 60) * 24 *1000
-        
         return new_refresh
     
     def convert_passwords(self, use_keyring):
@@ -421,7 +420,7 @@ class Watch_io:
     A class for managing watches.
     """
     def __init__(self, specto, file_name):
-        #read the watch from file using the iniparser module
+        # Read the watch from file using the iniparser module
         self.specto = specto
         self.file_name = file_name
         self.valid = True
@@ -434,7 +433,7 @@ class Watch_io:
                 self.specto.logger.log(_("There was an error writing to the file %s") % self.file_name, "critical", "specto")
             finally:
                 f.close()
-        os.chmod(self.file_name, 0600)#This is important for security purposes, we make the file read-write to the owner only, otherwise everyone can read passwords.
+        os.chmod(self.file_name, 0600)  # This is important for security purposes, we make the file read-write to the owner only, otherwise everyone can read passwords.
         try:
             self.cfg = ini_namespace(file(self.file_name))
         except:
@@ -519,7 +518,7 @@ class Watch_io:
         
         if cfg:
             name = self.hide_brackets(values['name'])
-            if not cfg._sections.has_key(name):
+            if not name in cfg._sections:
                 cfg.new_namespace(name) #add a new watch
                 try:
                     f = open(self.file_name, "w")
@@ -543,7 +542,7 @@ class Watch_io:
         
         if cfg:
             name = self.hide_brackets(name)
-            if not cfg._sections.has_key(name):
+            if not name in cfg._sections:
                 return 0
             else:
                 if option == "password": # and self.check_old_version(self.cfg[name]['type']): #don't use encoding for old watches.list
@@ -588,7 +587,7 @@ class Watch_io:
         """
         try:
             self.cfg = ini_namespace(file(self.file_name))
-            if not self.cfg._sections.has_key(self.hide_brackets(name)):
+            if not (self.hide_brackets(name)) in self.cfg._sections:
                 return False
             else:
                 return True
@@ -655,8 +654,4 @@ class Watch_io:
             old = True
         except ValueError:
             old = False #type is not int: new version
-        
         return old
-            
-
-

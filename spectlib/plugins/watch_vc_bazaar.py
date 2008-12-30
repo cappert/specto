@@ -25,7 +25,8 @@ from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
 from spectlib.i18n import _
-import sys, os
+import sys
+import os
 
 from bzrlib.missing import find_unmerged
 from bzrlib.branch import Branch

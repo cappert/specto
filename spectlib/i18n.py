@@ -28,6 +28,7 @@ from spectlib.i18n_safedict import SafeDict
 _translation = None
 MESSAGES_DIR = "%s/share/locale" % sys.prefix
 
+
 def set_language(language=None):
     global _translation
     if language is not None:
@@ -40,17 +41,21 @@ def set_language(language=None):
         # untranslated English.
         _translation = gettext.NullTranslations()
 
+
 def get_translation():
     return _translation
+
 
 def set_translation(translation):
     global _translation
     _translation = translation
 
+
 # Set up the global translation based on environment variables.  Mostly used
 # for command line scripts.
 if _translation is None:
     set_language()
+
 
 def _(s):
     """
@@ -59,6 +64,7 @@ def _(s):
     if not s:
         return s
     return _translation.ugettext(s)
+
 
 def N_(singular, plural, n, var_singular = None, var_plural = None):
     # FIXME: the code below is UNTESTED, because pygettext hates me

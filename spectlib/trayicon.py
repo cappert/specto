@@ -41,7 +41,8 @@ class Tray:
         self.ICON2_PATH = self.specto.PATH + "icons/specto_tray_2.svg"
         # Create the tray icon object
         self.tray=None
-        if not self.tray: self.tray = gtk.StatusIcon()
+        if not self.tray:
+            self.tray = gtk.StatusIcon()
         self.tray.set_from_file(self.ICON_PATH)
         self.tray.connect("activate", self.show_notifier)
         self.tray.connect("popup-menu", self.show_popup)
@@ -142,7 +143,6 @@ class Tray:
         self.item_refresh.set_image(image)
         image.show()
         
-        
         #create submenu for changed watches
         self.sub_menu = gtk.Menu()
 
@@ -167,7 +167,6 @@ class Tray:
         self.sub_menu.show_all()        
         self.item_clear.set_submenu(self.sub_menu)
         
-
         # Connect the events
         self.item_show.connect( 'activate', self.show_notifier)
         self.item_refresh.connect ('activate', self.refresh)

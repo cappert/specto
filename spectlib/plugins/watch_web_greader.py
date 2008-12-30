@@ -124,7 +124,7 @@ class Watch_web_greader(Watch):
                     feed_info += _("and others...")
                 i += 1            
             feed_info = feed_info.rstrip(", ")    
-            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") % (self.name, self.newMsg, feed_info, str(self.unreadMsg)  + self.or_more)    
+            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") % (self.name, self.newMsg, feed_info, str(self.unreadMsg) + self.or_more)    
         return text
     
     def get_extra_information(self):        
@@ -235,9 +235,6 @@ class Feed_collection():
                 unread.append(_feed)
         return unread
         
-                
-
-
 
 """
 grnotify
@@ -275,10 +272,10 @@ cookies = -1
 old_unread = -1
 unread = 0
 
-def getcookies ():
-    ################################
-    #Use cookies
-    #
+def getcookies():
+    """
+    Use cookies
+    """
     COOKIEFILE = os.path.join(spectlib.util.get_path('tmp'), 'cookies.lwp')
     # the path and filename to save your cookies in
     
@@ -348,7 +345,7 @@ def getcookies ():
     # we could encode a dictionary of values here,
     # using urllib.urlencode(somedict)
 
-    txheaders =  {'User-agent' : 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'}
+    txheaders = {'User-agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'}
     # fake a user agent, some websites (like google) don't like automated exploration
 
     try:

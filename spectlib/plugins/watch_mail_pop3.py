@@ -33,7 +33,7 @@ import string
 
 type = "Watch_mail_pop3"
 type_desc = _("POP3")
-icon =  'emblem-mail'
+icon = 'emblem-mail'
 category = _("Mail") 
 
 def get_add_gui_info():
@@ -155,12 +155,11 @@ class Watch_mail_pop3(Watch):
         text = ""
         while i < len(self.mail_info) and i < 4:
             name = self.mail_info[i].author.split("<")[0]
-            subject =  self.mail_info[i].subject
+            subject = self.mail_info[i].subject
             author_info += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
                 author_info += _("and others...")
             i += 1
-                
         return author_info
         
     def get_gui_info(self):
@@ -184,7 +183,6 @@ class Watch_mail_pop3(Watch):
                     self.mail_info.add(email)
             finally:
                 f.close()
-
         
     def write_cache_file(self):
         try:
@@ -194,7 +192,6 @@ class Watch_mail_pop3(Watch):
         else:
             for email in self.mail_info:
                 f.write(email.id + "&Separator;" + email.author + "&Separator;" + email.subject + "&Separator;" + email.date + "\n")    
-            
         finally:
             f.close()
             
@@ -273,5 +270,3 @@ class Email_collection():
             if _email.new == True:
                 unread.append(_email)
         return unread
-        
-            

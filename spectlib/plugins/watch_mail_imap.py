@@ -45,7 +45,7 @@ def get_add_gui_info():
 class Watch_mail_imap(Watch):
     """ 
     Watch class that will check if you recevied a new mail on your pop3 account. 
-    """    
+    """
     def __init__(self, specto, id, values):
         watch_values = [ 
                         ( "username", spectlib.config.String(True) ),
@@ -54,7 +54,7 @@ class Watch_mail_imap(Watch):
                         ( "ssl", spectlib.config.Boolean(False) ), 
                         ( "port", spectlib.config.Integer(False) ),
                         ( "folder", spectlib.config.String(False) ) 
-                       ]
+                        ]
         
         self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
         
@@ -111,7 +111,7 @@ class Watch_mail_imap(Watch):
                                 (ret, subject) = server.fetch(message,'(BODY[HEADER.FIELDS (SUBJECT)])')
                                 (ret, sender) = server.fetch(message,'(BODY[HEADER.FIELDS (FROM)])')
                                 if ret == 'OK':
-                                    id = id [0][1]
+                                    id = id[0][1]
                                     id = id.replace("\n", "")
                                     id = id.replace("\r", "")
                                     id = id.lower().replace("message-id: ", "")
@@ -170,7 +170,7 @@ class Watch_mail_imap(Watch):
         text = ""
         while i < len(self.mail_info) and i < 4:
             name = self.mail_info[i].author.split("<")[0]
-            subject =  self.mail_info[i].subject
+            subject = self.mail_info[i].subject
             author_info += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
                 author_info += _("and others...")
@@ -271,4 +271,3 @@ class Email_collection():
             if _email.new == True:
                 unread.append(_email)
         return unread
- 

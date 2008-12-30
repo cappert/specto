@@ -53,7 +53,7 @@ class About:
         
         authors_file_path = (spectlib.util.get_path(category="doc") \
                                                           + 'AUTHORS')
-        authors_file = open (authors_file_path, "r")
+        authors_file = open(authors_file_path, "r")
         # this is a hack, because gtk.AboutDialog expects a list, not a file
         authors = authors_file.readlines()
         authors_file.close()
