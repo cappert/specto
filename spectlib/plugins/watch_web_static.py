@@ -279,7 +279,7 @@ class Watch_web_static(Watch):
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('URL'), self.url_),
-                (_('Error margin'), str(self.error_margin) + "%")
+                (_('Error margin (%)'), str(self.error_margin) + "%")
                 ]
 
 def get_add_gui_info():

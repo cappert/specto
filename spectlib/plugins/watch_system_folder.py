@@ -81,7 +81,7 @@ class Watch_system_folder(Watch):
                 self.update_cache_file()#write the values (with the removed lines) to the cache file
             else:
                 self.error = True
-                self.specto.logger.log(_('watch is not set to a folder'), "error", self.name)
+                self.specto.logger.log(_('The watch is not set to a folder'), "error", self.name)
                 
             #first time don't mark as changed
             if self.first_time == True:

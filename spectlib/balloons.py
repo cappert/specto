@@ -84,4 +84,4 @@ class NotificationToast:
             try:
                 self.toast.show()
             except:
-                self.specto.logger.log(_("Cannot send notification message. Make sure that libnotify and dbus are available on your system."), "error", self.specto)
+                self.specto.logger.log(_("Cannot display notification message. Make sure that libnotify and D-Bus are available on your system."), "error", self.specto)

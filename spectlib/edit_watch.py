@@ -193,7 +193,6 @@ class Edit_watch:
     def clear_clicked(self,widget):
         """ Clear the log window. """
         self.specto.logger.remove_watch_log(self.watch.name)
-        self.specto.logger.log(_('Removed logs'), "info", self.name)
         self.log = self.specto.logger.watch_log(self.watch.name)
         self.logwindow.set_text(self.log)
         

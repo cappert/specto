@@ -129,27 +129,35 @@ class Watch_sn_facebook(Watch):
         
     def get_balloon_text(self):
         """ create the text for the balloon """
-        text = _("You received: ")
-        if len(self.updates['message']) == 1:
-            text += _("a new message, ")
-        elif len(self.updates['message']) > 1:
-            text += _("%d new messages, ") % (len(self.updates['message']))
+        text = _("You received") + " "
+        count = len(self.updates['message'])
+        if count == 1:
+            text += _("a new message") + ", "
+        elif count > 1:
+            text += _("%d new messages") % (count)
+            text += ", "
             
-        if len(self.updates['notification']) == 1:
-            text += _("a new notification, ")
-        elif len(self.updates['notification']) > 1:
-            text += _("%d new notifications, ") % (len(self.updates['notification']))
+        count = len(self.updates['notification'])
+        if count == 1:
+            text += _("a new notification") + ", "
+        elif count > 1:
+            text += _("%d new notifications") % (count)
+            text += ", "
             
-        if len(self.updates['request']) == 1:
-            text += _("a new request, ")
-        elif len(self.updates['request']) > 1:
-            text += _("%d new requests, ") % (len(self.updates['request']))
-
-        if len(self.updates['wall']) == 1:
-            text += _("a new wall post, ")
-        elif len(self.updates['wall']) > 1:
-            text += _("%d new wall posts, ") % (len(self.updates['wall']))
-
+        count = len(self.updates['request'])
+        if count == 1:
+            text += _("a new request") + ", "
+        elif count > 1:
+            text += _("%d new requests") % (count)
+            text += ", "
+            
+        count = len(self.updates['wall'])
+        if count == 1:
+            text += _("a new wall post") + ", "
+        elif count > 1:
+            text += _("%d new wall posts") % (count)
+            text += ", "
+        
         return text.rstrip(", ")
         
     def get_extra_information(self):        

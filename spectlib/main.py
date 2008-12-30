@@ -262,10 +262,7 @@ class Specto:
             dialog.label_hbox.pack_start(icon, True, True, 6)
             icon.show()
 
-            label = gtk.Label(_('<b><big>Specto is currently busy and \
-             cannot quit yet.</big></b>\n\nThis may be because it is checking \
-              for watch changes.\nHowever, you can try forcing it to quit \
-               by clicking the murder button.'))
+            label = gtk.Label(_('<b><big>Specto is currently busy and cannot quit yet.</big></b>\n\nThis may be because it is checking for watch changes.\nHowever, you can try forcing it to quit by clicking the murder button.'))
             label.set_use_markup(True)
             dialog.label_hbox.pack_start(label, True, True, 6)
             label.show()
