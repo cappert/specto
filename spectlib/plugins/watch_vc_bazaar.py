@@ -4,7 +4,7 @@
 #
 #       watch_vc_bazaar.py
 #
-# Copyright (c) 2005-2007, Jean-François Fortin Tam
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -54,14 +54,11 @@ class Watch_vc_bazaar(Watch):
                        ]
         
         self.icon = icon
-        self.standard_open_command = ''
+        self.standard_open_command = 'xdg-open %s' % values['folder']
         self.type_desc = type_desc 
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        if self.standard_open_command == self.open_command:
-            self.standard_open_command = "nautilus " + self.folder
-            self.open_command = self.standard_open_command
             
         self.local_branch_ = 0
         self.remote_branch_ = 0

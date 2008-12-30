@@ -51,14 +51,11 @@ class Watch_system_folder(Watch):
                        ]
         
         self.icon = icon
-        self.standard_open_command = ''
+        self.standard_open_command = "xdg-open %s" % values['folder']
         self.type_desc = type_desc
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        if self.standard_open_command == self.open_command:
-            self.standard_open_command = "nautilus " + self.folder
-            self.open_command = self.standard_open_command
         
         self.cache_file = os.path.join(self.specto.CACHE_DIR, "folder" + self.folder.replace("/","_") + ".cache")                
         self.first_time = False

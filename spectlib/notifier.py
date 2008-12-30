@@ -414,10 +414,10 @@ class Notifier:
                 end = self.log_buffer.get_end_iter()
                 self.log_buffer.delete(start, end)
                 
-                iter = self.log_buffer.get_iter_at_offset(0)            
+                iter = self.log_buffer.get_iter_at_offset(0)          
                 for line in log_text:
-                    self.log_buffer.insert_with_tags_by_name(iter, line[1], line[0])
-                                                                            
+                    self.log_buffer.insert_with_tags_by_name(iter, line[1], line[0])                                                                            
+                
             if watch.changed == False:
                 self.wTree.get_widget("clear").set_sensitive(False)
                 self.wTree.get_widget("btnClear").set_sensitive(False)
@@ -818,6 +818,7 @@ class Notifier:
         self.log_buffer.create_tag("INFO", foreground="#4e9a06")
         self.log_buffer.create_tag("WARNING", foreground="#c4a000")
         self.error_log_window = gtk.ScrolledWindow()
+        self.error_log_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         self.error_log_window.add_with_viewport(self.error_log)
         self.error_log_window.show()
         self.label_error_log = gtk.Label(_("Error log"))
@@ -944,7 +945,7 @@ class Notifier:
                 image = self.get_icon(child[1], 0, False)
                 img.set_from_pixbuf(image)
                 childmenuItem.set_image(img)
-                childmenuItem.connect('button-press-event', self.show_add_watch, child[2])
+                childmenuItem.connect('activate', self.show_add_watch, child[2])
                 childmenuItem.show()
                 
                 childmenuItem_ = gtk.ImageMenuItem(child[0])
@@ -953,7 +954,7 @@ class Notifier:
                 image = self.get_icon(child[1], 0, False)
                 img.set_from_pixbuf(image)
                 childmenuItem_.set_image(img)
-                childmenuItem_.connect('button-press-event', self.show_add_watch, child[2])
+                childmenuItem_.connect('activate', self.show_add_watch, child[2])
                 childmenuItem_.show()                
             menuItem.set_submenu(childmenu)
             menuItem_.set_submenu(childmenu_)
@@ -979,7 +980,7 @@ class Notifier:
                     
     def show_add_watch(self, event, *args):
         """ Show the add watch window. """
-        watch_type = args[1]
+        watch_type = args[0]
         if self.add_w == "":
             self.add_w= Add_watch(self.specto, self, watch_type)
         elif self.add_w.add_watch.flags() & gtk.MAPPED:

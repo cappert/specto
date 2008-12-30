@@ -57,7 +57,6 @@ class Watch_sn_facebook(Watch):
                        ]
         
         self.icon = icon
-        self.standard_open_command = ''
         self.type_desc = type_desc 
         
         url = "http://www.facebook.com"
@@ -65,9 +64,6 @@ class Watch_sn_facebook(Watch):
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        
-        if self.open_command == self.standard_open_command: #check if google apps url has to be used
-            self.open_command = self.standard_open_command
 
         self.cache_file = os.path.join(self.specto.CACHE_DIR, "facebook" + self.email + ".cache")    
         self.previous_messages = []

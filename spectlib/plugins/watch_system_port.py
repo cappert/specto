@@ -48,7 +48,7 @@ class Watch_system_port(Watch):
                        ]
         
         self.icon = icon
-        self.open_command = ''
+        self.standard_open_command = ''
         self.type_desc = type_desc
         self.status = ""
                 
