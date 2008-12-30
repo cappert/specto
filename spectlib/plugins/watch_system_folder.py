@@ -89,7 +89,7 @@ class Watch_system_folder(Watch):
                 self.first_time = False            
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
 
         Watch.timer_update(self)
                 

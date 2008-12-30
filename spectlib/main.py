@@ -92,7 +92,7 @@ class Specto:
 
         if sys.argv[1:]:
             if "--console" in sys.argv[1:][0]:
-                self.logger.log("Console mode enabled.", "debug", "specto")
+                self.logger.log(_("Console mode enabled."), "debug", "specto")
                 self.GTK = False
                 self.CONSOLE = True
                 try:
@@ -124,7 +124,7 @@ class Specto:
         try:
             self.watch_db.create(values)
         except AttributeError, error_fields:
-            self.logger.log("Specto could not create a corrupted watch.", \
+            self.logger.log(_("Could not create a watch, because it is corrupt."), \
                                 "critical", "specto")
 
 

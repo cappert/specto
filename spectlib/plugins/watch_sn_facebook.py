@@ -123,7 +123,7 @@ class Watch_sn_facebook(Watch):
             self.write_cache_file()
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         
         Watch.timer_update(self)
         

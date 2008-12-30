@@ -91,10 +91,10 @@ class Watch_vc_bazaar(Watch):
                 
         except NotBranchError, e:
             self.error = True
-            self.specto.logger.log( ('%s') % str(e), "warning", self.name)#this string is not translated
+            self.specto.logger.log(('%s') % str(e), "warning", self.name)  # This '%s' string here has nothing to translate
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         
         Watch.timer_update(self)
         

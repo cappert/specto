@@ -186,7 +186,7 @@ class Watch_web_static(Watch):
                 ### NOTE: do not write the redirect url in a config file!
                 self.write_filesize()
         except:
-            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
             self.error = True
             
         Watch.timer_update(self)

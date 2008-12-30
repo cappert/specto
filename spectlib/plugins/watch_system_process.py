@@ -76,7 +76,7 @@ class Watch_system_process(Watch):
                 self.status = _("Unknown")
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         Watch.timer_update(self)
         
     def check_process(self):

@@ -123,7 +123,7 @@ class Watch:
             if self.use_network:
                 if not self.check_connection():
                     return
-            self.specto.logger.log("Watch started checking.",\
+            self.specto.logger.log(_("Watch started checking."),\
                                                  "debug", self.name)
             self.specto.mark_watch_status("checking", self.id)
             self.error = False
