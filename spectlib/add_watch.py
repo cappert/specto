@@ -59,7 +59,6 @@ class Add_watch:
         dic= { "on_button_cancel_clicked": self.cancel_clicked,
         "on_button_add_clicked": self.add_clicked,
         "on_button_help_clicked": self.help_clicked,
-        "on_name_changed": self.name_changed,
         "on_add_watch_delete_event": self.delete_event,
         "check_command_toggled": self.command_toggled,
         "check_open_toggled": self.open_toggled,
@@ -86,11 +85,6 @@ class Add_watch:
         #set the default values
         self.refresh_unit.set_active(2)
         self.refresh.set_value(1.0)
-
-    def name_changed(self, widget):
-        """ Show the watch name in the window. """
-        new_name = "<b>" + self.name.get_text().replace("&", "&amp;") + "</b>"
-        self.wTree.get_widget("label7").set_label(new_name)
 
     def set_options(self, watch_type):
         """ Show the table with the right watch options. """ 
