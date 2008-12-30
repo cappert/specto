@@ -58,6 +58,8 @@ class Watch_mail_pop3(Watch):
                         ( "port", spectlib.config.Integer(False) )                         
                        ]
         
+        self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
+        
         Watch.__init__(self, specto, id, values, watch_values)
         
         self.type_desc = type_desc
@@ -90,7 +92,8 @@ class Watch_mail_pop3(Watch):
             self.error = True
             self.specto.logger.log( ('%s') % str(e), "warning", self.name)
         except:
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.error = True
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         else:
             try:
                 s.user(self.username)
@@ -120,7 +123,8 @@ class Watch_mail_pop3(Watch):
                 self.error = True
                 self.specto.logger.log( ('%s') % str(e), "warning", self.name)                
             except:
-                self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+                self.error = True
+                self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg

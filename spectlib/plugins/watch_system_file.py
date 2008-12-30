@@ -52,6 +52,7 @@ class Watch_system_file(Watch):
         self.icon = icon
         self.open_command = ''
         self.type_desc = type_desc
+        self.standard_open_command = "xdg-open %s" % values['file']
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
@@ -118,7 +119,7 @@ class Watch_system_file(Watch):
                 self.first_time = False     
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         
         Watch.timer_update(self)
         

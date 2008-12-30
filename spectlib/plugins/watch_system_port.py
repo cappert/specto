@@ -48,7 +48,7 @@ class Watch_system_port(Watch):
                        ]
         
         self.icon = icon
-        self.open_command = ''
+        self.standard_open_command = ''
         self.type_desc = type_desc
         self.status = ""
                 
@@ -74,7 +74,7 @@ class Watch_system_port(Watch):
                 self.status = _("Unknown")
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         
         Watch.timer_update(self)
         

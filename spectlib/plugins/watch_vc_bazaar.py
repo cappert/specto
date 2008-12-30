@@ -4,7 +4,7 @@
 #
 #       watch_vc_bazaar.py
 #
-# Copyright (c) 2005-2007, Jean-François Fortin Tam
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -39,7 +39,7 @@ category = _("Version control")
 
 def get_add_gui_info():
     return [
-            ("folder", spectlib.gtkconfig.FolderChooser(_("Bazaar folder")))
+            ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
            ]
            
 class Watch_vc_bazaar(Watch):
@@ -54,14 +54,11 @@ class Watch_vc_bazaar(Watch):
                        ]
         
         self.icon = icon
-        self.standard_open_command = ''
+        self.standard_open_command = 'xdg-open %s' % values['folder']
         self.type_desc = type_desc 
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        if self.standard_open_command == self.open_command:
-            self.standard_open_command = "nautilus " + self.folder
-            self.open_command = self.standard_open_command
             
         self.local_branch_ = 0
         self.remote_branch_ = 0
@@ -91,10 +88,10 @@ class Watch_vc_bazaar(Watch):
                 
         except NotBranchError, e:
             self.error = True
-            self.specto.logger.log( ('%s') % str(e), "warning", self.name)#this string is not translated
+            self.specto.logger.log(('%s') % str(e), "warning", self.name)  # This '%s' string here has nothing to translate
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         
         Watch.timer_update(self)
         
@@ -167,6 +164,6 @@ class Watch_vc_bazaar(Watch):
         return [ 
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
-                (_('Bazaar folder'), self.folder),
+                (_('Folder'), self.folder),
                 (_('Main branch'), self.remote_branch_label)
                 ]        

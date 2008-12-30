@@ -46,7 +46,7 @@ def get_add_gui_info():
            
 class Watch_sn_facebook(Watch):
     """ 
-    Watch class that will check if a bzr folder has been changed. 
+    Watch class that will check for changes in a user's Facebook account.
     """
     
     def __init__(self, specto, id, values):
@@ -57,7 +57,6 @@ class Watch_sn_facebook(Watch):
                        ]
         
         self.icon = icon
-        self.standard_open_command = ''
         self.type_desc = type_desc 
         
         url = "http://www.facebook.com"
@@ -65,9 +64,6 @@ class Watch_sn_facebook(Watch):
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        
-        if self.open_command == self.standard_open_command: #check if google apps url has to be used
-            self.open_command = self.standard_open_command
 
         self.cache_file = os.path.join(self.specto.CACHE_DIR, "facebook" + self.email + ".cache")    
         self.previous_messages = []
@@ -123,33 +119,41 @@ class Watch_sn_facebook(Watch):
             self.write_cache_file()
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         
         Watch.timer_update(self)
         
     def get_balloon_text(self):
         """ create the text for the balloon """
-        text = _("You received: ")
-        if len(self.updates['message']) == 1:
-            text += _("a new message, ")
-        elif len(self.updates['message']) > 1:
-            text += _("%d new messages, ") % (len(self.updates['message']))
+        text = _("You received") + " "
+        count = len(self.updates['message'])
+        if count == 1:
+            text += _("a new message") + ", "
+        elif count > 1:
+            text += _("%d new messages") % (count)
+            text += ", "
             
-        if len(self.updates['notification']) == 1:
-            text += _("a new notification, ")
-        elif len(self.updates['notification']) > 1:
-            text += _("%d new notifications, ") % (len(self.updates['notification']))
+        count = len(self.updates['notification'])
+        if count == 1:
+            text += _("a new notification") + ", "
+        elif count > 1:
+            text += _("%d new notifications") % (count)
+            text += ", "
             
-        if len(self.updates['request']) == 1:
-            text += _("a new request, ")
-        elif len(self.updates['request']) > 1:
-            text += _("%d new requests, ") % (len(self.updates['request']))
-
-        if len(self.updates['wall']) == 1:
-            text += _("a new wall post, ")
-        elif len(self.updates['wall']) > 1:
-            text += _("%d new wall posts, ") % (len(self.updates['wall']))
-
+        count = len(self.updates['request'])
+        if count == 1:
+            text += _("a new request") + ", "
+        elif count > 1:
+            text += _("%d new requests") % (count)
+            text += ", "
+            
+        count = len(self.updates['wall'])
+        if count == 1:
+            text += _("a new wall post") + ", "
+        elif count > 1:
+            text += _("%d new wall posts") % (count)
+            text += ", "
+        
         return text.rstrip(", ")
         
     def get_extra_information(self):        

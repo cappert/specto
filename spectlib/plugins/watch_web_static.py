@@ -104,7 +104,7 @@ class Watch_web_static(Watch):
                 response = web_proxy.urllib2.urlopen(request)
             except (URLError, BadStatusLine), e:
                 self.error = True
-                self.specto.logger.log(_('%s') % str(e), "warning", self.name)
+                self.specto.logger.log(('%s') % str(e), "warning", self.name) # This '%s' string here has nothing to translate
             else:
                 self.info_ = response.info()
                 self.url2_ = response.geturl()
@@ -186,7 +186,7 @@ class Watch_web_static(Watch):
                 ### NOTE: do not write the redirect url in a config file!
                 self.write_filesize()
         except:
-            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
             self.error = True
             
         Watch.timer_update(self)
@@ -279,7 +279,7 @@ class Watch_web_static(Watch):
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('URL'), self.url_),
-                (_('Error margin'), str(self.error_margin) + "%")
+                (_('Error margin (%)'), str(self.error_margin) + "%")
                 ]
 
 def get_add_gui_info():

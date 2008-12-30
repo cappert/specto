@@ -99,7 +99,7 @@ class Watch_web_greader(Watch):
                     
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         Watch.timer_update(self)
         
     def get_gui_info(self):

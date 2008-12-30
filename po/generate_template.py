@@ -7,6 +7,7 @@ print "Specto's custom string extractor script\n"
 
 import os
 import glob
+from string import replace
 paths = ["../spectlib", "../spectlib/tools",
          "../spectlib/plugins", "../data/glade"]
 extensions = [".py", ".h"]
@@ -29,9 +30,11 @@ for path in paths:
         for x in glob.glob(foo):
             arguments += x
             arguments += " "
+# Here is a hack to prevent indexing that file:
+arguments = replace(arguments, " ../spectlib/i18n.py", "")
 print "Will analyze these files:\n\n", arguments
 
-command = "python pygettext.py --keyword=N_ --output=specto.pot " + arguments
+command = "pygettext --keyword=N_ --output=specto.pot " + arguments
 os.system(command)
 print "\n\nSTRINGS EXTRACTED. They have been saved" \
-        "as the template file 'specto.pot'"
+        " as the template file 'specto.pot'"

@@ -123,7 +123,7 @@ class Watch:
             if self.use_network:
                 if not self.check_connection():
                     return
-            self.specto.logger.log("Watch started checking.",\
+            self.specto.logger.log(_("Watch started checking."),\
                                                  "debug", self.name)
             self.specto.mark_watch_status("checking", self.id)
             self.error = False
@@ -156,8 +156,7 @@ class Watch:
                 os.system(self.command + " &")
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error marking the watch \
-                                            as changed"), "error", self.name)
+            self.specto.logger.log(_("There was an error marking the watch as changed"), "error", self.name)
 
     def timer_update(self):
         """ update the timer """
@@ -274,7 +273,7 @@ class Watch_collection:
                         self.plugin_menu.update({menu1:[]})
                     self.plugin_menu[menu1].append(menu2)
                 except:
-                   self.specto.logger.log(_('Could not load the file: %s.') % _file, "critical", "specto") 
+                   self.specto.logger.log(_('There was an error opening the file %s') % _file, "critical", "specto") 
                 
     def create(self, values):
         """ read the content from the dictionary and create the watch """      

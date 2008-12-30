@@ -51,14 +51,11 @@ class Watch_system_folder(Watch):
                        ]
         
         self.icon = icon
-        self.standard_open_command = ''
+        self.standard_open_command = "xdg-open %s" % values['folder']
         self.type_desc = type_desc
                 
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        if self.standard_open_command == self.open_command:
-            self.standard_open_command = "nautilus " + self.folder
-            self.open_command = self.standard_open_command
         
         self.cache_file = os.path.join(self.specto.CACHE_DIR, "folder" + self.folder.replace("/","_") + ".cache")                
         self.first_time = False
@@ -81,7 +78,7 @@ class Watch_system_folder(Watch):
                 self.update_cache_file()#write the values (with the removed lines) to the cache file
             else:
                 self.error = True
-                self.specto.logger.log(_('watch is not set to a folder'), "error", self.name)
+                self.specto.logger.log(_('The watch is not set to a folder'), "error", self.name)
                 
             #first time don't mark as changed
             if self.first_time == True:
@@ -89,7 +86,7 @@ class Watch_system_folder(Watch):
                 self.first_time = False            
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
 
         Watch.timer_update(self)
                 

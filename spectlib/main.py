@@ -92,7 +92,7 @@ class Specto:
 
         if sys.argv[1:]:
             if "--console" in sys.argv[1:][0]:
-                self.logger.log("Console mode enabled.", "debug", "specto")
+                self.logger.log(_("Console mode enabled."), "debug", "specto")
                 self.GTK = False
                 self.CONSOLE = True
                 try:
@@ -124,7 +124,7 @@ class Specto:
         try:
             self.watch_db.create(values)
         except AttributeError, error_fields:
-            self.logger.log("Specto could not create a corrupted watch.", \
+            self.logger.log(_("Could not create a watch, because it is corrupt."), \
                                 "critical", "specto")
 
 
@@ -262,10 +262,7 @@ class Specto:
             dialog.label_hbox.pack_start(icon, True, True, 6)
             icon.show()
 
-            label = gtk.Label(_('<b><big>Specto is currently busy and \
-             cannot quit yet.</big></b>\n\nThis may be because it is checking \
-              for watch changes.\nHowever, you can try forcing it to quit \
-               by clicking the murder button.'))
+            label = gtk.Label(_('<b><big>Specto is currently busy and cannot quit yet.</big></b>\n\nThis may be because it is checking for watch changes.\nHowever, you can try forcing it to quit by clicking the murder button.'))
             label.set_use_markup(True)
             dialog.label_hbox.pack_start(label, True, True, 6)
             label.show()

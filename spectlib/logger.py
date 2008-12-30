@@ -81,6 +81,8 @@ class Log_dialog:
         self.log_buffer.create_tag("ERROR", foreground="#a40000")
         self.log_buffer.create_tag("INFO", foreground="#4e9a06")
         self.log_buffer.create_tag("WARNING", foreground="#c4a000")
+        self.log_buffer.create_tag("DEBUG", foreground="#815902")
+        self.log_buffer.create_tag("CRITICAL", foreground="#2e3436")
 
         start = self.log_buffer.get_start_iter()
         end = self.log_buffer.get_end_iter()
@@ -96,13 +98,15 @@ class Log_dialog:
 
     def save(self, widget):
         """ Save the text in the logwindow. """
-        text = self.logwindow.get_text(self.logwindow.get_start_iter(), \
-                                            self.logwindow.get_end_iter())
+        text = self.log_buffer.get_text(self.log_buffer.get_start_iter(), \
+                                            self.log_buffer.get_end_iter())
         self.save = Save_dialog(self.specto, text)
 
     def clear(self, widget):
         """ Clear the text in the log window and from the log file. """
-        self.logwindow.set_text("")
+        start = self.log_buffer.get_start_iter()
+        end = self.log_buffer.get_end_iter()
+        self.log_buffer.delete(start, end)
         f = open(self.file_name, "w")
         f.write("")
         f.close()
@@ -110,31 +114,46 @@ class Log_dialog:
 
     def find(self, widget):
         """ Find the lines in the log file that contain the filter word. """
+        self.read_log()
         level = self.wTree.get_widget("combo_level").get_active()
         buffer_log = self.log.split("\n")
         filtered_log = ""
 
-        if level == 0:
-            self.logwindow.set_text(self.log)
-        else:
-            if level == 1:
-                pattern = ("DEBUG")
-            elif level == 2:
-                pattern = ("INFO")
-            elif level == 3:
-                pattern = ("WARNING")
-            elif level == 4:
-                pattern = ("ERROR")
-            elif level == 5:
-                pattern = ("CRITICAL")
-            elif level == -1:
-                pattern = self.wTree.get_widget("combo_level").child.get_text()
-
+        if level == 1:
+            pattern = ("DEBUG")
+        elif level == 2:
+            pattern = ("INFO")
+        elif level == 3:
+            pattern = ("WARNING")
+        elif level == 4:
+            pattern = ("ERROR")
+        elif level == 5:
+            pattern = ("CRITICAL")
+        elif level == -1:
+            pattern = self.wTree.get_widget("combo_level").child.get_text()
+        
+        start = self.log_buffer.get_start_iter()
+        end = self.log_buffer.get_end_iter()
+        self.log_buffer.delete(start, end)
+        iter = self.log_buffer.get_iter_at_offset(0)
+        
+        if level == 0:  # Show everything
+            for line in buffer_log:
+                if line:  # If the line is not empty
+                    tag = line.split(" - ")[1].strip()
+                    self.log_buffer.insert_with_tags_by_name(iter, \
+                                                        line + "\n", tag)
+        else:  # Show the filtered log
+            # Do the filtering
             for i in buffer_log:
                 if re.search(pattern, i, re.IGNORECASE):
                     filtered_log += i + "\n"
-
-            self.logwindow.set_text(filtered_log)
+            filtered_log = filtered_log.split("\n")
+            for line in filtered_log:
+                if line:  # If the line is not empty
+                    tag = line.split(" - ")[1].strip()
+                    self.log_buffer.insert_with_tags_by_name(iter, \
+                                                        line + "\n", tag)
 
     def read_log(self):
         """ Read the log file. """
@@ -229,11 +248,11 @@ class Logger:
         #write to log file
         #TODO:XXX: Do we need to gettextize it? Maybe just the date.
         logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s &Separator; %(levelname)s \
-                          &Separator; %(name)s &Separator; %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S',
-                    filename=self.file_name,
-                    filemode='a')
+              format='%(asctime)s &Separator; %(levelname)s &Separator;' \
+              + ' %(name)s &Separator; %(message)s',
+              datefmt='%Y-%m-%d %H:%M:%S',
+              filename=self.file_name,
+              filemode='a')
 
         #write to console
         console = logging.StreamHandler()
