@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2.1 of the License, or(at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,8 +32,8 @@ category = _("Internet")
 
 def get_add_gui_info():
     return [
-            ("username", spectlib.gtkconfig.Entry(_("Username"))),
-            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
+           ("username", spectlib.gtkconfig.Entry(_("Username"))),
+           ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
             ]
 
 class Watch_web_greader(Watch):
@@ -43,8 +43,8 @@ class Watch_web_greader(Watch):
 
     def __init__(self, specto, id, values):
         watch_values = [ 
-                        ( "username", spectlib.config.String(True) ),
-                        ( "password", spectlib.config.String(True) ) 
+                      ("username", spectlib.config.String(True)),
+                      ("password", spectlib.config.String(True)) 
                         ]
 
         url = "http://www.google.com/reader/"
@@ -104,17 +104,17 @@ class Watch_web_greader(Watch):
         
     def get_gui_info(self):
         return [ 
-                (_('Name'), self.name),
-                (_('Last changed'), self.last_changed),
-                (_('Username'), self.username),
-                (_('Unread messages'), str(self.unreadMsg) + self.or_more)
+               (_('Name'), self.name),
+               (_('Last changed'), self.last_changed),
+               (_('Username'), self.username),
+               (_('Unread messages'), str(self.unreadMsg) + self.or_more)
                 ]
                 
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.news_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("<b>%s</b> has a new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") % (self.name, unread_messages[0].name, str(self.unreadMsg) + self.or_more)
+            text = _("<b>%s</b> has a new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") %(self.name, unread_messages[0].name, str(self.unreadMsg) + self.or_more)
         else:
             i = 0 #show max 4 feeds
             feed_info = ""
@@ -124,7 +124,7 @@ class Watch_web_greader(Watch):
                     feed_info += _("and others...")
                 i += 1            
             feed_info = feed_info.rstrip(", ")    
-            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") % (self.name, self.newMsg, feed_info, str(self.unreadMsg) + self.or_more)    
+            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") %(self.name, self.newMsg, feed_info, str(self.unreadMsg) + self.or_more)    
         return text
     
     def get_extra_information(self):        
@@ -330,9 +330,8 @@ def getcookies():
             ClientCookie.install_opener(opener)
             
     url = 'https://www.google.com/accounts/ServiceLoginAuth'
-    user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
-    login = {'Email' : email,
-        'Passwd' : passwd}
+    user_agent = 'Mozilla/4.0(compatible; MSIE 5.5; Windows NT)'
+    login = {'Email': email, 'Passwd': passwd}
 
     data = urllib.urlencode(login)
 
@@ -345,8 +344,8 @@ def getcookies():
     # we could encode a dictionary of values here,
     # using urllib.urlencode(somedict)
 
-    txheaders = {'User-agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'}
-    # fake a user agent, some websites (like google) don't like automated exploration
+    txheaders = {'User-agent': 'Mozilla/4.0(compatible; MSIE 5.5; Windows NT)'}
+    # fake a user agent, some websites(like google) don't like automated exploration
 
     try:
         req = Request(theurl, txdata, txheaders)
@@ -382,11 +381,11 @@ def getUnreadItems(Request):
     testxml = response.read()
     del response
     if '<object>' in testxml:
-        fileHandle = open ( LISTFILE, 'w' ) 
-        fileHandle.write (testxml)
+        fileHandle = open(LISTFILE, 'w') 
+        fileHandle.write(testxml)
         del testxml
         fileHandle.close()
-        fileHandle = open ( LISTFILE )
+        fileHandle = open(LISTFILE)
         unread = xml.dom.minidom.parse(fileHandle)
         fileHandle.close()
         del fileHandle
@@ -394,21 +393,21 @@ def getUnreadItems(Request):
         namelist = unread.getElementsByTagName('string')
         for count in countlist:
             if count.attributes["name"].value != 'count':
-                countlist.remove (count)
+                countlist.remove(count)
         del unread
         del L[:]
         found = 0
-        for i in xrange (0, len(countlist)):
+        for i in xrange(0, len(countlist)):
             if 'state/com.google/reading-list' in namelist[i].firstChild.toxml():
-                unread =  countlist[i].firstChild.toxml()
+                unread = countlist[i].firstChild.toxml()
                 found = 1
             else:
-                L.append ((countlist[i].firstChild.toxml() , namelist[i].firstChild.toxml() ))
+                L.append((countlist[i].firstChild.toxml(), namelist[i].firstChild.toxml()))
         del countlist[:]
         del namelist[:]
-        if not found:        #if there aren't any subscribed feeds
+        if not found: # If there are no subscribed feeds
             unread = '-1'
-        L = sorted (L, compare)
+        L = sorted(L, compare)
         feeds = len(L)
         return 1
     else:
@@ -426,24 +425,24 @@ def updateFeeds(Request):
         response = urllib2.urlopen(req)
         del req
     except IOError, e:
-        return 2         #we didn't get a connection
+        return 2  # We didn't get a connection
     testxml = response.read()    #read the opened page
     del response
-    if '<object>' in testxml:    #if we got a XML file
-        fileHandle = open ( LISTFILE, 'w' ) 
-        fileHandle.write (testxml)
+    if '<object>' in testxml:  # If we got a XML file
+        fileHandle = open(LISTFILE, 'w')
+        fileHandle.write(testxml)
         del testxml
         fileHandle.close
-        fileHandle = open ( LISTFILE )
+        fileHandle = open(LISTFILE)
         document = xml.dom.minidom.parse(fileHandle)
         fileHandle.close()
         del fileHandle
         del names[:]
         feedlist = document.getElementsByTagName('string')
-        for j in xrange (0, len(feedlist)):
-            if (feedlist[j].attributes["name"].value == 'id' or feedlist[j].attributes["name"].value == 'title'):
-                if ('/state/com.google/broadcast' in feedlist[j].firstChild.toxml() or feedlist[j].firstChild.toxml()[0] != 'u'):
-                    names.append (feedlist[j].firstChild.toxml())
+        for j in xrange(0, len(feedlist)):
+            if(feedlist[j].attributes["name"].value == 'id' or feedlist[j].attributes["name"].value == 'title'):
+                if('/state/com.google/broadcast' in feedlist[j].firstChild.toxml() or feedlist[j].firstChild.toxml()[0] != 'u'):
+                    names.append(feedlist[j].firstChild.toxml())
         del document
         del feedlist[:]
         
@@ -451,14 +450,14 @@ def readFeeds(Request):
     global names
     LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'names.xml')
     if os.path.isfile(LISTFILE):
-        fileHandle = open ( LISTFILE )
+        fileHandle = open(LISTFILE)
         document = xml.dom.minidom.parse(fileHandle)
         del names[:]
         feedlist = document.getElementsByTagName('string')
-        for j in xrange (0, len(feedlist)):
-            if (feedlist[j].attributes["name"].value == 'id' or feedlist[j].attributes["name"].value == 'title'):
-                if ('/state/com.google/broadcast' in feedlist[j].firstChild.toxml() or feedlist[j].firstChild.toxml()[0] != 'u'):
-                    names.append (feedlist[j].firstChild.toxml())
+        for j in xrange(0, len(feedlist)):
+            if(feedlist[j].attributes["name"].value == 'id' or feedlist[j].attributes["name"].value == 'title'):
+                if('/state/com.google/broadcast' in feedlist[j].firstChild.toxml() or feedlist[j].firstChild.toxml()[0] != 'u'):
+                    names.append(feedlist[j].firstChild.toxml())
         del document
         del feedlist[:]
         fileHandle.close()
@@ -481,43 +480,43 @@ class Greader():
         
     def refresh(self):
         cookies = getcookies()
-        if (cookies[0] == 1):
+        if(cookies[0] == 1):
             request = cookies[1]
             cj = cookies[2]
             cookies = getUnreadItems(request)
-        if (cookies == 0):
+        if(cookies == 0):
             info = -1, _('Wrong username or password')
             extra_info = ''
-        if (cookies == 2 ):
+        if(cookies == 2):
             info = -1, _('Could not establish a connection to server')
             extra_info = ''
-        if (cookies == 3):
+        if(cookies == 3):
             info = -1, _('Could not get cookies')
             extra_info = ''
-        if (cookies != 1):
+        if(cookies != 1):
             cookies = getcookies()
 
-        if (unread == '-1'):
+        if(unread == '-1'):
             info = 1, _('You are not subscribed to any feeds')
-        elif (unread == '0'):
+        elif(unread == '0'):
             info = 1, _('No unread items')
-        elif (unread >= '1'):
+        elif(unread >= '1'):
             info = 2, unread
             
         readFeeds(request)
-        if (len(L) >= numberFeeds):
+        if(len(L) >= numberFeeds):
             i = numberFeeds
         else:
-            i =  len(L)# - 1
+            i = len(L)# - 1
         extra_info = {}
         extra_info_friends = ''
-        for i in xrange (0,i):
+        for i in xrange(0,i):
             found = 0
-            for j in xrange (0, len(names)):
+            for j in xrange(0, len(names)):
                 if not found:
-                    if (str(L[i][1]) == names[j] or '/state/com.google/broadcast-friends' in L[i][1]) and int (L[i][0]) != 0:
+                    if(str(L[i][1]) == names[j] or '/state/com.google/broadcast-friends' in L[i][1]) and int(L[i][0]) != 0:
                         found = 1
-                        if ('/state/com.google/broadcast-friends' in L[i][1]):
+                        if('/state/com.google/broadcast-friends' in L[i][1]):
                             extra_info_friends += str(L[i][0])
                         else:
                             extra_info.update({names[j+1]: int(L[i][0])})

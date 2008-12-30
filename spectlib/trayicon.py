@@ -168,12 +168,12 @@ class Tray:
         self.item_clear.set_submenu(self.sub_menu)
         
         # Connect the events
-        self.item_show.connect( 'activate', self.show_notifier)
-        self.item_refresh.connect ('activate', self.refresh)
-        self.item_pref.connect( 'activate', self.show_preferences)
-        self.item_help.connect( 'activate', self.show_help)
-        self.item_about.connect( 'activate', self.show_about)
-        self.item_quit.connect( 'activate', self.quit)
+        self.item_show.connect('activate', self.show_notifier)
+        self.item_refresh.connect('activate', self.refresh)
+        self.item_pref.connect('activate', self.show_preferences)
+        self.item_help.connect('activate', self.show_help)
+        self.item_about.connect('activate', self.show_about)
+        self.item_quit.connect('activate', self.quit)
         
         # Create the menu
         self.menu = gtk.Menu()

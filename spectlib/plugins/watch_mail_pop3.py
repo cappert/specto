@@ -24,7 +24,8 @@
 from spectlib.watch import Watch
 import spectlib.util
 
-import poplib, email
+import poplib
+import email
 import os
 from socket import error
 from spectlib.i18n import _

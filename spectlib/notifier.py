@@ -104,7 +104,7 @@ class Notifier:
         "on_btnOpen_clicked": self.open_watch_callback,
         "on_btnClear_clicked": self.clear_watch,
         "on_treeview_cursor_changed": self.show_watch_info,
-        "on_btnEdit_clicked": self.show_edit_watch, 
+        "on_btnEdit_clicked": self.show_edit_watch,
         "on_by_watch_type_activate": self.sort_type,
         "on_by_name_activate": self.sort_name,
         "on_by_watch_active_activate": self.sort_active,
@@ -117,15 +117,10 @@ class Notifier:
         self.notifier=self.wTree.get_widget("notifier")
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.svg')
         self.notifier.set_icon(icon)
-        
         self.specto.notifier_initialized = True
         self.create_notifier_gui()
-
         self.stop_refresh = False
-        
 
-### Watch functions ###
-                
     def clear_watch(self, widget, *id):
         """
         Call the main function to clear the watch and reset the name in the notifier.
@@ -139,15 +134,12 @@ class Notifier:
         watch = self.specto.watch_db[id]
         watch.clear()
         self.model.set(self.iter[id], 2, watch.name, 5, pango.WEIGHT_NORMAL)
-        
         if self.model.iter_is_valid(self.iter[id]) and not watch.error:
             self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50, False))
-        
         if watch.changed == False:
             self.wTree.get_widget("btnClear").set_sensitive(False)
         else:
             self.wTree.get_widget("btnClear").set_sensitive(True)
-        
         #check if all watches has been cleared
         changed_watches = False
         changes = self.specto.watch_db.count_changed_watches()
@@ -162,7 +154,6 @@ class Notifier:
         self.wTree.get_widget("btnClear").set_sensitive(False)
         self.wTree.get_widget("button_clear_all").set_sensitive(False)
         self.wTree.get_widget("clear_all1").set_sensitive(False)
-        
         for watch in self.specto.watch_db:
             if self.model.iter_is_valid(self.iter[watch.id]):
                 self.clear_watch("", watch.id)
@@ -178,7 +169,6 @@ class Notifier:
                 if self.stop_refresh == True:
                     self.stop_refresh = False
                     break
-                    
                 try:
                     iter = self.model.get_iter(i)
                     if self.model.iter_is_valid(iter):
@@ -192,24 +182,22 @@ class Notifier:
                     except:
                         pass
                     self.specto.watch_db[id].start()
-                    
             self.wTree.get_widget("button_refresh").set_stock_id("gtk-refresh") #menu item, does not allow changing label
             self.wTree.get_widget("button_refresh").set_label(_("Refresh All"))
             self.wTree.get_widget("button_add").set_sensitive(True)
             self.wTree.get_widget("btnEdit").set_sensitive(True)
         else:
             self.stop_refresh = True
-            
+
     def toggle_changed(self, id):
         """ Change the name and icon from the watch in the notifier window. """
         watch = self.specto.watch_db[id]
         self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_BOLD)
         self.wTree.get_widget("button_clear_all").set_sensitive(True)
         self.wTree.get_widget("clear_all1").set_sensitive(True)
-        
         if self.model.iter_is_valid(self.iter[id]):
             self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 0, False))
-    
+
     def mark_error(self, error_message):
         error_dialog = ErrorDialog(self.specto, error_message)
         
@@ -355,7 +343,7 @@ class Notifier:
         id = int(model.get_value(iter, 3))
         watch = self.specto.watch_db[id]
         
-        if model.get_value(iter,0):
+        if model.get_value(iter, 0):
             model.set_value(iter, 0, 0)
             if watch.changed:
                 self.clear_watch("", id)
@@ -475,9 +463,8 @@ class Notifier:
                 path, col, cellx, celly = pthinfo
                 treeview.grab_focus()
                 treeview.set_cursor(path, col, 0)
-                menu = self.create_menu(self,self.notifier,None)
+                menu = self.create_menu(self, self.notifier, None)
                 menu.popup(None, None, None, 3, time)
-
             return 1
             
     def _clear_watch(self, *widget):
@@ -500,7 +487,7 @@ class Notifier:
         id = int(model.get_value(iter, 3))
         self.show_edit_watch(self, widget, id)
 
-    def create_menu(self, window,event, data=None):
+    def create_menu(self, window, event, data=None):
         model, iter = self.treeview.get_selection().get_selected()
         id = int(model.get_value(iter, 3))
         watch = self.specto.watch_db[id]
@@ -510,7 +497,7 @@ class Notifier:
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
-        menuItem.connect('activate',self.refresh_watch)
+        menuItem.connect('activate', self.refresh_watch)
         if watch.active == False:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
@@ -519,7 +506,7 @@ class Notifier:
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
-        menuItem.connect('activate',self._clear_watch)
+        menuItem.connect('activate', self._clear_watch)
         if watch.changed == False:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
@@ -531,14 +518,14 @@ class Notifier:
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
-        menuItem.connect('activate',self.edit_watch)
+        menuItem.connect('activate', self.edit_watch)
         menu.append(menuItem)
 
         menuItem = gtk.ImageMenuItem(_("Remove"))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU)
         menuItem.set_image(image)
-        menuItem.connect('activate',self.remove_watch)
+        menuItem.connect('activate', self.remove_watch)
         menu.append(menuItem)
     
         menu.show_all()

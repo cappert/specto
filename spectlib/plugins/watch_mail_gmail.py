@@ -35,6 +35,7 @@ type_desc = _("GMail")
 icon = 'emblem-mail'
 category = _("Mail") 
 
+
 def get_add_gui_info():
     return [
             ("username", spectlib.gtkconfig.Entry(_("Username"))),
@@ -75,8 +76,7 @@ class Watch_mail_gmail(Watch):
         self.mail_info = Email_collection()
         
         self.read_cache_file()
-        
-        
+                
     def check(self):
         """ Check for new mails on your gmail account. """
         try:
@@ -156,7 +156,6 @@ class Watch_mail_gmail(Watch):
                     self.mail_info.add(email)
             finally:
                 f.close()
-
         
     def write_cache_file(self):
         try:

@@ -184,7 +184,7 @@ class Watch:
             self.specto.connection_manager.add_callback(self.start_checking)
             self.specto.mark_watch_status("no-network", self.id)
             return False
-        else :
+        else:
             self.specto.mark_watch_status("network", self.id)
             return True
         
@@ -530,7 +530,7 @@ class Watch_io:
                     f.close()
 
             del values['name']
-            for option, value  in values.iteritems():
+            for option, value in values.iteritems():
                 self.write_option(name, option, value)
                           
     def write_option(self, name, option, value):

@@ -32,16 +32,17 @@ from bzrlib.missing import find_unmerged
 from bzrlib.branch import Branch
 from bzrlib.errors import NotBranchError
 
-
 type = "Watch_vc_bazaar"
 type_desc = _("Bazaar")
 icon = 'bazaar'
 category = _("Version control")
 
+
 def get_add_gui_info():
     return [
             ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
            ]
+
            
 class Watch_vc_bazaar(Watch):
     """ 
@@ -143,7 +144,6 @@ class Watch_vc_bazaar(Watch):
                         self.remote_branch_ = int(line.split(":")[1])
             finally:
                 f.close()
-
         
     def write_cache_file(self):
         try:

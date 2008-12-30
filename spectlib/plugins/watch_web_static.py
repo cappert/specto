@@ -299,7 +299,8 @@ __author__ = 'Aaron Swartz <me@aaronsw.com>'
 __copyright__ = '(C) 2003 Aaron Swartz. GNU GPL 2.'
 __version__ = '0.22'
 
-import difflib, string
+import difflib
+import string
 
 def isTag(x):
     return x[0] == "<" and x[-1] == ">"
