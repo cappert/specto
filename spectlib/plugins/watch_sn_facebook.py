@@ -52,8 +52,8 @@ class Watch_sn_facebook(Watch):
     def __init__(self, specto, id, values):
 
         watch_values = [
-                        ( "email", spectlib.config.String(True) ),
-                        ( "password", spectlib.config.String(True) )
+                        ("email", spectlib.config.String(True)),
+                        ("password", spectlib.config.String(True))
                        ]
 
         self.icon = icon
@@ -112,7 +112,7 @@ class Watch_sn_facebook(Watch):
 
             for w in self.wall:
                 if w.poster + ": " + w.post not in self.previous_wall:
-                    self.updates['wall'].append(w.poster + ": " + w.post )
+                    self.updates['wall'].append(w.poster + ": " + w.post)
                     self.actually_changed = True
                     self.previous_wall.append(w.poster + ": " + w.post)
 

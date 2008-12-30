@@ -52,7 +52,7 @@ class Watch_vc_bazaar(Watch):
     def __init__(self, specto, id, values):
 
         watch_values = [
-                        ( "folder", spectlib.config.String(True) )
+                        ("folder", spectlib.config.String(True))
                        ]
 
         self.icon = icon

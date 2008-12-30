@@ -53,7 +53,7 @@ class Import_watch:
         #create tree
         gladefile= self.specto.PATH + 'glade/import_export.glade'
         windowname= "import_export"
-        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
+        self.wTree=gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
         self.import_watch=self.wTree.get_widget("import_export")
 
         self.import_watch.set_title(_("Import watches"))
@@ -63,7 +63,7 @@ class Import_watch:
         self.new_watch_db = {}
 
         #catch some events
-        dic= { "on_button_select_all_clicked": self.select_all,
+        dic= {"on_button_select_all_clicked": self.select_all,
             "on_button_deselect_all_clicked": self.deselect_all,
             "on_button_action_clicked": self.import_watches,
             "on_button_close_clicked": self.delete_event}
@@ -71,7 +71,7 @@ class Import_watch:
         #attach the events
         self.wTree.signal_autoconnect(dic)
 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.import_watch.set_icon(icon)
 
         self.treeview=self.wTree.get_widget("treeview")

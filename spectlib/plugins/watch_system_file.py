@@ -46,7 +46,7 @@ class Watch_system_file(Watch):
     def __init__(self, specto, id, values):
 
         watch_values = [
-                        ( "file", spectlib.config.String(True) )
+                        ("file", spectlib.config.String(True))
                        ]
 
         self.icon = icon

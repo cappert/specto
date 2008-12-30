@@ -52,11 +52,11 @@ class Watch_mail_pop3(Watch):
     """
     def __init__(self, specto, id, values):
         watch_values = [
-                        ( "username", spectlib.config.String(True) ),
-                        ( "password", spectlib.config.String(True) ),
-                        ( "host", spectlib.config.String(True) ),
-                        ( "ssl", spectlib.config.Boolean(False) ),
-                        ( "port", spectlib.config.Integer(False) )
+                        ("username", spectlib.config.String(True)),
+                        ("password", spectlib.config.String(True)),
+                        ("host", spectlib.config.String(True)),
+                        ("ssl", spectlib.config.Boolean(False)),
+                        ("port", spectlib.config.Integer(False))
                        ]
 
         self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
@@ -91,7 +91,7 @@ class Watch_mail_pop3(Watch):
                     s = poplib.POP3(self.host)
         except poplib.error_protoerror, e:
             self.error = True
-            self.specto.logger.log( ('%s') % str(e), "warning", self.name)
+            self.specto.logger.log(('%s') % str(e), "warning", self.name)
         except:
             self.error = True
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
@@ -122,7 +122,7 @@ class Watch_mail_pop3(Watch):
 
             except poplib.error_proto, e:
                 self.error = True
-                self.specto.logger.log( ('%s') % str(e), "warning", self.name)
+                self.specto.logger.log(('%s') % str(e), "warning", self.name)
             except:
                 self.error = True
                 self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)

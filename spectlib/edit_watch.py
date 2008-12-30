@@ -72,9 +72,9 @@ class Edit_watch:
         self.edit_watch=self.wTree.get_widget("edit_watch")
         self.edit_watch.set_title(_("Edit watch: ") + self.watch.name)
         self.wTree.get_widget("name").set_text(self.watch.name)
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.edit_watch.set_icon(icon)
-        self.edit_watch.set_resizable( False )
+        self.edit_watch.set_resizable(False)
 
         refresh, refresh_unit = self.specto.watch_db.get_interval(self.watch.refresh)
         self.wTree.get_widget("refresh_unit").set_active(refresh_unit)
@@ -149,7 +149,7 @@ class Edit_watch:
             values[key] = window_options[key].get_value()
             window_options[key].set_color(0xFFFF, 0xFFFF, 0xFFFF)
 
-        self.wTree.get_widget("name").modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+        self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
 
         try:
             self.specto.watch_db[self.watch.id].set_values(values, True)
@@ -158,7 +158,7 @@ class Edit_watch:
             i = 1
             for field in fields:
                 if field == " name":
-                    self.wTree.get_widget("name").modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
+                    self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
                     self.wTree.get_widget("name").grab_focus()
                 else:
                     field = window_options[field.strip()]
@@ -286,7 +286,7 @@ class Save_dialog:
         # Attach the events
         self.wTree.signal_autoconnect(dic)
 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.save_dialog.set_icon(icon)
         self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
 

@@ -68,9 +68,9 @@ class Add_watch:
         self.wTree.signal_autoconnect(dic)
 
         self.add_watch=self.wTree.get_widget("add_watch")
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.add_watch.set_icon(icon)
-        self.add_watch.set_resizable( False )
+        self.add_watch.set_resizable(False)
 
         self.name = self.wTree.get_widget("name")
         self.refresh = self.wTree.get_widget("refresh")
@@ -167,7 +167,7 @@ class Add_watch:
                 values[key] = window_options[key].get_value()
                 window_options[key].set_color(0xFFFF, 0xFFFF, 0xFFFF)
 
-            self.wTree.get_widget("name").modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+            self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
 
             try:
                 id = self.specto.watch_db.create({0:values})[0] #write the options in the configuration file
@@ -176,7 +176,7 @@ class Add_watch:
                 i = 1
                 for field in fields:
                     if field == " name":
-                        self.wTree.get_widget("name").modify_base( gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
+                        self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
                         self.wTree.get_widget("name").grab_focus()
                     else:
                         field = window_options[field.strip()]
@@ -232,9 +232,9 @@ class Unique_Dialog:
         self.wTree=gtk.glade.XML(self.gladefile, self.dialogname)
         self.unique_dialog=self.wTree.get_widget("dialog")
 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png' )
+        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.unique_dialog.set_icon(icon)
-        self.unique_dialog.set_resizable( False )
+        self.unique_dialog.set_resizable(False)
         self.result = self.unique_dialog.run()
 
         self.unique_dialog.destroy()

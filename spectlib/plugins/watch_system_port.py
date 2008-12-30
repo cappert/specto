@@ -44,7 +44,7 @@ class Watch_system_port(Watch):
 
     def __init__(self, specto, id, values):
         watch_values = [
-                        ( "port", spectlib.config.Integer(True) )
+                        ("port", spectlib.config.Integer(True))
                        ]
 
         self.icon = icon
@@ -81,7 +81,7 @@ class Watch_system_port(Watch):
     def check_port(self):
         """ see if there is a connection on the port or not """
         conn = False
-        y=os.popen( 'netstat -nt','r').read().splitlines()
+        y=os.popen('netstat -nt','r').read().splitlines()
         del y[0]
         del y[0]
         for k in y:

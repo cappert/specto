@@ -44,7 +44,7 @@ class Watch_system_process(Watch):
     def __init__(self, specto, id, values):
 
         watch_values = [
-                        ( "process", spectlib.config.String(True) )
+                        ("process", spectlib.config.String(True))
                        ]
 
         self.icon = icon

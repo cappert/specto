@@ -50,8 +50,8 @@ class Watch_mail_gmail(Watch):
 
     def __init__(self, specto, id, values):
         watch_values = [
-                        ( "username", spectlib.config.String(True) ),
-                        ( "password", spectlib.config.String(True) )
+                        ("username", spectlib.config.String(True)),
+                        ("password", spectlib.config.String(True))
                        ]
         url = "https://mail.google.com"
         self.standard_open_command = spectlib.util.return_webpage(url)
@@ -183,6 +183,7 @@ class Email():
         self.found = False
         self.new = False
 
+
 class Email_collection():
 
     def __init__(self):
@@ -295,7 +296,7 @@ class MailHandler(ContentHandler):
         self.actual=list()
         self.mail_count="0"
 
-    def startElement( self, name, attrs):
+    def startElement(self, name, attrs):
         # update actual path
         self.actual.append(name)
 
@@ -304,11 +305,11 @@ class MailHandler(ContentHandler):
             m = Mail()
             self.entries.append(m)
 
-    def endElement( self, name):
+    def endElement(self, name):
         # update actual path
         self.actual.pop()
 
-    def characters( self, content):
+    def characters(self, content):
         # New messages count
         if (self.actual==self.PATH_FULLCOUNT):
             self.mail_count = self.mail_count+content
@@ -351,7 +352,7 @@ class GmailAtom:
         self.m = MailHandler()
         # initialize authorization handler
         auth_handler = web_proxy.urllib2.HTTPBasicAuthHandler()
-        auth_handler.add_password( self.realm, self.host, user, pswd)
+        auth_handler.add_password(self.realm, self.host, user, pswd)
         opener = web_proxy.urllib2.build_opener(auth_handler)
         web_proxy.urllib2.install_opener(opener)
 
@@ -360,7 +361,7 @@ class GmailAtom:
 
     def refreshInfo(self):
         # get the page and parse it
-        p = sax.parseString( self.sendRequest().read(), self.m)
+        p = sax.parseString(self.sendRequest().read(), self.m)
 
     def getUnreadMsgCount(self):
         return self.m.getUnreadMsgCount()

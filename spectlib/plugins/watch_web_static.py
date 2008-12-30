@@ -139,7 +139,7 @@ class Watch_web_static(Watch):
                     #RSS 1: <feed xmlns=*>
                     #RSS 2: <rdf:RDF xmlns:rdf=*>
                     #Atom : <feed xmlns=*>
-                if not (    compile("<rdf:RDF xmlns:rdf=.*>").findall(self.page_source)==[]   ) or not(    compile("<rss version=.*>").findall(self.page_source)==[]   ) or not (    compile("<feed xmlns=.*>").findall(self.page_source)==[]   ):
+                if not (compile("<rdf:RDF xmlns:rdf=.*>").findall(self.page_source)==[]) or not(compile("<rss version=.*>").findall(self.page_source)==[]) or not (compile("<feed xmlns=.*>").findall(self.page_source)==[]):
                     #it seems like it is a syndication feed. Let's see if we can extract the home URL from it.
                     self.regexed_contents=compile("<link>.*</link>").findall(self.page_source) # Grabs anything inside <link> and </link>; .* means "any characters
                     self.rss_links=""
@@ -235,7 +235,6 @@ class Watch_web_static(Watch):
                 f.close()
         else:
             return 0
-
 
     def remove_cache_files(self):
         os.unlink(self.cacheFullPath_)

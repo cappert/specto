@@ -48,12 +48,12 @@ class Watch_mail_imap(Watch):
     """
     def __init__(self, specto, id, values):
         watch_values = [
-                        ( "username", spectlib.config.String(True) ),
-                        ( "password", spectlib.config.String(True) ),
-                        ( "host", spectlib.config.String(True) ),
-                        ( "ssl", spectlib.config.Boolean(False) ),
-                        ( "port", spectlib.config.Integer(False) ),
-                        ( "folder", spectlib.config.String(False) )
+                        ("username", spectlib.config.String(True)),
+                        ("password", spectlib.config.String(True)),
+                        ("host", spectlib.config.String(True)),
+                        ("ssl", spectlib.config.Boolean(False)),
+                        ("port", spectlib.config.Integer(False)),
+                        ("folder", spectlib.config.String(False))
                         ]
 
         self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")

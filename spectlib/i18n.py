@@ -79,7 +79,7 @@ def N_(singular, plural, n, var_singular = None, var_plural = None):
             len(messages),
             "Linus",
             "Linus, Bill, Steve"
-            )
+)
     Or maybe (untested):
         i18n._n(
             "1 message from %s",
@@ -87,7 +87,7 @@ def N_(singular, plural, n, var_singular = None, var_plural = None):
             len(messages),
             "Linus",
             "Linus, Bill, Steve"
-            )
+)
     """
     foo = _translation.ungettext(singular, plural, n)  # Get the translation
 
