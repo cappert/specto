@@ -23,7 +23,6 @@
 
 import os, sys
 from spectlib.tools.specto_gconf import Specto_gconf
-import gnomevfs
 
 def return_webpage(webpage):
     """ Open the webpage in the default browser. """
@@ -41,12 +40,6 @@ def open_gconf_application(key):
     if "mailto" in key:
         application = application.replace(" %s", "")#this is an ugly hack, because evolution really doesn't want to startup with %s
     return application
-    
-def open_file_watch(f):
-    """ Open a file with the correct application (mime). """
-    mime_type = gnomevfs.get_mime_type(f)
-    application = gnomevfs.mime_get_default_application(mime_type)
-    return application[2] + " \"" + f + "\""
 
 def get_path(category=None):
     """ Return the correct path. """
