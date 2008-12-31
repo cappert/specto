@@ -27,7 +27,8 @@ import spectlib.gtkconfig
 import spectlib.tools.web_proxy as web_proxy
 from spectlib.i18n import _
 
-import sys, os
+import sys
+import os
 import formatter
 import htmllib
 import re
@@ -38,144 +39,149 @@ type_desc = _("Facebook")
 icon = 'facebook'
 category = _("Social networks")
 
+
 def get_add_gui_info():
-    return [
-            ("email", spectlib.gtkconfig.Entry(_("Email"))),
-            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
-            ]
-           
+    return [("email", spectlib.gtkconfig.Entry(_("Email"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))]
+
+
 class Watch_sn_facebook(Watch):
-    """ 
-    Watch class that will check if a bzr folder has been changed. 
     """
-    
+    Watch class that will check for changes in a user's Facebook account.
+    """
+
     def __init__(self, specto, id, values):
-        
-        watch_values = [ 
-                        ( "email", spectlib.config.String(True) ),
-                        ( "password", spectlib.config.String(True) )
-                       ]
-        
+
+        watch_values = [("email", spectlib.config.String(True)),
+                        ("password", spectlib.config.String(True))]
+
         self.icon = icon
-        self.type_desc = type_desc 
-        
+        self.type_desc = type_desc
+
         url = "http://www.facebook.com"
-        self.standard_open_command = spectlib.util.return_webpage(url)         
-                
+        self.standard_open_command = spectlib.util.return_webpage(url)
+
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
-        self.cache_file = os.path.join(self.specto.CACHE_DIR, "facebook" + self.email + ".cache")    
+        self.cache_file = os.path.join(self.specto.CACHE_DIR, "facebook" + self.email + ".cache")
         self.previous_messages = []
-        self.previous_notifications = [] 
+        self.previous_notifications = []
         self.previous_requests = []
         self.previous_wall = []
-        
+
         self.use_network = True
-        
+
         self.read_cache_file()
 
     def check(self):
-        """ See if a there are new facebook items. """        
+        """ See if a there are new facebook items. """
         try:
-            self.updates = { 'message': [], 'notification': [], 'request': [], 'wall': [] }       
+            self.updates = {'message': [], 'notification': [], 'request': [], 'wall': []}
             #message
             facebook = Facebook(self.email, self.password)
             self.messages = facebook.get_messages()
-            
+
             for message in self.messages:
                 if message.sender + ": " + message.message not in self.previous_messages:
                     self.updates['message'].append(message.sender + ": " + message.message)
                     self.actually_changed = True
                     self.previous_messages.append(message.sender + ": " + message.message)
 
-            #notification        
+            #notification
             self.notifications = facebook.get_notifications()
-            
+
             for notification in self.notifications:
                 if notification.notification not in self.previous_notifications:
                     self.updates['notification'].append(notification.notification)
                     self.actually_changed = True
                     self.previous_notifications.append(notification.notification)
-            
-            #requests                                
+
+            #requests
             self.requests = facebook.get_requests()
-           
+
             for request in self.requests:
                 if request.request not in self.previous_requests:
                     self.updates['request'].append(request.request)
                     self.actually_changed = True
                     self.previous_requests.append(request.request)
-               
+
             #wall post
             self.wall = facebook.get_wall()
-           
+
             for w in self.wall:
                 if w.poster + ": " + w.post not in self.previous_wall:
-                    self.updates['wall'].append(w.poster + ": " + w.post )
+                    self.updates['wall'].append(w.poster + ": " + w.post)
                     self.actually_changed = True
                     self.previous_wall.append(w.poster + ": " + w.post)
-            
+
             self.write_cache_file()
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: ") + str(sys.exc_info()[0]), "error", self.name)
-        
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+
         Watch.timer_update(self)
-        
+
     def get_balloon_text(self):
         """ create the text for the balloon """
-        text = _("You received: ")
-        if len(self.updates['message']) == 1:
-            text += _("a new message, ")
-        elif len(self.updates['message']) > 1:
-            text += _("%d new messages, ") % (len(self.updates['message']))
-            
-        if len(self.updates['notification']) == 1:
-            text += _("a new notification, ")
-        elif len(self.updates['notification']) > 1:
-            text += _("%d new notifications, ") % (len(self.updates['notification']))
-            
-        if len(self.updates['request']) == 1:
-            text += _("a new request, ")
-        elif len(self.updates['request']) > 1:
-            text += _("%d new requests, ") % (len(self.updates['request']))
+        text = _("You received") + " "
+        count = len(self.updates['message'])
+        if count == 1:
+            text += _("a new message") + ", "
+        elif count > 1:
+            text += _("%d new messages") % (count)
+            text += ", "
 
-        if len(self.updates['wall']) == 1:
-            text += _("a new wall post, ")
-        elif len(self.updates['wall']) > 1:
-            text += _("%d new wall posts, ") % (len(self.updates['wall']))
+        count = len(self.updates['notification'])
+        if count == 1:
+            text += _("a new notification") + ", "
+        elif count > 1:
+            text += _("%d new notifications") % (count)
+            text += ", "
+
+        count = len(self.updates['request'])
+        if count == 1:
+            text += _("a new request") + ", "
+        elif count > 1:
+            text += _("%d new requests") % (count)
+            text += ", "
+
+        count = len(self.updates['wall'])
+        if count == 1:
+            text += _("a new wall post") + ", "
+        elif count > 1:
+            text += _("%d new wall posts") % (count)
+            text += ", "
 
         return text.rstrip(", ")
-        
-    def get_extra_information(self):        
+
+    def get_extra_information(self):
         i = 0
         info = ""
         for message in self.updates['message']:
             info += message + "\n"
             i += 1
-        
+
         for notification in self.updates['notification']:
             info += notification + "\n"
             i += 1
-        
+
         for request in self.updates['request']:
             info += request + "\n"
             i += 1
-            
+
         for wall in self.updates['wall']:
             info += wall + "\n"
             i += 1
-              
+
         return self.escape(info)
-        
+
     def escape(self, text):
         text = text.replace('&', '&amp;') \
                    .replace('<', '&lt;') \
-                   .replace('>', '&gt;') 
-        return text        
+                   .replace('>', '&gt;')
+        return text
 
-                
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
             try:
@@ -189,13 +195,12 @@ class Watch_sn_facebook(Watch):
                     elif line.startswith("notification:"):
                         self.previous_notifications = line.split("notification:")[1].split("&Separator;")
                     elif line.startswith("request:"):
-                        self.previous_requests = line.split("request:")[1].split("&Separator;")                        
+                        self.previous_requests = line.split("request:")[1].split("&Separator;")
                     elif line.startswith("wall:"):
-                        self.previous_wall = line.split("wall:")[1].split("&Separator;")                                                
+                        self.previous_wall = line.split("wall:")[1].split("&Separator;")
             finally:
                 f.close()
 
-        
     def write_cache_file(self):
         try:
             f = open(self.cache_file, "w")
@@ -206,40 +211,40 @@ class Watch_sn_facebook(Watch):
             for message in self.messages:
                 messages_ += message.sender + ": " + message.message + "&Separator;"
             f.write("message:" + messages_ + "\n")
-            
+
             notifications_ = ""
             for notification in self.notifications:
                 notifications_ += notification.notification + "&Separator;"
             f.write("notification:" + notifications_ + "\n")
-            
+
             requests_ = ""
             for request in self.requests:
                 requests_ += request.request + "&Separator;"
             f.write("request:" + requests_ + "\n")
-            
+
             wall_ = ""
             for w in self.wall:
                 wall_ += w.poster + ": " + w.post + "&Separator;"
             f.write("wall:" + wall_ + "\n")
         finally:
             f.close()
-            
+
     def remove_cache_files(self):
-        os.unlink(self.cache_file)        
-        
+        os.unlink(self.cache_file)
+
     def get_gui_info(self):
-        return [ 
-                (_("Name"), self.name),
+        return [(_("Name"), self.name),
                 (_("Last changed"), self.last_changed),
-                (_("Email"), self.email)
-                ] 
-                
+                (_("Email"), self.email)]
+
+
 class Facebook():
+
     def __init__(self, email, password):
         opener = web_proxy.urllib2.build_opener(web_proxy.urllib2.HTTPCookieProcessor())
         web_proxy.urllib2.install_opener(opener)
-        web_proxy.urllib2.urlopen(web_proxy.urllib2.Request("https://login.facebook.com/login.php?m&amp;next=http%3A%2F%2Fm.facebook.com%2Fhome.php","email=%s&pass=%s&login=Login" % (email, password)))                                        
-        
+        web_proxy.urllib2.urlopen(web_proxy.urllib2.Request("https://login.facebook.com/login.php?m&amp;next=http%3A%2F%2Fm.facebook.com%2Fhome.php", "email=%s&pass=%s&login=Login" % (email, password)))
+
     def get_messages(self):
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/inbox/")
         messages_ = connection.read().split("<hr />")
@@ -253,59 +258,59 @@ class Facebook():
             title = re.search('<a href="/inbox/\?read=.+">(.+)</a><br /><small><a href="/profile.php', line)
             if title <> None:
                 outstream = StringIO()
-                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(title.group(1))
                 title = outstream.getvalue()
                 outstream.close()
-                
+
                 #unread message
                 unread = False
                 if "&#8226;" in title:
                     title = title.replace("&#8226;", "")
                     unread = True
-                    
+
                 #search sender
                 sender = re.search('</a><br /><small><a href="/profile.php\?id=.+">(.+)</a><br />', line)
                 if sender <> None:
-                    sender = sender.group(1)                    
+                    sender = sender.group(1)
             else: # group message
                 #search subject
                 title = re.search('<a href="/inbox/\?read=.+">(.+)</a><br /><small><a href="/group.php', line)
                 if title <> None:
                     outstream = StringIO()
-                    p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                    p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                     p.feed(title.group(1))
                     title = outstream.getvalue()
                     outstream.close()
-                    
+
                     #unread message
                     unread = False
                     if "&#8226;" in title:
                         title = title.replace("&#8226;", "")
-                        unread = True  
+                        unread = True
                     #search sender
                     sender = re.search('</a><br /><small><a href="/group.php\?gid=.+">(.+)</a><br />', line)
                     if sender <> None:
-                        sender = sender.group(1)                                  
-                        
-            if sender <> None and title <> None and unread == True:  
+                        sender = sender.group(1)
+
+            if sender <> None and title <> None and unread == True:
                 messages.extend([FacebookMessage(sender.strip(), title.strip())])
-                
+
         return messages
-        
+
     def get_notifications(self):
         notifications = []
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/notifications.php")
         messages = connection.read().split("<hr />")
         for line in messages:
-          
+
             #search notification
             notification = re.search('</b><br /><a href="/profile.php\?id=.+>(.+)<br /></div>', line)
             if notification <> None:
                 outstream = StringIO()
-                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(notification.group(0))
-                notification = re.sub("(\[.+\])","", outstream.getvalue())
+                notification = re.sub("(\[.+\])", "", outstream.getvalue())
                 notification = notification.replace("\n", " ")
                 outstream.close()
                 notifications.extend([FacebookNotification(notification.strip())])
@@ -316,61 +321,68 @@ class Facebook():
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/reqs.php")
         messages = connection.read().split("<td class=\"sec\">")
         for line in messages:
-        
+
             #search friend requests
             request = re.search('<a href="/profile.php\?id=.+">(.+)<div><form action=', line)
             if request <> None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(request.group(0))
-                request = re.sub("(\[.+\])"," ", outstream.getvalue())
+                request = re.sub("(\[.+\])", " ", outstream.getvalue())
                 p.close()
-                requests.extend([FacebookRequest(request.replace("\n","").strip())])
+                requests.extend([FacebookRequest(request.replace("\n", "").strip())])
         return requests
-        
+
     def get_wall(self):
         walls = []
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/wall.php")
         messages = connection.read().split("<hr />")
         for line in messages:
-          
+
             #search wall poster
             poster = re.search('<a href="/profile.php\?id=.+>(.+)<br /><small>', line)
             if poster <> None:
                 outstream = StringIO()
-                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(poster.group(0))
-                poster = re.sub("(\[.+\])","", outstream.getvalue())
+                poster = re.sub("(\[.+\])", "", outstream.getvalue())
                 outstream.close()
-            
+
             #search wall post
             post = re.search('</small></div><div>(.+)</div>', line)
             if post <> None:
                 outstream = StringIO()
-                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(post.group(0))
                 post = outstream.getvalue()
-                outstream.close()   
-        
-            if poster <> None and post <> None:  
-                walls.extend([FacebookWall(poster.strip(), post.strip().replace("\n"," "))])
+                outstream.close()
+
+            if poster <> None and post <> None:
+                walls.extend([FacebookWall(poster.strip(), post.strip().replace("\n", " "))])
         return walls
-                                                                                    
+
 
 class FacebookMessage():
+
     def __init__(self, sender, message):
         self.sender = sender
         self.message = message
-        
+
+
 class FacebookNotification():
+
     def __init__(self, notification):
         self.notification = notification
-      
+
+
 class FacebookRequest():
+
     def __init__(self, request):
         self.request = request
-        
+
+
 class FacebookWall():
+
     def __init__(self, poster, post):
         self.poster = poster
-        self.post = post                                                                
+        self.post = post

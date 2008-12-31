@@ -24,7 +24,8 @@
 from spectlib.watch import Watch
 import spectlib.util
 
-import poplib, email
+import poplib
+import email
 import os
 from socket import error
 from spectlib.i18n import _
@@ -33,35 +34,34 @@ import string
 
 type = "Watch_mail_pop3"
 type_desc = _("POP3")
-icon =  'emblem-mail'
-category = _("Mail") 
+icon = 'emblem-mail'
+category = _("Mail")
+
 
 def get_add_gui_info():
-    return [
-            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+    return [("username", spectlib.gtkconfig.Entry(_("Username"))),
             ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
             ("host", spectlib.gtkconfig.Entry(_("Host"))),
-            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))
-            ]
+            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))]
 
 
 class Watch_mail_pop3(Watch):
-    """ 
-    Watch class that will check if you recevied a new mail on your pop3 account. 
-    """    
+    """
+    Watch class that will check if you recevied a new mail on your pop3 account.
+    """
+
     def __init__(self, specto, id, values):
-        watch_values = [ 
-                        ( "username", spectlib.config.String(True) ),
-                        ( "password", spectlib.config.String(True) ),
-                        ( "host", spectlib.config.String(True) ),
-                        ( "ssl", spectlib.config.Boolean(False) ),
-                        ( "port", spectlib.config.Integer(False) )                         
-                       ]
-        
+
+        watch_values = [("username", spectlib.config.String(True)),
+                        ("password", spectlib.config.String(True)),
+                        ("host", spectlib.config.String(True)),
+                        ("ssl", spectlib.config.Boolean(False)),
+                        ("port", spectlib.config.Integer(False))]
+
         self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
-        
+
         Watch.__init__(self, specto, id, values, watch_values)
-        
+
         self.type_desc = type_desc
         self.use_network = True
         self.icon =icon
@@ -73,10 +73,9 @@ class Watch_mail_pop3(Watch):
         self.mail_info = Email_collection()
 
         self.read_cache_file()
-        
 
     def check(self):
-        """ Check for new mails on your pop3 account. """        
+        """ Check for new mails on your pop3 account. """
         try:
             if self.ssl == True:
                 if self.port <> -1:
@@ -90,10 +89,10 @@ class Watch_mail_pop3(Watch):
                     s = poplib.POP3(self.host)
         except poplib.error_protoerror, e:
             self.error = True
-            self.specto.logger.log( ('%s') % str(e), "warning", self.name)
+            self.specto.logger.log(('%s') % str(e), "warning", self.name)
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
         else:
             try:
                 s.user(self.username)
@@ -101,7 +100,7 @@ class Watch_mail_pop3(Watch):
                 self.unreadMsg = len(s.list()[1])
                 self.newMsg = 0
                 self.mail_info.clear_old()
-                                
+
                 if self.unreadMsg > 0:
                     i=1
                     while i < self.unreadMsg + 1:
@@ -116,20 +115,19 @@ class Watch_mail_pop3(Watch):
                     self.mail_info.sort()
                 self.mail_info.remove_old()
                 self.write_cache_file()
-                    
+
                 s.quit()
-                                        
+
             except poplib.error_proto, e:
                 self.error = True
-                self.specto.logger.log( ('%s') % str(e), "warning", self.name)                
+                self.specto.logger.log(('%s') % str(e), "warning", self.name)
             except:
                 self.error = True
-                self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+                self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
 
-        
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
@@ -146,31 +144,28 @@ class Watch_mail_pop3(Watch):
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")
-            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)    
+            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)
         return text
-    
+
     def get_extra_information(self):
         i = 0
         author_info = ""
         text = ""
         while i < len(self.mail_info) and i < 4:
             name = self.mail_info[i].author.split("<")[0]
-            subject =  self.mail_info[i].subject
+            subject = self.mail_info[i].subject
             author_info += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
                 author_info += _("and others...")
             i += 1
-                
         return author_info
-        
+
     def get_gui_info(self):
-        return [ 
-                (_('Name'), self.name),
+        return [(_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Username'), self.username),
-                (_('Unread messages'), self.unreadMsg)
-                ] 
-                
+                (_('Unread messages'), self.unreadMsg)]
+
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
             try:
@@ -185,7 +180,6 @@ class Watch_mail_pop3(Watch):
             finally:
                 f.close()
 
-        
     def write_cache_file(self):
         try:
             f = open(self.cache_file, "w")
@@ -193,17 +187,16 @@ class Watch_mail_pop3(Watch):
             self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.name)
         else:
             for email in self.mail_info:
-                f.write(email.id + "&Separator;" + email.author + "&Separator;" + email.subject + "&Separator;" + email.date + "\n")    
-            
+                f.write(email.id + "&Separator;" + email.author + "&Separator;" + email.subject + "&Separator;" + email.date + "\n")
         finally:
             f.close()
-            
-    def remove_cache_files(self):
-        os.unlink(self.cache_file)            
 
-                    
+    def remove_cache_files(self):
+        os.unlink(self.cache_file)
+
+
 class Email():
-    
+
     def __init__(self, id, author, subject, date):
         self.id = id
         self.subject = subject
@@ -215,19 +208,20 @@ class Email():
         self.date = date
         self.found = False
         self.new = False
-        
+
+
 class Email_collection():
-    
+
     def __init__(self):
         self.email_collection = []
-        
-    def add(self, email):            
+
+    def add(self, email):
         self.new = True
         for _email in self.email_collection:
             if email.id == _email.id:
                 self.new = False
                 _email.found = True
-                                
+
         if self.new == True:
             email.found = True
             email.new = True
@@ -235,13 +229,13 @@ class Email_collection():
             return True
         else:
             return False
-        
+
     def __getitem__(self, id):
         return self.email_collection[id]
-    
+
     def __len__(self):
         return len(self.email_collection)
-    
+
     def remove_old(self):
         i = 0
         collection_copy = []
@@ -250,15 +244,15 @@ class Email_collection():
                 collection_copy.append(_email)
             i += 1
         self.email_collection = collection_copy
-          
+
     def clear_old(self):
         for _email in self.email_collection:
             _email.found = False
             _email.new = False
-            
+
     def sort(self):
         self.email_collection.sort(self.sort_function)
-          
+
     def sort_function(self, x, y):
         if x.date > y.date:
             return 1
@@ -266,12 +260,10 @@ class Email_collection():
             return 0
         else:
             return -1
-        
+
     def get_unread_messages(self):
         unread = []
         for _email in self.email_collection:
             if _email.new == True:
                 unread.append(_email)
         return unread
-        
-            

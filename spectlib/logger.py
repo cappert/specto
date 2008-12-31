@@ -119,37 +119,41 @@ class Log_dialog:
         buffer_log = self.log.split("\n")
         filtered_log = ""
 
-        if level == 0:
-            self.logwindow.set_text(self.log)
-        else:
-            if level == 1:
-                pattern = ("DEBUG")
-            elif level == 2:
-                pattern = ("INFO")
-            elif level == 3:
-                pattern = ("WARNING")
-            elif level == 4:
-                pattern = ("ERROR")
-            elif level == 5:
-                pattern = ("CRITICAL")
-            elif level == -1:
-                pattern = self.wTree.get_widget("combo_level").child.get_text()
-
-            for i in buffer_log:
-                if re.search(pattern, i, re.IGNORECASE):
-                    filtered_log += i + "\n"
+        if level == 1:
+            pattern = ("DEBUG")
+        elif level == 2:
+            pattern = ("INFO")
+        elif level == 3:
+            pattern = ("WARNING")
+        elif level == 4:
+            pattern = ("ERROR")
+        elif level == 5:
+            pattern = ("CRITICAL")
+        elif level == -1:
+            pattern = self.wTree.get_widget("combo_level").child.get_text()
 
         start = self.log_buffer.get_start_iter()
         end = self.log_buffer.get_end_iter()
         self.log_buffer.delete(start, end)
-
         iter = self.log_buffer.get_iter_at_offset(0)
-        filtered_log = filtered_log.split("\n")
-        for line in filtered_log:
-            if line != "":
-                tag = line.split(" - ")[1].strip()
-                self.log_buffer.insert_with_tags_by_name(iter, \
-                                                    line + "\n", tag)
+
+        if level == 0:  # Show everything
+            for line in buffer_log:
+                if line:  # If the line is not empty
+                    tag = line.split(" - ")[1].strip()
+                    self.log_buffer.insert_with_tags_by_name(iter, \
+                                                        line + "\n", tag)
+        else:  # Show the filtered log
+            # Do the filtering
+            for i in buffer_log:
+                if re.search(pattern, i, re.IGNORECASE):
+                    filtered_log += i + "\n"
+            filtered_log = filtered_log.split("\n")
+            for line in filtered_log:
+                if line:  # If the line is not empty
+                    tag = line.split(" - ")[1].strip()
+                    self.log_buffer.insert_with_tags_by_name(iter, \
+                                                        line + "\n", tag)
 
     def read_log(self):
         """ Read the log file. """
