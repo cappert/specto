@@ -52,14 +52,14 @@ class Edit_watch:
         # Create the tree
         gladefile= self.specto.PATH + 'glade/edit_watch.glade'
         windowname= "edit_watch"
-        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
+        self.wTree=gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
 
         # Catch some events
-        dic= { "on_button_cancel_clicked": self.cancel_clicked,
+        dic = {"on_button_cancel_clicked": self.cancel_clicked,
         "on_button_save_clicked": self.save_clicked,
         "on_button_remove_clicked": self.remove_clicked,
-        #"on_button_clear_clicked": self.clear_clicked,#clear error_log textfield
-        "on_button_save_as_clicked": self.save_as_clicked,#save error_log text
+        #"on_button_clear_clicked": self.clear_clicked,  # clear error_log textfield
+        "on_button_save_as_clicked": self.save_as_clicked,  # save error_log text
         "on_edit_watch_delete_event": self.delete_event,
         "check_command_toggled": self.command_toggled,
         "check_open_toggled": self.open_toggled,
@@ -102,7 +102,7 @@ class Edit_watch:
 
                 #self.logwindow.set_text(self.log)
 
-    def cancel_clicked(self,widget):
+    def cancel_clicked(self, widget):
         """ Destroy the edit watch dialog. """
         self.edit_watch.destroy()
 
@@ -121,7 +121,7 @@ class Edit_watch:
 
         self.wTree.get_widget("refresh").configure(adjustment, climb_rate, digits)
 
-    def save_clicked(self,widget):
+    def save_clicked(self, widget):
         """ Save the new options from the edited watch. """
         values = {}
         #get the standard options from a watch
@@ -181,7 +181,7 @@ class Edit_watch:
             if self.watch.active == True:
                 self.specto.watch_db[self.watch.id].restart()
 
-    def remove_clicked(self,widget):
+    def remove_clicked(self, widget):
         """ Remove the watch. """
         dialog = spectlib.gtkconfig.RemoveDialog(_("Remove a watch"),
         (_('<big>Remove the watch "%s"?</big>\nThis operation cannot be undone.') % self.watch.name))
@@ -193,13 +193,13 @@ class Edit_watch:
             self.specto.watch_io.remove_watch(self.watch.name)
             self.notifier.tray.show_tooltip()
 
-    def clear_clicked(self,widget):
+    def clear_clicked(self, widget):
         """ Clear the log window. """
         self.specto.logger.remove_watch_log(self.watch.name)
         self.log = self.specto.logger.watch_log(self.watch.name)
         self.logwindow.set_text(self.log)
 
-    def save_as_clicked(self,widget):
+    def save_as_clicked(self, widget):
         """ Open the Save as dialog window. """
         Save_dialog(self, self.log)
 
@@ -239,7 +239,6 @@ class Edit_watch:
         self.table = gtk.Table(rows=len(values), columns=2, homogeneous=False)
         self.table.set_row_spacings(6)
         self.table.set_col_spacings(6)
-
         self.watch_options[watch_type] = {}
 
         i = 0
@@ -247,12 +246,10 @@ class Edit_watch:
             table, _widget = widget.get_widget()
             widget.set_value(watch_values[value])
             self.table.attach(table, 0, 1, i, i + 1)
-            self.watch_options[watch_type].update({value:widget})
-
+            self.watch_options[watch_type].update({value: widget})
             i += 1
 
         self.table.show()
-
         vbox_options.pack_start(self.table, False, False, 0)
 
     def command_toggled(self, widget):
@@ -276,13 +273,11 @@ class Save_dialog:
         # Create the tree
         gladefile= self.specto.PATH + 'glade/edit_watch.glade'
         windowname= "file_chooser"
-        self.wTree=gtk.glade.XML(gladefile,windowname)
+        self.wTree=gtk.glade.XML(gladefile, windowname)
         self.save_dialog = self.wTree.get_widget("file_chooser")
 
-        dic={
-        "on_button_cancel_clicked": self.cancel,
-        "on_button_save_clicked": self.save
-        }
+        dic={"on_button_cancel_clicked": self.cancel,
+            "on_button_save_clicked": self.save}
         # Attach the events
         self.wTree.signal_autoconnect(dic)
 
@@ -303,6 +298,7 @@ class Save_dialog:
         f.close()
 
         self.save_dialog.destroy()
+
 
 if __name__ == "__main__":
     # Run the gui

@@ -22,17 +22,21 @@
 # Boston, MA 02111-1307, USA.
 
 import gtk
-import os, sys
+import os
+import sys
 from spectlib import i18n
 from spectlib.i18n import _
 
+
 def gettext_noop(s):
     return s
+
 
 class Tray:
     """
     Display a tray icon in the notification area.
     """
+
     def __init__(self, specto, notifier):
         self.specto = specto
         self.notifier = notifier
@@ -192,7 +196,6 @@ class Tray:
         self.menu.show_all()
         self.menu.popup(None, None, gtk.status_icon_position_menu, button, activate_time, self.tray)#the last argument is to tell gtk.status_icon_position_menu where to grab the coordinates to position the popup menu correctly
 
-    #grab the x and y position of the tray icon and make the balloon emerge from it
     def get_x(self):
         if self.tray.get_visible()==True:
             x = self.tray.get_geometry()[1][0]
@@ -201,6 +204,7 @@ class Tray:
             x = 0 #remove half the icon's width
             #FIXME: I don't know why that one does not work
         return x
+
     def get_y(self):
         if self.tray.get_visible()==True:
             y = self.tray.get_geometry()[1][1]

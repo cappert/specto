@@ -48,6 +48,7 @@ type_desc = _("Webpage/feed")
 icon = 'applications-internet'
 category = _("Internet")
 
+
 class Watch_web_static(Watch):
     """
     Watch class that will check if http or rss pages are changed.
@@ -64,11 +65,9 @@ class Watch_web_static(Watch):
     url2_ = ""
 
     def __init__(self, specto, id, values):
-        watch_values = [
-                        ("uri", spectlib.config.String(True)),
+        watch_values = [("uri", spectlib.config.String(True)),
                         ("error_margin", spectlib.config.Dec(True)),
-                        ("redirect", spectlib.config.Boolean(False))
-                       ]
+                        ("redirect", spectlib.config.Boolean(False))]
 
         self.standard_open_command = spectlib.util.return_webpage(values['uri'])
 
@@ -79,7 +78,7 @@ class Watch_web_static(Watch):
         self.filesize_difference = 0.0
         self.icon = icon
 
-        self.open_command = self.open_command.replace("&","\&")
+        self.open_command = self.open_command.replace("&", "\&")
         self.url_ = self.uri
         self.diff = ""
 
@@ -91,7 +90,7 @@ class Watch_web_static(Watch):
                 self.uri = "http://" + self.uri
             self.url_ = self.uri
             digest = md5.new(self.url_).digest()
-            cacheFileName = "".join(["%02x" % (ord(c),) for c in digest])
+            cacheFileName = "".join(["%02x" % (ord(c), ) for c in digest])
             self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
             self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
             request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding": "gzip"})
@@ -115,7 +114,7 @@ class Watch_web_static(Watch):
                 self.content_ = self._writeContent(response)
                 self.info_['Url'] = self.uri
                 self.digest_ = md5.new(self.content_).digest()
-                self.digest_ = "".join(["%02x" % (ord(c),) for c in self.digest_])
+                self.digest_ = "".join(["%02x" % (ord(c), ) for c in self.digest_])
                 self.info_['md5sum'] = self.digest_
 
                 # This uncompresses the gzipped contents, if you need to parse the page. This is used to check if it is a feed for example, a few lines later.
@@ -278,18 +277,16 @@ class Watch_web_static(Watch):
         return text
 
     def get_gui_info(self):
-        return [
-                (_('Name'), self.name),
+        return [(_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('URL'), self.url_),
-                (_('Error margin (%)'), str(self.error_margin) + "%")
-                ]
+                (_('Error margin (%)'), str(self.error_margin) + "%")]
+
 
 def get_add_gui_info():
-    return [
-            ("uri", spectlib.gtkconfig.Entry(_("URL"))),
-            ("error_margin", spectlib.gtkconfig.Scale(_("Error margin (%)"),value=2.0,upper=50,step_incr=0.1,page_incr=1.0))
-            ]
+    return [("uri", spectlib.gtkconfig.Entry(_("URL"))),
+            ("error_margin", spectlib.gtkconfig.Scale(_("Error margin (%)"), value=2.0, upper=50, step_incr=0.1, page_incr=1.0))]
+
 
 """HTML Diff: http://www.aaronsw.com/2002/diff
 Rough code, badly documented. Send me comments and patches."""
@@ -301,8 +298,10 @@ __version__ = '0.22'
 import difflib
 import string
 
+
 def isTag(x):
     return x[0] == "<" and x[-1] == ">"
+
 
 def textDiff(a, b):
     """Takes in strings a and b and returns a human-readable HTML diff."""
@@ -321,6 +320,7 @@ def textDiff(a, b):
         elif e[0] == "insert":
             out.append('<span foreground=\"green\">'+''.join(b[e[3]:e[4]]) + "</span>\n")
     return ''.join(out)
+
 
 def html2list(x, b=1):
     mode = 'char'

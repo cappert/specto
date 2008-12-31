@@ -27,7 +27,8 @@ import spectlib.gtkconfig
 import spectlib.tools.web_proxy as web_proxy
 from spectlib.i18n import _
 
-import sys, os
+import sys
+import os
 import formatter
 import htmllib
 import re
@@ -38,11 +39,11 @@ type_desc = _("Facebook")
 icon = 'facebook'
 category = _("Social networks")
 
+
 def get_add_gui_info():
-    return [
-            ("email", spectlib.gtkconfig.Entry(_("Email"))),
-            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
-            ]
+    return [("email", spectlib.gtkconfig.Entry(_("Email"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))]
+
 
 class Watch_sn_facebook(Watch):
     """
@@ -51,10 +52,8 @@ class Watch_sn_facebook(Watch):
 
     def __init__(self, specto, id, values):
 
-        watch_values = [
-                        ("email", spectlib.config.String(True)),
-                        ("password", spectlib.config.String(True))
-                       ]
+        watch_values = [("email", spectlib.config.String(True)),
+                        ("password", spectlib.config.String(True))]
 
         self.icon = icon
         self.type_desc = type_desc
@@ -78,7 +77,7 @@ class Watch_sn_facebook(Watch):
     def check(self):
         """ See if a there are new facebook items. """
         try:
-            self.updates = { 'message': [], 'notification': [], 'request': [], 'wall': [] }
+            self.updates = {'message': [], 'notification': [], 'request': [], 'wall': []}
             #message
             facebook = Facebook(self.email, self.password)
             self.messages = facebook.get_messages()
@@ -183,7 +182,6 @@ class Watch_sn_facebook(Watch):
                    .replace('>', '&gt;')
         return text
 
-
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
             try:
@@ -202,7 +200,6 @@ class Watch_sn_facebook(Watch):
                         self.previous_wall = line.split("wall:")[1].split("&Separator;")
             finally:
                 f.close()
-
 
     def write_cache_file(self):
         try:
@@ -236,17 +233,17 @@ class Watch_sn_facebook(Watch):
         os.unlink(self.cache_file)
 
     def get_gui_info(self):
-        return [
-                (_("Name"), self.name),
+        return [(_("Name"), self.name),
                 (_("Last changed"), self.last_changed),
-                (_("Email"), self.email)
-                ]
+                (_("Email"), self.email)]
+
 
 class Facebook():
+
     def __init__(self, email, password):
         opener = web_proxy.urllib2.build_opener(web_proxy.urllib2.HTTPCookieProcessor())
         web_proxy.urllib2.install_opener(opener)
-        web_proxy.urllib2.urlopen(web_proxy.urllib2.Request("https://login.facebook.com/login.php?m&amp;next=http%3A%2F%2Fm.facebook.com%2Fhome.php","email=%s&pass=%s&login=Login" % (email, password)))
+        web_proxy.urllib2.urlopen(web_proxy.urllib2.Request("https://login.facebook.com/login.php?m&amp;next=http%3A%2F%2Fm.facebook.com%2Fhome.php", "email=%s&pass=%s&login=Login" % (email, password)))
 
     def get_messages(self):
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/inbox/")
@@ -313,7 +310,7 @@ class Facebook():
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(notification.group(0))
-                notification = re.sub("(\[.+\])","", outstream.getvalue())
+                notification = re.sub("(\[.+\])", "", outstream.getvalue())
                 notification = notification.replace("\n", " ")
                 outstream.close()
                 notifications.extend([FacebookNotification(notification.strip())])
@@ -331,9 +328,9 @@ class Facebook():
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(request.group(0))
-                request = re.sub("(\[.+\])"," ", outstream.getvalue())
+                request = re.sub("(\[.+\])", " ", outstream.getvalue())
                 p.close()
-                requests.extend([FacebookRequest(request.replace("\n","").strip())])
+                requests.extend([FacebookRequest(request.replace("\n", "").strip())])
         return requests
 
     def get_wall(self):
@@ -348,7 +345,7 @@ class Facebook():
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(poster.group(0))
-                poster = re.sub("(\[.+\])","", outstream.getvalue())
+                poster = re.sub("(\[.+\])", "", outstream.getvalue())
                 outstream.close()
 
             #search wall post
@@ -361,24 +358,31 @@ class Facebook():
                 outstream.close()
 
             if poster <> None and post <> None:
-                walls.extend([FacebookWall(poster.strip(), post.strip().replace("\n"," "))])
+                walls.extend([FacebookWall(poster.strip(), post.strip().replace("\n", " "))])
         return walls
 
 
 class FacebookMessage():
+
     def __init__(self, sender, message):
         self.sender = sender
         self.message = message
 
+
 class FacebookNotification():
+
     def __init__(self, notification):
         self.notification = notification
 
+
 class FacebookRequest():
+
     def __init__(self, request):
         self.request = request
 
+
 class FacebookWall():
+
     def __init__(self, poster, post):
         self.poster = poster
         self.post = post

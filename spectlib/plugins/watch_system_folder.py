@@ -25,7 +25,8 @@ from spectlib.watch import Watch
 import spectlib.config
 from spectlib.i18n import _
 
-import os, re
+import os
+import re
 from stat import *
 
 type = "Watch_system_folder"
@@ -33,10 +34,9 @@ type_desc = _("Folder")
 icon = 'folder'
 category = _("System")
 
+
 def get_add_gui_info():
-    return [
-            ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
-           ]
+    return [("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))]
 
 
 class Watch_system_folder(Watch):
@@ -45,10 +45,7 @@ class Watch_system_folder(Watch):
     """
 
     def __init__(self, specto, id, values):
-
-        watch_values = [
-                        ("folder", spectlib.config.String(True))
-                       ]
+        watch_values = [("folder", spectlib.config.String(True))]
 
         self.icon = icon
         self.standard_open_command = "xdg-open %s" % values['folder']
@@ -57,7 +54,7 @@ class Watch_system_folder(Watch):
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
-        self.cache_file = os.path.join(self.specto.CACHE_DIR, "folder" + self.folder.replace("/","_") + ".cache")
+        self.cache_file = os.path.join(self.specto.CACHE_DIR, "folder" + self.folder.replace("/", "_") + ".cache")
         self.first_time = False
         self.info = {}
         self.info['removed'] = [0, ""]
@@ -93,7 +90,7 @@ class Watch_system_folder(Watch):
     def get_file(self, file_):
         """ Get the info from a file and compair it with the previous info. """
         size = int(os.stat(file_)[6]) #mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime = info
-        file_ = file_.replace("?","\?") \
+        file_ = file_.replace("?", "\?") \
                      .replace("(", "\(") \
                      .replace(")", "\)") \
                      .replace("^", "\^") \
@@ -201,8 +198,6 @@ class Watch_system_folder(Watch):
                    .replace('>', '&gt;')
         return text
 
-
-
     def update_cache_file(self):
         """ Write the new values in the cache file. """
         try:
@@ -233,7 +228,6 @@ class Watch_system_folder(Watch):
 
     def remove_cache_files(self):
         os.unlink(self.cache_file)
-
 
     def get_gui_info(self):
         return [

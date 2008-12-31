@@ -110,8 +110,7 @@ class Notifier:
         "on_by_watch_active_activate": self.sort_active,
         "on_remove_clicked": self.remove_watch,
         "on_clear_activate": self._clear_watch,
-        "on_remove_activate": self.remove_watch
-        }
+        "on_remove_activate": self.remove_watch}
         self.wTree.signal_autoconnect(dic)
 
         self.notifier=self.wTree.get_widget("notifier")
@@ -557,8 +556,7 @@ class Notifier:
         tips = [_("You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."),
                     _("Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."),
                     _("Single-click an existing watch to display information, and double-click it to open the content."),
-                    _("Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers.")
-                    ]
+                    _("Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers.")]
         chosen_tip = tips[randrange(len(tips))]
         return chosen_tip
 
@@ -1028,6 +1026,7 @@ class Notifier:
             pass
         else:
             self.export_watch = Export_watch(self.specto, self)
+
 
 if __name__ == "__main__":
     #run the gui

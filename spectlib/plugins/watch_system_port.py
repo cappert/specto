@@ -32,10 +32,10 @@ type_desc = _("Port")
 icon = 'network-transmit-receive'
 category = _("System")
 
+
 def get_add_gui_info():
-    return [
-            ("port", spectlib.gtkconfig.Spinbutton(_("Port"), value=21, upper=65535))
-           ]
+    return [("port", spectlib.gtkconfig.Spinbutton(_("Port"), value=21, upper=65535))]
+
 
 class Watch_system_port(Watch):
     """
@@ -43,9 +43,7 @@ class Watch_system_port(Watch):
     """
 
     def __init__(self, specto, id, values):
-        watch_values = [
-                        ("port", spectlib.config.Integer(True))
-                       ]
+        watch_values = [("port", spectlib.config.Integer(True))]
 
         self.icon = icon
         self.standard_open_command = ''
@@ -81,7 +79,7 @@ class Watch_system_port(Watch):
     def check_port(self):
         """ see if there is a connection on the port or not """
         conn = False
-        y=os.popen('netstat -nt','r').read().splitlines()
+        y=os.popen("netstat -nt", "r").read().splitlines()
         del y[0]
         del y[0]
         for k in y:
@@ -104,12 +102,10 @@ class Watch_system_port(Watch):
             return False
 
     def get_gui_info(self):
-        return [
-                (_('Name'), self.name),
+        return [(_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Port'), self.port),
-                (_('Status'), self.status)
-                ]
+                (_('Status'), self.status)]
 
     def get_balloon_text(self):
         """ create the text for the balloon """

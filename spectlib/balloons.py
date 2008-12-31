@@ -35,15 +35,13 @@ notifyInitialized = False
 
 class NotificationToast:
     _notifyRealm = 'Specto'
-    _Urgencies = {
-        'low': pynotify.URGENCY_LOW,
-        'critical': pynotify.URGENCY_CRITICAL,
-        'normal': pynotify.URGENCY_NORMAL
-        }
+    _Urgencies = {'low': pynotify.URGENCY_LOW,
+                'critical': pynotify.URGENCY_CRITICAL,
+                'normal': pynotify.URGENCY_NORMAL}
 
     def __open_watch(self, n, action, id):
         if self.specto.notifier.open_watch(id):
-            self.specto.notifier.clear_watch('',id)
+            self.specto.notifier.clear_watch('', id)
 
     def __init__(self, specto, notifier):
         global notifyInitialized
@@ -63,7 +61,7 @@ class NotificationToast:
             tray_x = self.notifier.tray.get_x()
             tray_y = self.notifier.tray.get_y()
             self.toast = pynotify.Notification(summary, body)
-            self.timeout = self.specto.specto_gconf.get_entry("pop_toast_duration")*1000
+            self.timeout = self.specto.specto_gconf.get_entry("pop_toast_duration") * 1000
             if self.timeout:
                 self.toast.set_timeout(self.timeout)
             if name:
@@ -77,8 +75,8 @@ class NotificationToast:
                 self.toast.set_icon_from_pixbuf(icon)
 
             if tray_x != 0 and tray_y != 0:  # grab the x and y position of the tray icon and make the balloon emerge from it
-                self.toast.set_hint("x",tray_x)
-                self.toast.set_hint("y",tray_y)
+                self.toast.set_hint("x", tray_x)
+                self.toast.set_hint("y", tray_y)
 
             try:
                 self.toast.show()

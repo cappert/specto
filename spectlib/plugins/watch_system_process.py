@@ -24,16 +24,17 @@
 from spectlib.watch import Watch
 import spectlib.config
 from spectlib.i18n import _
+import os
+import signal
 
 type = "Watch_system_process"
 type_desc = _("Process")
 icon = 'applications-system'
 category = _("System")
 
+
 def get_add_gui_info():
-    return [
-            ("process", spectlib.gtkconfig.Entry(_("Process")))
-           ]
+    return [("process", spectlib.gtkconfig.Entry(_("Process")))]
 
 
 class Watch_system_process(Watch):
@@ -43,9 +44,7 @@ class Watch_system_process(Watch):
 
     def __init__(self, specto, id, values):
 
-        watch_values = [
-                        ("process", spectlib.config.String(True))
-                       ]
+        watch_values = [("process", spectlib.config.String(True))]
 
         self.icon = icon
         self.standard_open_command = values['process']
@@ -56,7 +55,6 @@ class Watch_system_process(Watch):
         Watch.__init__(self, specto, id, values, watch_values)
 
         self.running_initially = self.check_process()
-
 
     def check(self):
         """ See if a process was started or stopped. """
@@ -89,12 +87,11 @@ class Watch_system_process(Watch):
             return False
 
     def get_gui_info(self):
-        return [
-                (_('Name'), self.name),
+        return [(_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Process'), self.process),
-                (_('Status'), self.status)
-                ]
+                (_('Status'), self.status)]
+
     def get_balloon_text(self):
         """ create the text for the balloon """
         if self.check_process():
@@ -108,15 +105,14 @@ Nick Craig-Wood <nick at craig-wood.com> -- http://www.craig-wood.com/nick
 Manage Processes and a ProcessList under Linux.
 """
 
-import os
-import signal
 
 class Process(object):
     """Represents a process"""
+
     def __init__(self, pid):
         """Make a new Process object"""
         self.proc = "/proc/%d" % pid
-        pid,command,state,parent_pid = file(os.path.join(self.proc, "stat")).read().strip().split()[:4]
+        pid, command, state, parent_pid = file(os.path.join(self.proc, "stat")).read().strip().split()[:4]
         command = command[1:-1]
         self.pid = int(pid)
         self.command = command
@@ -124,11 +120,14 @@ class Process(object):
         self.parent_pid = int(parent_pid)
         self.parent = None
         self.children = []
+
     def kill(self, sig = signal.SIGTERM):
         """Kill this process with SIGTERM by default"""
         os.kill(self.pid, sig)
+
     def __repr__(self):
         return "Process(pid = %r)" % self.pid
+
     def getcwd(self):
         """Read the current directory of this process or None for can't"""
         try:
@@ -136,8 +135,10 @@ class Process(object):
         except OSError:
             return None
 
+
 class ProcessList(object):
     """Represents a list of processes"""
+
     def __init__(self):
         """Read /proc and fill up the process lists"""
         self.by_pid = {}
@@ -155,6 +156,7 @@ class ProcessList(object):
                 process.parent = parent
             except KeyError:
                 pass
+
     def named(self, name):
         """Returns a list of processes with the given name"""
         name = name[:15]#FIXME: this is a hack around the bug found a few lines ago, not a real solution

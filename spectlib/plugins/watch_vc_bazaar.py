@@ -39,9 +39,7 @@ category = _("Version control")
 
 
 def get_add_gui_info():
-    return [
-            ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
-           ]
+    return [("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))]
 
 
 class Watch_vc_bazaar(Watch):
@@ -51,9 +49,7 @@ class Watch_vc_bazaar(Watch):
 
     def __init__(self, specto, id, values):
 
-        watch_values = [
-                        ("folder", spectlib.config.String(True))
-                       ]
+        watch_values = [("folder", spectlib.config.String(True))]
 
         self.icon = icon
         self.standard_open_command = 'xdg-open %s' % values['folder']
@@ -67,7 +63,7 @@ class Watch_vc_bazaar(Watch):
         self.remote_branch_label = ""
         self.local_extra = []
         self.remote_extra = []
-        self.cache_file = os.path.join(self.specto.CACHE_DIR, "bazaar" + self.folder.replace("/","_") + ".cache")
+        self.cache_file = os.path.join(self.specto.CACHE_DIR, "bazaar" + self.folder.replace("/", "_") + ".cache")
 
     def check(self):
         """ See if a folder's contents were modified or created. """
@@ -162,9 +158,7 @@ class Watch_vc_bazaar(Watch):
         os.unlink(self.cache_file)
 
     def get_gui_info(self):
-        return [
-                (_('Name'), self.name),
+        return [(_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Folder'), self.folder),
-                (_('Main branch'), self.remote_branch_label)
-                ]
+                (_('Main branch'), self.remote_branch_label)]

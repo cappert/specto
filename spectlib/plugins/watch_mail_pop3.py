@@ -37,27 +37,26 @@ type_desc = _("POP3")
 icon = 'emblem-mail'
 category = _("Mail")
 
+
 def get_add_gui_info():
-    return [
-            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+    return [("username", spectlib.gtkconfig.Entry(_("Username"))),
             ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
             ("host", spectlib.gtkconfig.Entry(_("Host"))),
-            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))
-            ]
+            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))]
 
 
 class Watch_mail_pop3(Watch):
     """
     Watch class that will check if you recevied a new mail on your pop3 account.
     """
+
     def __init__(self, specto, id, values):
-        watch_values = [
-                        ("username", spectlib.config.String(True)),
+
+        watch_values = [("username", spectlib.config.String(True)),
                         ("password", spectlib.config.String(True)),
                         ("host", spectlib.config.String(True)),
                         ("ssl", spectlib.config.Boolean(False)),
-                        ("port", spectlib.config.Integer(False))
-                       ]
+                        ("port", spectlib.config.Integer(False))]
 
         self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
 
@@ -74,7 +73,6 @@ class Watch_mail_pop3(Watch):
         self.mail_info = Email_collection()
 
         self.read_cache_file()
-
 
     def check(self):
         """ Check for new mails on your pop3 account. """
@@ -130,7 +128,6 @@ class Watch_mail_pop3(Watch):
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
 
-
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
@@ -164,12 +161,10 @@ class Watch_mail_pop3(Watch):
         return author_info
 
     def get_gui_info(self):
-        return [
-                (_('Name'), self.name),
+        return [(_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Username'), self.username),
-                (_('Unread messages'), self.unreadMsg)
-                ]
+                (_('Unread messages'), self.unreadMsg)]
 
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
@@ -213,6 +208,7 @@ class Email():
         self.date = date
         self.found = False
         self.new = False
+
 
 class Email_collection():
 

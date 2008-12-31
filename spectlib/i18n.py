@@ -73,21 +73,17 @@ def N_(singular, plural, n, var_singular = None, var_plural = None):
     Also replaces variables such as %s after translating.
 
     Example usage:
-        i18n._n(
-            "Message from %s",
+        i18n._n("Message from %s",
             "Messages from %s',
             len(messages),
             "Linus",
-            "Linus, Bill, Steve"
-)
+            "Linus, Bill, Steve")
     Or maybe (untested):
-        i18n._n(
-            "1 message from %s",
+        i18n._n("1 message from %s",
             len(messages) + " messages from %s',
             len(messages),
             "Linus",
-            "Linus, Bill, Steve"
-)
+            "Linus, Bill, Steve")
     """
     foo = _translation.ungettext(singular, plural, n)  # Get the translation
 

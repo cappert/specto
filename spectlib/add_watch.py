@@ -38,31 +38,34 @@ try:
 except:
     pass
 
+
 class Add_watch:
     """
     Class to create the add watch dialog.
     """
-    #Please do not use confusing widget names such as 'lbl' and 'tbl', use full names like 'label' and 'table'.
+    # Please do not use confusing widget names such as 'lbl' and 'tbl',
+    # Use full names like 'label' and 'table'.
+
     def __init__(self, specto, notifier, watch_type):
         self.specto = specto
         self.notifier = notifier
         #create tree
         gladefile= self.specto.PATH + 'glade/add_watch.glade'
         windowname= "add_watch"
-        self.wTree=gtk.glade.XML(gladefile,windowname, self.specto.glade_gettext)
+        self.wTree=gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
 
         self.watch_type = watch_type
         #save the option for hiding the table
         self.option_visible = -1
 
         #catch some events
-        dic= { "on_button_cancel_clicked": self.cancel_clicked,
+        dic= {"on_button_cancel_clicked": self.cancel_clicked,
         "on_button_add_clicked": self.add_clicked,
         "on_button_help_clicked": self.help_clicked,
         "on_add_watch_delete_event": self.delete_event,
         "check_command_toggled": self.command_toggled,
         "check_open_toggled": self.open_toggled,
-        "on_refresh_unit_changed": self.set_refresh_values }
+        "on_refresh_unit_changed": self.set_refresh_values}
 
         #attach the events
         self.wTree.signal_autoconnect(dic)
@@ -94,15 +97,13 @@ class Add_watch:
         self.table = gtk.Table(rows=len(values), columns=1, homogeneous=False)
         self.table.set_row_spacings(6)
         self.table.set_col_spacings(6)
-
         self.watch_options[watch_type] = {}
 
         i = 0
         for value, widget in values:
             table, _widget = widget.get_widget()
             self.table.attach(table, 0, 1, i, i + 1)
-            self.watch_options[watch_type].update({value:widget})
-
+            self.watch_options[watch_type].update({value: widget})
             i += 1
 
         self.table.show()
@@ -124,7 +125,7 @@ class Add_watch:
 
         self.refresh.configure(adjustment, climb_rate, digits)
 
-    def add_clicked(self,widget):
+    def add_clicked(self, widget):
         """
         Add the watch to the watches repository.
         """
@@ -159,7 +160,6 @@ class Add_watch:
                 values['open_command'] = ""
                 open = True
 
-
             gui_values = self.specto.watch_db.plugin_dict[values['type']].get_add_gui_info()
             window_options = self.watch_options[values['type']]
 
@@ -170,7 +170,7 @@ class Add_watch:
             self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
 
             try:
-                id = self.specto.watch_db.create({0:values})[0] #write the options in the configuration file
+                id = self.specto.watch_db.create({0: values})[0] #write the options in the configuration file
             except AttributeError, error_fields:
                 fields = str(error_fields).split(",")
                 i = 1
@@ -195,11 +195,11 @@ class Add_watch:
                 self.notifier.add_notifier_entry(id)
                 self.specto.watch_db[id].start()
 
-    def help_clicked(self,widget):
+    def help_clicked(self, widget):
         """ Call the show help function. """
         self.specto.util.show_webpage("http://code.google.com/p/specto/wiki/AddingWatches")
 
-    def cancel_clicked(self,widget):
+    def cancel_clicked(self, widget):
         """ Destroy the add watch window. """
         self.add_watch.destroy()
 
@@ -240,6 +240,7 @@ class Unique_Dialog:
         self.unique_dialog.destroy()
 
         return self.result
+
 
 if __name__ == "__main__":
     #run the gui

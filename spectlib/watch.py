@@ -227,7 +227,7 @@ class Watch:
 
         if len(error_fields) <> 0:
             error_fields = error_fields.lstrip(",")
-            raise AttributeError, error_fields
+            raise AttributeError(error_fields)
         else:
             if not validate:
                 self.values = values
@@ -241,7 +241,9 @@ class Watch:
     def remove_cache_files(self):
         return ""
 
+
 class Watch_collection:
+
     def __init__(self, specto):
         self.watch_db = []
         self.plugin_menu = {}
@@ -270,7 +272,7 @@ class Watch_collection:
                     menu1 = obj.category
                     menu2 = [obj.type_desc, obj.icon, obj.type]
                     if not menu1 in self.plugin_menu:
-                        self.plugin_menu.update({menu1:[]})
+                        self.plugin_menu.update({menu1: []})
                     self.plugin_menu[menu1].append(menu2)
                 except:
                     self.specto.logger.log(_('There was an error opening the file %s') % _file, "critical", "specto")
@@ -296,7 +298,7 @@ class Watch_collection:
                     if len(values) > 1:
                         pass
                     else:
-                        raise AttributeError, error_fields
+                        raise AttributeError(error_fields)
                 else:
                     self.watch_db.append(watch_)
                     _id.append(self.id)
@@ -415,10 +417,12 @@ class Watch_collection:
     def __getitem__(self, i):
         return self.watch_db[i]
 
+
 class Watch_io:
     """
     A class for managing watches.
     """
+
     def __init__(self, specto, file_name):
         # Read the watch from file using the iniparser module
         self.specto = specto
@@ -461,7 +465,7 @@ class Watch_io:
             i += 1
         return watch_value_db
 
-    def read_watch(self,name, startup=False):
+    def read_watch(self, name, startup=False):
         """
         Read the watch options from one watch.
         """
@@ -484,10 +488,10 @@ class Watch_io:
             else:
                 option = self.read_option(name, option_, startup)
 
-            watch_options_ = { option_: option }
+            watch_options_ = {option_: option}
             watch_options.update(watch_options_)
         name = self.show_brackets(name)
-        watch_options.update({'name':name})
+        watch_options.update({'name': name})
 
         return watch_options
 
@@ -621,12 +625,12 @@ class Watch_io:
             finally:
                 f.close()
 
-    def hide_brackets(self,name):
+    def hide_brackets(self, name):
         name = name.replace("[", "&brStart;")
         name = name.replace("]", "&brEnd;")
         return name
 
-    def show_brackets(self,name):
+    def show_brackets(self, name):
         name = name.replace("&brStart;", "[")
         name = name.replace("&brEnd;", "]")
         return name

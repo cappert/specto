@@ -22,7 +22,8 @@
 # Boston, MA 02111-1307, USA.
 from spectlib.i18n import _
 import os
-from spectlib.watch import Watch_io, Watch_collection
+from spectlib.watch import Watch_io
+from spectlib.watch import Watch_collection
 
 try:
     import pygtk
@@ -197,7 +198,7 @@ class Import_watch:
         model, iter = self.treeview.get_selection().get_selected()
         i = int(model.get_value(iter, 3))
 
-        if model.get_value(iter,0):
+        if model.get_value(iter, 0):
             model.set_value(iter, 0, 0)
         else:
             model.set_value(iter, 0, 1)
@@ -214,13 +215,11 @@ class Open_dialog:
         # Create the tree
         gladefile= self.specto.PATH + 'glade/import_export.glade'
         windowname= "filechooser"
-        self.wTree=gtk.glade.XML(gladefile,windowname)
+        self.wTree=gtk.glade.XML(gladefile, windowname)
         self.open_dialog = self.wTree.get_widget("filechooser")
 
-        dic={
-        "on_button_cancel_clicked": self.cancel,
-        "on_button_save_clicked": self.open
-        }
+        dic={"on_button_cancel_clicked": self.cancel,
+            "on_button_save_clicked": self.open}
         # Attach the events
         self.wTree.signal_autoconnect(dic)
 

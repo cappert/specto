@@ -32,10 +32,9 @@ type_desc = _("File")
 icon = 'gnome-mime-text'
 category = _("System")
 
+
 def get_add_gui_info():
-    return [
-            ("file", spectlib.gtkconfig.FileChooser(_("File")))
-           ]
+    return [("file", spectlib.gtkconfig.FileChooser(_("File")))]
 
 
 class Watch_system_file(Watch):
@@ -44,10 +43,7 @@ class Watch_system_file(Watch):
     """
 
     def __init__(self, specto, id, values):
-
-        watch_values = [
-                        ("file", spectlib.config.String(True))
-                       ]
+        watch_values = [("file", spectlib.config.String(True))]
 
         self.icon = icon
         self.open_command = ''
@@ -57,7 +53,7 @@ class Watch_system_file(Watch):
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
-        self.cache_file = os.path.join(self.specto.CACHE_DIR, "file" + self.file.replace("/","_") + ".cache")
+        self.cache_file = os.path.join(self.specto.CACHE_DIR, "file" + self.file.replace("/", "_") + ".cache")
         self.first_time = False
 
     def check(self):
@@ -73,7 +69,7 @@ class Watch_system_file(Watch):
                 self.actually_changed = True
                 self.file_info.append(_("The file was removed"))
             else:
-                self.old_info = self.old_info.replace("L", "").replace("[", "").replace("]","").replace("'", "").split(",")
+                self.old_info = self.old_info.replace("L", "").replace("[", "").replace("]", "").replace("'", "").split(",")
 
                 i = 0
                 while i < len(info):

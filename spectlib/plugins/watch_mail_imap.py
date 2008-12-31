@@ -24,7 +24,8 @@
 from spectlib.watch import Watch
 import spectlib.util
 
-import imaplib, sys
+import imaplib
+import sys
 import os
 from spectlib.i18n import _
 
@@ -33,28 +34,26 @@ type_desc = _("IMAP")
 icon = 'emblem-mail'
 category = _("Mail")
 
+
 def get_add_gui_info():
-    return [
-            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+    return [("username", spectlib.gtkconfig.Entry(_("Username"))),
             ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
             ("host", spectlib.gtkconfig.Entry(_("Host"))),
-            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))
-            ]
+            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))]
 
 
 class Watch_mail_imap(Watch):
     """
     Watch class that will check if you recevied a new mail on your pop3 account.
     """
+
     def __init__(self, specto, id, values):
-        watch_values = [
-                        ("username", spectlib.config.String(True)),
+        watch_values = [("username", spectlib.config.String(True)),
                         ("password", spectlib.config.String(True)),
                         ("host", spectlib.config.String(True)),
                         ("ssl", spectlib.config.Boolean(False)),
                         ("port", spectlib.config.Integer(False)),
-                        ("folder", spectlib.config.String(False))
-                        ]
+                        ("folder", spectlib.config.String(False))]
 
         self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
 
@@ -108,8 +107,8 @@ class Watch_mail_imap(Watch):
                         if message != "":
                             (ret, id) = server.fetch(message, '(BODY[HEADER.FIELDS (MESSAGE-ID)])')
                             if ret == 'OK':
-                                (ret, subject) = server.fetch(message,'(BODY[HEADER.FIELDS (SUBJECT)])')
-                                (ret, sender) = server.fetch(message,'(BODY[HEADER.FIELDS (FROM)])')
+                                (ret, subject) = server.fetch(message, '(BODY[HEADER.FIELDS (SUBJECT)])')
+                                (ret, sender) = server.fetch(message, '(BODY[HEADER.FIELDS (FROM)])')
                                 if ret == 'OK':
                                     id = id[0][1]
                                     id = id.replace("\n", "")
@@ -143,7 +142,6 @@ class Watch_mail_imap(Watch):
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
-
 
     def get_balloon_text(self):
         """ create the text for the balloon """
@@ -179,12 +177,10 @@ class Watch_mail_imap(Watch):
         return author_info
 
     def get_gui_info(self):
-        return [
-                (_('Name'), self.name),
+        return [(_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Username'), self.username),
-                (_('Unread messages'), self.unreadMsg)
-                ]
+                (_('Unread messages'), self.unreadMsg)]
 
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
@@ -199,7 +195,6 @@ class Watch_mail_imap(Watch):
                     self.mail_info.add(email)
             finally:
                 f.close()
-
 
     def write_cache_file(self):
         try:
@@ -216,6 +211,7 @@ class Watch_mail_imap(Watch):
     def remove_cache_files(self):
         os.unlink(self.cache_file)
 
+
 class Email():
 
     def __init__(self, id, author, subject):
@@ -224,6 +220,7 @@ class Email():
         self.author = author
         self.found = False
         self.new = False
+
 
 class Email_collection():
 

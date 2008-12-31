@@ -37,10 +37,8 @@ category = _("Mail")
 
 
 def get_add_gui_info():
-    return [
-            ("username", spectlib.gtkconfig.Entry(_("Username"))),
-            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
-            ]
+    return [("username", spectlib.gtkconfig.Entry(_("Username"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))]
 
 
 class Watch_mail_gmail(Watch):
@@ -49,10 +47,8 @@ class Watch_mail_gmail(Watch):
     """
 
     def __init__(self, specto, id, values):
-        watch_values = [
-                        ("username", spectlib.config.String(True)),
-                        ("password", spectlib.config.String(True))
-                       ]
+        watch_values = [("username", spectlib.config.String(True)),
+                        ("password", spectlib.config.String(True))]
         url = "https://mail.google.com"
         self.standard_open_command = spectlib.util.return_webpage(url)
 
@@ -91,13 +87,13 @@ class Watch_mail_gmail(Watch):
                 self.actually_changed = False
                 self.specto.mark_watch_status("clear", self.id)
             else:
-                i=0
+                i = 0
                 while i < self.oldMsg and i < 20: # i < 20 is a hack around the gmail limitation of metadata retrieval (does not affect message count)
-                    info = Email(s.getMsgAuthorName(i), s.getMsgTitle(i),s.getMsgSummary(i))
+                    info = Email(s.getMsgAuthorName(i), s.getMsgTitle(i), s.getMsgSummary(i))
                     if self.mail_info.add(info): #check if it is a new email or just unread
                         self.actually_changed = True
-                        self.newMsg+=1
-                    i+=1
+                        self.newMsg += 1
+                    i += 1
             self.mail_info.remove_old()
             self.write_cache_file()
         except URLError, e:
@@ -109,12 +105,10 @@ class Watch_mail_gmail(Watch):
         Watch.timer_update(self)
 
     def get_gui_info(self):
-        return [
-                (_("Name"), self.name),
+        return [(_("Name"), self.name),
                 (_("Last changed"), self.last_changed),
                 (_("Username"), self.username),
-                (_("Unread messages"), self.oldMsg)
-                ]
+                (_("Unread messages"), self.oldMsg)]
 
     def get_balloon_text(self):
         """ create the text for the balloon """
@@ -261,16 +255,19 @@ class Email_collection():
 from xml.sax.handler import ContentHandler
 from xml import sax
 
-# Auxiliar structure
+
 class Mail:
+    # Auxiliar structure
     title=""
     summary=""
     author_name=""
     author_addr=""
 
-# Sax XML Handler
-class MailHandler(ContentHandler):
 
+class MailHandler(ContentHandler):
+    """
+    Sax XML Handler
+    """
     # Tags
     TAG_FEED = "feed"
     TAG_FULLCOUNT = "fullcount"
@@ -282,11 +279,11 @@ class MailHandler(ContentHandler):
     TAG_EMAIL = "email"
 
     # Path the information
-    PATH_FULLCOUNT = [ TAG_FEED, TAG_FULLCOUNT ]
-    PATH_TITLE = [ TAG_FEED, TAG_ENTRY, TAG_TITLE ]
-    PATH_SUMMARY = [ TAG_FEED, TAG_ENTRY, TAG_SUMMARY ]
-    PATH_AUTHOR_NAME = [ TAG_FEED, TAG_ENTRY, TAG_AUTHOR, TAG_NAME ]
-    PATH_AUTHOR_EMAIL = [ TAG_FEED, TAG_ENTRY, TAG_AUTHOR, TAG_EMAIL ]
+    PATH_FULLCOUNT = [TAG_FEED, TAG_FULLCOUNT]
+    PATH_TITLE = [TAG_FEED, TAG_ENTRY, TAG_TITLE]
+    PATH_SUMMARY = [TAG_FEED, TAG_ENTRY, TAG_SUMMARY]
+    PATH_AUTHOR_NAME = [TAG_FEED, TAG_ENTRY, TAG_AUTHOR, TAG_NAME]
+    PATH_AUTHOR_EMAIL = [TAG_FEED, TAG_ENTRY, TAG_AUTHOR, TAG_EMAIL]
 
     def __init__(self):
         self.startDocument()
@@ -341,9 +338,11 @@ class MailHandler(ContentHandler):
     def getUnreadMsgCount(self):
         return int(self.mail_count)
 
-# The mail class
-class GmailAtom:
 
+class GmailAtom:
+    """
+    The mail class
+    """
     realm = "New mail feed"
     host = "https://mail.google.com"
     url = host + "/mail/feed/atom"

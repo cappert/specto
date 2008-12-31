@@ -4,7 +4,8 @@ import os
 from distutils.core import setup
 
 f=open('data/doc/VERSION', 'r')  # Open the VERSION file for reading.
-version_string = f.readline()[:-1]  # "[:-1]" means we omit the last character, which is "\n".
+# Below, "[:-1]" means we omit the last character, which is "\n".
+version_string = f.readline()[:-1]
 f.close
 
 
@@ -18,7 +19,8 @@ def give_files(dir, *extension):
     return files
 
 
-i18n_languages = "fr cs de es it pt_BR ro sv tr"  # List all the languages, separated by one whitespace
+# List all the languages, separated by one whitespace
+i18n_languages = "fr cs de es it pt_BR ro sv tr"
 
 
 def give_mo_file(lang):
@@ -42,8 +44,7 @@ temp_files = [
     ('share/icons/hicolor/scalable/apps', ['data/icons/hicolor/scalable/specto.svg']),
     ('share/applications', ['specto.desktop']),
     ('share/specto/icons', give_files('data/icons/', '.png', '.svg')),
-    ('share/specto/glade', give_files('data/glade/', '.glade'))
-    ]
+    ('share/specto/glade', give_files('data/glade/', '.glade'))]
 
 for lang_tuple in give_mo_tuples(i18n_languages):
     temp_files.append(lang_tuple)
@@ -58,5 +59,4 @@ setup(name = "specto",
     #package_dir = {'': 'src'},
     #package_data = {'specto': ['preferences.glade', 'notify.glade']},
     scripts = ['specto'],
-    data_files = temp_files
-    )
+    data_files = temp_files)

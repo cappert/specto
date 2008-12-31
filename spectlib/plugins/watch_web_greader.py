@@ -30,11 +30,11 @@ type_desc = _("Google Reader")
 icon = 'internet-news-reader'
 category = _("Internet")
 
+
 def get_add_gui_info():
-    return [
-           ("username", spectlib.gtkconfig.Entry(_("Username"))),
-           ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))
-            ]
+    return [("username", spectlib.gtkconfig.Entry(_("Username"))),
+           ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))]
+
 
 class Watch_web_greader(Watch):
     """
@@ -42,10 +42,8 @@ class Watch_web_greader(Watch):
     """
 
     def __init__(self, specto, id, values):
-        watch_values = [
-                      ("username", spectlib.config.String(True)),
-                      ("password", spectlib.config.String(True))
-                        ]
+        watch_values = [("username", spectlib.config.String(True)),
+                      ("password", spectlib.config.String(True))]
 
         url = "http://www.google.com/reader/"
         self.standard_open_command = spectlib.util.return_webpage(url)
@@ -103,12 +101,10 @@ class Watch_web_greader(Watch):
         Watch.timer_update(self)
 
     def get_gui_info(self):
-        return [
-               (_('Name'), self.name),
+        return [(_('Name'), self.name),
                (_('Last changed'), self.last_changed),
                (_('Username'), self.username),
-               (_('Unread messages'), str(self.unreadMsg) + self.or_more)
-                ]
+               (_('Unread messages'), str(self.unreadMsg) + self.or_more)]
 
     def get_balloon_text(self):
         """ create the text for the balloon """
@@ -136,7 +132,6 @@ class Watch_web_greader(Watch):
                 feed_info += _("and others...")
             i += 1
         return feed_info
-
 
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
@@ -167,6 +162,7 @@ class Watch_web_greader(Watch):
     def remove_cache_files(self):
         os.unlink(self.cache_file)
 
+
 class Feed():
 
     def __init__(self, name, messages):
@@ -174,6 +170,7 @@ class Feed():
         self.messages = int(messages)
         self.found = False
         self.new = False
+
 
 class Feed_collection():
 
@@ -258,9 +255,6 @@ import time
 import os.path
 import sys
 
-###############################
-#Variables
-#
 counter = 1 #boolean to show counter or not
 numberFeeds = 5 #default maximum number of feeds of which info is shows
 L = [] #contains feed ids and their number of unread items
@@ -271,6 +265,7 @@ passwd = ''
 cookies = -1
 old_unread = -1
 unread = 0
+
 
 def getcookies():
     """
@@ -365,10 +360,9 @@ def getcookies():
         cj.save(COOKIEFILE)                     # save the cookies again
         return 1, Request, cj        #everything went ok
 
-##########################
-#Get the number of unread items
-#
+
 def getUnreadItems(Request):
+    """ Get the number of unread items """
     global unread, L, feeds
     LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'list.xml')
     url = 'https://www.google.com/reader/api/0/unread-count?all=true'
@@ -413,10 +407,9 @@ def getUnreadItems(Request):
     else:
         return 0
 
-##################################
-#Set the names of feeds the user is subscribed to
-#
+
 def updateFeeds(Request):
+    """ Set the names of feeds the user is subscribed to """
     global names, feeds
     LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'names.xml')
     url = 'http://www.google.com/reader/api/0/subscription/list'
@@ -446,6 +439,7 @@ def updateFeeds(Request):
         del document
         del feedlist[:]
 
+
 def readFeeds(Request):
     global names
     LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'names.xml')
@@ -464,13 +458,14 @@ def readFeeds(Request):
     else:
         updateFeeds(Request)
 
-#################################
-#Compare function to sort the feeds by number of unread items
-#
-def compare(a,b):
+
+def compare(a, b):
+    """ Compare function to sort the feeds by number of unread items """
     return cmp(int(b[0]), int(a[0]))
 
+
 class Greader():
+
     def __init__(self, username, password):
         global unread, info, extra_info, extra_info_friends, email, passwd
         global config_changed
@@ -510,7 +505,7 @@ class Greader():
             i = len(L)# - 1
         extra_info = {}
         extra_info_friends = ''
-        for i in xrange(0,i):
+        for i in xrange(0, i):
             found = 0
             for j in xrange(0, len(names)):
                 if not found:
