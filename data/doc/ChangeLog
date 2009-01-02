@@ -4,10 +4,6 @@ This file is updated only at "release time".
 
 Specto 0.3: 2009 01 ??
 ======================
-- There is a lot of new undocumented (sometimes hidden) features. Grep "##DOC"
-- The facebook watch is still not working.
-- Dependencies are still undocumented, grep -Rn "import " * ?
-
 Upgrading to this release is strongly recommended, as it solves a huge amount of issues reported in the 0.2.x series, is more stable, implements new features, is more secure and easier to maintain.
 This release contains lots of architectural changes. The watch system is now a plugin system, the watch list has changed, GNOME keyring is now used for encrypting passwords by default (though you can disable it), and the configuration/cache directories are now based on the XDG user directory specification. As such, you will need to import your watch list if upgrading from Specto 0.2.x. You may also need to reset (overwrite) your passwords, or convert them to plain text before upgrading.
 
@@ -33,21 +29,21 @@ Features
     * Issue #51: Integrate with GNOME Keyring for password encryption
     * Issue #54: FreeDesktop-compliant user directories
     * Issue #117: show more information for errors
-    * Issue #128: Allow setting a port for mail watches (add 'port = 323' to your watch config) ##DOC
-    * Issue #135: Proxy support ##DOC
-    * Issue #136: Allow checking a specific IMAP folder (no gui yet) ##DOC
+    * Issue #128: Allow setting a port for mail watches (add 'port = 323' to your watch config)
+    * Issue #135: Proxy support
+    * Issue #136: Allow checking a specific IMAP folder (no gui yet)
     * Issue #142: Don't scroll the notifier list view column headers
-    * Issue #146: Per-watch option to prevent URL redirects; To use this option add "redirect = True" to the watch that is allowed to redirect ##DOC
+    * Issue #146: Per-watch option to prevent URL redirects; To use this option add "redirect = True" to the watch that is allowed to redirect
     * Issue #166: Add a checkbox in the preferences for gnome-keyring usage
     * Issue #178: Add direct access to the "remove" functionnality
-    * Issue #180: keyring vs plaintext conversion should be smart and automatic ##DOC
+    * Issue #180: keyring vs plaintext conversion should be smart and automatic
     * Issue #190: Insanely faster startup (performance profiling)
-    * Major changes in terminology, as discussed on the mailing list ##DOC
+    * Major changes in terminology, as discussed on the mailing list
     * Make some watch names clearer
     * More error-handling
     * More space for the extra information in the info panel
     * Moved some code so the file dialog will show faster
-    * New watch type: Bazaar (version control) ##DOC
+    * New watch type: Bazaar (version control)
     * New watch type: Facebook (messages, notifications, requests, wall posts)
     * New watch type: Google Reader (issue #63)
     * Require all mandatory fields to be filled (add/edit watch)
@@ -136,7 +132,7 @@ Specto 0.2.2: 2007-06-19
 ========================
 
 Features
-    * Add a hidden gconf key, "follow_website_redirects" (Issue #58) ##DOC
+    * Add a hidden gconf key, "follow_website_redirects" (Issue #58)
     * Add a translatable "translator-credits" string for the about dialog
     * A statusbar tells the user if no network connection is detected
 
