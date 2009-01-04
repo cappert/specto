@@ -100,15 +100,15 @@ class Watch_vc_bazaar(Watch):
         msg = ""
         if len(self.local_extra) <> 0:
             if len(self.local_extra) == 1:
-                msg = _("One new revision on your local branch.")
+                msg = _("One new local revision on your branch <b>%s</b>.") % self.name
             else:
-                msg = _("%d new revisions on your local branch.") % len(self.local_extra)
+                msg = _("%d new local revisions on your branch <b>%s</b>.") % (len(self.local_extra), self.name)
         if len(self.remote_extra) <> 0:
             if len(self.remote_extra) == 1:
-                msg = _("One new revision on the remote branch.")
+                msg = _("One new revision on the remote branch for <b>%s</b>.") % self.name
             else:
                 print self.remote_extra[0]
-                msg = _("%d new revisions on the remote branch.") % len(self.remote_extra)        
+                msg = _("%d new revisions on the remote branch for <b>%s</b>.") % (len(self.remote_extra), self.name)
         return msg
         
     def get_extra_information(self):        
