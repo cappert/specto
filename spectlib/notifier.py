@@ -905,9 +905,7 @@ class Notifier:
         self.specto.specto_gconf.set_entry("sort_function", "active")
 
     def recreate_tray(self, *args):
-        """
-        Recreate a tray icon if the notification area unexpectedly quits.
-        """
+        """ Recreate a tray icon if the notification area unexpectedly quits. """
         try:self.tray.destroy()
         except:pass
         self.tray = ""
@@ -922,6 +920,7 @@ class Notifier:
             self.pref.show()
             
     def generate_add_menu(self):
+        """ Creates two "Add watch" submenus for the toplevel menu and the toolbar """
         menu_dict = self.specto.watch_db.plugin_menu
         self.add_menu = gtk.Menu()
         self.add_menu_ = gtk.Menu()
@@ -939,6 +938,7 @@ class Notifier:
             childmenu = gtk.Menu()        
             childmenu_ = gtk.Menu()  
             for child in menu_dict[parent]:
+                # Create an entry for the popup add menu
                 childmenuItem = gtk.ImageMenuItem(child[0])
                 childmenu.append(childmenuItem)
                 img = gtk.Image()
@@ -948,6 +948,7 @@ class Notifier:
                 childmenuItem.connect('activate', self.show_add_watch, child[2])
                 childmenuItem.show()
                 
+                # Create an entry for the "edit -> add" submenu
                 childmenuItem_ = gtk.ImageMenuItem(child[0])
                 childmenu_.append(childmenuItem_)
                 img = gtk.Image()
