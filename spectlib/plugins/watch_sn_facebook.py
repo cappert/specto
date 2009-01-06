@@ -348,7 +348,6 @@ class Facebook():
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/wall.php")
         messages = connection.read().split("<hr />")
         for line in messages:
-            print line + "\n\n"
             #search wall poster
             poster = re.search('<a href="/profile.php\?.+refid=.+>(.+)<br /><small>.+</small></div><div>', line)
             if poster <> None:
