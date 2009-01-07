@@ -71,18 +71,21 @@ class Watch_vc_bazaar(Watch):
             self.read_cache_file()
             local_branch = Branch.open_containing(self.folder)[0]
             remote_branch = Branch.open_containing(local_branch.get_parent())[0]
-            self.remote_branch_label = local_branch.get_parent().replace("%7E", "~")
-            self.local_extra, self.remote_extra = find_unmerged(local_branch, remote_branch)
+            if local_branch.get_parent() <> None:
+                self.remote_branch_label = local_branch.get_parent().replace("%7E", "~")
+                self.local_extra, self.remote_extra = find_unmerged(local_branch, remote_branch)
 
-            if len(self.local_extra) <> 0:
-                if int(self.local_extra[len(self.local_extra) - 1][0]) > self.local_branch_:
-                    self.actually_changed = True
-                    self.write_cache_file()
+                if len(self.local_extra) <> 0:
+                    if int(self.local_extra[len(self.local_extra) - 1][0]) > self.local_branch_:
+                        self.actually_changed = True
+                        self.write_cache_file()
 
-            if len(self.remote_extra) <> 0:
-                if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
-                    self.actually_changed = True
-                    self.write_cache_file()
+                if len(self.remote_extra) <> 0:
+                    if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
+                        self.actually_changed = True
+                        self.write_cache_file()
+            else:
+                self.specto.logger.log(_("No remote copy available"), "info", self.name)
 
         except NotBranchError, e:
             self.error = True
