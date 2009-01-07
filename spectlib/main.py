@@ -33,7 +33,8 @@ import gobject
 import gettext
 
 import spectlib.util as util
-from spectlib.watch import Watch_collection, Watch_io
+from spectlib.watch import Watch_collection
+from spectlib.watch import Watch_io
 from spectlib.console import Console
 from spectlib.logger import Logger
 from spectlib.tools.specto_gconf import Specto_gconf

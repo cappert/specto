@@ -22,7 +22,8 @@
 # Boston, MA 02111-1307, USA.
 from spectlib.i18n import _
 import os
-from spectlib.watch import Watch_io, Watch_collection
+from spectlib.watch import Watch_io
+from spectlib.watch import Watch_collection
 
 try:
     import pygtk

@@ -43,17 +43,17 @@ class About:
         version_file = open(version_file_path, 'r')
         version = str(version_file.readline()[:-1])
         version_file.close
-        
+
         license_file_path = (spectlib.util.get_path(category="doc") \
                                                           + 'COPYING')
         license_file = open(license_file_path, "r")
         license = license_file.read()
         license_file.close()
         license = str(license)
-        
+
         authors_file_path = (spectlib.util.get_path(category="doc") \
                                                           + 'AUTHORS')
-        authors_file = open (authors_file_path, "r")
+        authors_file = open(authors_file_path, "r")
         # this is a hack, because gtk.AboutDialog expects a list, not a file
         authors = authors_file.readlines()
         authors_file.close()
