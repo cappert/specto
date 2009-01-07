@@ -82,40 +82,36 @@ class Watch_sn_facebook(Watch):
             facebook = Facebook(self.email, self.password)
             if facebook.connect():
                 self.messages = facebook.get_messages()
-    
                 for message in self.messages:
                     if message.sender + ": " + message.message not in self.previous_messages:
                         self.updates['message'].append(message.sender + ": " + message.message)
                         self.actually_changed = True
                         self.previous_messages.append(message.sender + ": " + message.message)
-    
-                #notification
+
+                # Facebook notifications
                 self.notifications = facebook.get_notifications()
-    
                 for notification in self.notifications:
                     if notification.notification not in self.previous_notifications:
                         self.updates['notification'].append(notification.notification)
                         self.actually_changed = True
                         self.previous_notifications.append(notification.notification)
-    
-                #requests
+
+                # Requests
                 self.requests = facebook.get_requests()
-    
                 for request in self.requests:
                     if request.request not in self.previous_requests:
                         self.updates['request'].append(request.request)
                         self.actually_changed = True
                         self.previous_requests.append(request.request)
-    
-                #wall post
+
+                # Wall posts
                 self.wall = facebook.get_wall()
-    
                 for w in self.wall:
                     if w.poster + ": " + w.post not in self.previous_wall:
                         self.updates['wall'].append(w.poster + ": " + w.post)
                         self.actually_changed = True
                         self.previous_wall.append(w.poster + ": " + w.post)
-    
+
                 self.write_cache_file()
             else:
                 self.error = True
@@ -243,19 +239,20 @@ class Watch_sn_facebook(Watch):
 
 
 class Facebook():
+
     def __init__(self, email, password):
         self.email = email
         self.password = password
-        
-    def connect(self):        
+
+    def connect(self):
         opener = web_proxy.urllib2.build_opener(web_proxy.urllib2.HTTPCookieProcessor())
         web_proxy.urllib2.install_opener(opener)
-        response = web_proxy.urllib2.urlopen(web_proxy.urllib2.Request("https://login.facebook.com/login.php?m&amp;next=http%3A%2F%2Fm.facebook.com%2Fhome.php","email=%s&pass=%s&login=Login" % (self.email, self.password)))                                        
+        response = web_proxy.urllib2.urlopen(web_proxy.urllib2.Request("https://login.facebook.com/login.php?m&amp;next=http%3A%2F%2Fm.facebook.com%2Fhome.php", "email=%s&pass=%s&login=Login" % (self.email, self.password)))
         if "form action=\"https://login.facebook.com/login.php" in response.read():
-          return False
+            return False
         else:
-          return True
-        
+            return True
+
     def get_messages(self):
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/inbox/")
         messages_ = connection.read().split("<hr />")
@@ -268,11 +265,11 @@ class Facebook():
             title = re.search('<a href="/inbox/\?.+;refid=11"><b>(.+)</b></a><br /><small><a href="/profile.php', line)
             if title <> None:
                 outstream = StringIO()
-                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(title.group(1))
                 title = outstream.getvalue().replace("&#8226;", "")
                 outstream.close()
-                   
+
                 #search sender
                 sender = re.search('</a><br /><small><a href="/profile.php\?.+;refid=11">(.+)</a>(<br />|,)', line)
                 if sender <> None:
@@ -280,27 +277,27 @@ class Facebook():
                 else: #multiple receipients
                     sender = re.search('</a><br /><small><a href="/profile.php\?.+;refid=11".+>(.+)</a>(<br />|,)', line)
                     if sender <> None:
-                        sender = sender.group(1)                    
+                        sender = sender.group(1)
             else: # group message
                 #search subject
                 title = re.search('<a href="/inbox/\?.+;refid=11"><b>(.+)</b></a><br /><small><a href="', line)
                 if title <> None:
                     outstream = StringIO()
-                    p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                    p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                     p.feed(title.group(1))
                     title = outstream.getvalue().replace("&#8226;", "")
                     outstream.close()
-                    
+
                     #search sender
                     sender = re.search('</a><br /><small><a href=".+group.php\?gid=.+">(.+)</a><br />', line)
                     if sender <> None:
-                        sender = sender.group(1)                                  
-                        
-            if sender <> None and title <> None:  
+                        sender = sender.group(1)
+
+            if sender <> None and title <> None:
                 messages.extend([FacebookMessage(sender.strip(), title.strip())])
-                
+
         return messages
-        
+
     def get_notifications(self):
         notifications = []
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/notifications.php")
@@ -310,9 +307,9 @@ class Facebook():
             notification = re.search('</b><br /><a href="/profile.php\?.+>(.+)</div>', line)
             if notification <> None:
                 outstream = StringIO()
-                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(notification.group())
-                notification = re.sub("(\[.\])","", outstream.getvalue())
+                notification = re.sub("(\[.\])", "", outstream.getvalue())
                 notification = notification.replace("\n", " ")
                 outstream.close()
                 notifications.extend([FacebookNotification(notification.strip())])
@@ -329,20 +326,20 @@ class Facebook():
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(request.group(0))
-                request = re.sub("(\[.\])"," ", outstream.getvalue())
+                request = re.sub("(\[.\])", " ", outstream.getvalue())
                 p.close()
-                requests.extend([FacebookRequest(request.replace("\n","").strip())])
+                requests.extend([FacebookRequest(request.replace("\n", "").strip())])
             else: #event requests
                 request = re.search('<a href="/event.php\?.+refid=.+">(.+)<br />Place:', line)
                 if request <> None:
                     outstream = StringIO()
                     p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                     p.feed(request.group(0))
-                    request = re.sub("(\[.\])"," ", outstream.getvalue())
+                    request = re.sub("(\[.\])", " ", outstream.getvalue())
                     p.close()
-                    requests.extend([FacebookRequest(request.replace("\n","").strip())])              
+                    requests.extend([FacebookRequest(request.replace("\n", "").strip())])
         return requests
-        
+
     def get_wall(self):
         walls = []
         connection = web_proxy.urllib2.urlopen("http://m.facebook.com/wall.php")
@@ -352,39 +349,46 @@ class Facebook():
             poster = re.search('<a href="/profile.php\?.+refid=.+>(.+)<br /><small>.+</small></div><div>', line)
             if poster <> None:
                 outstream = StringIO()
-                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(poster.group(0))
-                poster = re.sub("(\[.+\])","", outstream.getvalue()).split("\n")[0]
+                poster = re.sub("(\[.+\])", "", outstream.getvalue()).split("\n")[0]
                 outstream.close()
-            
+
             #search wall post
             post = re.search('</small></div><div>(.+)</div>', line)
             if post <> None:
                 outstream = StringIO()
-                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))    
+                p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(post.group(0))
-                post = re.sub("(\[.+\])","", outstream.getvalue()).replace("delete", "")
-                outstream.close()   
-        
-            if poster <> None and post <> None:  
-                walls.extend([FacebookWall(poster.strip(), post.strip().replace("\n"," "))])
+                post = re.sub("(\[.+\])", "", outstream.getvalue()).replace("delete", "")
+                outstream.close()
+
+            if poster <> None and post <> None:
+                walls.extend([FacebookWall(poster.strip(), post.strip().replace("\n", " "))])
         return walls
-                                                                                    
+
 
 class FacebookMessage():
+
     def __init__(self, sender, message):
         self.sender = sender
         self.message = message
-        
+
+
 class FacebookNotification():
+
     def __init__(self, notification):
         self.notification = notification
-      
+
+
 class FacebookRequest():
+
     def __init__(self, request):
         self.request = request
-        
+
+
 class FacebookWall():
+
     def __init__(self, poster, post):
         self.poster = poster
         self.post = post
