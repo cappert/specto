@@ -58,6 +58,8 @@ class Watch_vc_bazaar(Watch):
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
+        self.use_network = True
+
         self.local_branch_ = 0
         self.remote_branch_ = 0
         self.remote_branch_label = ""
@@ -85,7 +87,8 @@ class Watch_vc_bazaar(Watch):
                         self.actually_changed = True
                         self.write_cache_file()
             else:
-                self.specto.logger.log(_("No remote copy available"), "info", self.name)
+                self.error = True
+                self.specto.logger.log(_("No remote branch available, you will not be notified of differences and changes."), "warning", self.name)
 
         except NotBranchError, e:
             self.error = True
@@ -101,9 +104,9 @@ class Watch_vc_bazaar(Watch):
         msg = ""
         if len(self.local_extra) <> 0:
             if len(self.local_extra) == 1:
-                msg = _("One new local revision on your branch <b>%s</b>.") % self.name
+                msg = _("One new local revision on your branch <b>%s</b> has not yet been pushed to the remote branch.") % self.name
             else:
-                msg = _("%d new local revisions on your branch <b>%s</b>.") % (len(self.local_extra), self.name)
+                msg = _("%d new local revisions on your branch <b>%s</b> have not yet been pushed to the remote branch.") % (len(self.local_extra), self.name)
         if len(self.remote_extra) <> 0:
             if len(self.remote_extra) == 1:
                 msg = _("One new revision on the remote branch for <b>%s</b>.") % self.name
