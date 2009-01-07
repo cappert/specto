@@ -40,41 +40,37 @@ class About:
         self.specto = specto
         version_file_path = (spectlib.util.get_path(category="doc") \
                                                           + 'VERSION')
-        version_file=open(version_file_path, 'r')
+        version_file = open(version_file_path, 'r')
         version = str(version_file.readline()[:-1])
         version_file.close
+
         license_file_path = (spectlib.util.get_path(category="doc") \
                                                           + 'COPYING')
         license_file = open(license_file_path, "r")
         license = license_file.read()
         license_file.close()
         license = str(license)
-        authors = ["Jean-Francois 'Kiddo' Fortin Tam\n\t\
-                    <nekohayo AT gmail DOT com>\n",
-                    "Wout Clymans\n\t\
-                    <woutclymans AT gmail DOT com>\n\n",
-                    "Pascal Potvin\n\t\
-                    <pascal.potvin AT gmail DOT com>\n",
-                    "Giulio 'Dullboy' lotti\n\t\
-                    <dullgiulio AT gmail DOT com>\n",
-                    "Thomas McColgan\n\t\
-                    <thomas DOT mccolgan AT gmx DOT de>\n",
-                    "Conor 'majikstreet' Callahan\n\t\
-                    <majikstreet AT gmail DOT com>\n",
-                    "Chris 'RAOF' Halse Rogers\n\t\
-                    <chalserogers AT gmail DOT com>\n"]
+
+        authors_file_path = (spectlib.util.get_path(category="doc") \
+                                                          + 'AUTHORS')
+        authors_file = open(authors_file_path, "r")
+        # this is a hack, because gtk.AboutDialog expects a list, not a file
+        authors = authors_file.readlines()
+        authors_file.close()
 
         logo = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
                                         'icons/specto_about.png')
 
-        translator_credits = _("translator-credits-your-names-go-here")
+        # gtk.AboutDialog will detect if "translator-credits" is untranslated,
+        # and hide the tab.
+        translator_credits = _("translator-credits")
 
         #create tree
         self.about=gtk.AboutDialog()
 
         self.about.set_name("Specto")
         self.about.set_version(version)
-        self.about.set_copyright("Jean-Francois Fortin Tam")
+        self.about.set_copyright("Copyright © Jean-François Fortin Tam & Wout Clymans")
         #self.wTree.set_comments(comments)
         self.about.set_license(license)
         #self.wTree.set_wrap_license(license)

@@ -25,7 +25,8 @@ from spectlib.watch import Watch
 import spectlib.config
 from spectlib.i18n import _
 
-import os, re
+import os
+import re
 from stat import *
 
 type = "Watch_system_folder"
@@ -33,34 +34,27 @@ type_desc = _("Folder")
 icon = 'folder'
 category = _("System")
 
+
 def get_add_gui_info():
-    return [
-            ("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))
-           ]
+    return [("folder", spectlib.gtkconfig.FolderChooser(_("Folder")))]
 
 
 class Watch_system_folder(Watch):
-    """ 
-    Watch class that will check if a folder has been changed. 
     """
-    
+    Watch class that will check if a folder has been changed.
+    """
+
     def __init__(self, specto, id, values):
-        
-        watch_values = [ 
-                        ( "folder", spectlib.config.String(True) )
-                       ]
-        
+        watch_values = [("folder", spectlib.config.String(True))]
+
         self.icon = icon
-        self.standard_open_command = ''
+        self.standard_open_command = "xdg-open %s" % values['folder']
         self.type_desc = type_desc
-                
+
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
-        if self.standard_open_command == self.open_command:
-            self.standard_open_command = "nautilus " + self.folder
-            self.open_command = self.standard_open_command
-        
-        self.cache_file = os.path.join(self.specto.CACHE_DIR, "folder" + self.folder.replace("/","_") + ".cache")                
+
+        self.cache_file = os.path.join(self.specto.CACHE_DIR, "folder" + self.folder.replace("/", "_") + ".cache")
         self.first_time = False
         self.info = {}
         self.info['removed'] = [0, ""]
@@ -68,7 +62,7 @@ class Watch_system_folder(Watch):
         self.info['modified'] = [0, ""]
 
     def check(self):
-        """ See if a folder's contents were modified or created. """        
+        """ See if a folder's contents were modified or created. """
         try:
             self.old_values = self.read_cache_file()
             mode = os.stat(self.folder)[ST_MODE]
@@ -81,22 +75,22 @@ class Watch_system_folder(Watch):
                 self.update_cache_file()#write the values (with the removed lines) to the cache file
             else:
                 self.error = True
-                self.specto.logger.log(_('watch is not set to a folder'), "error", self.name)
-                
+                self.specto.logger.log(_('The watch is not set to a folder'), "error", self.name)
+
             #first time don't mark as changed
             if self.first_time == True:
                 self.actually_changed = False
-                self.first_time = False            
+                self.first_time = False
         except:
             self.error = True
-            self.specto.logger.log(_("Unexpected error: "), sys.exc_info()[0], "error", self.name)
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
 
         Watch.timer_update(self)
-                
+
     def get_file(self, file_):
         """ Get the info from a file and compair it with the previous info. """
         size = int(os.stat(file_)[6]) #mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime = info
-        file_ = file_.replace("?","\?") \
+        file_ = file_.replace("?", "\?") \
                      .replace("(", "\(") \
                      .replace(")", "\)") \
                      .replace("^", "\^") \
@@ -115,10 +109,10 @@ class Watch_system_folder(Watch):
                      .replace("\]", "]") \
                      .replace("\$", "$") \
                      .replace("\+", "+") \
-                     .replace("\.", ".") 
+                     .replace("\.", ".")
                      #.replace("\\", "\")
 
-        if old_size and str(size): 
+        if old_size and str(size):
             old_size = int(old_size.group(1))
             if size != old_size:
                 #replace filesize
@@ -132,7 +126,7 @@ class Watch_system_folder(Watch):
             self.info['created'][0] += 1
             self.info['created'][1] += file_ + "\n"
             self.actually_changed = True
-            
+
     def get_dir(self, dir_):
         """ Recursively walk a directory. """
         for f in os.listdir(dir_):
@@ -145,7 +139,7 @@ class Watch_system_folder(Watch):
                 self.get_file(pathname)
             else: # Unknown file type
                 self.specto.logger.log(_("Skipping %s") % pathname, "debug", self.name)
-                
+
     def get_removed_files(self):
         """ Get the removed files. """
         old_values_ = self.old_values.split("\n")
@@ -159,7 +153,7 @@ class Watch_system_folder(Watch):
             else:
                 self.old_values += old_values_[y] + "\n"
             y+=1
-            
+
     def get_balloon_text(self):
         """ create the text for the balloon """
         created = self.info['created'][0]
@@ -181,9 +175,9 @@ class Watch_system_folder(Watch):
                 text += _("1 file was modified.\n")
             else:
                 text += str(modified) + _(" files were modified.\n")
-        
+
         return text
-    
+
     def get_extra_information(self):
         created = self.info['created'][0]
         removed = self.info['removed'][0]
@@ -192,20 +186,18 @@ class Watch_system_folder(Watch):
         if created > 0:
             text += '<span foreground=\"green\">' + self.escape(self.info['created'][1]) + '</span>'
         if removed > 0:
-            text += '<span foreground=\"red\">' + self.escape(self.info['removed'][1]) + '</span>'            
+            text += '<span foreground=\"red\">' + self.escape(self.info['removed'][1]) + '</span>'
         if modified > 0:
-            text += '<span foreground=\"yellow\">' + self.escape(self.info['modified'][1]) + '</span>'                
-                        
+            text += '<span foreground=\"yellow\">' + self.escape(self.info['modified'][1]) + '</span>'
+
         return text
-    
+
     def escape(self, text):
         text = text.replace('&', '&amp;') \
                    .replace('<', '&lt;') \
-                   .replace('>', '&gt;') 
+                   .replace('>', '&gt;')
         return text
-        
-    
-        
+
     def update_cache_file(self):
         """ Write the new values in the cache file. """
         try:
@@ -215,7 +207,7 @@ class Watch_system_folder(Watch):
             self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.name)
         finally:
             f.close()
-        
+
     def read_cache_file(self):
         """ Read the options from the cache file. """
         try:
@@ -229,17 +221,16 @@ class Watch_system_folder(Watch):
                 f.close()
             else:
                 self.first_time = True
-                
-            return text                
+
+            return text
         except:
             self.specto.logger.log(_("There was an error opening the file %s") % self.cache_file, "critical", self.name)
-            
+
     def remove_cache_files(self):
-        os.unlink(self.cache_file)          
-        
+        os.unlink(self.cache_file)
 
     def get_gui_info(self):
-        return [ 
+        return [
                 (_('Name'), self.name),
                 (_('Last changed'), self.last_changed),
                 (_('Folder'), self.folder),

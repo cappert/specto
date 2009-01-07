@@ -21,9 +21,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import os, sys
+import os
+import sys
 from spectlib.tools.specto_gconf import Specto_gconf
-import gnomevfs
+import gnomevfs  # FIXME: gnomevfs is deprecated, we should use gio
+
 
 def return_webpage(webpage):
     """ Open the webpage in the default browser. """
@@ -31,8 +33,10 @@ def return_webpage(webpage):
     default_browser = specto_gconf.get_entry("command")
     return (default_browser % webpage) #return the browser with the page
 
+
 def show_webpage(webpage):
     os.system(return_webpage(webpage) + " &")
+
 
 def open_gconf_application(key):
     """ Get the name from gconf and open the application. """
@@ -41,12 +45,14 @@ def open_gconf_application(key):
     if "mailto" in key:
         application = application.replace(" %s", "")#this is an ugly hack, because evolution really doesn't want to startup with %s
     return application
-    
+
+
 def open_file_watch(f):
     """ Open a file with the correct application (mime). """
     mime_type = gnomevfs.get_mime_type(f)
     application = gnomevfs.mime_get_default_application(mime_type)
     return application[2] + " \"" + f + "\""
+
 
 def get_path(category=None):
     """ Return the correct path. """
@@ -64,7 +70,7 @@ def get_path(category=None):
             PATH = os.path.join(os.getcwd(), "data/doc/")
         elif category=="src":
             PATH = os.path.dirname(os.path.abspath(__file__))
-            
+
     if category == "specto":
         try:
             PATH = os.path.join(os.environ['XDG_CONFIG_HOME'],
@@ -74,7 +80,7 @@ def get_path(category=None):
                                               "specto")
         if not os.path.exists(PATH):
             os.makedirs(PATH)
-            os.chmod(PATH, 0700)  # Meet XDG spec        
+            os.chmod(PATH, 0700)  # Meet XDG spec
 
     if category == "tmp":
         try:
@@ -85,7 +91,7 @@ def get_path(category=None):
                                               "specto")
         if not os.path.exists(PATH):
             os.makedirs(PATH)
-            os.chmod(PATH, 0700)  # Meet XDG spec        
+            os.chmod(PATH, 0700)  # Meet XDG spec
     return PATH
 
 
@@ -102,7 +108,7 @@ def get_file():
         if not os.path.exists(dirname):
             os.makedirs(dirname)
             os.chmod(dirname, 0700)  # Meet XDG spec
-        f = open(file_name,"w")
+        f = open(file_name, "w")
         f.close()
         # As we store passwords make sure only user can read the watch file
         os.chmod(file_name, 0600)

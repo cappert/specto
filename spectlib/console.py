@@ -34,9 +34,7 @@ class Console:
             if args == "--only-changed":
                 self.only_changed = True
             elif args == "--help":
-                print _('\nSpecto console version\n\nUse "specto \
-                    --console --only-changed" to show only \
-                                watch changes notifications.\n\n')
+                print _('\nSpecto console version\n\nUse "specto --console --only-changed" to show only watch changes notifications.\n\n')
                 sys.exit(0)
 
     def start_watches(self):

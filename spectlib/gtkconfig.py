@@ -341,10 +341,7 @@ class ErrorDialog():
                                                          gtk.ICON_SIZE_DIALOG)
 
         self.wTree.get_widget("label4").set_use_markup(True)
-        self.wTree.get_widget("label4").set_label(_("<b>Specto encountered \
-            an error</b>\nPlease verify if this bug has been entered \
-            in our issue tracker, and if not, file a bug report \
-            so we can fix it."))
+        self.wTree.get_widget("label4").set_label(_("<b>Specto encountered an error</b>\nPlease verify if this bug has been entered in our issue tracker, and if not, file a bug report so we can fix it."))
 
     def send(self, *args):
         url = "http://code.google.com/p/specto/issues/list"
