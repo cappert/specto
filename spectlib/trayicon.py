@@ -155,7 +155,7 @@ class Tray:
         self.sub_item_clear.set_image(image)
         image.show()
 
-        self.sub_item_clear.connect('activate', self.specto.notifier.clear_all)
+        self.sub_item_clear.connect('activate', self.specto.notifier.mark_all_as_read)
         self.sub_menu.append(self.sub_item_clear)
 
         self.sub_menu.append(gtk.SeparatorMenuItem())
@@ -165,7 +165,7 @@ class Tray:
                 self.sub_item_clear = gtk.ImageMenuItem(watch.name, True)
                 image = gtk.image_new_from_pixbuf(self.notifier.get_icon(watch.icon, 0, False))
                 self.sub_item_clear.set_image(image)
-                self.sub_item_clear.connect('activate', self.specto.notifier.clear_watch, watch.id)
+                self.sub_item_clear.connect('activate', self.specto.notifier.mark_watch_as_read, watch.id)
                 self.sub_menu.append(self.sub_item_clear)
 
         self.sub_menu.show_all()

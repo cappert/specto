@@ -85,7 +85,7 @@ class Watch_mail_gmail(Watch):
             self.mail_info.clear_old()
             if self.oldMsg == 0:#no unread messages, we need to clear the watch
                 self.actually_changed = False
-                self.specto.mark_watch_status("clear", self.id)
+                self.specto.mark_watch_status("idle", self.id)
             else:
                 i = 0
                 while i < self.oldMsg and i < 20: # i < 20 is a hack around the gmail limitation of metadata retrieval (does not affect message count)
