@@ -395,7 +395,7 @@ class Notifier:
                 self.wTree.get_widget("clear").set_sensitive(True)
                 self.wTree.get_widget("btnClear").set_sensitive(True)
                 try:
-                    if watch.get_extra_information() <> "":
+                    if watch.get_extra_information() != "":
                         self.wTree.get_widget("lblExtraInfo").set_label(watch.get_extra_information())
                 except:
                     self.specto.logger.log(_("Extra information could not be set"), "error", self.specto.watch_db[id].name)
