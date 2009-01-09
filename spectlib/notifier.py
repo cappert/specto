@@ -208,9 +208,11 @@ class Notifier:
                     self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_BOLD)
                     self.wTree.get_widget("button_clear_all").set_sensitive(True)
                     self.wTree.get_widget("clear_all1").set_sensitive(True)
-                    if self.model.iter_is_valid(self.iter[id]):
-                        icon = self.get_icon(watch.icon, 0, False)
+                    icon = self.get_icon(watch.icon, 0, False)
                 else:
+                    self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_NORMAL)
+                    self.wTree.get_widget("button_clear_all").set_sensitive(False)
+                    self.wTree.get_widget("clear_all1").set_sensitive(False)                
                     icon = self.get_icon(watch.icon, 50, False)
 
             elif status == "no-network":
