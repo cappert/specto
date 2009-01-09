@@ -88,7 +88,7 @@ class Watch_vc_bazaar(Watch):
                         self.write_cache_file()
             else:
                 self.error = True
-                self.specto.logger.log(_("No remote branch available, you will not be notified of differences and changes."), "warning", self.name)
+                self.specto.logger.log(_("No parent branch available, you will not be notified of differences and changes."), "warning", self.name)
 
         except NotBranchError, e:
             self.error = True
@@ -104,9 +104,9 @@ class Watch_vc_bazaar(Watch):
         msg = ""
         if len(self.local_extra) <> 0:
             if len(self.local_extra) == 1:
-                msg = _("One new local revision on your branch <b>%s</b> has not yet been pushed to the remote branch.") % self.name
+                msg = _("One new local revision on <b>%s</b> has not yet been merged with its parent branch.") % self.name
             else:
-                msg = _("%d new local revisions on your branch <b>%s</b> have not yet been pushed to the remote branch.") % (len(self.local_extra), self.name)
+                msg = _("%d new local revisions on <b>%s</b> have not yet been merged with its parent branch.") % (len(self.local_extra), self.name)
         if len(self.remote_extra) <> 0:
             if len(self.remote_extra) == 1:
                 msg = _("One new revision on the remote branch for <b>%s</b>.") % self.name
