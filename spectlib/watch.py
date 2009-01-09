@@ -98,16 +98,16 @@ class Watch:
             self.specto.logger.log(_("There was an error stopping the watch"),\
                                                             "error", self.name)
 
-    def clear(self):
-        """ clear the watch """
+    def mark_as_read(self):
+        """ mark the watch as read """
         try:
             self.changed = False
             self.watch_io.write_option(self.name, 'changed', self.changed)
             if not self.error:
-                self.specto.mark_watch_status("idle-clear", self.id)
+                self.specto.mark_watch_status("idle", self.id)
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error clearing the watch"),\
+            self.specto.logger.log(_("There was an error marking the watch as read"),\
                                                             "error", self.name)
 
     def restart(self):
@@ -118,8 +118,6 @@ class Watch:
 
     def start_checking(self):
         try:
-            if self.changed == True:
-                self.specto.mark_watch_status("mark-changed", self.id)
             if self.use_network:
                 if not self.check_connection():
                     return
@@ -185,7 +183,7 @@ class Watch:
             self.specto.mark_watch_status("no-network", self.id)
             return False
         else:
-            self.specto.mark_watch_status("network", self.id)
+            self.specto.mark_watch_status("idle", self.id)
             return True
 
     def get_values(self):
@@ -321,10 +319,10 @@ class Watch_collection:
         """ get a watch object """
         return self.watch_db[id]
 
-    def clear_all_watches(self):
+    def mark_all_watches_as_read(self):
         """ mark all watches as not changed """
         for watch in self.watch_db:
-            watch.clear()
+            watch.mark_as_read()
 
     def start_all_watches(self):
         """ start all watches in the collection """

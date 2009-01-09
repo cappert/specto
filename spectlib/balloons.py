@@ -41,7 +41,7 @@ class NotificationToast:
 
     def __open_watch(self, n, action, id):
         if self.specto.notifier.open_watch(id):
-            self.specto.notifier.clear_watch('', id)
+            self.specto.notifier.mark_watch_as_read('', id)
 
     def __init__(self, specto, notifier):
         global notifyInitialized
