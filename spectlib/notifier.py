@@ -214,7 +214,7 @@ class Notifier:
                     self.wTree.get_widget("button_clear_all").set_sensitive(False)
                     self.wTree.get_widget("clear_all1").set_sensitive(False)                
                     icon = self.get_icon(watch.icon, 50, False)
-
+                statusbar.push(0, "")  # As per HIG, make the status bar empty when nothing is happening
             elif status == "no-network":
                 statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The network connection seems to be down, networked watches will not check until then.')))
                 self.tray.show_tooltip()
