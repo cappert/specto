@@ -85,7 +85,7 @@ class Watch_vc_bazaar(Watch):
                         self.actually_changed = True
                         self.write_cache_file()
                         
-                if len(self.local_extra) == 0 and len(self.remote_extra) == 0:
+                if not self.local_extra and not self.remote_extra:
                     self.mark_as_read()
             else:
                 self.specto.logger.log(_("No remote copy available"), "info", self.name)
