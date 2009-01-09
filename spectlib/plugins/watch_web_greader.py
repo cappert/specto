@@ -74,9 +74,7 @@ class Watch_web_greader(Watch):
                 self.error = True
                 self.specto.logger.log(('%s') % unread[1], "error", self.name)
             elif unread[0] == 1:#no unread items, we need to clear the watch
-                self.unreadMsg = unread[1]
-                self.actually_changed = False
-                self.specto.mark_watch_status("clear", self.id)
+                self.mark_as_read()
                 self.news_info = Feed_collection()
             else:
                 self.unreadMsg = int(unread[1])
@@ -90,7 +88,7 @@ class Watch_web_greader(Watch):
                     _feed = Feed(feed, info[feed])
                     if self.news_info.add(_feed):
                         self.actually_changed = True
-                        self.newMsg+=1
+                        self.newMsg += 1
 
                 self.news_info.remove_old()
                 self.write_cache_file()

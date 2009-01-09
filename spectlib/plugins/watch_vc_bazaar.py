@@ -58,6 +58,8 @@ class Watch_vc_bazaar(Watch):
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
+        self.use_network = True
+
         self.local_branch_ = 0
         self.remote_branch_ = 0
         self.remote_branch_label = ""
@@ -84,8 +86,12 @@ class Watch_vc_bazaar(Watch):
                     if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
                         self.actually_changed = True
                         self.write_cache_file()
+                        
+                if not self.local_extra and not self.remote_extra:
+                    self.mark_as_read()
             else:
-                self.specto.logger.log(_("No remote copy available"), "info", self.name)
+                self.error = True
+                self.specto.logger.log(_("No parent branch available, you will not be notified of differences and changes."), "warning", self.name)
 
         except NotBranchError, e:
             self.error = True
@@ -101,15 +107,14 @@ class Watch_vc_bazaar(Watch):
         msg = ""
         if len(self.local_extra) <> 0:
             if len(self.local_extra) == 1:
-                msg = _("One new revision on your local branch.")
+                msg = _("One new local revision on <b>%s</b> has not yet been merged with its parent branch.") % self.name
             else:
-                msg = _("%d new revisions on your local branch.") % len(self.local_extra)
+                msg = _("%d new local revisions on <b>%s</b> have not yet been merged with its parent branch.") % (len(self.local_extra), self.name)
         if len(self.remote_extra) <> 0:
             if len(self.remote_extra) == 1:
-                msg = _("One new revision on the remote branch.")
+                msg = _("One new revision on the remote branch for <b>%s</b>.") % self.name
             else:
-                print self.remote_extra[0]
-                msg = _("%d new revisions on the remote branch.") % len(self.remote_extra)
+                msg = _("%d new revisions on the remote branch for <b>%s</b>.") % (len(self.remote_extra), self.name)
         return msg
 
     def get_extra_information(self):
