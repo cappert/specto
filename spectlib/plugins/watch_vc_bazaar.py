@@ -114,7 +114,6 @@ class Watch_vc_bazaar(Watch):
             if len(self.remote_extra) == 1:
                 msg = _("One new revision on the remote branch for <b>%s</b>.") % self.name
             else:
-                print self.remote_extra[0]
                 msg = _("%d new revisions on the remote branch for <b>%s</b>.") % (len(self.remote_extra), self.name)
         return msg
 
