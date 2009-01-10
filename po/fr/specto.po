@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Specto\n"
-"POT-Creation-Date: 2009-01-09 17:39+EST\n"
-"PO-Revision-Date: 2009-01-09 17:42-0500\n"
+"POT-Creation-Date: 2009-01-10 12:36+EST\n"
+"PO-Revision-Date: 2009-01-10 12:36-0500\n"
 "Last-Translator: Jean-François Fortin Tam\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -293,8 +293,8 @@ msgid "Select a File"
 msgstr "Sélectionnez un fichier"
 
 #: ../data/glade/preferences.glade.h:15
-msgid "Show balloons from the notification icon when a watch has changed"
-msgstr "Afficher des bulles d'alerte lorsqu'un observateur a changé"
+msgid "Show notifications when a watch has changed"
+msgstr "Afficher les notifications lorsqu'un observateur a changé"
 
 #: ../data/glade/preferences.glade.h:16
 msgid "Use GNOME keyring to store passwords in encrypted format"

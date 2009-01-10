@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-01-09 17:39+EST\n"
+"POT-Creation-Date: 2009-01-10 12:36+EST\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -270,7 +270,7 @@ msgid "Select a File"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:15
-msgid "Show balloons from the notification icon when a watch has changed"
+msgid "Show notifications when a watch has changed"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:16
