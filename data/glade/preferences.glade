@@ -39,7 +39,7 @@
                           <widget class="GtkCheckButton" id="chk_libnotify">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">Show balloons from the notification icon when a watch has changed</property>
+                            <property name="label" translatable="yes">Show notifications when a watch has changed</property>
                             <property name="use_underline">True</property>
                             <property name="response_id">0</property>
                             <property name="active">True</property>
