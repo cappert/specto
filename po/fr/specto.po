@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Specto\n"
 "POT-Creation-Date: 2009-01-10 12:36+EST\n"
-"PO-Revision-Date: 2009-01-10 12:36-0500\n"
+"PO-Revision-Date: 2009-02-22 15:55-0500\n"
 "Last-Translator: Jean-François Fortin Tam\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -893,7 +893,7 @@ msgstr "Le processus système, <b>%s</b>, a démarré."
 
 #: ../spectlib/plugins/watch_system_process.py:100
 msgid "The system process, <b>%s</b>, has stopped."
-msgstr "Le site processus système, <b>%s</b>, s'est arrêté."
+msgstr "Le processus système, <b>%s</b>, s'est arrêté."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:36
 msgid "Bazaar"
