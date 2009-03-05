@@ -48,7 +48,7 @@ def open_gconf_application(key):
 
 def get_path(category=None):
     """ Return the correct path. """
-    if not os.path.exists('data') and not os.path.exists('spectlib'):
+    if not os.path.exists('data') or not os.path.exists('spectlib'):
         if not category:
             PATH = "%s/share/specto/" % sys.prefix
         elif category=="doc":
