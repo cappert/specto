@@ -211,7 +211,6 @@ class Notifier:
                     icon = self.get_icon(watch.icon, 0, False)
                 else:
                     self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_NORMAL)
-                    self.wTree.get_widget("button_clear_all").set_sensitive(False)
                     self.wTree.get_widget("clear_all1").set_sensitive(False)                
                     icon = self.get_icon(watch.icon, 50, False)
                 statusbar.push(0, "")  # As per HIG, make the status bar empty when nothing is happening
