@@ -79,6 +79,7 @@ class Specto:
 
         self.glade_gettext = gettext.textdomain("specto")
         self.logger = Logger(self)
+
         self.check_instance() #see if specto is already running
         self.specto_gconf = specto_gconf
         self.check_default_settings()
@@ -91,8 +92,7 @@ class Specto:
         self.watch_db = Watch_collection(self)
         self.watch_io = Watch_io(self, self.FILE)
 
-        if sys.argv[1:]:
-            if "--console" in sys.argv[1:][0]:
+        if (sys.argv[1:] and "--console" in sys.argv[1:][0]) or not self.GTK:
                 self.logger.log(_("Console mode enabled."), "debug", "specto")
                 self.GTK = False
                 self.CONSOLE = True
@@ -117,6 +117,8 @@ class Specto:
                 self.notifier_hide = True
             else:#just in case the entry was never created in gconf
                 self.notifier_keep_hidden = False
+        else:
+            sys.exit(0)
 
         #listen for gconf keys
         self.specto_gconf.notify_entry("debug_mode", self.key_changed, "debug")
@@ -192,15 +194,17 @@ class Specto:
         os.chmod(pidfile, 0600)
 
         #see if specto is already running
-        f=open(pidfile, "r")
+        f = open(pidfile, "r")
         pid = f.readline()
         f.close()
         if pid:
-            p=os.system("ps --no-heading --pid " + pid)
-            p_name=os.popen("ps -f --pid " + pid).read()
+            p = os.system("ps --no-heading --pid " + pid)
+            p_name = os.popen("ps -f --pid " + pid).read()
             if p == 0 and "specto" in p_name:
-                self.logger.log(_("Specto is already running!"), \
-                                    "critical", "specto")
+                if DEBUG:
+                    self.logger.log(_("Specto is already running!"), "critical", "specto")
+                else:
+                    print _("Specto is already running!")
                 sys.exit(0)
 
         #write the pid file
