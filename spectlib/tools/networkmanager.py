@@ -64,20 +64,38 @@ class NMListener(CallbackRunner):
 
     def __init__(self, bus):
         super(NMListener, self).__init__()
+        self.nm_7 = False
         nmProxy = bus.get_object('org.freedesktop.NetworkManager',
                                  '/org/freedesktop/NetworkManager')
-        self.nmIface = dbus.Interface(nmProxy,
+        
+        try:
+            self.nmIface = dbus.Interface(nmProxy,"org.freedesktop.DBus.Properties") 
+            bus.add_signal_receiver(self.on_nm_event,
+                                      'StateChanged', 
+                                      'org.freedesktop.NetworkManager', 
+                                      'org.freedesktop.NetworkManager', 
+                                      '/org/freedesktop/NetworkManager')
+            self.lastStatus = self.nmIface.Get("org.freedesktop.NetworkManager", "State")
+            self.nm_7 = True
+        except:
+       
+            self.nmIface = dbus.Interface(nmProxy,
                                       'org.freedesktop.NetworkManager')
-        self.nmIface.connect_to_signal('DeviceNoLongerActive', \
-                                       self.on_nm_event,\
-                                       'org.freedesktop.NetworkManager')
-        self.nmIface.connect_to_signal('DeviceNowActive', self.on_nm_event,
-                                       'org.freedesktop.NetworkManager')
-        self.lastStatus = self.nmIface.state()
+            
+            self.nmIface.connect_to_signal('DeviceNoLongerActive',
+                                           self.on_nm_event,
+                                           'org.freedesktop.NetworkManager')
+            self.nmIface.connect_to_signal('DeviceNowActive', 
+                                           self.on_nm_event,
+                                           'org.freedesktop.NetworkManager')
+            self.lastStatus = self.nmIface.state()
 
     def on_nm_event(self, *args, **kwargs):
         wasConnected = self.connected()
-        self.lastStatus = self.nmIface.state()
+        if self.nm_7:
+            self.lastStatus = self.nmIface.Get("org.freedesktop.NetworkManager", "State")
+        else:
+            self.lastStatus = self.nmIface.state()
         if (not wasConnected) and self.connected():
             self._run_callbacks()
 
@@ -88,7 +106,10 @@ class NMListener(CallbackRunner):
         ### It seems that the only way of being sure the service exists
         ### is to actually try to use it!
         try:
-            self.nmIface.state()
+            if self.nm_7:
+                self.nmIface.Get("org.freedesktop.NetworkManager", "State")
+            else:
+                self.nmIface.state()
         except dbus.DBusException:
             return False
         return True
