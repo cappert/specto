@@ -159,7 +159,7 @@ class Watch_system_folder(Watch):
         created = self.info['created'][0]
         removed = self.info['removed'][0]
         modified = self.info['modified'][0]
-        text = _("<b>%s</b> has changed:\n") % self.name
+        text = ""
         if created > 0:
             if created == 1:
                 text += _("1 new file was created.\n")

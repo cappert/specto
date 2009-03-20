@@ -107,14 +107,14 @@ class Watch_vc_bazaar(Watch):
         msg = ""
         if len(self.local_extra) <> 0:
             if len(self.local_extra) == 1:
-                msg = _("One new local revision on <b>%s</b> has not yet been merged with its parent branch.") % self.name
+                msg = _("One new local revision has not yet been merged with its parent branch.")
             else:
-                msg = _("%d new local revisions on <b>%s</b> have not yet been merged with its parent branch.") % (len(self.local_extra), self.name)
+                msg = _("%d new local revisions have not yet been merged with its parent branch.") % len(self.local_extra)
         if len(self.remote_extra) <> 0:
             if len(self.remote_extra) == 1:
-                msg = _("One new revision on the remote branch for <b>%s</b>.") % self.name
+                msg = _("One new revision on the remote branch.")
             else:
-                msg = _("%d new revisions on the remote branch for <b>%s</b>.") % (len(self.remote_extra), self.name)
+                msg = _("%d new revisions on the remote branch.") % len(self.remote_extra)
         return msg
 
     def get_extra_information(self):
