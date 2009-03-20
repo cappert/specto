@@ -167,7 +167,6 @@ class Specto:
             ["always_show_icon", False], #True would be against the HIG!
             ["debug_mode", False],
             ["follow_website_redirects", True],
-            ["pop_toast_duration", 5],
             ["pop_toast", True],
             ["show_deactivated_watches", True],
             ["show_in_windowlist", True],

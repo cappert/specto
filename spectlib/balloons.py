@@ -79,9 +79,6 @@ class NotificationToast:
             tray_x = self.notifier.tray.get_x()
             tray_y = self.notifier.tray.get_y()
             self.toast = pynotify.Notification(summary, body)
-            self.timeout = self.specto.specto_gconf.get_entry("pop_toast_duration") * 1000
-            if self.timeout:
-                self.toast.set_timeout(self.timeout)
             if name:
                 # If name is not None and exists in specto.watch_db, a button is added to the notification
                 w = self.specto.watch_db.find_watch(name)
