@@ -90,9 +90,9 @@ class Watch_mail_imap(Watch):
             self.specto.logger.log(('%s') % str(e), "warning", self.name)
         else:
             try:
-                if folder <> "":
+                if self.folder != "":
                     try:
-                        server.select(folder, readonly=1)
+                        server.select(self.folder, readonly=1)
                     except:
                         pass
                 else:
