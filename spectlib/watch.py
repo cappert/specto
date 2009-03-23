@@ -253,13 +253,14 @@ class Watch_collection:
 
     def load_plugins(self):
         dir = self.specto.SRC_PATH + "/plugins/"
+        sys.path.append(dir)
         for f in os.listdir(dir):
             if f[-3:] == ".py" and f != "__init__.py":
                 if not os.path.exists('data'):
                     dir = "spectlib.plugins."
                 else:
                     dir = "spectlib/plugins/"
-                _file = dir + f[:-3]
+                _file = f[:-3]
                 try:
                     mod = __import__(_file, globals(), locals(), [''])
                     obj = sys.modules[_file]

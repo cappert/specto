@@ -2,7 +2,7 @@
 Individual entries in these release notes are alphabetical, not chronological.
 This file is updated only at "release time".
 
-Specto 0.3: 2009 01 10
+Specto 0.3: 2009 03 20
 ======================
 Upgrading to this release is strongly recommended, as it solves a huge amount of issues reported in the 0.2.x series, is more stable, implements new features, is more secure and easier to maintain.
 This release contains lots of architectural changes. The watch system is now a plugin system, the watch list has changed, GNOME keyring is now used for encrypting passwords by default (though you can disable it), and the configuration/cache directories are now based on the XDG user directory specification. As such, you will need to import your watch list if upgrading from Specto 0.2.x. You may also need to reset (overwrite) your passwords, or convert them to plain text before upgrading.
@@ -38,6 +38,7 @@ Features
     * Issue #178: Add direct access to the "remove" functionnality
     * Issue #180: keyring vs plaintext conversion should be smart and automatic
     * Issue #190: Insanely faster startup (performance profiling)
+    * Issue #212: when adding a watch, focus the name entry
     * Major changes in terminology, as discussed on the mailing list
     * Make some watch names clearer
     * More error-handling
@@ -94,6 +95,8 @@ Bug fixes
     * Issue #172: Error balloons must not be attached to the notification area
     * Issue #174: GTK warnings about using the same menu twice
     * Issue #177: D-BUS error string not translated
+    * Issue #181: "mark as read" button becomes insensitive after global watch refresh
+    * Issue #185: network-manager 0.7 compatibility
     * Prevent fuzzy text in the notifier on startup, using pango.WEIGHT_NORMAL
     * Slight label alignment adjustment in the log viewer
     * Touch up the notification balloon punctuation for multiple items watches
@@ -114,6 +117,8 @@ Maintainability
     * Issue #20: Code modularization
     * Issue #39: POP3 & IMAP watches not on par with gmail watch's message counting logic
     * Issue #176: Clean up translatable logger strings
+    * Issue #211: remove the --help commandline parameter
+    * Issue #215: remove balloon duration and action features to conform to notify-osd
     * Move copyright headers to AUTHORS file to ease maintenance and relevance
     * New "watches as plugins" system
     * Refactor this ChangeLog to make it as release notes only

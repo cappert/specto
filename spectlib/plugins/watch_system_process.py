@@ -95,9 +95,9 @@ class Watch_system_process(Watch):
     def get_balloon_text(self):
         """ create the text for the balloon """
         if self.check_process():
-            text = _("The system process, <b>%s</b>, has started.") % self.name
+            text = _("The system process has started.")
         elif self.check_process()==False:#the process check returned false, which means the process is not running
-            text = _("The system process, <b>%s</b>, has stopped.") % self.name
+            text = _("The system process has stopped.")
         return text
 """
 Nick Craig-Wood <nick at craig-wood.com> -- http://www.craig-wood.com/nick
