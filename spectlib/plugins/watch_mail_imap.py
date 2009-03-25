@@ -39,7 +39,8 @@ def get_add_gui_info():
     return [("username", spectlib.gtkconfig.Entry(_("Username"))),
             ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
             ("host", spectlib.gtkconfig.Entry(_("Host"))),
-            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))]
+            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL"))),
+            ("folder", spectlib.gtkconfig.Entry(_("Folder (optional)")))]
 
 
 class Watch_mail_imap(Watch):
@@ -88,6 +89,9 @@ class Watch_mail_imap(Watch):
         except imaplib.IMAP4.error, e:
             self.error = True
             self.specto.logger.log(('%s') % str(e), "warning", self.name)
+        except:
+            self.error = True
+            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)            
         else:
             try:
                 if folder <> "":
