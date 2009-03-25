@@ -56,7 +56,7 @@ class Watch_mail_imap(Watch):
                         ("port", spectlib.config.Integer(False)),
                         ("folder", spectlib.config.String(False))]
 
-        self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
+        self.standard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
 
         Watch.__init__(self, specto, id, values, watch_values)
 
