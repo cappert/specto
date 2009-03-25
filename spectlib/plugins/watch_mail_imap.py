@@ -94,11 +94,12 @@ class Watch_mail_imap(Watch):
             self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)            
         else:
             try:
-                if folder <> "":
+                if self.folder <> "":
                     try:
-                        server.select(folder, readonly=1)
+                        server.select(self.folder, readonly=1)
                     except:
-                        pass
+                        self.error = True
+                        self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
                 else:
                     server.select(readonly=1)
                 (retcode, messages) = server.search(None, '(UNSEEN)')
