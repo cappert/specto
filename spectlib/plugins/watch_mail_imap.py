@@ -87,19 +87,16 @@ class Watch_mail_imap(Watch):
                     server = imaplib.IMAP4(self.host)
             server.login(self.username, self.password)
         except imaplib.IMAP4.error, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)
+            self.set_warning(str(e))
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)            
+            self.set_error()           
         else:
             try:
                 if self.folder <> "":
                     try:
                         server.select(self.folder, readonly=1)
                     except:
-                        self.error = True
-                        self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+                        self.set_error()
                 else:
                     server.select(readonly=1)
                 (retcode, messages) = server.search(None, '(UNSEEN)')
@@ -139,11 +136,9 @@ class Watch_mail_imap(Watch):
                 server.logout()
 
             except imaplib.IMAP4.error, e:
-                self.error = True
-                self.specto.logger.log(('%s') % str(e), "error", self.name)
+                self.set_warning(str(e))
             except:
-                self.error = True
-                self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+                self.set_error()
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
