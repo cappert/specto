@@ -58,7 +58,7 @@ class Watch_mail_pop3(Watch):
                         ("ssl", spectlib.config.Boolean(False)),
                         ("port", spectlib.config.Integer(False))]
 
-        self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
+        self.standard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
 
         Watch.__init__(self, specto, id, values, watch_values)
 
@@ -78,15 +78,35 @@ class Watch_mail_pop3(Watch):
         """ Check for new mails on your pop3 account. """
         try:
             if self.ssl == True:
-                if self.port <> -1:
-                    s = poplib.POP3_SSL(self.host, self.port)
+                if self.port != -1:
+                    try:
+                        s = poplib.POP3_SSL(self.host, self.port)
+                    except:
+                        self.set_error()
+                        Watch.timer_update(self)
+                        return ""
                 else:
-                    s = poplib.POP3_SSL(self.host)
+                    try:
+                        s = poplib.POP3_SSL(self.host)
+                    except:
+                        self.set_error()
+                        Watch.timer_update(self)
+                        return ""
             else:
-                if self.port <> -1:
-                    s = poplib.POP3(self.host, self.port)
+                if self.port != -1:
+                    try:
+                        s = poplib.POP3(self.host, self.port)
+                    except:
+                        self.set_error()
+                        Watch.timer_update(self)
+                        return ""                    
                 else:
-                    s = poplib.POP3(self.host)
+                    try:
+                        s = poplib.POP3(self.host)
+                    except:
+                        self.set_error()
+                        Watch.timer_update(self)
+                        return ""
         except poplib.error_protoerror, e:
             self.set_error(str(e))
         except:
@@ -121,8 +141,9 @@ class Watch_mail_pop3(Watch):
             except:
                 self.set_error()
 
-        Watch.timer_update(self)
         self.oldMsg = self.newMsg
+        Watch.timer_update(self)
+
 
     def get_balloon_text(self):
         """ create the text for the balloon """
