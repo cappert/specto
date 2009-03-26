@@ -239,16 +239,7 @@ class Watch:
             self.specto.logger.log(('%s') % str(message), "error", self.name)
         else:
             self.error_message = _("Unexpected error:") + " " + str(sys.exc_info()[1])
-            self.specto.logger.log(self.error_message, "error", self.name)
-            
-    def set_warning(self, message=""):
-        self.error = True
-        if message != "":
-            self.error_message = str(message)
-            self.specto.logger.log(('%s') % str(message), "warning", self.name)
-        else:
-            self.error_message = _("Unexpected error:") + " " + str(sys.exc_info()[1])
-            self.specto.logger.log(self.error_message, "warning", self.name)                       
+            self.specto.logger.log(self.error_message, "error", self.name)                      
 
 
 class Watch_collection:

@@ -88,11 +88,9 @@ class Watch_mail_pop3(Watch):
                 else:
                     s = poplib.POP3(self.host)
         except poplib.error_protoerror, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)
+            self.set_error(str(e))
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
         else:
             try:
                 s.user(self.username)
@@ -119,11 +117,9 @@ class Watch_mail_pop3(Watch):
                 s.quit()
 
             except poplib.error_proto, e:
-                self.error = True
-                self.specto.logger.log(('%s') % str(e), "warning", self.name)
+                self.set_error(str(e))
             except:
-                self.error = True
-                self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+                self.set_error()
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg

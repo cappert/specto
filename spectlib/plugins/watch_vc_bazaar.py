@@ -90,15 +90,12 @@ class Watch_vc_bazaar(Watch):
                 if not self.local_extra and not self.remote_extra:
                     self.mark_as_read()
             else:
-                self.error = True
-                self.specto.logger.log(_("No parent branch available, you will not be notified of differences and changes."), "warning", self.name)
+                self.set_error(_("No parent branch available, you will not be notified of differences and changes."))
 
         except NotBranchError, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)  # This '%s' string here has nothing to translate
+            self.set_error(str(e))
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
 
         Watch.timer_update(self)
 

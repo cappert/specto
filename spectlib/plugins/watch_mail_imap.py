@@ -87,7 +87,7 @@ class Watch_mail_imap(Watch):
                     server = imaplib.IMAP4(self.host)
             server.login(self.username, self.password)
         except imaplib.IMAP4.error, e:
-            self.set_warning(str(e))
+            self.set_error(str(e))
         except:
             self.set_error()           
         else:
@@ -136,7 +136,7 @@ class Watch_mail_imap(Watch):
                 server.logout()
 
             except imaplib.IMAP4.error, e:
-                self.set_warning(str(e))
+                self.set_error(str(e))
             except:
                 self.set_error()
 

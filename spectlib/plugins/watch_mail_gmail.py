@@ -96,11 +96,9 @@ class Watch_mail_gmail(Watch):
             self.mail_info.remove_old()
             self.write_cache_file()
         except URLError, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)  # This '%s' string here has nothing to translate
+            sef.set_error(str(e))  # This '%s' string here has nothing to translate
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
         Watch.timer_update(self)
 
     def get_gui_info(self):

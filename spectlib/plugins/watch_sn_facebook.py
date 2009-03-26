@@ -114,11 +114,9 @@ class Watch_sn_facebook(Watch):
 
                 self.write_cache_file()
             else:
-                self.error = True
-                self.specto.logger.log(_("Wrong username/password"), "warning", self.name)
+                self.set_error((_("Wrong username/password"))
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
 
         Watch.timer_update(self)
 
