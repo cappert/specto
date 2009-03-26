@@ -113,7 +113,7 @@ class Watch_mail_gmail(Watch):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("<b>%s</b> has received a new message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author, self.oldMsg)
+            text = _("New message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (unread_messages[0].author, self.oldMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
@@ -123,7 +123,7 @@ class Watch_mail_gmail(Watch):
                     author_info += "and others..."
                 i += 1
             author_info = author_info.rstrip(", ")
-            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.oldMsg)
+            text = _("%d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.newMsg, author_info, self.oldMsg)
         return text
 
     def get_extra_information(self):

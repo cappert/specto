@@ -52,22 +52,37 @@ class NotificationToast:
             pynotify.init(self._notifyRealm)
             notifyInitialized = True
 
+        # Check the features available from the notification daemon
+        self.capabilities = {'actions': False,
+                        'body': False,
+                        'body-hyperlinks': False,
+                        'body-images': False,
+                        'body-markup': False,
+                        'icon-multi': False,
+                        'icon-static': False,
+                        'sound': False,
+                        'image/svg+xml': False,
+                        'append': False}
+        caps = pynotify.get_server_caps()
+        if caps is None:
+            print "Failed to receive server caps."
+            sys.exit(1)
+        for cap in caps:
+            self.capabilities[cap] = True
+
     def show_toast(self, body, icon=None, urgency="low", summary=_notifyRealm, name=None):
         tray_x = 0
         tray_y = 0
 
         if notifyInitialized:
-            sleep(0.5)  # This is an important hack :) the reason why there is a sleep of half a second is to leave time for the tray icon to appear before getting its coordinates
+            sleep(0.5)  # FIXME: issue #43, associate the balloon with the notification icon properly. Currently, this is a hack to leave time for the tray icon to appear before getting its coordinates
             tray_x = self.notifier.tray.get_x()
             tray_y = self.notifier.tray.get_y()
             self.toast = pynotify.Notification(summary, body)
-            self.timeout = self.specto.specto_gconf.get_entry("pop_toast_duration") * 1000
-            if self.timeout:
-                self.toast.set_timeout(self.timeout)
             if name:
                 # If name is not None and exists in specto.watch_db, a button is added to the notification
                 w = self.specto.watch_db.find_watch(name)
-                if w != -1:
+                if w != -1 and self.capabilities["actions"]:  # Don't request action buttons if the notification daemon (ex: notify-osd) rejects them
                     self.toast.add_action("clicked", gtk.stock_lookup(gtk.STOCK_JUMP_TO)[1].replace('_', ''), self.__open_watch, w)
             self.toast.set_urgency(self._Urgencies[urgency])
             if icon:

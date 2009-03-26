@@ -147,7 +147,7 @@ class Watch_system_file(Watch):
 
     def get_balloon_text(self):
         """ create the text for the balloon """
-        text = _("<b>%s</b> has changed:\n") % self.file
+        text = ""
         for line in self.file_info:
             text += line + "\n"
 

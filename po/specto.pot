@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-01-10 12:36+EST\n"
+"POT-Creation-Date: 2009-03-20 10:42+EDT\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,7 +86,7 @@ msgstr ""
 msgid "<b>Watch options</b>"
 msgstr ""
 
-#: ../data/glade/edit_watch.glade.h:5 ../spectlib/notifier.py:789
+#: ../data/glade/edit_watch.glade.h:5 ../spectlib/notifier.py:788
 msgid "Error log"
 msgstr ""
 
@@ -160,7 +160,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: ../data/glade/notifier.glade.h:10 ../spectlib/notifier.py:493
+#: ../data/glade/notifier.glade.h:10 ../spectlib/notifier.py:492
 #: ../spectlib/trayicon.py:144
 msgid "Mark as read"
 msgstr ""
@@ -238,42 +238,38 @@ msgid "Display the notification window in the window list"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:7
-msgid "Duration (in seconds):"
-msgstr ""
-
-#: ../data/glade/preferences.glade.h:8
 msgid "Enable debug mode and logging"
 msgstr ""
 
-#: ../data/glade/preferences.glade.h:9
+#: ../data/glade/preferences.glade.h:8
 msgid "If activated, you will receive more information when running Specto from a terminal, and more information will be printed to the logs."
 msgstr ""
 
-#: ../data/glade/preferences.glade.h:10
+#: ../data/glade/preferences.glade.h:9
 msgid "It is strongly recommended to use keyring password encryption. If you disable this option, your passwords will be saved in <b>plain text, unencrypted</b> in your watch list, and could be read by anyone gaining access to your system user account."
 msgstr ""
 
-#: ../data/glade/preferences.glade.h:11
+#: ../data/glade/preferences.glade.h:10
 msgid "Play this sound when a problem occurs:"
 msgstr ""
 
-#: ../data/glade/preferences.glade.h:12
+#: ../data/glade/preferences.glade.h:11
 msgid "Play this sound when a watch has changed:"
 msgstr ""
 
-#: ../data/glade/preferences.glade.h:13
+#: ../data/glade/preferences.glade.h:12
 msgid "Preferences"
 msgstr ""
 
-#: ../data/glade/preferences.glade.h:14
+#: ../data/glade/preferences.glade.h:13
 msgid "Select a File"
 msgstr ""
 
-#: ../data/glade/preferences.glade.h:15
+#: ../data/glade/preferences.glade.h:14
 msgid "Show notifications when a watch has changed"
 msgstr ""
 
-#: ../data/glade/preferences.glade.h:16
+#: ../data/glade/preferences.glade.h:15
 msgid "Use GNOME keyring to store passwords in encrypted format"
 msgstr ""
 
@@ -285,36 +281,27 @@ msgstr ""
 msgid "Specto's Website"
 msgstr ""
 
-#: ../spectlib/balloons.py:84
+#: ../spectlib/balloons.py:99
 msgid "Cannot display notification message. Make sure that libnotify and D-Bus are available on your system."
 msgstr ""
 
-#: ../spectlib/console.py:37
-msgid ""
-"\n"
-"Specto console version\n"
-"\n"
-"Use \"specto --console --only-changed\" to show only watch changes notifications.\n"
-"\n"
-msgstr ""
-
-#: ../spectlib/console.py:48 ../spectlib/watch.py:145
+#: ../spectlib/console.py:45 ../spectlib/watch.py:145
 msgid "Watch has changed."
 msgstr ""
 
-#: ../spectlib/console.py:53 ../spectlib/watch.py:124
+#: ../spectlib/console.py:50 ../spectlib/watch.py:124
 msgid "Watch started checking."
 msgstr ""
 
-#: ../spectlib/console.py:55
+#: ../spectlib/console.py:52
 msgid "Watch is idle."
 msgstr ""
 
-#: ../spectlib/console.py:57 ../spectlib/watch.py:181
+#: ../spectlib/console.py:54 ../spectlib/watch.py:181
 msgid "No network connection detected"
 msgstr ""
 
-#: ../spectlib/console.py:59 ../spectlib/watch.py:140 ../spectlib/watch.py:177
+#: ../spectlib/console.py:56 ../spectlib/watch.py:140 ../spectlib/watch.py:177
 msgid "There was an error checking the watch"
 msgstr ""
 
@@ -322,11 +309,11 @@ msgstr ""
 msgid "Edit watch: "
 msgstr ""
 
-#: ../spectlib/edit_watch.py:186 ../spectlib/notifier.py:593
+#: ../spectlib/edit_watch.py:186 ../spectlib/notifier.py:592
 msgid "Remove a watch"
 msgstr ""
 
-#: ../spectlib/edit_watch.py:187 ../spectlib/notifier.py:594
+#: ../spectlib/edit_watch.py:187 ../spectlib/notifier.py:593
 msgid ""
 "<big>Remove the watch \"%s\"?</big>\n"
 "This operation cannot be undone."
@@ -341,12 +328,12 @@ msgid "Select"
 msgstr ""
 
 #: ../spectlib/export_watch.py:92 ../spectlib/import_watch.py:92
-#: ../spectlib/notifier.py:701
+#: ../spectlib/notifier.py:700
 msgid "Type"
 msgstr ""
 
 #: ../spectlib/export_watch.py:98 ../spectlib/import_watch.py:97
-#: ../spectlib/notifier.py:710 ../spectlib/plugins/watch_mail_gmail.py:107
+#: ../spectlib/notifier.py:709 ../spectlib/plugins/watch_mail_gmail.py:107
 #: ../spectlib/plugins/watch_mail_imap.py:180
 #: ../spectlib/plugins/watch_mail_pop3.py:164
 #: ../spectlib/plugins/watch_sn_facebook.py:236
@@ -361,12 +348,12 @@ msgid "Name"
 msgstr ""
 
 #: ../spectlib/export_watch.py:106 ../spectlib/import_watch.py:104
-#: ../spectlib/notifier.py:719
+#: ../spectlib/notifier.py:718
 msgid "ID"
 msgstr ""
 
 #: ../spectlib/export_watch.py:113 ../spectlib/import_watch.py:111
-#: ../spectlib/notifier.py:726
+#: ../spectlib/notifier.py:725
 msgid "TYPE"
 msgstr ""
 
@@ -396,23 +383,23 @@ msgstr ""
 msgid "Console mode enabled."
 msgstr ""
 
-#: ../spectlib/main.py:128
+#: ../spectlib/main.py:130
 msgid "Could not create a watch, because it is corrupt."
 msgstr ""
 
-#: ../spectlib/main.py:202
+#: ../spectlib/main.py:204 ../spectlib/main.py:206
 msgid "Specto is already running!"
 msgstr ""
 
-#: ../spectlib/main.py:249
+#: ../spectlib/main.py:252
 msgid "Cannot quit yet"
 msgstr ""
 
-#: ../spectlib/main.py:255
+#: ../spectlib/main.py:258
 msgid "Murder!"
 msgstr ""
 
-#: ../spectlib/main.py:266
+#: ../spectlib/main.py:269
 msgid ""
 "<b><big>Specto is currently busy and cannot quit yet.</big></b>\n"
 "\n"
@@ -432,71 +419,79 @@ msgstr ""
 msgid "The watch \"%s\" is checking."
 msgstr ""
 
-#: ../spectlib/notifier.py:219 ../spectlib/notifier.py:348
+#: ../spectlib/notifier.py:218 ../spectlib/notifier.py:347
 msgid "The network connection seems to be down, networked watches will not check until then."
 msgstr ""
 
-#: ../spectlib/notifier.py:224
+#: ../spectlib/notifier.py:223
 msgid "The watch \"%s\" has a problem."
 msgstr ""
 
-#: ../spectlib/notifier.py:227
-msgid "The watch, <b>%s</b>, has a problem. You may need to check the error log."
+#: ../spectlib/notifier.py:226
+msgid "%s encountered a problem"
 msgstr ""
 
-#: ../spectlib/notifier.py:233
+#: ../spectlib/notifier.py:226
+msgid "You may need to check the error log."
+msgstr ""
+
+#: ../spectlib/notifier.py:232
 msgid "The watch \"%s\" has changed."
 msgstr ""
 
-#: ../spectlib/notifier.py:263
+#: ../spectlib/notifier.py:245
+msgid "%s has changed"
+msgstr ""
+
+#: ../spectlib/notifier.py:262
 msgid "There was an error marking the watch status"
 msgstr ""
 
-#: ../spectlib/notifier.py:393 ../spectlib/watch.py:237
+#: ../spectlib/notifier.py:392 ../spectlib/watch.py:237
 msgid "No extra information available."
 msgstr ""
 
-#: ../spectlib/notifier.py:401
+#: ../spectlib/notifier.py:400
 msgid "Extra information could not be set"
 msgstr ""
 
-#: ../spectlib/notifier.py:428
+#: ../spectlib/notifier.py:427
 msgid "Watch opened"
 msgstr ""
 
-#: ../spectlib/notifier.py:484
+#: ../spectlib/notifier.py:483
 msgid "Refresh"
 msgstr ""
 
-#: ../spectlib/notifier.py:505
+#: ../spectlib/notifier.py:504
 msgid "Edit"
 msgstr ""
 
-#: ../spectlib/notifier.py:512
+#: ../spectlib/notifier.py:511
 msgid "Remove"
 msgstr ""
 
-#: ../spectlib/notifier.py:545
+#: ../spectlib/notifier.py:544
 msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
 msgstr ""
 
-#: ../spectlib/notifier.py:546
+#: ../spectlib/notifier.py:545
 msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
 msgstr ""
 
-#: ../spectlib/notifier.py:547
+#: ../spectlib/notifier.py:546
 msgid "Single-click an existing watch to display information, and double-click it to open the content."
 msgstr ""
 
-#: ../spectlib/notifier.py:548
+#: ../spectlib/notifier.py:547
 msgid "Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers."
 msgstr ""
 
-#: ../spectlib/notifier.py:694
+#: ../spectlib/notifier.py:693
 msgid "Active"
 msgstr ""
 
-#: ../spectlib/notifier.py:743
+#: ../spectlib/notifier.py:742
 msgid "Tip of the Day:"
 msgstr ""
 
@@ -569,7 +564,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_mail_imap.py:150
 #: ../spectlib/plugins/watch_mail_pop3.py:135
 msgid ""
-"<b>%s</b> has received a new message from <b>%s</b>...\n"
+"New message from <b>%s</b>...\n"
 "\n"
 "... <b>totalling %d</b> unread mails."
 msgstr ""
@@ -578,7 +573,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_mail_imap.py:162
 #: ../spectlib/plugins/watch_mail_pop3.py:147
 msgid ""
-"<b>%s</b> has received %d new messages from <b>%s</b>...\n"
+"%d new messages from <b>%s</b>...\n"
 "\n"
 "... <b>totalling %d</b> unread mails."
 msgstr ""
@@ -728,9 +723,7 @@ msgstr ""
 msgid "Time of last modification changed"
 msgstr ""
 
-#: ../spectlib/plugins/watch_system_file.py:150
 #: ../spectlib/plugins/watch_system_file.py:157
-#: ../spectlib/plugins/watch_system_folder.py:162
 msgid ""
 "<b>%s</b> has changed:\n"
 msgstr ""
@@ -806,11 +799,11 @@ msgid "Status"
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_port.py:114
-msgid "The connection, <b>%s</b>, was established."
+msgid "The network socket on port %s was established."
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_port.py:116
-msgid "The connection, <b>%s</b>, was closed."
+msgid "The network socket on port %s was closed."
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_process.py:31
@@ -828,11 +821,11 @@ msgid "Running"
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_process.py:98
-msgid "The system process, <b>%s</b>, has started."
+msgid "The system process has started."
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_process.py:100
-msgid "The system process, <b>%s</b>, has stopped."
+msgid "The system process has stopped."
 msgstr ""
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:36
@@ -848,19 +841,19 @@ msgid "No parent branch available, you will not be notified of differences and c
 msgstr ""
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:110
-msgid "One new local revision on <b>%s</b> has not yet been merged with its parent branch."
+msgid "One new local revision has not yet been merged with its parent branch."
 msgstr ""
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:112
-msgid "%d new local revisions on <b>%s</b> have not yet been merged with its parent branch."
+msgid "%d new local revisions have not yet been merged with its parent branch."
 msgstr ""
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:115
-msgid "One new revision on the remote branch for <b>%s</b>."
+msgid "One new revision on the remote branch."
 msgstr ""
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:117
-msgid "%d new revisions on the remote branch for <b>%s</b>."
+msgid "%d new revisions on the remote branch."
 msgstr ""
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:172
@@ -882,14 +875,14 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_web_greader.py:111
 msgid ""
-"<b>%s</b> has a new newsitems in <b>%s</b>...\n"
+"New newsitems in <b>%s</b>...\n"
 "\n"
 "... <b>totalling %s</b> unread items."
 msgstr ""
 
 #: ../spectlib/plugins/watch_web_greader.py:121
 msgid ""
-"<b>%s</b> has received %d new newsitems in <b>%s</b>...\n"
+"%d new newsitems in <b>%s</b>...\n"
 "\n"
 "... <b>totalling %s</b> unread items."
 msgstr ""
@@ -923,9 +916,7 @@ msgid "Filesize difference: %.2f"
 msgstr ""
 
 #: ../spectlib/plugins/watch_web_static.py:264
-msgid ""
-"The website, <b>%s</b>, has changed.\n"
-"Difference percentage: %s percent"
+msgid "Difference percentage: %s percent"
 msgstr ""
 
 #: ../spectlib/plugins/watch_web_static.py:282

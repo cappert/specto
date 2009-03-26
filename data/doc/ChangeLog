@@ -2,7 +2,7 @@
 Individual entries in these release notes are alphabetical, not chronological.
 This file is updated only at "release time".
 
-Specto 0.3: 2009 01 10
+Specto 0.3: 2009 03 20
 ======================
 Upgrading to this release is strongly recommended, as it solves a huge amount of issues reported in the 0.2.x series, is more stable, implements new features, is more secure and easier to maintain.
 This release contains lots of architectural changes. The watch system is now a plugin system, the watch list has changed, GNOME keyring is now used for encrypting passwords by default (though you can disable it), and the configuration/cache directories are now based on the XDG user directory specification. As such, you will need to import your watch list if upgrading from Specto 0.2.x. You may also need to reset (overwrite) your passwords, or convert them to plain text before upgrading.
@@ -118,6 +118,7 @@ Maintainability
     * Issue #39: POP3 & IMAP watches not on par with gmail watch's message counting logic
     * Issue #176: Clean up translatable logger strings
     * Issue #211: remove the --help commandline parameter
+    * Issue #215: remove balloon duration and action features to conform to notify-osd
     * Move copyright headers to AUTHORS file to ease maintenance and relevance
     * New "watches as plugins" system
     * Refactor this ChangeLog to make it as release notes only
