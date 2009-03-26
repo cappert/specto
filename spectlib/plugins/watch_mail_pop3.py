@@ -149,7 +149,10 @@ class Watch_mail_pop3(Watch):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("New message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (unread_messages[0].author.split(":")[0], self.unreadMsg)
+            author_info = unread_messages[0].author.split(":")[0]
+            author_info = author_info.replace("<", "(")
+            author_info = author_info.replace(">", ")")            
+            text = _("New message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (author_info, self.unreadMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
