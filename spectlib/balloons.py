@@ -78,6 +78,8 @@ class NotificationToast:
             sleep(0.5)  # FIXME: issue #43, associate the balloon with the notification icon properly. Currently, this is a hack to leave time for the tray icon to appear before getting its coordinates
             tray_x = self.notifier.tray.get_x()
             tray_y = self.notifier.tray.get_y()
+            summary = self.escape(summary)
+            body = self.escape(body)
             self.toast = pynotify.Notification(summary, body)
             if name:
                 # If name is not None and exists in specto.watch_db, a button is added to the notification
@@ -97,3 +99,18 @@ class NotificationToast:
                 self.toast.show()
             except:
                 self.specto.logger.log(_("Cannot display notification message. Make sure that libnotify and D-Bus are available on your system."), "error", self.specto)
+
+    def escape(self, text, quotes=True):
+        """Create a Markup instance from a string and escape special characters
+        it may contain (<, >, & and ").
+
+        If the `quotes` parameter is set to `False`, the " character is left as
+        is. Escaping quotes is generally only required for strings that are to
+        be used in attribute values.
+        """
+        text = str(text).replace('&', '&amp;') \
+                        .replace('<', '&lt;') \
+                        .replace('>', '&gt;')
+        if quotes:
+            text = text.replace('"', '&#34;')
+        return text
