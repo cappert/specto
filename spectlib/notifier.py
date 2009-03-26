@@ -223,7 +223,7 @@ class Notifier:
                 statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" has a problem.') % watch.name))
                 balloon_icon = self.get_icon("error", 0, True)
                 icon = self.get_icon("error", 50, False)
-                self.balloon.show_toast(_("You may need to check the error log."), balloon_icon, urgency="critical", summary=(_("%s encountered a problem") % watch.name))
+                self.balloon.show_toast(watch.error_message, balloon_icon, urgency="critical", summary=(_("%s encountered a problem") % watch.name))
                 if self.specto.specto_gconf.get_entry("use_problem_sound"):
                     problem_sound = self.specto.specto_gconf.get_entry("problem_sound")
                     gnome.sound_play(problem_sound)
