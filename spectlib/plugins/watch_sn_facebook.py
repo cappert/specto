@@ -114,7 +114,7 @@ class Watch_sn_facebook(Watch):
 
                 self.write_cache_file()
             else:
-                self.set_error((_("Wrong username/password"))
+                self.set_error((_("Wrong username/password")))
         except:
             self.set_error()
 

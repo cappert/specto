@@ -96,7 +96,7 @@ class Watch_mail_gmail(Watch):
             self.mail_info.remove_old()
             self.write_cache_file()
         except URLError, e:
-            sef.set_error(str(e))  # This '%s' string here has nothing to translate
+            self.set_error(str(e))  # This '%s' string here has nothing to translate
         except:
             self.set_error()
         Watch.timer_update(self)
