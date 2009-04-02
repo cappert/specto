@@ -102,7 +102,10 @@ class Watch_mail_imap(Watch):
                 (retcode, messages) = server.search(None, '(UNSEEN)')
                 self.mail_info.clear_old()
                 messages = messages[0].split(' ')
-                self.unreadMsg = len(messages)
+                if messages[0] != "":
+                    self.unreadMsg = len(messages)
+                else:
+                    self.unreadMsg = 0
                 self.newMsg = 0
                 if retcode == 'OK':
                     for message in messages:

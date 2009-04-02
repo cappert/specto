@@ -113,6 +113,8 @@ class Watch_sn_facebook(Watch):
                         self.previous_wall.append(w.poster + ": " + w.post)
 
                 self.write_cache_file()
+                if len(self.messages) == 0 and len(self.notifications) == 0 and len(self.requests) == 0 and len(self.wall) == 0:
+                    self.mark_as_read()
             else:
                 self.set_error((_("Wrong username/password")))
         except:

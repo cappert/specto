@@ -132,6 +132,8 @@ class Watch_mail_pop3(Watch):
                         i+=1
                     self.mail_info.sort()
                 self.mail_info.remove_old()
+                if len(self.mail_info) == 0:
+                    self.mark_as_read()
                 self.write_cache_file()
 
                 s.quit()
