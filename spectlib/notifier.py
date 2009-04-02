@@ -610,6 +610,7 @@ class Notifier:
             return True
         else:
             self.specto.quit()
+            return True
 
     def restore_size_and_position(self):
         """

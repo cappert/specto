@@ -243,7 +243,7 @@ class Specto:
 
     def quit(self, *args):
         """ Save the save and position from the notifier and quit Specto. """
-        if self.notifier.get_state()==True and self.notifier_hide:
+        if self.notifier.get_state() == True and self.notifier_hide:
             self.notifier.save_size_and_position()
         try:
             gtk.main_quit()
