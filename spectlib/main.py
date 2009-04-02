@@ -249,41 +249,45 @@ class Specto:
             gtk.main_quit()
         except:
             #create a close dialog
-            dialog = gtk.Dialog(_("Cannot quit yet"), None, \
-                gtk.DIALOG_MODAL | gtk.DIALOG_NO_SEPARATOR | \
-                            gtk.DIALOG_DESTROY_WITH_PARENT, None)
+            self.dialog = gtk.Dialog(_("Cannot quit yet"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+            self.dialog.set_modal(False)
             #HIG tricks
-            dialog.set_has_separator(False)
+            self.dialog.set_has_separator(False)
 
-            dialog.add_button(_("Murder!"), 3)
-            dialog.add_button(gtk.STOCK_CANCEL, -1)
+            self.dialog.add_button(_("Murder!"), 3)
+            self.dialog.add_button(gtk.STOCK_CANCEL, -1)
 
-            dialog.label_hbox = gtk.HBox(spacing=6)
+            self.dialog.label_hbox = gtk.HBox(spacing=6)
 
             icon = gtk.Image()
             icon.set_from_pixbuf(self.icon_theme.\
                         load_icon("dialog-warning", 64, 0))
-            dialog.label_hbox.pack_start(icon, True, True, 6)
+            self.dialog.label_hbox.pack_start(icon, True, True, 6)
             icon.show()
 
             label = gtk.Label(_('<b><big>Specto is currently busy and cannot quit yet.</big></b>\n\nThis may be because it is checking for watch changes.\nHowever, you can try forcing it to quit by clicking the murder button.'))
             label.set_use_markup(True)
-            dialog.label_hbox.pack_start(label, True, True, 6)
+            self.dialog.label_hbox.pack_start(label, True, True, 6)
             label.show()
 
-            dialog.vbox.pack_start(dialog.label_hbox, True, True, 12)
-            dialog.label_hbox.show()
+            self.dialog.vbox.pack_start(self.dialog.label_hbox, True, True, 12)
+            self.dialog.label_hbox.show()
 
             icon = gtk.gdk.pixbuf_new_from_file(self.PATH + \
                                 'icons/specto_window_icon.svg')
-            dialog.set_icon(icon)
-            answer = dialog.run()
-            if answer == 3:
-                try:#go figure, it never works!
-                    self.notifier.stop_refresh = True
-                    sys.exit(0)
-                except:
-                    #kill the specto process with killall
-                    os.system('killall specto')
-            else:
-                dialog.destroy()
+            self.dialog.set_icon(icon)
+            self.dialog.connect("delete_event", self.dialog_response)
+            self.dialog.connect("response", self.dialog_response)
+            self.dialog.show_all()
+
+                
+    def dialog_response(self, widget, answer):
+        if answer == 3:
+            try:#go figure, it never works!
+                self.notifier.stop_refresh = True
+                sys.exit(0)
+            except:
+                #kill the specto process with killall
+                os.system('killall specto')
+        else:
+            self.dialog.hide()            
