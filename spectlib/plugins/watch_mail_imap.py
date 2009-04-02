@@ -92,7 +92,7 @@ class Watch_mail_imap(Watch):
             self.set_error()           
         else:
             try:
-                if self.folder <> "":
+                if self.folder != "":
                     try:
                         server.select(self.folder, readonly=1)
                     except:
