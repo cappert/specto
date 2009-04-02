@@ -132,6 +132,8 @@ class Watch_mail_imap(Watch):
                                         self.newMsg+=1
                     self.mail_info.remove_old()
                     self.write_cache_file()
+                    if len(self.mail_info) == 0:
+                        self.mark_as_read()
 
                 server.logout()
 
