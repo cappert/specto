@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: specto\n"
 "POT-Creation-Date: 2009-03-26 12:50+EDT\n"
-"PO-Revision-Date: 2009-03-26 15:48-0500\n"
+"PO-Revision-Date: 2009-04-02 14:34-0500\n"
 "Last-Translator: Jean-François Fortin Tam\n"
 "Language-Team: Russian <kde-rus@kde.ru>\n"
 "MIME-Version: 1.0\n"
@@ -485,7 +485,7 @@ msgstr "С наблюдением \"%s\" возникли проблемы."
 
 #: ../spectlib/notifier.py:226
 msgid "%s encountered a problem"
-msgstr ""
+msgstr "%s столкнулся с проблемой"
 
 #: ../spectlib/notifier.py:232
 msgid "The watch \"%s\" has changed."
@@ -617,26 +617,24 @@ msgstr "Непрочитанные сообщения"
 #: ../spectlib/plugins/watch_mail_gmail.py:116
 #: ../spectlib/plugins/watch_mail_imap.py:150
 #: ../spectlib/plugins/watch_mail_pop3.py:135
-#, fuzzy
 msgid ""
 "New message from <b>%s</b>...\n"
 "\n"
 "... <b>totalling %d</b> unread mails."
 msgstr ""
-"<b>%s</b> получил новое сообщение от <b>%s</b>...\n"
+"Новое сообщение от <b>%s</b>...\n"
 "\n"
 "... <b>всего %d</b> непрочитанных писем."
 
 #: ../spectlib/plugins/watch_mail_gmail.py:126
 #: ../spectlib/plugins/watch_mail_imap.py:162
 #: ../spectlib/plugins/watch_mail_pop3.py:147
-#, fuzzy
 msgid ""
 "%d new messages from <b>%s</b>...\n"
 "\n"
 "... <b>totalling %d</b> unread mails."
 msgstr ""
-"<b>%s</b> получил %d новых сообщений от <b>%s</b>...\n"
+"%d новых сообщений от <b>%s</b>...\n"
 "\n"
 "... <b>всего %d</b> непрочитанных писем."
 
@@ -685,7 +683,7 @@ msgstr "Использовать SSL"
 
 #: ../spectlib/plugins/watch_mail_imap.py:43
 msgid "Folder (optional)"
-msgstr ""
+msgstr "Каталог (необязательно)"
 
 #: ../spectlib/plugins/watch_mail_imap.py:203
 #: ../spectlib/plugins/watch_mail_pop3.py:187
@@ -863,14 +861,12 @@ msgid "Status"
 msgstr "Состояние"
 
 #: ../spectlib/plugins/watch_system_port.py:114
-#, fuzzy
 msgid "The network socket on port %s was established."
-msgstr "Соединение, <b>%s</b>, было установлено."
+msgstr "Сокет на порте %s, был открыт."
 
 #: ../spectlib/plugins/watch_system_port.py:116
-#, fuzzy
 msgid "The network socket on port %s was closed."
-msgstr "Соединение, <b>%s</b>, было закрыто."
+msgstr "Сокет на порте %s, был закрыт."
 
 #: ../spectlib/plugins/watch_system_process.py:31
 #: ../spectlib/plugins/watch_system_process.py:37
@@ -887,14 +883,12 @@ msgid "Running"
 msgstr "Запущен"
 
 #: ../spectlib/plugins/watch_system_process.py:98
-#, fuzzy
 msgid "The system process has started."
-msgstr "Системный процесс, <b>%s</b>, был запущен."
+msgstr "Системный процесс был запущен."
 
 #: ../spectlib/plugins/watch_system_process.py:100
-#, fuzzy
 msgid "The system process has stopped."
-msgstr "Системный процесс, <b>%s</b>, был остановлен."
+msgstr "Системный процесс был остановлен."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:36
 msgid "Bazaar"
@@ -909,24 +903,20 @@ msgid "No parent branch available, you will not be notified of differences and c
 msgstr "Родительская ветвь недоступна, Вы не будете уведомлены о различиях и изменениях."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:110
-#, fuzzy
 msgid "One new local revision has not yet been merged with its parent branch."
-msgstr "Одна новая локальная ревизия на <b>%s</b> пока ещё не была слита cо своей родительской веткой."
+msgstr "Одна новая локальная ревизия пока ещё не была слита cо своей родительской веткой."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:112
-#, fuzzy
 msgid "%d new local revisions have not yet been merged with its parent branch."
-msgstr "%d новых локальных ревизий <b>%s</b> не были слиты со своей родительской веткой."
+msgstr "%d новых локальных ревизий не были слиты со своей родительской веткой."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:115
-#, fuzzy
 msgid "One new revision on the remote branch."
-msgstr "Одна новая ревизия в удаленной ветке для <b>%s</b>."
+msgstr "Одна новая ревизия в удаленной ветке."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:117
-#, fuzzy
 msgid "%d new revisions on the remote branch."
-msgstr "%d новых ревизий в удаленной ветке для <b>%s</b>."
+msgstr "%d новых ревизий в удаленной ветке."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:172
 msgid "Main branch"
@@ -946,24 +936,22 @@ msgid " or more"
 msgstr "или более"
 
 #: ../spectlib/plugins/watch_web_greader.py:111
-#, fuzzy
 msgid ""
 "New newsitems in <b>%s</b>...\n"
 "\n"
 "... <b>totalling %s</b> unread items."
 msgstr ""
-"<b>%s</b> имеется новость в <b>%s</b>...\n"
+"Пояились новости  <b>%s</b>...\n"
 "\n"
 "... <b>всего %s</b> непрочитанных новостей."
 
 #: ../spectlib/plugins/watch_web_greader.py:121
-#, fuzzy
 msgid ""
 "%d new newsitems in <b>%s</b>...\n"
 "\n"
 "... <b>totalling %s</b> unread items."
 msgstr ""
-"<b>%s</b> имеется новость в <b>%s</b>...\n"
+"<b>%s</b> имеется новости в <b>%s</b>...\n"
 "\n"
 "... <b>всего %s</b> непрочитанных новостей."
 
@@ -996,11 +984,8 @@ msgid "Filesize difference: %.2f"
 msgstr "Разница в размере файла:%.2f"
 
 #: ../spectlib/plugins/watch_web_static.py:264
-#, fuzzy
 msgid "Difference percentage: %s percent"
-msgstr ""
-"Веб-сайт, <b>%s</b>, изменился.\n"
-"Разница: %s процентов"
+msgstr "Процентная разница: %s процентов"
 
 #: ../spectlib/plugins/watch_web_static.py:282
 #: ../spectlib/plugins/watch_web_static.py:287
@@ -1058,34 +1043,4 @@ msgstr "Пожалуйста включите плагин \"%s\" если хо�
 #: ../spectlib/watch.py:609
 msgid "There was an error initializing config file %s"
 msgstr "Произошла ошибка при инициализации файла конфигурации %s"
-
-#~ msgid "Duration (in seconds):"
-#~ msgstr "Интервал (в секундах):"
-#~ msgid ""
-#~ "\n"
-#~ "Specto console version\n"
-#~ "\n"
-#~ "Use \"specto --console --only-changed\" to show only watch changes "
-#~ "notifications.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Консольная версия Specto\n"
-#~ "\n"
-#~ "Используйте \"specto --console --only-changed\" чтобы показывать только "
-#~ "уведомления об изменении наблюдений.\n"
-#~ "\n"
-#~ msgid ""
-#~ "The watch, <b>%s</b>, has a problem. You may need to check the error log."
-#~ msgstr ""
-#~ "У наблюдения, <b>%s</b>, возникла проблема. Возможно Вам необходимо "
-#~ "проверить журнал ошибок."
-#~ msgid ""
-#~ "<b>%s</b> has received %d new newsitems in <b>%s</b>...\n"
-#~ "\n"
-#~ "... <b>totalling %s</b> unread items."
-#~ msgstr ""
-#~ "<b>%s</b> получено %d новостей в <b>%s</b>...\n"
-#~ "\n"
-#~ "... <b>всего %s</b> непрочитанных новостей."
 
