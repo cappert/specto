@@ -31,7 +31,7 @@ Features
     * Issue #117: show more information for errors
     * Issue #128: Allow setting a port for mail watches (add 'port = 323' to your watch config)
     * Issue #135: Proxy support
-    * Issue #136: Allow checking a specific IMAP folder (no gui yet)
+    * Issue #136: Allow checking a specific IMAP folder
     * Issue #142: Don't scroll the notifier list view column headers
     * Issue #146: Per-watch option to prevent URL redirects; To use this option add "redirect = True" to the watch that is allowed to redirect
     * Issue #166: Add a checkbox in the preferences for gnome-keyring usage
@@ -97,6 +97,7 @@ Bug fixes
     * Issue #177: D-BUS error string not translated
     * Issue #181: "mark as read" button becomes insensitive after global watch refresh
     * Issue #185: network-manager 0.7 compatibility
+    * Issue #225: "jump to" button for IMAP watches does not call the mail client by default
     * Prevent fuzzy text in the notifier on startup, using pango.WEIGHT_NORMAL
     * Slight label alignment adjustment in the log viewer
     * Touch up the notification balloon punctuation for multiple items watches
@@ -119,6 +120,7 @@ Maintainability
     * Issue #176: Clean up translatable logger strings
     * Issue #211: remove the --help commandline parameter
     * Issue #215: remove balloon duration and action features to conform to notify-osd
+    * Issue #221: error notifications should be meaningful
     * Move copyright headers to AUTHORS file to ease maintenance and relevance
     * New "watches as plugins" system
     * Refactor this ChangeLog to make it as release notes only

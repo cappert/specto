@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Specto\n"
-"POT-Creation-Date: 2009-03-20 10:42+EDT\n"
-"PO-Revision-Date: 2009-03-20 10:45-0500\n"
+"POT-Creation-Date: 2009-03-26 12:50+EDT\n"
+"PO-Revision-Date: 2009-03-26 12:53-0500\n"
 "Last-Translator: Jean-François Fortin Tam\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -309,12 +309,12 @@ msgid "Cannot display notification message. Make sure that libnotify and D-Bus a
 msgstr "Impossible d'afficher le message de notification. Assurez-vous que libnotify et D-Bus sont disponibles sur votre système."
 
 #: ../spectlib/console.py:45
-#: ../spectlib/watch.py:145
+#: ../spectlib/watch.py:140
 msgid "Watch has changed."
 msgstr "L'observateur a changé."
 
 #: ../spectlib/console.py:50
-#: ../spectlib/watch.py:124
+#: ../spectlib/watch.py:121
 msgid "Watch started checking."
 msgstr "L'observateur a commencé sa mise à jour."
 
@@ -323,13 +323,13 @@ msgid "Watch is idle."
 msgstr "L'observateur a terminé sa mise à jour."
 
 #: ../spectlib/console.py:54
-#: ../spectlib/watch.py:181
+#: ../spectlib/watch.py:174
 msgid "No network connection detected"
 msgstr "Pas de connexion réseau détectée"
 
 #: ../spectlib/console.py:56
-#: ../spectlib/watch.py:140
-#: ../spectlib/watch.py:177
+#: ../spectlib/watch.py:136
+#: ../spectlib/watch.py:170
 msgid "There was an error checking the watch"
 msgstr "Erreur lors de la mise à jour de l'observateur"
 
@@ -482,10 +482,6 @@ msgstr "L'observateur « %s » a rencontré un problème."
 msgid "%s encountered a problem"
 msgstr "%s a rencontré un problème"
 
-#: ../spectlib/notifier.py:226
-msgid "You may need to check the error log."
-msgstr "Il serait recommandé d'aller vérifier les logs d'erreurs."
-
 #: ../spectlib/notifier.py:232
 msgid "The watch \"%s\" has changed."
 msgstr "L'observateur « %s » a changé."
@@ -499,7 +495,7 @@ msgid "There was an error marking the watch status"
 msgstr "Une erreur est survenue lors du changement de statut de l'observateur"
 
 #: ../spectlib/notifier.py:392
-#: ../spectlib/watch.py:237
+#: ../spectlib/watch.py:230
 msgid "No extra information available."
 msgstr "Pas d'information additionnelle disponible."
 
@@ -577,7 +573,6 @@ msgid "Password"
 msgstr "Mot de passe"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:103
-#: ../spectlib/plugins/watch_mail_imap.py:141
 #: ../spectlib/plugins/watch_mail_pop3.py:95
 #: ../spectlib/plugins/watch_mail_pop3.py:126
 #: ../spectlib/plugins/watch_sn_facebook.py:121
@@ -588,6 +583,8 @@ msgstr "Mot de passe"
 #: ../spectlib/plugins/watch_vc_bazaar.py:101
 #: ../spectlib/plugins/watch_web_greader.py:98
 #: ../spectlib/plugins/watch_web_static.py:192
+#: ../spectlib/watch.py:241
+#: ../spectlib/watch.py:250
 msgid "Unexpected error:"
 msgstr "Erreur inattendue :"
 
@@ -661,7 +658,7 @@ msgstr "et autres..."
 #: ../spectlib/plugins/watch_web_greader.py:153
 #: ../spectlib/plugins/watch_web_static.py:214
 #: ../spectlib/plugins/watch_web_static.py:226
-#: ../spectlib/watch.py:276
+#: ../spectlib/watch.py:288
 msgid "There was an error opening the file %s"
 msgstr "Une erreur est survenue en tentant d'ouvrir le fichier %s"
 
@@ -679,16 +676,20 @@ msgstr "Hôte"
 msgid "Use SSL"
 msgstr "Activer SSL"
 
+#: ../spectlib/plugins/watch_mail_imap.py:43
+msgid "Folder (optional)"
+msgstr "Dossier (facultatif)"
+
 #: ../spectlib/plugins/watch_mail_imap.py:203
 #: ../spectlib/plugins/watch_mail_pop3.py:187
 #: ../spectlib/plugins/watch_system_file.py:128
 #: ../spectlib/plugins/watch_system_folder.py:207
-#: ../spectlib/watch.py:435
-#: ../spectlib/watch.py:529
-#: ../spectlib/watch.py:557
-#: ../spectlib/watch.py:581
-#: ../spectlib/watch.py:607
-#: ../spectlib/watch.py:621
+#: ../spectlib/watch.py:447
+#: ../spectlib/watch.py:541
+#: ../spectlib/watch.py:569
+#: ../spectlib/watch.py:593
+#: ../spectlib/watch.py:619
+#: ../spectlib/watch.py:633
 msgid "There was an error writing to the file %s"
 msgstr "Une erreur est survenue en tentant d'écrire dans le fichier %s"
 
@@ -1003,7 +1004,7 @@ msgstr "Cacher la fenêtre"
 msgid "Show window"
 msgstr "Afficher la fenêtre"
 
-#: ../spectlib/watch.py:87
+#: ../spectlib/watch.py:88
 msgid "There was an error starting the watch"
 msgstr "Erreur en tentant de démarrer l'observateur"
 
@@ -1011,33 +1012,35 @@ msgstr "Erreur en tentant de démarrer l'observateur"
 msgid "There was an error stopping the watch"
 msgstr "Erreur en tentant d'arrêter l'observateur"
 
-#: ../spectlib/watch.py:110
+#: ../spectlib/watch.py:108
 msgid "There was an error marking the watch as read"
 msgstr "Une erreur est survenue en marquant l'observateur comme lu"
 
-#: ../spectlib/watch.py:157
+#: ../spectlib/watch.py:151
 msgid "There was an error marking the watch as changed"
 msgstr "Une erreur est survenue en signalant l'observateur comme \"changé\""
 
-#: ../spectlib/watch.py:223
-#: ../spectlib/watch.py:224
+#: ../spectlib/watch.py:216
+#: ../spectlib/watch.py:217
 msgid "No changes yet"
 msgstr "Rien à signaler."
 
-#: ../spectlib/watch.py:289
+#: ../spectlib/watch.py:301
 msgid "Please enable plugin \"%s\" if you want to use the watch \"%s\"."
 msgstr "Veuillez activer le plugin \"%s\" pour utiliser l'observateur \"%s\"."
 
-#: ../spectlib/watch.py:443
-#: ../spectlib/watch.py:456
-#: ../spectlib/watch.py:476
-#: ../spectlib/watch.py:502
-#: ../spectlib/watch.py:518
-#: ../spectlib/watch.py:542
-#: ../spectlib/watch.py:597
+#: ../spectlib/watch.py:455
+#: ../spectlib/watch.py:468
+#: ../spectlib/watch.py:488
+#: ../spectlib/watch.py:514
+#: ../spectlib/watch.py:530
+#: ../spectlib/watch.py:554
+#: ../spectlib/watch.py:609
 msgid "There was an error initializing config file %s"
 msgstr "Une erreur est survenue en tentant d'initialiser le fichier de configuration %s"
 
+#~ msgid "You may need to check the error log."
+#~ msgstr "Il serait recommandé d'aller vérifier les logs d'erreurs."
 #~ msgid "Duration (in seconds):"
 #~ msgstr "Durée (en secondes) :"
 #~ msgid ""
