@@ -74,16 +74,14 @@ class Watch_system_folder(Watch):
                 self.get_removed_files() #remove the files that were removed
                 self.update_cache_file()#write the values (with the removed lines) to the cache file
             else:
-                self.error = True
-                self.specto.logger.log(_('The watch is not set to a folder'), "error", self.name)
+                self.set_error(_('The watch is not set to a folder'))
 
             #first time don't mark as changed
             if self.first_time == True:
                 self.actually_changed = False
                 self.first_time = False
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
 
         Watch.timer_update(self)
 

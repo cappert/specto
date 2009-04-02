@@ -87,7 +87,7 @@ class Watch_mail_imap(Watch):
                     server = imaplib.IMAP4(self.host)
             server.login(self.username, self.password)
         except imaplib.IMAP4.error, e:
-            self.set_warning(str(e))
+            self.set_error(str(e))
         except:
             self.set_error()           
         else:
@@ -102,7 +102,10 @@ class Watch_mail_imap(Watch):
                 (retcode, messages) = server.search(None, '(UNSEEN)')
                 self.mail_info.clear_old()
                 messages = messages[0].split(' ')
-                self.unreadMsg = len(messages)
+                if messages[0] != "":
+                    self.unreadMsg = len(messages)
+                else:
+                    self.unreadMsg = 0
                 self.newMsg = 0
                 if retcode == 'OK':
                     for message in messages:
@@ -132,11 +135,13 @@ class Watch_mail_imap(Watch):
                                         self.newMsg+=1
                     self.mail_info.remove_old()
                     self.write_cache_file()
+                    if len(self.mail_info) == 0:
+                        self.mark_as_read()
 
                 server.logout()
 
             except imaplib.IMAP4.error, e:
-                self.set_warning(str(e))
+                self.set_error(str(e))
             except:
                 self.set_error()
 

@@ -113,12 +113,12 @@ class Watch_sn_facebook(Watch):
                         self.previous_wall.append(w.poster + ": " + w.post)
 
                 self.write_cache_file()
+                if len(self.messages) == 0 and len(self.notifications) == 0 and len(self.requests) == 0 and len(self.wall) == 0:
+                    self.mark_as_read()
             else:
-                self.error = True
-                self.specto.logger.log(_("Wrong username/password"), "warning", self.name)
+                self.set_error((_("Wrong username/password")))
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
 
         Watch.timer_update(self)
 
