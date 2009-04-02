@@ -31,7 +31,7 @@ Features
     * Issue #117: show more information for errors
     * Issue #128: Allow setting a port for mail watches (add 'port = 323' to your watch config)
     * Issue #135: Proxy support
-    * Issue #136: Allow checking a specific IMAP folder (no gui yet)
+    * Issue #136: Allow checking a specific IMAP folder
     * Issue #142: Don't scroll the notifier list view column headers
     * Issue #146: Per-watch option to prevent URL redirects; To use this option add "redirect = True" to the watch that is allowed to redirect
     * Issue #166: Add a checkbox in the preferences for gnome-keyring usage
@@ -65,6 +65,7 @@ Bug fixes
     * Fix the logic for showing/hiding deactivated watches
     * Hack that shows the menu correctly positionned, when clicking Add button
     * Issue #1: Add a 10 seconds timeout for web watches to prevent hangs
+    * Issue #3: startup quit warning dialog crashes if you click cancel
     * Issue #37: Save the filesize in a cache file (not in watches.list)
     * Issue #52: Ampersands in watch names in add_watch window
     * Issue #56: Ampersands in URLs pass a truncated address to browser
@@ -83,6 +84,7 @@ Bug fixes
     * Issue #114: Removing a watch should show a confirmation dialog
     * Issue #118: Add http:// and @ automatically if needed
     * Issue #119: Don't let the log file get huge
+    * Issue #122: the quit warning dialog should not block the UI and watch check process
     * Issue #131: Bombs on special characters
     * Issue #132: Removing a watch should remove its cache files
     * Issue #134: Harmonized colors
@@ -97,6 +99,8 @@ Bug fixes
     * Issue #177: D-BUS error string not translated
     * Issue #181: "mark as read" button becomes insensitive after global watch refresh
     * Issue #185: network-manager 0.7 compatibility
+    * Issue #222: folder-specific IMAP watch does not clear itself
+    * Issue #225: "jump to" button for IMAP watches does not call the mail client by default
     * Prevent fuzzy text in the notifier on startup, using pango.WEIGHT_NORMAL
     * Slight label alignment adjustment in the log viewer
     * Touch up the notification balloon punctuation for multiple items watches
@@ -119,6 +123,7 @@ Maintainability
     * Issue #176: Clean up translatable logger strings
     * Issue #211: remove the --help commandline parameter
     * Issue #215: remove balloon duration and action features to conform to notify-osd
+    * Issue #221: error notifications should be meaningful
     * Move copyright headers to AUTHORS file to ease maintenance and relevance
     * New "watches as plugins" system
     * Refactor this ChangeLog to make it as release notes only
