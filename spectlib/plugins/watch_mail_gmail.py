@@ -56,7 +56,7 @@ class Watch_mail_gmail(Watch):
         Watch.__init__(self, specto, id, values, watch_values)
 
         if self.open_command == self.standard_open_command: #check if google apps url has to be used
-            if "@" in self.username and not "@gmail.com" in self.username:
+            if "@" in self.username and not "@gmail.com" and not "@googlemail.com" in self.username:
                 url = "http://mail.google.com/a/" + self.username.split("@")[1]  # We use mail.google.com instead of gmail.com because of the trademark issue in Germany
                 self.standard_open_command = spectlib.util.return_webpage(url)
                 self.open_command = self.standard_open_command
