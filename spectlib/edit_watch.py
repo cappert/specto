@@ -218,7 +218,7 @@ class Edit_watch:
 
         watch_type = self.watch.type
         try:
-            if self.specto.watch_db.plugin_dict[watch_type].dbus == True:
+            if self.specto.watch_db.plugin_dict[watch_type].dbus_watch == True:
                 self.wTree.get_widget("refresh").hide()
                 self.wTree.get_widget("refresh_unit").hide()
                 self.wTree.get_widget("label_refresh1").hide()

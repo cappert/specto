@@ -96,7 +96,7 @@ class Add_watch:
         values = self.specto.watch_db.plugin_dict[watch_type].get_add_gui_info()
         
         try:
-            if self.specto.watch_db.plugin_dict[watch_type].dbus == True:
+            if self.specto.watch_db.plugin_dict[watch_type].dbus_watch == True:
                 self.refresh.hide()
                 self.refresh_unit.hide()
                 self.wTree.get_widget("label_refresh1").hide()

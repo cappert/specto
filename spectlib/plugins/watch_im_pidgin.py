@@ -32,15 +32,15 @@ type = "Watch_im_pidgin"
 type_desc = _("Pidgin")
 icon = 'pidgin'
 category = _("Social networks")
-dbus = True
+dbus_watch = True
 
 
 def get_add_gui_info():
-    return [("ReceivedImMsg_", spectlib.gtkconfig.CheckButton(_("Notify if you receive a IM message"), True)),
-            ("ReceivedChatMsg_", spectlib.gtkconfig.CheckButton(_("Notify if you receive a IM message"), True)),
-            ("BuddyStatusChanged_", spectlib.gtkconfig.CheckButton(_("Notify if a user changes status"))),
-            ("BuddySignedOn_", spectlib.gtkconfig.CheckButton(_("Notify if a user signs on"))),
-            ("BuddySignedOff_", spectlib.gtkconfig.CheckButton(_("Notify if a user signs off")))
+    return [("receivedimmsg_", spectlib.gtkconfig.CheckButton(_("Notify if you receive a IM message"), True)),
+            ("receivedchatmsg_", spectlib.gtkconfig.CheckButton(_("Notify if you receive a IM message"), True)),
+            ("buddystatuschanged_", spectlib.gtkconfig.CheckButton(_("Notify if a user changes status"))),
+            ("buddysignedon_", spectlib.gtkconfig.CheckButton(_("Notify if a user signs on"))),
+            ("buddysignedoff_", spectlib.gtkconfig.CheckButton(_("Notify if a user signs off")))
             ]
 
 
@@ -51,11 +51,11 @@ class Watch_im_pidgin(Watch):
 
     def __init__(self, specto, id, values):
 
-        watch_values = [("ReceivedImMsg_", spectlib.config.Boolean(False)),
-                        ("ReceivedChatMsg_", spectlib.config.Boolean(False)),
-                        ("BuddyStatusChanged_", spectlib.config.Boolean(False)),
-                        ("BuddySignedOn_", spectlib.config.Boolean(False)),
-                        ("BuddySignedOff_", spectlib.config.Boolean(False))
+        watch_values = [("receivedimmsg_", spectlib.config.Boolean(False)),
+                        ("receivedchatmsg_", spectlib.config.Boolean(False)),
+                        ("buddystatuschanged_", spectlib.config.Boolean(False)),
+                        ("buddysignedon_", spectlib.config.Boolean(False)),
+                        ("buddysignedoff_", spectlib.config.Boolean(False))
                         ]
 
         self.icon = icon
@@ -67,6 +67,7 @@ class Watch_im_pidgin(Watch):
         
         self.dbus = True
         self.message = ""
+        self.extra_info = ""
         # Use the dbus interface we saw in dbus-notify
         self.dbus_interface = "im.pidgin.purple.PurpleInterface"
         self.dbus_path = "/im/pidgin/purple/PurpleObject"
@@ -82,7 +83,7 @@ class Watch_im_pidgin(Watch):
         
         
     def BuddyStatusChanged(self, buddy, old_status, status):
-        if not self.BuddyStatusChanged_:
+        if not self.buddystatuschanged_:
             return
         
         if buddy != 0:
@@ -94,12 +95,12 @@ class Watch_im_pidgin(Watch):
             if osts != nsts:
                 name = pidgin_interface.PurpleBuddyGetAlias(buddy)
                 self.message = name + ' changed status from ' + osts + ' to ' + nsts
-
+                self.extra_info = self.clean(self.message) + "\n" + self.extra_info
                 self.watch_changed()
 
         
     def BuddySignedOn(self, buddy):
-        if not BuddySignedOn_:
+        if not self.buddysignedon_:
             return
         
         if buddy != 0:
@@ -107,24 +108,24 @@ class Watch_im_pidgin(Watch):
 
             name = pidgin_interface.PurpleBuddyGetAlias(buddy)
             self.message = name + ' signed on'
-
+            self.extra_info = self.clean(self.message) + "\n" + self.extra_info
             self.watch_changed()
 
         
     def BuddySignedOff(self, buddy):
-        if not BuddySignedOff:
+        if not self.buddysignedoff_:
             return
         if buddy != 0:
             pidgin_interface = self.get_pidgin_interface()
             
             name = pidgin_interface.PurpleBuddyGetAlias(buddy)
             self.message = name + ' signed off'
-
+            self.extra_info = self.clean(self.message) + "\n" + self.extra_info
             self.watch_changed()
         
 
     def ReceivedImMsg(self, account, name, message, conversation, flags):
-        if not self.ReceivedImMsg:
+        if not self.receivedimmsg_:
             return
         pidgin_interface = self.get_pidgin_interface()
     
@@ -138,10 +139,11 @@ class Watch_im_pidgin(Watch):
             if buddy != 0:
                 name = pidgin_interface.PurpleBuddyGetAlias(buddy)
                 self.message = name + ": " + message
+                self.extra_info = self.clean(self.message) + "\n" + self.extra_info
                 self.watch_changed()
 
     def ReceivedChatMsg(self, account, name, message, conversation, flags):
-        if not ReceivedChatMsg_:
+        if not self.receivedchatmsg_:
             return
         pidgin_interface = self.get_pidgin_interface()
 
@@ -156,7 +158,8 @@ class Watch_im_pidgin(Watch):
             chat_nick = pidgin_interface.PurpleConvChatGetNick(chat_data)
 
             if name != chat_nick:
-                self.message = chatroom_name + " (" + name + "): " + message 
+                self.message = chatroom_name + " (" + name + "): " + message
+                self.extra_info = self.clean(self.message) + "\n" + self.extra_info 
                 self.watch_changed()
                 
     def get_pidgin_interface(self):
@@ -178,10 +181,7 @@ class Watch_im_pidgin(Watch):
         return s
 
     def get_extra_information(self):
-        i = 0
-        author_info = ""
-
-        return author_info
+        return self.extra_info
 
     def get_gui_info(self):
         return [(_('Name'), self.name),

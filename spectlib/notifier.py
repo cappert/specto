@@ -305,11 +305,15 @@ class Notifier:
 
         self.iter[id] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[id], 0, active)
-        self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50, False))
+        if watch.changed == True:
+            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 0, False))
+            self.model.set(self.iter[id], 5, pango.WEIGHT_BOLD)
+        else:
+            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50, False))
+            self.model.set(self.iter[id], 5, pango.WEIGHT_NORMAL)            
         self.model.set_value(self.iter[id], 2, watch.name)
         self.model.set_value(self.iter[id], 3, watch.id)
         self.model.set_value(self.iter[id], 4, watch.type)
-        self.model.set(self.iter[id], 5, pango.WEIGHT_NORMAL)#make sure the text is not fuzzy on startup
 
         if not self.wTree.get_widget("display_all_watches").active and active == 0: #dont creat the entry
             self.remove_notifier_entry(id)
@@ -394,8 +398,9 @@ class Notifier:
                 self.wTree.get_widget("clear").set_sensitive(True)
                 self.wTree.get_widget("btnClear").set_sensitive(True)
                 try:
-                    if watch.get_extra_information() != "":
-                        self.wTree.get_widget("lblExtraInfo").set_label(watch.get_extra_information())
+                    extra_info = watch.get_extra_information()
+                    if extra_info != "":
+                        self.wTree.get_widget("lblExtraInfo").set_label(extra_info)
                 except:
                     self.specto.logger.log(_("Extra information could not be set"), "error", self.specto.watch_db[id].name)
 
