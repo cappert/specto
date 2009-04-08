@@ -912,7 +912,7 @@ class Notifier:
                 image = self.get_icon(child[1], 0, False)
                 img.set_from_pixbuf(image)
                 childmenuItem.set_image(img)
-                childmenuItem.connect('activate', self.show_add_watch, child[2]) #FIXME: doesn't work with the keyboard
+                childmenuItem.connect('button-press-event', self.show_add_watch, child[2]) #FIXME: doesn't work with the keyboard
                 childmenuItem.show()
 
                 # Create an entry for the "edit -> add" submenu
@@ -922,7 +922,7 @@ class Notifier:
                 image = self.get_icon(child[1], 0, False)
                 img.set_from_pixbuf(image)
                 childmenuItem_.set_image(img)
-                childmenuItem_.connect('activate', self.show_add_watch, child[2])
+                childmenuItem_.connect('button-press-event', self.show_add_watch, child[2])
                 childmenuItem_.show()
             menuItem.set_submenu(childmenu)
             menuItem_.set_submenu(childmenu_)
@@ -948,7 +948,7 @@ class Notifier:
 
     def show_add_watch(self, event, *args):
         """ Show the add watch window. """
-        watch_type = args[0]
+        watch_type = args[1]
         if self.add_w == "":
             self.add_w= Add_watch(self.specto, self, watch_type)
         elif self.add_w.add_watch.flags() & gtk.MAPPED:
