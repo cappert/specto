@@ -88,12 +88,20 @@ class Add_watch:
         #set the default values
         self.refresh_unit.set_active(2)
         self.refresh.set_value(1.0)
-        
+
         self.name.grab_focus()
 
     def set_options(self, watch_type):
         """ Show the table with the right watch options. """
         values = self.specto.watch_db.plugin_dict[watch_type].get_add_gui_info()
+        
+        try:
+            if self.specto.watch_db.plugin_dict[watch_type].dbus == True:
+                self.refresh.hide()
+                self.refresh_unit.hide()
+                self.wTree.get_widget("label_refresh1").hide()
+        except:
+            pass
 
         #create the options gui
         self.table = gtk.Table(rows=len(values), columns=1, homogeneous=False)

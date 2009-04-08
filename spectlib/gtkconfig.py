@@ -29,7 +29,7 @@ import spectlib.util
 class Entry():
 
     def __init__(self, label, text=None):
-        self.table = gtk.Table(rows=1, columns=2, homogeneous=True)
+        self.table = gtk.Table(rows=1, columns=2)
         self.gtkLabel = gtk.Label((label + ":"))
         self.gtkLabel.set_alignment(xalign=0.0, yalign=0.5)
         self.gtkLabel.show()
@@ -39,7 +39,7 @@ class Entry():
         if text != None:
             self.entry.set_text(text)
         self.entry.show()
-        self.table.attach(self.entry, 1, 2, 0, 1)
+        self.table.attach(self.entry, 1, 2, 0, 1, xoptions=gtk.FILL)
         self.table.show()
 
     def set_value(self, value):
@@ -62,7 +62,7 @@ class Entry():
 class PasswordEntry():
 
     def __init__(self, label, text=None):
-        self.table = gtk.Table(rows=1, columns=2, homogeneous=True)
+        self.table = gtk.Table(rows=1, columns=2)
         self.gtkLabel = gtk.Label((label + ":"))
         self.gtkLabel.set_alignment(xalign=0.0, yalign=0.5)
         self.gtkLabel.show()
@@ -73,7 +73,7 @@ class PasswordEntry():
         if text != None:
             self.entry.set_text(text)
         self.entry.show()
-        self.table.attach(self.entry, 1, 2, 0, 1)
+        self.table.attach(self.entry, 1, 2, 0, 1, xoptions=gtk.FILL)
         self.table.show()
 
     def set_value(self, value):
@@ -97,7 +97,7 @@ class Spinbutton():
 
     def __init__(self, label, value=1, lower=1, upper=100, \
                     step_incr=1, page_incr=10, page_size=0):
-        self.table = gtk.Table(rows=1, columns=2, homogeneous=True)
+        self.table = gtk.Table(rows=1, columns=2)
         self.gtkLabel = gtk.Label((label + ":"))
         self.gtkLabel.set_alignment(xalign=0.0, yalign=0.5)
         self.gtkLabel.show()
@@ -107,7 +107,7 @@ class Spinbutton():
                         step_incr, page_incr, page_size)
         self.spinbutton = gtk.SpinButton(adjustment)
         self.spinbutton.show()
-        self.table.attach(self.spinbutton, 1, 2, 0, 1)
+        self.table.attach(self.spinbutton, 1, 2, 0, 1, xoptions=gtk.FILL)
         self.table.show()
 
     def set_value(self, value):
@@ -130,7 +130,7 @@ class Spinbutton():
 class CheckButton():
 
     def __init__(self, label, value=False):
-        self.table = gtk.Table(rows=1, columns=2, homogeneous=True)
+        self.table = gtk.Table(rows=1, columns=2)
         self.gtkLabel = gtk.Label((label + ":"))
         self.gtkLabel.set_alignment(xalign=0.0, yalign=0.5)
         self.gtkLabel.show()
@@ -138,8 +138,9 @@ class CheckButton():
 
         self.checkbutton = gtk.CheckButton()
         self.checkbutton.set_active(value)
+        self.checkbutton.set_alignment(xalign=1.0, yalign=0.0)
         self.checkbutton.show()
-        self.table.attach(self.checkbutton, 1, 2, 0, 1)
+        self.table.attach(self.checkbutton, 1, 2, 0, 1, xoptions=gtk.FILL)
         self.table.show()
 
     def set_value(self, value):
@@ -162,7 +163,7 @@ class CheckButton():
 class FileChooser():
 
     def __init__(self, label, value=False):
-        self.table = gtk.Table(rows=2, columns=1, homogeneous=True)
+        self.table = gtk.Table(rows=2, columns=1)
         self.gtkLabel = gtk.Label((label + ":"))
         self.gtkLabel.set_alignment(xalign=0.0, yalign=0.5)
         self.gtkLabel.show()
@@ -172,7 +173,7 @@ class FileChooser():
         self.filechooser.set_action(gtk.FILE_CHOOSER_ACTION_OPEN)
         self.filechooser.set_filename(os.environ['HOME'])
         self.filechooser.show()
-        self.table.attach(self.filechooser, 0, 1, 1, 2)
+        self.table.attach(self.filechooser, 0, 1, 1, 2, xoptions=gtk.FILL)
         self.table.show()
 
     def set_value(self, value):
@@ -195,7 +196,7 @@ class FileChooser():
 class FolderChooser():
 
     def __init__(self, label, value=False):
-        self.table = gtk.Table(rows=2, columns=1, homogeneous=True)
+        self.table = gtk.Table(rows=2, columns=1)
         self.gtkLabel = gtk.Label((label + ":"))
         self.gtkLabel.set_alignment(xalign=0.0, yalign=0.5)
         self.gtkLabel.show()
@@ -205,7 +206,7 @@ class FolderChooser():
         self.dirchooser.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
         self.dirchooser.set_filename(os.environ['HOME'])
         self.dirchooser.show()
-        self.table.attach(self.dirchooser, 0, 1, 1, 2)
+        self.table.attach(self.dirchooser, 0, 1, 1, 2, xoptions=gtk.FILL)
         self.table.show()
 
     def set_value(self, value):
@@ -229,7 +230,7 @@ class Scale():
 
     def __init__(self, label, value=0, lower=0, upper=100, \
                    step_incr=1.0, page_incr=1.0, page_size=10):
-        self.table = gtk.Table(rows=2, columns=1, homogeneous=False)
+        self.table = gtk.Table(rows=2, columns=1)
 
         self.gtkLabel = gtk.Label((label + ":"))
         self.gtkLabel.set_alignment(xalign=0.0, yalign=0.5)
@@ -249,7 +250,7 @@ class Scale():
         self.scale.set_digits(1)
         self.scale.set_value_pos(gtk.POS_RIGHT)
         self.scale.show()
-        self.table.attach(self.scale, 0, 1, 1, 2)
+        self.table.attach(self.scale, 0, 1, 1, 2, xoptions=gtk.FILL)
         self.table.show()
 
     def set_value(self, value):
