@@ -1,60 +1,62 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Specto\n"
+"Project-Id-Version: specto-0.2.2\n"
 "POT-Creation-Date: 2009-03-26 12:50+EDT\n"
-"PO-Revision-Date: 2009-04-19 17:04+0100\n"
-"Last-Translator: Martin Lettner <m.lettner@gmail.com>\n"
+"PO-Revision-Date: 2009-04-19 11:42-0500\n"
+"Last-Translator: Jean-François Fortin Tam\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: German\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: CHINA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ./\n"
 
 #: ../data/glade/add_watch.glade.h:1
 #: ../data/glade/edit_watch.glade.h:2
-#, fuzzy
 msgid "<b>Run a custom command:</b>"
-msgstr "<b>Ein spezielles Kommando ausführen:</b>"
+msgstr "<b>运行自定义命令：</b>"
 
 #: ../data/glade/add_watch.glade.h:2
 msgid "Add a Watch"
-msgstr "Beobachtung hinzufügen"
+msgstr "添加一个监视"
 
 #: ../data/glade/add_watch.glade.h:3
 #: ../data/glade/edit_watch.glade.h:4
 msgid "Advanced options"
-msgstr "Erweiterte Einstellungen"
+msgstr "高级选项"
 
 #: ../data/glade/add_watch.glade.h:4
 msgid ""
 "Choose \n"
 "an other name"
 msgstr ""
-"Einen anderen\n"
-"Namen wählen"
+"选择 \n"
+"另一个名称"
 
 #: ../data/glade/add_watch.glade.h:6
 msgid ""
 "Edit existing\n"
 "watch"
 msgstr ""
-"Beobachtung\n"
-"bearbeiten"
+"编辑存在的\n"
+"监视"
 
 #: ../data/glade/add_watch.glade.h:8
 #: ../data/glade/edit_watch.glade.h:6
 msgid "General options"
-msgstr "Allgemeine Einstellungen"
+msgstr "<b>基本设置</b>"
 
 #: ../data/glade/add_watch.glade.h:9
 #: ../data/glade/edit_watch.glade.h:7
 msgid "Name:"
-msgstr "Name:"
+msgstr "名称："
 
 #: ../data/glade/add_watch.glade.h:10
 #: ../data/glade/edit_watch.glade.h:8
 msgid "Refresh Interval:"
-msgstr "Überprüfungsintervall:"
+msgstr "刷新间隔："
 
 #: ../data/glade/add_watch.glade.h:11
 #: ../data/glade/edit_watch.glade.h:9
@@ -64,14 +66,14 @@ msgid ""
 "Hours\n"
 "Days"
 msgstr ""
-"Sekunden\n"
-"Minuten\n"
-"Stunden\n"
-"Tage"
+"秒\n"
+"分\n"
+"小时\n"
+"天"
 
 #: ../data/glade/add_watch.glade.h:15
 msgid "The watch name is already in use"
-msgstr "Beobachtungsname wird bereits verwendet"
+msgstr "这个监视名称已经存在了"
 
 #: ../data/glade/add_watch.glade.h:16
 msgid ""
@@ -79,46 +81,44 @@ msgid ""
 "\n"
 "If you want to create a new one, you need to choose a different name."
 msgstr ""
-"Der eingegebene Beobachtungsname existiert bereits! Soll die vorhandene Beobachtung geändert oder eine neue angelegt werden?\n"
+"您选择的这个监视名称已经存在了! 您是希望修改现有的监视, 还是创建一个新的监视?\n"
 "\n"
-"Wenn eine neue Beobachtung erstellt werden soll muss eine anderer Name eingegeben werden."
+"如果你希望创建一个新的监视, 你需要选择一个不同的名称."
 
 #: ../data/glade/add_watch.glade.h:19
 #: ../data/glade/edit_watch.glade.h:14
 msgid "When this watch has changed"
-msgstr "Wenn sich diese Beobachtung ändert"
+msgstr "当监视刷新时"
 
 #: ../data/glade/add_watch.glade.h:20
 #: ../data/glade/edit_watch.glade.h:15
 msgid "When you open this watch"
-msgstr "Wenn Sie diese Beobachtung öffnen"
+msgstr "当打开监视时"
 
 #: ../data/glade/edit_watch.glade.h:1
 msgid "<b>General settings</b>"
-msgstr "<b>Allgemeine Einstellungen</b>"
+msgstr "<b>基本设置</b>"
 
 #: ../data/glade/edit_watch.glade.h:3
 msgid "<b>Watch options</b>"
-msgstr "<b>Beobachtungs-Einstellungen</b>"
+msgstr "<b>监视名称</b>"
 
 #: ../data/glade/edit_watch.glade.h:5
 #: ../spectlib/notifier.py:788
-#, fuzzy
 msgid "Error log"
-msgstr "Fehlerbericht"
+msgstr "错误日志"
 
 #: ../data/glade/edit_watch.glade.h:13
-#, fuzzy
 msgid "Watch $WATCH_NAME"
-msgstr "Beobachtung $WATCH_NAME"
+msgstr "监视$WATCH_NAME"
 
 #: ../data/glade/import_export.glade.h:1
 msgid "Deselect all"
-msgstr "Nichts auswählen"
+msgstr "删除全部"
 
 #: ../data/glade/import_export.glade.h:2
 msgid "Select all"
-msgstr "Alle auswählen"
+msgstr "选择全部"
 
 #: ../data/glade/log_dialog.glade.h:1
 msgid ""
@@ -129,74 +129,74 @@ msgid ""
 "Error\n"
 "Critical"
 msgstr ""
-"Alle\n"
-"Fehlerbehebung\n"
-"Informationen\n"
-"Warnung\n"
-"Fehler\n"
-"Kritisch"
+"All\n"
+"Debug\n"
+"Info\n"
+"Warning\n"
+"Error\n"
+"Critical"
 
 #: ../data/glade/log_dialog.glade.h:7
 msgid "Filter:"
-msgstr "Filter"
+msgstr "过滤器："
 
 #: ../data/glade/log_dialog.glade.h:8
 msgid "Logs"
-msgstr "Berichte"
+msgstr "日志："
 
 #: ../data/glade/log_dialog.glade.h:9
 msgid "Save As"
-msgstr "Speichern unter"
+msgstr "保存为"
 
 #: ../data/glade/notifier.glade.h:1
 msgid "By Active"
-msgstr "Nach Aktivität"
+msgstr "按 活动状态"
 
 #: ../data/glade/notifier.glade.h:2
 msgid "By Name"
-msgstr "Nach Name"
+msgstr "按 名称"
 
 #: ../data/glade/notifier.glade.h:3
 msgid "By Watch Type"
-msgstr "Nach Beobachtungstyp"
+msgstr "按 监视类型"
 
 #: ../data/glade/notifier.glade.h:4
 msgid "Debug information"
-msgstr "Debug-Information"
+msgstr "Debug信息"
 
 #: ../data/glade/notifier.glade.h:5
 msgid "Display _All Watches"
-msgstr "_Alle Beobachtungen anzeigen"
+msgstr "显示所有的监视(_A)"
 
 #: ../data/glade/notifier.glade.h:6
 msgid "Display _Toolbar"
-msgstr "Anzeigesymbolleiste"
+msgstr "显示工具栏(_T)"
 
 #: ../data/glade/notifier.glade.h:7
 msgid "Error"
-msgstr "Fehler"
+msgstr "错误"
 
 #: ../data/glade/notifier.glade.h:8
 msgid "Extra information"
-msgstr "Zusatzinformation"
+msgstr "额外信息"
 
 #: ../data/glade/notifier.glade.h:9
 msgid "General"
-msgstr "Allgemein"
+msgstr "常规"
 
 #: ../data/glade/notifier.glade.h:10
 #: ../spectlib/notifier.py:492
 #: ../spectlib/trayicon.py:144
 msgid "Mark as read"
-msgstr "Als gelesen markieren"
+msgstr "标记为已读"
 
 #: ../data/glade/notifier.glade.h:11
 msgid "Notifications"
-msgstr "Benachrichtigungen"
+msgstr "提醒"
 
 #: ../data/glade/notifier.glade.h:12
 msgid "Sorting"
-msgstr "Sortieren"
+msgstr "排序"
 
 #: ../data/glade/notifier.glade.h:13
 msgid "Visit the issue tracker"
@@ -204,150 +204,146 @@ msgstr ""
 
 #: ../data/glade/notifier.glade.h:14
 msgid "_Edit"
-msgstr "_Bearbeiten"
+msgstr "编辑(_E)"
 
 #: ../data/glade/notifier.glade.h:15
 msgid "_Error Log"
-msgstr "_Fehlerbericht"
+msgstr "错误日志(_E)"
 
 #: ../data/glade/notifier.glade.h:16
 msgid "_Export Watches"
-msgstr "Beobachtungen E_xportieren"
+msgstr "导出监视(_E)"
 
 #: ../data/glade/notifier.glade.h:17
 msgid "_File"
-msgstr "_Datei"
+msgstr "文件(_F)"
 
 #: ../data/glade/notifier.glade.h:18
 msgid "_Help"
-msgstr "_Hilfe"
+msgstr "帮助(_H)"
 
 #: ../data/glade/notifier.glade.h:19
 msgid "_Import Watches"
-msgstr "Beobachtungen _importieren"
+msgstr "导入监视(_I)"
 
 #: ../data/glade/notifier.glade.h:20
 #: ../spectlib/trayicon.py:153
 msgid "_Mark all read"
-msgstr "Alle als gelesen _markieren"
+msgstr "标记为已读(_M)"
 
 #: ../data/glade/notifier.glade.h:21
 msgid "_Refresh All"
-msgstr "Alle _aktualisieren"
+msgstr "刷新所有(_A)"
 
 #: ../data/glade/notifier.glade.h:22
 msgid "_View"
-msgstr "_Ansicht"
+msgstr "视图(_V)"
 
 #: ../data/glade/preferences.glade.h:1
 msgid "<b>Debugging and Logging</b>"
-msgstr "<b>Fehlerbehebung und Bericht</b>"
+msgstr "<b>Debugging 和 日志</b>"
 
 #: ../data/glade/preferences.glade.h:2
 msgid "<b>Display</b>"
-msgstr "<b>Anzeige</b>"
+msgstr "<b>显示</b>"
 
 #: ../data/glade/preferences.glade.h:3
 msgid "<b>Security</b>"
-msgstr "<b>Sicherheit</b>"
+msgstr "<b>安全:</b>"
 
 #: ../data/glade/preferences.glade.h:4
 msgid "<b>Sounds</b>"
-msgstr "<b>Sound</b>"
+msgstr "<b>声音</b>"
 
 #: ../data/glade/preferences.glade.h:5
 msgid "Always show the icon in the notification area"
-msgstr "Symbol immer im Benachrichtigungsfeld anzeigen"
+msgstr "一直显示在提示区"
 
 #: ../data/glade/preferences.glade.h:6
 msgid "Display the notification window in the window list"
-msgstr "Benachrichtigungsfenster in der Fensterliste anzeigen"
+msgstr "在窗口列表中显示提醒窗口"
 
 #: ../data/glade/preferences.glade.h:7
 msgid "Enable debug mode and logging"
-msgstr "Fehlerbehebung und Protokoll einschalten"
+msgstr "启用 debug 模式和日志"
 
 #: ../data/glade/preferences.glade.h:8
 msgid "If activated, you will receive more information when running Specto from a terminal, and more information will be printed to the logs."
-msgstr "Wenn aktiv werden mehr informationen im Terminalmodus ausgegeben und mehr informationen werden in die Berichte aufgenommen."
+msgstr "如果激活此模式,你将会在运行specto的终端中得到更多信息, 并且更多信息将会记录到日志中。"
 
 #: ../data/glade/preferences.glade.h:9
 msgid "It is strongly recommended to use keyring password encryption. If you disable this option, your passwords will be saved in <b>plain text, unencrypted</b> in your watch list, and could be read by anyone gaining access to your system user account."
-msgstr ""
+msgstr "强烈的推荐您使用密钥环。如果您取消此选项，您的密码将会被保存在<b>未经加密</b>的监视列表文本文件中，并且可能会被任何能够访问你的系统的人员获取。"
 
 #: ../data/glade/preferences.glade.h:10
 msgid "Play this sound when a problem occurs:"
-msgstr "Diesen Klang wiedergeben wenn ein Problem auftritt:"
+msgstr "当问发生问题时播放声音："
 
 #: ../data/glade/preferences.glade.h:11
 msgid "Play this sound when a watch has changed:"
-msgstr "Diesen Klang wiedergeben wenn sich eine Beobachtung ändert:"
+msgstr "当监视更新时播放声音："
 
 #: ../data/glade/preferences.glade.h:12
 msgid "Preferences"
-msgstr "Einstellungen"
+msgstr "偏好设置"
 
 #: ../data/glade/preferences.glade.h:13
 msgid "Select a File"
-msgstr "Datei wählen"
+msgstr "选择一个文件"
 
 #: ../data/glade/preferences.glade.h:14
 msgid "Show notifications when a watch has changed"
-msgstr "Benachrichtigungen anzeigen wenn sich eine Beobachtung ändert"
+msgstr "显示提醒当一个监视更新时"
 
 #: ../data/glade/preferences.glade.h:15
 msgid "Use GNOME keyring to store passwords in encrypted format"
-msgstr "GNOME-Schlüsselbund verwenden um Passwörter verschlüsselt zu speichern"
+msgstr "使用GNOME密钥环以加密的格式保存密码"
 
 #: ../spectlib/about.py:66
 msgid "translator-credits"
-msgstr ""
-"Thomas McColgan <thomas.mccolgan AT gmx.de>\n"
-"Sebastian Fischer <sebastian.fischer AT gmail.com>\n"
-"Martin Lettner <m.lettner AT gmail.com>"
+msgstr "Alex Yang <sthots@gmail.com>"
 
 #: ../spectlib/about.py:79
 msgid "Specto's Website"
-msgstr "Specto Webseite"
+msgstr "Specto的网站"
 
 #: ../spectlib/balloons.py:99
 msgid "Cannot display notification message. Make sure that libnotify and D-Bus are available on your system."
-msgstr ""
+msgstr "不能够显示提示信息。请确认您的系统中libnotify和D-Bus是可用的。"
 
 #: ../spectlib/console.py:45
 #: ../spectlib/watch.py:140
 msgid "Watch has changed."
-msgstr "Beobachtung hat sich geändert."
+msgstr "监视已改变"
 
 #: ../spectlib/console.py:50
 #: ../spectlib/watch.py:121
 msgid "Watch started checking."
-msgstr "Beobachtung hat Überprüfung gestartet."
+msgstr "监视开始检查。"
 
 #: ../spectlib/console.py:52
-#, fuzzy
 msgid "Watch is idle."
-msgstr "Beobachtung ist untätig."
+msgstr "监视空闲。"
 
 #: ../spectlib/console.py:54
 #: ../spectlib/watch.py:174
 msgid "No network connection detected"
-msgstr "Keine Netzwerk-Verbindung gefunden"
+msgstr "未检测到网络连接"
 
 #: ../spectlib/console.py:56
 #: ../spectlib/watch.py:136
 #: ../spectlib/watch.py:170
 msgid "There was an error checking the watch"
-msgstr "Fehler beim Überprüfen der Beobachtung"
+msgstr "当检查监视是发生了错误"
 
 #: ../spectlib/edit_watch.py:73
 msgid "Edit watch: "
-msgstr "Beobachtung bearbeiten:"
+msgstr "编辑监视："
 
 #: ../spectlib/edit_watch.py:186
 #: ../spectlib/notifier.py:592
 msgid "Remove a watch"
-msgstr "Beobachtung entfernen"
+msgstr "移除一个监视"
 
 #: ../spectlib/edit_watch.py:187
 #: ../spectlib/notifier.py:593
@@ -355,24 +351,24 @@ msgid ""
 "<big>Remove the watch \"%s\"?</big>\n"
 "This operation cannot be undone."
 msgstr ""
-"<big>Beobachtung \"%s\" entfernen?</big>\n"
-"Dieser Vorgang kann nicht rückgängig gemacht werden."
+"<big>移除这个监视\"%s\"?</big>\n"
+"这个操作无法被撤销。"
 
 #: ../spectlib/export_watch.py:57
 #: ../spectlib/export_watch.py:58
 msgid "Export watches"
-msgstr "Beobachtungen exportieren"
+msgstr "导出监视"
 
 #: ../spectlib/export_watch.py:86
 #: ../spectlib/import_watch.py:87
 msgid "Select"
-msgstr "auswählen"
+msgstr "选择"
 
 #: ../spectlib/export_watch.py:92
 #: ../spectlib/import_watch.py:92
 #: ../spectlib/notifier.py:700
 msgid "Type"
-msgstr "Typ"
+msgstr "类型"
 
 #: ../spectlib/export_watch.py:98
 #: ../spectlib/import_watch.py:97
@@ -389,7 +385,7 @@ msgstr "Typ"
 #: ../spectlib/plugins/watch_web_greader.py:102
 #: ../spectlib/plugins/watch_web_static.py:280
 msgid "Name"
-msgstr "Name"
+msgstr "名称"
 
 #: ../spectlib/export_watch.py:106
 #: ../spectlib/import_watch.py:104
@@ -401,160 +397,156 @@ msgstr "ID"
 #: ../spectlib/import_watch.py:111
 #: ../spectlib/notifier.py:725
 msgid "TYPE"
-msgstr "TYP"
+msgstr "类型"
 
 #: ../spectlib/gtkconfig.py:171
 #: ../spectlib/gtkconfig.py:402
 msgid "Choose a file"
-msgstr "Datei auswählen"
+msgstr "选择一个文件"
 
 #: ../spectlib/gtkconfig.py:204
 #: ../spectlib/gtkconfig.py:408
 msgid "Choose a directory"
-msgstr "Ordner auswählen"
+msgstr "选择一个目录"
 
 #: ../spectlib/gtkconfig.py:344
 msgid ""
 "<b>Specto encountered an error</b>\n"
 "Please verify if this bug has been entered in our issue tracker, and if not, file a bug report so we can fix it."
 msgstr ""
+"<b>Specto 遇到了一个错误</b>\n"
+"Please verify if this bug has been entered in our issue tracker, and if not, file a bug report so we can fix it."
 
 #: ../spectlib/import_watch.py:60
 #: ../spectlib/import_watch.py:61
 msgid "Import watches"
-msgstr "Beobachtungen importieren"
+msgstr "导入监视"
 
 #: ../spectlib/main.py:60
 msgid "no GTK, activating console mode"
-msgstr "kein GTK, aktiviere Konsolenmodus"
+msgstr "不使用GTK，在终端模式活动"
 
 #: ../spectlib/main.py:96
 msgid "Console mode enabled."
-msgstr "Konsolen-Modus aktiviert."
+msgstr "终端模式已启用。"
 
 #: ../spectlib/main.py:130
-#, fuzzy
 msgid "Could not create a watch, because it is corrupt."
-msgstr "Konnte keine Beobachtung erstellen, sie scheint kaputt."
+msgstr "无法创建一个监视，它可能已经损坏。"
 
 #: ../spectlib/main.py:204
 #: ../spectlib/main.py:206
 msgid "Specto is already running!"
-msgstr "Specto läuft bereits!"
+msgstr "Specto已经在运行"
 
 #: ../spectlib/main.py:252
 msgid "Cannot quit yet"
-msgstr "Kann noch nicht beendet werden"
+msgstr "尚不能退出"
 
 #: ../spectlib/main.py:258
-#, fuzzy
 msgid "Murder!"
-msgstr "Ermorden!"
+msgstr "强制退出！"
 
 #: ../spectlib/main.py:269
-#, fuzzy
 msgid ""
 "<b><big>Specto is currently busy and cannot quit yet.</big></b>\n"
 "\n"
 "This may be because it is checking for watch changes.\n"
 "However, you can try forcing it to quit by clicking the murder button."
 msgstr ""
-"Specto ist im Moment beschäftigt und kann nicht geschlossen werden.\n"
+"<b><big>Specto 正忙并且尚不能退出</big></b>\n"
 "\n"
-"Dies kann daran liegen dass einige Objekte gerade überprüft werden.\n"
-"Allerdings kann versucht werden Specto mit der Mörder-Schaltfläche zu killen."
+"这可能是因为正在检查更新.\n"
+"但是您仍可以通过点击强制退出按钮强制退出。"
 
 #: ../spectlib/notifier.py:164
 msgid "Stop"
-msgstr "Stoppen"
+msgstr "停止"
 
 #: ../spectlib/notifier.py:185
 #: ../spectlib/trayicon.py:145
 msgid "Refresh All"
-msgstr "Alle aktualisieren"
+msgstr "刷新全部"
 
 #: ../spectlib/notifier.py:203
 msgid "The watch \"%s\" is checking."
-msgstr "Die Beobachtung \"%s\" überprüft."
+msgstr "监视“%s”正在检查。"
 
 #: ../spectlib/notifier.py:218
 #: ../spectlib/notifier.py:347
-#, fuzzy
 msgid "The network connection seems to be down, networked watches will not check until then."
-msgstr "Es scheint keine Netzwerk-Verbindung vorhanden zu sein, Netzwerk-Beobachtungen werden momentan nicht ausgeführt."
+msgstr "网络连接似乎是断开的，监视在连接之前将不会更新。"
 
 #: ../spectlib/notifier.py:223
 msgid "The watch \"%s\" has a problem."
-msgstr "Beobachtung \"%s\" hat einen Fehler."
+msgstr "监视“%s”存在一个错误。"
 
 #: ../spectlib/notifier.py:226
 msgid "%s encountered a problem"
-msgstr "%s hat einen Fehler festgestellt"
+msgstr "%s遇到了一个问题"
 
 #: ../spectlib/notifier.py:232
 msgid "The watch \"%s\" has changed."
-msgstr "Beobachtung \"%s\" hat sich geändert."
+msgstr "监视“%s”已经改变。"
 
 #: ../spectlib/notifier.py:245
-#, fuzzy
 msgid "%s has changed"
-msgstr "Zuletzt geändert"
+msgstr "%s已经改变"
 
 #: ../spectlib/notifier.py:262
 msgid "There was an error marking the watch status"
-msgstr "Fehler beim Markieren des Beobachtungs-Status"
+msgstr "标记监视状态时发生了一个错误。"
 
 #: ../spectlib/notifier.py:392
 #: ../spectlib/watch.py:230
 msgid "No extra information available."
-msgstr "Keine Zusatzinformation verfügbar."
+msgstr "没有可用的额外信息。"
 
 #: ../spectlib/notifier.py:400
 msgid "Extra information could not be set"
-msgstr "Zusatzinformation konnte nicht gesetzt werden"
+msgstr "无法设置额外信息"
 
 #: ../spectlib/notifier.py:427
 msgid "Watch opened"
-msgstr "Beobachtung geöffnet"
+msgstr "监视已打开"
 
 #: ../spectlib/notifier.py:483
 msgid "Refresh"
-msgstr "Aktualisieren"
+msgstr "刷新"
 
 #: ../spectlib/notifier.py:504
 msgid "Edit"
-msgstr "Bearbeiten"
+msgstr "编辑"
 
 #: ../spectlib/notifier.py:511
 msgid "Remove"
-msgstr "Entfernen"
+msgstr "移除"
 
 #: ../spectlib/notifier.py:544
 msgid "You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."
-msgstr "Sie können alle Arten von Webseiten als Beobachtung hinzufügen. Statische Seiten, RSS oder Atom Feeds, etc. Specto wird sie automatisch untersuchen."
+msgstr "你可以添加各种网站作为监视对象。包括静态页面，RSS或ATOM源等。Specto将会自动处理他们。"
 
 #: ../spectlib/notifier.py:545
 msgid "Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."
-msgstr "Bei Webseiten können sie eine Fehlertoleranz auswählen, die die minimale Änderung in Prozent angibt. Dies ermöglicht es z.B. Seiten mit viel Werbung die sich ständig ändert zu überwachen."
+msgstr ""
 
 #: ../spectlib/notifier.py:546
 msgid "Single-click an existing watch to display information, and double-click it to open the content."
-msgstr "Klicken sie einfach auf eine existierende Beobachtung um Informationen anzuzeigen, und doppelt um den Inhalt zu öffnen."
+msgstr "单机存在的监视以显示相关信息，双击将会打开详细内容。"
 
 #: ../spectlib/notifier.py:547
 msgid "Please set a reasonable refresh interval in order to save bandwidth and prevent you from being blocked from content providers."
-msgstr "Bitte wählen Sie ein vernünftiges Aktualisierungsintervall um Bandbreite zu sparen und damit Webseitenbetreiber Sie nicht blockieren."
+msgstr "请设置一个合理的刷新间隔以节省带宽并防止被服务商封禁。"
 
 #: ../spectlib/notifier.py:693
 msgid "Active"
-msgstr "Aktiv"
+msgstr "启用"
 
 #: ../spectlib/notifier.py:742
 msgid "Tip of the Day:"
-msgstr "Tipp des Tages:"
+msgstr "每日提示："
 
 #: ../spectlib/plugins/watch_mail_gmail.py:34
-#, fuzzy
 msgid "GMail"
 msgstr "Gmail"
 
@@ -562,7 +554,7 @@ msgstr "Gmail"
 #: ../spectlib/plugins/watch_mail_imap.py:35
 #: ../spectlib/plugins/watch_mail_pop3.py:38
 msgid "Mail"
-msgstr "Mail"
+msgstr "邮件"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:40
 #: ../spectlib/plugins/watch_mail_gmail.py:109
@@ -573,7 +565,7 @@ msgstr "Mail"
 #: ../spectlib/plugins/watch_web_greader.py:35
 #: ../spectlib/plugins/watch_web_greader.py:104
 msgid "Username"
-msgstr "Benutzername"
+msgstr "用户名"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:41
 #: ../spectlib/plugins/watch_mail_imap.py:40
@@ -581,7 +573,7 @@ msgstr "Benutzername"
 #: ../spectlib/plugins/watch_sn_facebook.py:45
 #: ../spectlib/plugins/watch_web_greader.py:36
 msgid "Password"
-msgstr "Passwort"
+msgstr "密码"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:103
 #: ../spectlib/plugins/watch_mail_pop3.py:95
@@ -597,7 +589,7 @@ msgstr "Passwort"
 #: ../spectlib/watch.py:241
 #: ../spectlib/watch.py:250
 msgid "Unexpected error:"
-msgstr "Unerwarteter Fehler:"
+msgstr "意外错误："
 
 #: ../spectlib/plugins/watch_mail_gmail.py:108
 #: ../spectlib/plugins/watch_mail_imap.py:181
@@ -611,14 +603,14 @@ msgstr "Unerwarteter Fehler:"
 #: ../spectlib/plugins/watch_web_greader.py:103
 #: ../spectlib/plugins/watch_web_static.py:281
 msgid "Last changed"
-msgstr "Zuletzt geändert"
+msgstr "最近的变化"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:110
 #: ../spectlib/plugins/watch_mail_imap.py:183
 #: ../spectlib/plugins/watch_mail_pop3.py:167
 #: ../spectlib/plugins/watch_web_greader.py:105
 msgid "Unread messages"
-msgstr "Ungelesene Nachrichten"
+msgstr "未读的消息"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:116
 #: ../spectlib/plugins/watch_mail_imap.py:150
@@ -628,6 +620,9 @@ msgid ""
 "\n"
 "... <b>totalling %d</b> unread mails."
 msgstr ""
+"来自<b>%s</b>的新信息...\n"
+"\n"
+"... <b>总计 %d</b>未读邮件"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:126
 #: ../spectlib/plugins/watch_mail_imap.py:162
@@ -637,6 +632,9 @@ msgid ""
 "\n"
 "... <b>totalling %d</b> unread mails."
 msgstr ""
+"来自<b>%s</b>的%d 个新信息\n"
+"\n"
+"... <b>总计 %d</b> 未读邮件。"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:135
 #: ../spectlib/plugins/watch_mail_imap.py:174
@@ -647,7 +645,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:118
 #: ../spectlib/plugins/watch_web_greader.py:130
 msgid "and others..."
-msgstr "und andere..."
+msgstr ""
 
 #: ../spectlib/plugins/watch_mail_gmail.py:144
 #: ../spectlib/plugins/watch_mail_gmail.py:157
@@ -665,7 +663,7 @@ msgstr "und andere..."
 #: ../spectlib/plugins/watch_web_static.py:226
 #: ../spectlib/watch.py:288
 msgid "There was an error opening the file %s"
-msgstr "Fehler beim Öffnen der Datei %s"
+msgstr "打开文件%s时发生了错误 "
 
 #: ../spectlib/plugins/watch_mail_imap.py:33
 msgid "IMAP"
@@ -674,16 +672,16 @@ msgstr "IMAP"
 #: ../spectlib/plugins/watch_mail_imap.py:41
 #: ../spectlib/plugins/watch_mail_pop3.py:44
 msgid "Host"
-msgstr "Host"
+msgstr ""
 
 #: ../spectlib/plugins/watch_mail_imap.py:42
 #: ../spectlib/plugins/watch_mail_pop3.py:45
 msgid "Use SSL"
-msgstr "SSL benutzen"
+msgstr "使用SSL"
 
 #: ../spectlib/plugins/watch_mail_imap.py:43
 msgid "Folder (optional)"
-msgstr "Ordner (optional)"
+msgstr "文件夹(可选的)"
 
 #: ../spectlib/plugins/watch_mail_imap.py:203
 #: ../spectlib/plugins/watch_mail_pop3.py:187
@@ -696,20 +694,19 @@ msgstr "Ordner (optional)"
 #: ../spectlib/watch.py:619
 #: ../spectlib/watch.py:633
 msgid "There was an error writing to the file %s"
-msgstr "Fehler beim Schreiben der Datei %s"
+msgstr "写入文件%s时发生了错误 "
 
 #: ../spectlib/plugins/watch_mail_pop3.py:36
 msgid "POP3"
 msgstr "POP3"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:38
-#, fuzzy
 msgid "Facebook"
 msgstr "Facebook"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:40
 msgid "Social networks"
-msgstr "Soziale Netzwerke"
+msgstr ""
 
 #: ../spectlib/plugins/watch_sn_facebook.py:44
 #: ../spectlib/plugins/watch_sn_facebook.py:238
@@ -718,88 +715,84 @@ msgstr "Email"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:118
 msgid "Wrong username/password"
-msgstr "Falscher Benutzername/Passwort"
+msgstr "错误的用户名或密码"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:127
 msgid "You received"
-msgstr "Sie haben empfangen"
+msgstr "您接收到"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:130
 msgid "a new message"
-msgstr "eine neue Nachricht"
+msgstr "一个新信息"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:132
 msgid "%d new messages"
-msgstr "%d neue Nachrichten"
+msgstr "%d 个新信息"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:137
 msgid "a new notification"
-msgstr "eine neue Benachrichtigung"
+msgstr "一个新的提醒"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:139
 msgid "%d new notifications"
-msgstr "%d neue Benachrichtigungen"
+msgstr "%d个新的提醒"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:144
-#, fuzzy
 msgid "a new request"
-msgstr "eine neue Anfrage"
+msgstr ""
 
 #: ../spectlib/plugins/watch_sn_facebook.py:146
-#, fuzzy
 msgid "%d new requests"
-msgstr "%d neue Anfragen"
+msgstr ""
 
 #: ../spectlib/plugins/watch_sn_facebook.py:151
-#, fuzzy
 msgid "a new wall post"
-msgstr "eine neue Pinnwand-Nachricht"
+msgstr ""
 
 #: ../spectlib/plugins/watch_sn_facebook.py:153
-#, fuzzy
 msgid "%d new wall posts"
-msgstr "%d neue neue Pinnwand-Nachrichten"
+msgstr ""
 
 #: ../spectlib/plugins/watch_system_file.py:31
 #: ../spectlib/plugins/watch_system_file.py:37
 #: ../spectlib/plugins/watch_system_file.py:167
 msgid "File"
-msgstr "Datei"
+msgstr "文件"
 
 #: ../spectlib/plugins/watch_system_file.py:33
 #: ../spectlib/plugins/watch_system_folder.py:35
 #: ../spectlib/plugins/watch_system_port.py:33
 #: ../spectlib/plugins/watch_system_process.py:33
 msgid "System"
-msgstr "System"
+msgstr "系统"
 
 #: ../spectlib/plugins/watch_system_file.py:70
 msgid "The file was removed"
-msgstr "Die Datei wurde entfernt"
+msgstr "文件已被移除"
 
 #: ../spectlib/plugins/watch_system_file.py:97
 msgid "User id of the owner changed"
-msgstr "Benutzer-ID des Besitzers hat sich geändert"
+msgstr "所有者的用户ID改变"
 
 #: ../spectlib/plugins/watch_system_file.py:100
 msgid "Group id of the owner changed"
-msgstr "Gruppen-ID des Besitzers hat sich geändert"
+msgstr "所有者的组ID改变"
 
 #: ../spectlib/plugins/watch_system_file.py:103
 msgid "File size changed"
-msgstr "Dateigröße hat sich geändert"
+msgstr "文件大小改变"
 
 #: ../spectlib/plugins/watch_system_file.py:106
 msgid "Time of last access changed"
-msgstr "Letzte Zugriffszeit hat sich geändert"
+msgstr "最后一次访问时间改变"
 
 #: ../spectlib/plugins/watch_system_file.py:109
 msgid "Time of last modification changed"
-msgstr "Zeit der letzten Bearbeitung hat sich geändert"
+msgstr "最后一次修改时间改变"
 
 #: ../spectlib/plugins/watch_system_file.py:157
 msgid "<b>%s</b> has changed:\n"
-msgstr "<b>%s</b> hat geändert:\n"
+msgstr "<b>%s</b>已经改变：\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:33
 #: ../spectlib/plugins/watch_system_folder.py:39
@@ -807,110 +800,105 @@ msgstr "<b>%s</b> hat geändert:\n"
 #: ../spectlib/plugins/watch_vc_bazaar.py:42
 #: ../spectlib/plugins/watch_vc_bazaar.py:171
 msgid "Folder"
-msgstr "Ordner"
+msgstr "目录"
 
 #: ../spectlib/plugins/watch_system_folder.py:78
-#, fuzzy
 msgid "The watch is not set to a folder"
-msgstr "Die Beobachtung ist für keinen Ordner festgelegt"
+msgstr "监视未被设置到一个文件夹"
 
 #: ../spectlib/plugins/watch_system_folder.py:141
 msgid "Skipping %s"
-msgstr "Überspringe %s"
+msgstr "跳过%s"
 
 #: ../spectlib/plugins/watch_system_folder.py:165
 msgid "1 new file was created.\n"
-msgstr "1 neue Datei wurde erstellt.\n"
+msgstr "一个新文件被创建。\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:167
 msgid " new files were created.\n"
-msgstr " neue Dateien wurden erstellt.\n"
+msgstr "创建了新文件。\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:170
 msgid "1 file was removed.\n"
-msgstr "1 Datei wurde entfernt.\n"
+msgstr "一个文件被移除。\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:172
 msgid " files were removed.\n"
-msgstr " Dateien wurden entfernt.\n"
+msgstr "文件被移除。\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:175
 msgid "1 file was modified.\n"
-msgstr "1 Datei wurde verändert.\n"
+msgstr "一个文件被移除。\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:177
 msgid " files were modified.\n"
-msgstr " Dateien wurden geändert.\n"
+msgstr "文件被修改。\n"
 
 #: ../spectlib/plugins/watch_system_port.py:31
 #: ../spectlib/plugins/watch_system_port.py:37
 #: ../spectlib/plugins/watch_system_port.py:107
 msgid "Port"
-msgstr "Port"
+msgstr "端口"
 
 #: ../spectlib/plugins/watch_system_port.py:65
 msgid "Closed"
-msgstr "Geschlossen"
+msgstr "关闭"
 
 #: ../spectlib/plugins/watch_system_port.py:69
 msgid "Open"
-msgstr "Offen"
+msgstr "打开"
 
 #: ../spectlib/plugins/watch_system_port.py:72
 #: ../spectlib/plugins/watch_system_process.py:74
 msgid "Unknown"
-msgstr "Unbekannt"
+msgstr "未知的"
 
 #: ../spectlib/plugins/watch_system_port.py:108
 #: ../spectlib/plugins/watch_system_process.py:93
 msgid "Status"
-msgstr "Status"
+msgstr "状态"
 
 #: ../spectlib/plugins/watch_system_port.py:114
-#, fuzzy
 msgid "The network socket on port %s was established."
-msgstr "Die Verbindung <b>%s</b> wurde hergestellt."
+msgstr "%s端口上的网络连接被打开。"
 
 #: ../spectlib/plugins/watch_system_port.py:116
-#, fuzzy
 msgid "The network socket on port %s was closed."
-msgstr "Die Verbindung <b>%s</b> wurde geschlossen."
+msgstr "%s端口上的网络连接被关闭。"
 
 #: ../spectlib/plugins/watch_system_process.py:31
 #: ../spectlib/plugins/watch_system_process.py:37
 #: ../spectlib/plugins/watch_system_process.py:92
 msgid "Process"
-msgstr "Prozess"
+msgstr "进程"
 
 #: ../spectlib/plugins/watch_system_process.py:67
 msgid "Not running"
-msgstr "Angehalten"
+msgstr "未运行"
 
 #: ../spectlib/plugins/watch_system_process.py:71
 msgid "Running"
-msgstr "Läuft"
+msgstr "运行中"
 
 #: ../spectlib/plugins/watch_system_process.py:98
-#, fuzzy
 msgid "The system process has started."
-msgstr "Der System-Prozess <b>%s</b> wurde gestoppt."
+msgstr "系统进程已启动。"
 
 #: ../spectlib/plugins/watch_system_process.py:100
-#, fuzzy
 msgid "The system process has stopped."
-msgstr "System-Prozess <b>%s</b> wurde gestoppt."
+msgstr "系统进程已停止。"
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:36
 msgid "Bazaar"
-msgstr "Bazaar"
+msgstr ""
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:38
 msgid "Version control"
-msgstr "Versionskontrolle"
+msgstr "版本控制"
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:94
 msgid "No parent branch available, you will not be notified of differences and changes."
-msgstr ""
+msgstr "没有可用的父分支，您将不会接收到不同和改变的通知。"
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:110
 msgid "One new local revision has not yet been merged with its parent branch."
@@ -929,22 +917,21 @@ msgid "%d new revisions on the remote branch."
 msgstr ""
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:172
-#, fuzzy
 msgid "Main branch"
-msgstr "Haupt-Zweig"
+msgstr "主分支"
 
 #: ../spectlib/plugins/watch_web_greader.py:29
 msgid "Google Reader"
-msgstr "Google Reader"
+msgstr "Google阅读器"
 
 #: ../spectlib/plugins/watch_web_greader.py:31
 #: ../spectlib/plugins/watch_web_static.py:49
 msgid "Internet"
-msgstr "Internet"
+msgstr "互联网"
 
 #: ../spectlib/plugins/watch_web_greader.py:83
 msgid " or more"
-msgstr " oder mehr"
+msgstr ""
 
 #: ../spectlib/plugins/watch_web_greader.py:111
 msgid ""
@@ -962,35 +949,35 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_web_greader.py:481
 msgid "Wrong username or password"
-msgstr "Falscher Benutzername oder Passwort"
+msgstr "错误的用户名或密码"
 
 #: ../spectlib/plugins/watch_web_greader.py:484
 msgid "Could not establish a connection to server"
-msgstr "Konnte keine Verbindung zum Server herstellen"
+msgstr "无法与服务器建立连接"
 
 #: ../spectlib/plugins/watch_web_greader.py:487
 msgid "Could not get cookies"
-msgstr "Konnte Cookies nicht empfangen"
+msgstr "无法获取cookie"
 
 #: ../spectlib/plugins/watch_web_greader.py:493
 msgid "You are not subscribed to any feeds"
-msgstr "Sie haben keine Feeds abonniert"
+msgstr "您没有订阅任何源"
 
 #: ../spectlib/plugins/watch_web_greader.py:495
 msgid "No unread items"
-msgstr "Keine ungelesenen Objekte"
+msgstr "没有未读条目"
 
 #: ../spectlib/plugins/watch_web_static.py:47
 msgid "Webpage/feed"
-msgstr "Webseite/Feed"
+msgstr "网页/源"
 
 #: ../spectlib/plugins/watch_web_static.py:175
 msgid "Filesize difference: %.2f"
-msgstr "Dateigrößen-Differenz: %.2f"
+msgstr "文件大小差别：%.2f"
 
 #: ../spectlib/plugins/watch_web_static.py:264
 msgid "Difference percentage: %s percent"
-msgstr "Differenz-Anteil: %s Prozent"
+msgstr "差异比例:%s％"
 
 #: ../spectlib/plugins/watch_web_static.py:282
 #: ../spectlib/plugins/watch_web_static.py:287
@@ -1000,44 +987,44 @@ msgstr "URL"
 #: ../spectlib/plugins/watch_web_static.py:283
 #: ../spectlib/plugins/watch_web_static.py:288
 msgid "Error margin (%)"
-msgstr "Fehlertoleranz (%)"
+msgstr ""
 
 #: ../spectlib/trayicon.py:98
 msgid "No changed watches."
-msgstr "Keine veränderten Beobachtungen."
+msgstr "没有更新的监视。"
 
 #: ../spectlib/trayicon.py:134
 msgid "Hide window"
-msgstr "Fenster verstecken"
+msgstr "隐藏窗口"
 
 #: ../spectlib/trayicon.py:136
 msgid "Show window"
-msgstr "Fenster zeigen"
+msgstr "显示窗口"
 
 #: ../spectlib/watch.py:88
 msgid "There was an error starting the watch"
-msgstr "Fehler beim Starten der Beobachtung"
+msgstr "开始监视时发生了错误。"
 
 #: ../spectlib/watch.py:98
 msgid "There was an error stopping the watch"
-msgstr "Fehler beim Stoppen der Beobachtung"
+msgstr "停止监视时发生了错误。"
 
 #: ../spectlib/watch.py:108
 msgid "There was an error marking the watch as read"
-msgstr "Fehler beim Markieren der Beobachtung als gelesen"
+msgstr "将监视标为已读时发生了错误"
 
 #: ../spectlib/watch.py:151
 msgid "There was an error marking the watch as changed"
-msgstr "Fehler beim Markieren der Beobachtung als verändert"
+msgstr "将监视标为已改变时发生了错误"
 
 #: ../spectlib/watch.py:216
 #: ../spectlib/watch.py:217
 msgid "No changes yet"
-msgstr "Bisher keine Veränderungen"
+msgstr "尚无更新"
 
 #: ../spectlib/watch.py:301
 msgid "Please enable plugin \"%s\" if you want to use the watch \"%s\"."
-msgstr "Bitte aktivieren Sie Plugin \"%s\", wenn Sie die Beobachtung \"%s\" verwenden wollen."
+msgstr "请启用“%ｓ”插件以使用监视“%s”。"
 
 #: ../spectlib/watch.py:455
 #: ../spectlib/watch.py:468
@@ -1047,25 +1034,10 @@ msgstr "Bitte aktivieren Sie Plugin \"%s\", wenn Sie die Beobachtung \"%s\" verw
 #: ../spectlib/watch.py:554
 #: ../spectlib/watch.py:609
 msgid "There was an error initializing config file %s"
-msgstr "Fehler während der Initialisierung der Konfigurationsdatei %s"
+msgstr "初始化配置文件时发生了错误。"
 
-#~ msgid "Duration (in seconds):"
-#~ msgstr "Dauer (in Sekunden):"
-#~ msgid ""
-#~ "The watch, <b>%s</b>, has a problem. You may need to check the error log."
-#~ msgstr ""
-#~ "Die Beobachtung <b>%s</b> hat einen Fehler erzeugt. Im Fehlerbericht "
-#~ "stehen eventuell Details."
-#~ msgid ""
-#~ "The website, <b>%s</b>, has changed.\n"
-#~ "Difference percentage: %s percent"
-#~ msgstr ""
-#~ "Die Webseite <b>%s</b> hat sich geändert.\n"
-#~ "Differenz: %s Prozent"
 #~ msgid "Watch Type:"
-#~ msgstr "Beobachtungstyp:"
-
-#, fuzzy
+#~ msgstr "监视类型："
 #~ msgid ""
 #~ "Website\n"
 #~ "Email\n"
@@ -1073,145 +1045,127 @@ msgstr "Fehler während der Initialisierung der Konfigurationsdatei %s"
 #~ "Process\n"
 #~ "Port"
 #~ msgstr ""
-#~ "Webseite\n"
-#~ "Email\n"
-#~ "Dateien/Ordner"
+#~ "站点\n"
+#~ "电子邮件\n"
+#~ "文件或文件夹\n"
+#~ "进程\n"
+#~ "端口"
 #~ msgid "Watch Settings"
-#~ msgstr "Beobachtungseinstellungen"
+#~ msgstr "监视设置"
+#~ msgid "<b>File/folder:</b>"
+#~ msgstr "<b>文件/文件夹:</b>"
+#~ msgid "<b>Last Updated:</b>"
+#~ msgstr "<b>最后更新:</b>"
+#~ msgid "<b>Location:</b>"
+#~ msgstr "<b>位置:</b>"
+#~ msgid "<b>Name:</b>"
+#~ msgstr "<b>名称:</b>"
+#~ msgid "<b>Process:</b>"
+#~ msgstr "<b>进程:</b>"
+#~ msgid "<b>Username:</b>"
+#~ msgstr "<b>用户名:</b>"
+#~ msgid "label"
+#~ msgstr "标签"
 #~ msgid "A problem occured"
-#~ msgstr "Ein Problem ist aufgetreten"
+#~ msgstr "发生了一个问题"
 #~ msgid "A watch is updated"
-#~ msgstr "Eine Beobachtung wird aktualisiert!"
+#~ msgstr "更新了一个监视"
+#~ msgid "Duration (in seconds):"
+#~ msgstr "持续时间（秒）"
 #~ msgid "Pop toasts from the tray icon when a watch is updated"
-#~ msgstr ""
-#~ "Popup vom Spectosymbol wenn ein Objekt unter Beobachtung geändert wurde"
+#~ msgstr "当有监视更新时从托盘图标中弹出气泡"
 #~ msgid ""
 #~ "While in debug mode, Specto will provide more information in order to "
 #~ "help you diagnose problems. Logging will save all this information to a "
 #~ "log file. You can use this to help developers improve Specto."
 #~ msgstr ""
-#~ "Im Fehlerbehebungsmodus wird Specto mehr Informationen anzeigen um bei "
-#~ "der Fehlerbehebung zu helfen. Die Fehlerberichterstattung wird all diese "
-#~ "Informationen in einem Bericht speichern. Dieser kann dann genutzt werden "
-#~ "um Specto zu verbessern."
+#~ "在debug模式下，Specto将会提供更多信息以帮助您诊断可能存在的问题。日志系统"
+#~ "将会将所有的这些信息存贮到日志文件中。您可以使用它帮助开发者改进 Specto。"
 #~ msgid "file"
-#~ msgstr "Datei"
+#~ msgstr "文件"
 #~ msgid "folder"
-#~ msgstr "Ordner"
-#~ msgid "Protocol:"
-#~ msgstr "Protokol:"
+#~ msgstr "目录"
 #~ msgid "User:"
-#~ msgstr "Benutzer:"
+#~ msgstr "用户名:"
 #~ msgid "File/folder:"
-#~ msgstr "Datei/Ordner:"
+#~ msgstr "文件/目录："
 #~ msgid "removed logs from watch: \"%s\""
-#~ msgstr "Logs von Beobachtung entfernt:  : \"%s\""
+#~ msgstr "删除“%s”监视的日志"
 #~ msgid "Pop3"
 #~ msgstr "Pop3"
 #~ msgid "Imap"
-#~ msgstr "Imap"
+#~ msgstr "IMAP"
 #~ msgid "watch \"%s\" stopped"
-#~ msgstr "Beobachtung \"%s\" gestoppt"
-#~ msgid "notifier: reappear"
-#~ msgstr "Benachrichtiger: anzeigen"
-#~ msgid "notifier: hide"
-#~ msgstr "Benachrichtiger: verstecken"
-#~ msgid "preferences: create"
-#~ msgstr "Einstellungen: erstellen"
-#~ msgid "preferences: reappear"
-#~ msgstr "Einstellungen: anzeigen"
-#~ msgid "error log: create"
-#~ msgstr "Fehlerlog: erstellen"
-#~ msgid "error log: already visible"
-#~ msgstr "Fehlerlog: bereits sichtbar"
-#~ msgid "error log: recreate"
-#~ msgstr "Fehlerbericht: wiederherstellen"
-#~ msgid "add watch: create"
-#~ msgstr "Beobachtung hinzufügen: erstellen"
-#~ msgid "add watch: already visible"
-#~ msgstr "Beobachtung hinzufügen: bereits sichtbar"
-#~ msgid "add watch: recreate"
-#~ msgstr "Beobachtung hinzufügen: wiederherstellen"
-#~ msgid "edit watch: create"
-#~ msgstr "Beobachtung hinzufügen: erstellen"
-#~ msgid "edit watch: already visible"
-#~ msgstr "Beobachtung hinzufügen: bereits sichtbar"
-#~ msgid "edit watch: recreate"
-#~ msgstr "Beobachtung hinzufügen: wiederherstellen"
+#~ msgstr "监视“%s”已经停止"
 #~ msgid "gmail <i>(%s unread)</i>"
-#~ msgstr "gmail <i>(%s ungelesen)</i>"
+#~ msgstr "Gmail <i>(%s 未读)</i>"
 #~ msgid "notifier: size set"
-#~ msgstr "Benachrichtiger: Größe eingestellt"
+#~ msgstr "提醒：尺寸已设置"
 #~ msgid "notifier: size not set"
-#~ msgstr "Benachrichtiger: Größe nicht eingestellt"
+#~ msgstr "提醒：尺寸尚未设置"
 #~ msgid "notifier: position set"
-#~ msgstr "Benachrichtiger: Position eingestellt"
+#~ msgstr "提醒：位置已设置"
 #~ msgid "notifier: position not set"
-#~ msgstr "Benachrichtiger: Position nicht eingestellt"
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>Name:</b>"
-#~ msgid "<b>Last Updated:</b>"
-#~ msgstr "<b>Letztes Update:</b>"
-#~ msgid "<b>Location:</b>"
-#~ msgstr "<b>Ort:</b>"
-#~ msgid "<b>Error Margin:</b>"
-#~ msgstr "<b>Fehlertoleranz:</b>"
-#~ msgid "<b>Host:</b>"
-#~ msgstr "<b>Host:</b>"
-#~ msgid "<b>Username:</b>"
-#~ msgstr "<b>Benutzername:</b>"
-#~ msgid "<b>File/folder:</b>"
-#~ msgstr "<b>Datei/Ordner:</b>"
+#~ msgstr "ntifer：位置尚未设置"
 #~ msgid "Preferences saved."
-#~ msgstr "Einstellungen gespeichert."
+#~ msgstr "偏好设置已保存。"
 #~ msgid "Updated watches:\n"
-#~ msgstr "Aktualisierte Beobachtungen:\n"
+#~ msgstr "有更新的监视：\n"
 #~ msgid "website"
-#~ msgstr "Webseite"
+#~ msgstr "网站"
 #~ msgid "websites"
-#~ msgstr "Webseiten"
+#~ msgstr "多个网站"
 #~ msgid "mail account"
-#~ msgstr "Mail-Account"
+#~ msgstr "邮件帐号"
 #~ msgid "mail accounts"
-#~ msgstr "Mail-Accounts"
+#~ msgstr "多个邮件帐号"
 #~ msgid "file/folder"
-#~ msgstr "Datei/Ordner"
+#~ msgstr "文件/文件夹"
 #~ msgid "files/folders"
-#~ msgstr "Dateien/Ordner"
+#~ msgstr "多个文件/文件夹"
+#~ msgid "process"
+#~ msgstr "进程"
+#~ msgid "processes"
+#~ msgstr "多个进程"
+#~ msgid "port"
+#~ msgstr "端口"
+#~ msgid "ports"
+#~ msgstr "多个端口"
+#~ msgid ""
+#~ "The watch, <b>%s</b>, has a problem. You may need to check the error log."
+#~ msgstr "监视“<b>%s</b>”存在问题。您可以检查错误日志。"
+#~ msgid "Watch \"%s\" is already marked as updated in the notifier"
+#~ msgstr "监视“%s”已经在提示中标记为已更新"
 #~ msgid "Watch \"%s\" updated!"
-#~ msgstr "Beobachtung \"%s\" aktualisiert!"
+#~ msgstr "监视“%s” 更新！"
+#~ msgid "The website, <b>%s</b>, has been updated."
+#~ msgstr "网站<b>%s</b>已经更新。"
 #~ msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
-#~ msgstr "Ihr Email-Account, <b>%s</b>, hat <b>%d</b> neue Mails."
+#~ msgstr "您的Email帐号<b>%s</b>有<b>%d</b> 封新邮件。"
 #~ msgid ""
 #~ "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling %"
 #~ "s"
-#~ msgstr ""
-#~ "Ihr Email-Account <b>%s</b> hat <b>%d</b> neue ungelesene Mails, "
-#~ "insgesamt %s."
+#~ msgstr "您的Email帐号<b>%s</b>有<b>%d</b> 封未读，总计 %s"
 #~ msgid "Your email account, <b>%s</b>, has new mail."
-#~ msgstr "Ihr Email-Account <b>%s</b> hat neue Mail."
+#~ msgstr "您的Email帐号<b>%s</b>有新邮件。"
 #~ msgid "The file/folder, <b>%s</b>, has been updated."
-#~ msgstr "Die Datei/Der Ordner , <b>%s</b>, wurde aktualisiert."
-#~ msgid "Not implemented yet"
-#~ msgstr "Noch nicht implementiert"
+#~ msgstr "文件/文件夹<b>%s</b>已更新。"
 #~ msgid "Unknown File Watch"
-#~ msgstr "Unbekannte Dateibeobachtung"
+#~ msgstr "未知的文件监视"
 #~ msgid "Updating watch: \"%s\""
-#~ msgstr "Aktualisiere Beobachtung: \"%s\""
+#~ msgstr "正在更新监视“%s”"
 #~ msgid "update: %s removed"
-#~ msgstr "Update: %s entfernt"
+#~ msgstr "更新：%s被移除"
 #~ msgid "Unknown Mail Watch"
-#~ msgstr "Unbekannte Mailbeobachtung"
+#~ msgstr "未知的邮件监视"
 #~ msgid "Watch: \"%s\" has error: %s"
-#~ msgstr "Beobachtung: \"%s\" hat einen Fehler: %s"
+#~ msgstr "监视“%s”存在一个错误 ：%s"
 #~ msgid "Mailbox does not exist"
-#~ msgstr "Mailbox existiert nicht"
+#~ msgstr "邮箱不存在"
 #~ msgid "Watch: \"%s\" has error: "
-#~ msgstr "Beobachtung: \"%s\" hat einen Fehler:"
-
-#, fuzzy
+#~ msgstr "监视“%s”存在一个错误"
 #~ msgid "Unknown Process Watch"
-#~ msgstr "Unbekannte Dateibeobachtung"
+#~ msgstr "未知的进程监视"
 #~ msgid "Watch: \"%s\" has error: empty url"
-#~ msgstr "Beobachtung: \"%s\" hat einen Fehler: leere URL"
+#~ msgstr "监视“%s”存在一个错误：空的URL"
 
