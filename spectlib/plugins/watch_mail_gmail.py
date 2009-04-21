@@ -38,7 +38,8 @@ category = _("Mail")
 
 def get_add_gui_info():
     return [("username", spectlib.gtkconfig.Entry(_("Username"))),
-            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))]
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
+            ("label", spectlib.gtkconfig.Entry(_("Label"), "Inbox"))]
 
 
 class Watch_mail_gmail(Watch):
@@ -48,7 +49,8 @@ class Watch_mail_gmail(Watch):
 
     def __init__(self, specto, id, values):
         watch_values = [("username", spectlib.config.String(True)),
-                        ("password", spectlib.config.String(True))]
+                        ("password", spectlib.config.String(True)),
+                        ("label", spectlib.config.String(False))]
         url = "https://mail.google.com"
         self.standard_open_command = spectlib.util.return_webpage(url)
 
@@ -78,7 +80,7 @@ class Watch_mail_gmail(Watch):
         try:
             if "@" not in self.username:
                 self.username += "@gmail.com"
-            s = GmailAtom(self.username, self.password)
+            s = GmailAtom(self.username, self.password, self.label)
             s.refreshInfo()
             self.oldMsg = s.getUnreadMsgCount()
             self.newMsg = 0
@@ -344,7 +346,9 @@ class GmailAtom:
     host = "https://mail.google.com"
     url = host + "/mail/feed/atom"
 
-    def __init__(self, user, pswd):
+    def __init__(self, user, pswd, label):
+        if label:
+            self.url = self.url + "/" + label
         self.m = MailHandler()
         # initialize authorization handler
         auth_handler = web_proxy.urllib2.HTTPBasicAuthHandler()
