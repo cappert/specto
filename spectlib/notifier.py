@@ -211,7 +211,7 @@ class Notifier:
                     icon = self.get_icon(watch.icon, 0, False)
                 else:
                     self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_NORMAL)
-                    self.wTree.get_widget("clear_all1").set_sensitive(False)                
+                    self.wTree.get_widget("clear_all1").set_sensitive(False)
                     icon = self.get_icon(watch.icon, 50, False)
                 statusbar.push(0, "")  # As per HIG, make the status bar empty when nothing is happening
             elif status == "no-network":
@@ -520,7 +520,7 @@ class Notifier:
 
     def change_entry_name(self, *args):
         """ Edit the name from the watch in the notifier window. """
-        #change the name in the treeview
+        # Change the name in the treeview
         model, iter = self.treeview.get_selection().get_selected()
         id = int(model.get_value(iter, 3))
         self.change_name(args[2], id)
@@ -532,15 +532,15 @@ class Notifier:
             weight = pango.WEIGHT_NORMAL
         self.model.set(self.iter[id], 2, new_name, 5, weight)
 
-        #write the new name in watches.list
+        # Write the new name in watches.list
         self.specto.watch_io.replace_name(self.specto.watch_db[id].name, new_name)
-        #change the name in the database
+        # Change the name in the database
         self.specto.watch_db[id].name = new_name
         self.show_watch_info()
 
 ### GUI FUNCTIONS ###
-
-    def get_quick_tip(self):#these are the tips of the day that are shown on startup. The code that displays them is further below.
+    def get_quick_tip(self):
+        """Return a random tip of the day to be shown on startup"""
         tips = [_("You can add all kinds of websites as watches. Static pages, RSS or Atom feeds, etc. Specto will automatically handle them."),
                     _("Website watches can use an error margin that allows you to set a minimum difference percentage. This allows you to adapt to websites that change constantly or have lots of advertising."),
                     _("Single-click an existing watch to display information, and double-click it to open the content."),
@@ -803,9 +803,7 @@ class Notifier:
 
         self.generate_add_menu()
 
-
 ### Sort functions ###
-
     def get_startup_sort_order(self):
         order = self.get_gconf_sort_order()
         sort_function = self.specto.specto_gconf.get_entry("sort_function")

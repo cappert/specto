@@ -40,12 +40,9 @@ except:
 
 
 class Add_watch:
-    """
-    Class to create the add watch dialog.
-    """
+    """Class to create the add watch dialog."""
     # Please do not use confusing widget names such as 'lbl' and 'tbl',
     # Use full names like 'label' and 'table'.
-
     def __init__(self, specto, notifier, watch_type):
         self.specto = specto
         self.notifier = notifier
@@ -88,7 +85,7 @@ class Add_watch:
         #set the default values
         self.refresh_unit.set_active(2)
         self.refresh.set_value(1.0)
-        
+
         self.name.grab_focus()
 
     def set_options(self, watch_type):

@@ -39,12 +39,9 @@ except:
 
 
 class Edit_watch:
-    """
-    Class to create the edit watch dialog.
-    """
+    """Class to create the edit watch dialog."""
     # Please do not use confusing widget names such as 'lbl' and 'tbl',
     # use full names like 'label' and 'table'.
-
     def __init__(self, specto, notifier, id):
         self.specto = specto
         self.notifier = notifier
@@ -56,14 +53,14 @@ class Edit_watch:
 
         # Catch some events
         dic = {"on_button_cancel_clicked": self.cancel_clicked,
-        "on_button_save_clicked": self.save_clicked,
-        "on_button_remove_clicked": self.remove_clicked,
-        #"on_button_clear_clicked": self.clear_clicked,  # clear error_log textfield
-        "on_button_save_as_clicked": self.save_as_clicked,  # save error_log text
-        "on_edit_watch_delete_event": self.delete_event,
-        "check_command_toggled": self.command_toggled,
-        "check_open_toggled": self.open_toggled,
-        "on_refresh_unit_changed": self.set_refresh_values}
+            "on_button_save_clicked": self.save_clicked,
+            "on_button_remove_clicked": self.remove_clicked,
+            #"on_button_clear_clicked": self.clear_clicked,  # clear error_log textfield
+            "on_button_save_as_clicked": self.save_as_clicked,  # save error_log text
+            "on_edit_watch_delete_event": self.delete_event,
+            "check_command_toggled": self.command_toggled,
+            "check_open_toggled": self.open_toggled,
+            "on_refresh_unit_changed": self.set_refresh_values}
 
         # Attach the events
         self.wTree.signal_autoconnect(dic)
@@ -97,10 +94,6 @@ class Edit_watch:
                 iter = self.log_buffer.get_iter_at_offset(0)
                 for line in log_text:
                     self.log_buffer.insert_with_tags_by_name(iter, line[1], line[0])
-
-                #self.wTree.get_widget("error_log").set_buffer(self.logwindow)
-
-                #self.logwindow.set_text(self.log)
 
     def cancel_clicked(self, widget):
         """ Destroy the edit watch dialog. """

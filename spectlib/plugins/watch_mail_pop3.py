@@ -99,7 +99,7 @@ class Watch_mail_pop3(Watch):
                     except:
                         self.set_error()
                         Watch.timer_update(self)
-                        return ""                    
+                        return ""
                 else:
                     try:
                         s = poplib.POP3(self.host)
@@ -146,14 +146,13 @@ class Watch_mail_pop3(Watch):
         self.oldMsg = self.newMsg
         Watch.timer_update(self)
 
-
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
             author_info = unread_messages[0].author.split(":")[0]
             author_info = author_info.replace("<", "(")
-            author_info = author_info.replace(">", ")")            
+            author_info = author_info.replace(">", ")")
             text = _("New message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (author_info, self.unreadMsg)
         else:
             i = 0 #show max 4 mails

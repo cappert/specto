@@ -63,7 +63,6 @@ Convert it to ini format:
 
 # ---- Abstract classes
 
-
 class namespace(object):
 
     def __getitem__(self, key):
@@ -129,7 +128,6 @@ class unknown(object):
 
 
 # ---- Basic implementation of namespace
-
 
 class basic_namespace(namespace):
     """Represents a collection of named values

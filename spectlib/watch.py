@@ -231,7 +231,7 @@ class Watch:
 
     def remove_cache_files(self):
         return ""
-    
+
     def set_error(self, message=""):
         self.error = True
         if message != "":
@@ -239,7 +239,7 @@ class Watch:
             self.specto.logger.log(('%s') % str(message), "error", self.name)
         else:
             self.error_message = _("Unexpected error:") + " " + str(sys.exc_info()[1])
-            self.specto.logger.log(self.error_message, "error", self.name)                      
+            self.specto.logger.log(self.error_message, "error", self.name)
 
 
 class Watch_collection:

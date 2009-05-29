@@ -89,7 +89,7 @@ class Watch_mail_imap(Watch):
         except imaplib.IMAP4.error, e:
             self.set_error(str(e))
         except:
-            self.set_error()           
+            self.set_error()
         else:
             try:
                 if self.folder != "":

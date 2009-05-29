@@ -67,25 +67,22 @@ class NMListener(CallbackRunner):
         self.nm_7 = False
         nmProxy = bus.get_object('org.freedesktop.NetworkManager',
                                  '/org/freedesktop/NetworkManager')
-        
+
         try:
-            self.nmIface = dbus.Interface(nmProxy,"org.freedesktop.DBus.Properties") 
+            self.nmIface = dbus.Interface(nmProxy, "org.freedesktop.DBus.Properties")
             bus.add_signal_receiver(self.on_nm_event,
-                                      'StateChanged', 
-                                      'org.freedesktop.NetworkManager', 
-                                      'org.freedesktop.NetworkManager', 
+                                      'StateChanged',
+                                      'org.freedesktop.NetworkManager',
+                                      'org.freedesktop.NetworkManager',
                                       '/org/freedesktop/NetworkManager')
             self.lastStatus = self.nmIface.Get("org.freedesktop.NetworkManager", "State")
             self.nm_7 = True
         except:
-       
-            self.nmIface = dbus.Interface(nmProxy,
-                                      'org.freedesktop.NetworkManager')
-            
+            self.nmIface = dbus.Interface(nmProxy, 'org.freedesktop.NetworkManager')
             self.nmIface.connect_to_signal('DeviceNoLongerActive',
                                            self.on_nm_event,
                                            'org.freedesktop.NetworkManager')
-            self.nmIface.connect_to_signal('DeviceNowActive', 
+            self.nmIface.connect_to_signal('DeviceNowActive',
                                            self.on_nm_event,
                                            'org.freedesktop.NetworkManager')
             self.lastStatus = self.nmIface.state()

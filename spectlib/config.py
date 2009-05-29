@@ -21,11 +21,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-
 class Integer():
-    """
-    A config node containing a integer value.
-
+    """A config node containing a integer value.
     Supports restricting the valid values to a range.
     """
 
@@ -46,9 +43,7 @@ class Integer():
 
 
 class String():
-    """
-    A config node containing a string value.
-    """
+    """A config node containing a string value."""
 
     def __init__(self, mandatory):
         self.mandatory = mandatory

@@ -251,7 +251,7 @@ class Specto:
             #create a close dialog
             self.dialog = gtk.Dialog(_("Cannot quit yet"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
             self.dialog.set_modal(False)  # Needed to prevent the notifier UI and refresh process from blocking. Also, do not use dialog.run(), because it automatically sets modal to true.
-            
+
             #HIG tricks
             self.dialog.set_has_separator(False)
 
@@ -281,7 +281,6 @@ class Specto:
             self.dialog.connect("response", self.dialog_response)
             self.dialog.show_all()
 
-                
     def dialog_response(self, widget, answer):
         if answer == 3:
             try:#go figure, it never works!
@@ -291,4 +290,4 @@ class Specto:
                 #kill the specto process with killall
                 os.system('killall specto')
         else:
-            self.dialog.hide()            
+            self.dialog.hide()

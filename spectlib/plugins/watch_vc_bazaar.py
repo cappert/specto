@@ -86,7 +86,7 @@ class Watch_vc_bazaar(Watch):
                     if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
                         self.actually_changed = True
                         self.write_cache_file()
-                        
+
                 if not self.local_extra and not self.remote_extra:
                     self.mark_as_read()
             else:
