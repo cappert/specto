@@ -106,8 +106,7 @@ class Watch_web_static(Watch):
             try:
                 response = web_proxy.urllib2.urlopen(request)
             except (URLError, BadStatusLine), e:
-                self.error = True
-                self.specto.logger.log(('%s') % str(e), "warning", self.name) # This '%s' string here has nothing to translate
+                self.set_error(str(e))
             else:
                 self.info_ = response.info()
                 self.url2_ = response.geturl()
@@ -189,8 +188,7 @@ class Watch_web_static(Watch):
                 ### NOTE: do not write the redirect url in a config file!
                 self.write_filesize()
         except:
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
-            self.error = True
+            self.set_error()
 
         Watch.timer_update(self)
 
@@ -261,7 +259,7 @@ class Watch_web_static(Watch):
 
     def get_balloon_text(self):
         """ create the text for the balloon """
-        text = _("The website, <b>%s</b>, has changed.\nDifference percentage: %s percent") % (self.name, str(self.filesize_difference)[:5])
+        text = _("Difference percentage: %s percent") % (str(self.filesize_difference)[:5])
         return text
 
     def get_extra_information(self):

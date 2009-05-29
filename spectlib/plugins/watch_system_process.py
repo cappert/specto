@@ -73,8 +73,8 @@ class Watch_system_process(Watch):
                 self.actually_changed=False
                 self.status = _("Unknown")
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
+
         Watch.timer_update(self)
 
     def check_process(self):
@@ -95,9 +95,9 @@ class Watch_system_process(Watch):
     def get_balloon_text(self):
         """ create the text for the balloon """
         if self.check_process():
-            text = _("The system process, <b>%s</b>, has started.") % self.name
+            text = _("The system process has started.")
         elif self.check_process()==False:#the process check returned false, which means the process is not running
-            text = _("The system process, <b>%s</b>, has stopped.") % self.name
+            text = _("The system process has stopped.")
         return text
 """
 Nick Craig-Wood <nick at craig-wood.com> -- http://www.craig-wood.com/nick

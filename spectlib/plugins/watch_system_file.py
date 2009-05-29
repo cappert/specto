@@ -114,8 +114,7 @@ class Watch_system_file(Watch):
                 self.update_cache_file()
                 self.first_time = False
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
 
         Watch.timer_update(self)
 
@@ -125,7 +124,7 @@ class Watch_system_file(Watch):
             f = file(self.cache_file, "w")
             f.write(str(self.info))
         except:
-            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "error", self.name)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.name)
         finally:
             f.close()
 
@@ -147,7 +146,7 @@ class Watch_system_file(Watch):
 
     def get_balloon_text(self):
         """ create the text for the balloon """
-        text = _("<b>%s</b> has changed:\n") % self.file
+        text = ""
         for line in self.file_info:
             text += line + "\n"
 

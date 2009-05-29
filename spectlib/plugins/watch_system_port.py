@@ -71,8 +71,7 @@ class Watch_system_port(Watch):
                 self.actually_changed = False
                 self.status = _("Unknown")
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
 
         Watch.timer_update(self)
 
@@ -111,7 +110,7 @@ class Watch_system_port(Watch):
         """ create the text for the balloon """
         text = ""
         if self.running == True:
-            text = _("The connection, <b>%s</b>, was established.") % self.name
+            text = _("The network socket on port %s was established.") % self.port
         else:
-            text = _("The connection, <b>%s</b>, was closed.") % self.name
+            text = _("The network socket on port %s was closed.") % self.port
         return text

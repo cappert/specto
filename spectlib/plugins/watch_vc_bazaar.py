@@ -58,6 +58,8 @@ class Watch_vc_bazaar(Watch):
         #Init the superclass and set some specto values
         Watch.__init__(self, specto, id, values, watch_values)
 
+        self.use_network = True
+
         self.local_branch_ = 0
         self.remote_branch_ = 0
         self.remote_branch_label = ""
@@ -71,25 +73,29 @@ class Watch_vc_bazaar(Watch):
             self.read_cache_file()
             local_branch = Branch.open_containing(self.folder)[0]
             remote_branch = Branch.open_containing(local_branch.get_parent())[0]
-            self.remote_branch_label = local_branch.get_parent().replace("%7E", "~")
-            self.local_extra, self.remote_extra = find_unmerged(local_branch, remote_branch)
+            if local_branch.get_parent() <> None:
+                self.remote_branch_label = local_branch.get_parent().replace("%7E", "~")
+                self.local_extra, self.remote_extra = find_unmerged(local_branch, remote_branch)
 
-            if len(self.local_extra) <> 0:
-                if int(self.local_extra[len(self.local_extra) - 1][0]) > self.local_branch_:
-                    self.actually_changed = True
-                    self.write_cache_file()
+                if len(self.local_extra) <> 0:
+                    if int(self.local_extra[len(self.local_extra) - 1][0]) > self.local_branch_:
+                        self.actually_changed = True
+                        self.write_cache_file()
 
-            if len(self.remote_extra) <> 0:
-                if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
-                    self.actually_changed = True
-                    self.write_cache_file()
+                if len(self.remote_extra) <> 0:
+                    if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
+                        self.actually_changed = True
+                        self.write_cache_file()
+                        
+                if not self.local_extra and not self.remote_extra:
+                    self.mark_as_read()
+            else:
+                self.set_error(_("No parent branch available, you will not be notified of differences and changes."))
 
         except NotBranchError, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)  # This '%s' string here has nothing to translate
+            self.set_error(str(e))
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
 
         Watch.timer_update(self)
 
@@ -98,14 +104,13 @@ class Watch_vc_bazaar(Watch):
         msg = ""
         if len(self.local_extra) <> 0:
             if len(self.local_extra) == 1:
-                msg = _("One new revision on your local branch.")
+                msg = _("One new local revision has not yet been merged with its parent branch.")
             else:
-                msg = _("%d new revisions on your local branch.") % len(self.local_extra)
+                msg = _("%d new local revisions have not yet been merged with its parent branch.") % len(self.local_extra)
         if len(self.remote_extra) <> 0:
             if len(self.remote_extra) == 1:
                 msg = _("One new revision on the remote branch.")
             else:
-                print self.remote_extra[0]
                 msg = _("%d new revisions on the remote branch.") % len(self.remote_extra)
         return msg
 

@@ -39,52 +39,15 @@
                           <widget class="GtkCheckButton" id="chk_libnotify">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">Show balloons from the notification icon when a watch has changed</property>
+                            <property name="label" translatable="yes">Show notifications when a watch has changed</property>
                             <property name="use_underline">True</property>
                             <property name="response_id">0</property>
                             <property name="active">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="on_chk_libnotify_toggled"/>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkAlignment" id="alignment1">
-                            <property name="visible">True</property>
-                            <property name="bottom_padding">6</property>
-                            <property name="left_padding">22</property>
-                            <child>
-                              <widget class="GtkHBox" id="hbox_libnotify_duration">
-                                <property name="visible">True</property>
-                                <property name="spacing">6</property>
-                                <child>
-                                  <widget class="GtkLabel" id="label1">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Duration (in seconds):</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkHScale" id="hscale_libnotify_duration">
-                                    <property name="visible">True</property>
-                                    <property name="adjustment">5 0 30 1 10 10</property>
-                                    <property name="digits">0</property>
-                                    <property name="value_pos">GTK_POS_LEFT</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="position">1</property>
                           </packing>
                         </child>
                         <child>
@@ -100,7 +63,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">2</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                         <child>
@@ -115,7 +78,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">3</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                       </widget>
@@ -160,29 +123,18 @@
                         <property name="column_spacing">6</property>
                         <property name="row_spacing">6</property>
                         <child>
-                          <widget class="GtkFileChooserButton" id="soundProblem">
+                          <widget class="GtkCheckButton" id="chkSoundChanged">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="title" translatable="yes">Select a File</property>
+                            <property name="can_focus">True</property>
+                            <property name="label" translatable="yes">Play this sound when a watch has changed:</property>
+                            <property name="use_underline">True</property>
+                            <property name="response_id">0</property>
+                            <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="on_chkSoundChanged_toggled"/>
                           </widget>
                           <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="top_attach">1</property>
-                            <property name="bottom_attach">2</property>
-                            <property name="y_options">GTK_FILL</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkFileChooserButton" id="soundChanged">
-                            <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="title" translatable="yes">Select a File</property>
-                          </widget>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="y_options">GTK_FILL</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
                           </packing>
                         </child>
                         <child>
@@ -203,18 +155,29 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkCheckButton" id="chkSoundChanged">
+                          <widget class="GtkFileChooserButton" id="soundChanged">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">Play this sound when a watch has changed:</property>
-                            <property name="use_underline">True</property>
-                            <property name="response_id">0</property>
-                            <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="on_chkSoundChanged_toggled"/>
+                            <property name="sensitive">False</property>
+                            <property name="title" translatable="yes">Select a File</property>
                           </widget>
                           <packing>
-                            <property name="x_options">GTK_FILL</property>
-                            <property name="y_options"></property>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="y_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkFileChooserButton" id="soundProblem">
+                            <property name="visible">True</property>
+                            <property name="sensitive">False</property>
+                            <property name="title" translatable="yes">Select a File</property>
+                          </widget>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="y_options">GTK_FILL</property>
                           </packing>
                         </child>
                       </widget>

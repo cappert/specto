@@ -58,7 +58,7 @@ class Watch_mail_pop3(Watch):
                         ("ssl", spectlib.config.Boolean(False)),
                         ("port", spectlib.config.Integer(False))]
 
-        self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
+        self.standard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
 
         Watch.__init__(self, specto, id, values, watch_values)
 
@@ -78,21 +78,39 @@ class Watch_mail_pop3(Watch):
         """ Check for new mails on your pop3 account. """
         try:
             if self.ssl == True:
-                if self.port <> -1:
-                    s = poplib.POP3_SSL(self.host, self.port)
+                if self.port != -1:
+                    try:
+                        s = poplib.POP3_SSL(self.host, self.port)
+                    except:
+                        self.set_error()
+                        Watch.timer_update(self)
+                        return ""
                 else:
-                    s = poplib.POP3_SSL(self.host)
+                    try:
+                        s = poplib.POP3_SSL(self.host)
+                    except:
+                        self.set_error()
+                        Watch.timer_update(self)
+                        return ""
             else:
-                if self.port <> -1:
-                    s = poplib.POP3(self.host, self.port)
+                if self.port != -1:
+                    try:
+                        s = poplib.POP3(self.host, self.port)
+                    except:
+                        self.set_error()
+                        Watch.timer_update(self)
+                        return ""                    
                 else:
-                    s = poplib.POP3(self.host)
+                    try:
+                        s = poplib.POP3(self.host)
+                    except:
+                        self.set_error()
+                        Watch.timer_update(self)
+                        return ""
         except poplib.error_protoerror, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)
+            self.set_error(str(e))
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
         else:
             try:
                 s.user(self.username)
@@ -114,25 +132,29 @@ class Watch_mail_pop3(Watch):
                         i+=1
                     self.mail_info.sort()
                 self.mail_info.remove_old()
+                if len(self.mail_info) == 0:
+                    self.mark_as_read()
                 self.write_cache_file()
 
                 s.quit()
 
             except poplib.error_proto, e:
-                self.error = True
-                self.specto.logger.log(('%s') % str(e), "warning", self.name)
+                self.set_error(str(e))
             except:
-                self.error = True
-                self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+                self.set_error()
 
-        Watch.timer_update(self)
         self.oldMsg = self.newMsg
+        Watch.timer_update(self)
+
 
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("<b>%s</b> has received a new message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author.split(":")[0], self.unreadMsg)
+            author_info = unread_messages[0].author.split(":")[0]
+            author_info = author_info.replace("<", "(")
+            author_info = author_info.replace(">", ")")            
+            text = _("New message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (author_info, self.unreadMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
@@ -144,7 +166,7 @@ class Watch_mail_pop3(Watch):
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")
-            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)
+            text = _("%d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)
         return text
 
     def get_extra_information(self):

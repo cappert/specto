@@ -24,6 +24,7 @@ from spectlib.watch import Watch
 import spectlib.config
 from spectlib.i18n import _
 import spectlib.util
+import spectlib.tools.web_proxy as web_proxy
 
 type = "Watch_web_greader"
 type_desc = _("Google Reader")
@@ -74,9 +75,7 @@ class Watch_web_greader(Watch):
                 self.error = True
                 self.specto.logger.log(('%s') % unread[1], "error", self.name)
             elif unread[0] == 1:#no unread items, we need to clear the watch
-                self.unreadMsg = unread[1]
-                self.actually_changed = False
-                self.specto.mark_watch_status("clear", self.id)
+                self.mark_as_read()
                 self.news_info = Feed_collection()
             else:
                 self.unreadMsg = int(unread[1])
@@ -90,14 +89,14 @@ class Watch_web_greader(Watch):
                     _feed = Feed(feed, info[feed])
                     if self.news_info.add(_feed):
                         self.actually_changed = True
-                        self.newMsg+=1
+                        self.newMsg += 1
 
                 self.news_info.remove_old()
                 self.write_cache_file()
 
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
+
         Watch.timer_update(self)
 
     def get_gui_info(self):
@@ -110,7 +109,7 @@ class Watch_web_greader(Watch):
         """ create the text for the balloon """
         unread_messages = self.news_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("<b>%s</b> has a new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") %(self.name, unread_messages[0].name, str(self.unreadMsg) + self.or_more)
+            text = _("New newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") %(unread_messages[0].name, str(self.unreadMsg) + self.or_more)
         else:
             i = 0 #show max 4 feeds
             feed_info = ""
@@ -120,7 +119,7 @@ class Watch_web_greader(Watch):
                     feed_info += _("and others...")
                 i += 1
             feed_info = feed_info.rstrip(", ")
-            text = _("<b>%s</b> has received %d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") %(self.name, self.newMsg, feed_info, str(self.unreadMsg) + self.or_more)
+            text = _("%d new newsitems in <b>%s</b>...\n\n... <b>totalling %s</b> unread items.") %(self.newMsg, feed_info, str(self.unreadMsg) + self.or_more)
         return text
 
     def get_extra_information(self):
@@ -288,8 +287,8 @@ def getcookies():
             import ClientCookie
         except ImportError:
         # ClientCookie isn't available either
-            urlopen = urllib2.urlopen
-            Request = urllib2.Request
+            urlopen = web_proxy.urllib2.urlopen
+            Request = web_proxy.urllib2.Request
         else:
         # imported ClientCookie
             urlopen = ClientCookie.urlopen
@@ -298,8 +297,8 @@ def getcookies():
 
     else:
         # importing cookielib worked
-        urlopen = urllib2.urlopen
-        Request = urllib2.Request
+        urlopen = web_proxy.urllib2.urlopen
+        Request = web_proxy.urllib2.Request
         cj = cookielib.LWPCookieJar()
         # This is a subclass of FileCookieJar
         # that has useful load and save methods
@@ -313,9 +312,9 @@ def getcookies():
         if cookielib is not None:
         # if we use cookielib
         # then we get the HTTPCookieProcessor
-        # and install the opener in urllib2
-            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-            urllib2.install_opener(opener)
+        # and install the opener in web_proxy.urllib2
+            opener = web_proxy.urllib2.build_opener(web_proxy.urllib2.HTTPCookieProcessor(cj))
+            web_proxy.urllib2.install_opener(opener)
 
         else:
         # if we use ClientCookie
@@ -368,7 +367,7 @@ def getUnreadItems(Request):
     url = 'https://www.google.com/reader/api/0/unread-count?all=true'
     try:
         req = Request(url)
-        response = urllib2.urlopen(req)
+        response = web_proxy.urllib2.urlopen(req)
         del req
     except IOError, e:
         return 2         #we didn't get a connection
@@ -415,7 +414,7 @@ def updateFeeds(Request):
     url = 'http://www.google.com/reader/api/0/subscription/list'
     try:
         req = Request(url)
-        response = urllib2.urlopen(req)
+        response = web_proxy.urllib2.urlopen(req)
         del req
     except IOError, e:
         return 2  # We didn't get a connection

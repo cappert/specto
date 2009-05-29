@@ -39,7 +39,8 @@ def get_add_gui_info():
     return [("username", spectlib.gtkconfig.Entry(_("Username"))),
             ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
             ("host", spectlib.gtkconfig.Entry(_("Host"))),
-            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))]
+            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL"))),
+            ("folder", spectlib.gtkconfig.Entry(_("Folder (optional)")))]
 
 
 class Watch_mail_imap(Watch):
@@ -55,7 +56,7 @@ class Watch_mail_imap(Watch):
                         ("port", spectlib.config.Integer(False)),
                         ("folder", spectlib.config.String(False))]
 
-        self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
+        self.standard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
 
         Watch.__init__(self, specto, id, values, watch_values)
 
@@ -86,21 +87,25 @@ class Watch_mail_imap(Watch):
                     server = imaplib.IMAP4(self.host)
             server.login(self.username, self.password)
         except imaplib.IMAP4.error, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)
+            self.set_error(str(e))
+        except:
+            self.set_error()           
         else:
             try:
-                if folder <> "":
+                if self.folder != "":
                     try:
-                        server.select(folder, readonly=1)
+                        server.select(self.folder, readonly=1)
                     except:
-                        pass
+                        self.set_error()
                 else:
                     server.select(readonly=1)
                 (retcode, messages) = server.search(None, '(UNSEEN)')
                 self.mail_info.clear_old()
                 messages = messages[0].split(' ')
-                self.unreadMsg = len(messages)
+                if messages[0] != "":
+                    self.unreadMsg = len(messages)
+                else:
+                    self.unreadMsg = 0
                 self.newMsg = 0
                 if retcode == 'OK':
                     for message in messages:
@@ -130,15 +135,15 @@ class Watch_mail_imap(Watch):
                                         self.newMsg+=1
                     self.mail_info.remove_old()
                     self.write_cache_file()
+                    if len(self.mail_info) == 0:
+                        self.mark_as_read()
 
                 server.logout()
 
             except imaplib.IMAP4.error, e:
-                self.error = True
-                self.specto.logger.log(('%s') % str(e), "error", self.name)
+                self.set_error(str(e))
             except:
-                self.error = True
-                self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+                self.set_error()
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
@@ -147,7 +152,7 @@ class Watch_mail_imap(Watch):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("<b>%s</b> has received a new message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author.split(":")[0], self.unreadMsg)
+            text = _("New message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (unread_messages[0].author.split(":")[0], self.unreadMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
@@ -159,7 +164,7 @@ class Watch_mail_imap(Watch):
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")
-            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.unreadMsg)
+            text = _("%d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.newMsg, author_info, self.unreadMsg)
         return text
 
     def get_extra_information(self):

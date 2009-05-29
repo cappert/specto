@@ -24,7 +24,6 @@
 import os
 import sys
 from spectlib.tools.specto_gconf import Specto_gconf
-import gnomevfs  # FIXME: gnomevfs is deprecated, we should use gio
 
 
 def return_webpage(webpage):
@@ -47,16 +46,9 @@ def open_gconf_application(key):
     return application
 
 
-def open_file_watch(f):
-    """ Open a file with the correct application (mime). """
-    mime_type = gnomevfs.get_mime_type(f)
-    application = gnomevfs.mime_get_default_application(mime_type)
-    return application[2] + " \"" + f + "\""
-
-
 def get_path(category=None):
     """ Return the correct path. """
-    if not os.path.exists('data') and not os.path.exists('spectlib'):
+    if not os.path.exists('data') or not os.path.exists('spectlib'):
         if not category:
             PATH = "%s/share/specto/" % sys.prefix
         elif category=="doc":

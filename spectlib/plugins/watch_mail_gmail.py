@@ -56,8 +56,8 @@ class Watch_mail_gmail(Watch):
         Watch.__init__(self, specto, id, values, watch_values)
 
         if self.open_command == self.standard_open_command: #check if google apps url has to be used
-            if "@" in self.username and not "@gmail.com" in self.username:
-                url = "http://mail.google.com/a/" + self.username.split("@")[1]
+            if "@" in self.username and not "@gmail.com" and not "@googlemail.com" in self.username:
+                url = "http://mail.google.com/a/" + self.username.split("@")[1]  # We use mail.google.com instead of gmail.com because of the trademark issue in Germany
                 self.standard_open_command = spectlib.util.return_webpage(url)
                 self.open_command = self.standard_open_command
 
@@ -84,8 +84,7 @@ class Watch_mail_gmail(Watch):
             self.newMsg = 0
             self.mail_info.clear_old()
             if self.oldMsg == 0:#no unread messages, we need to clear the watch
-                self.actually_changed = False
-                self.specto.mark_watch_status("clear", self.id)
+                self.mark_as_read()
             else:
                 i = 0
                 while i < self.oldMsg and i < 20: # i < 20 is a hack around the gmail limitation of metadata retrieval (does not affect message count)
@@ -97,11 +96,9 @@ class Watch_mail_gmail(Watch):
             self.mail_info.remove_old()
             self.write_cache_file()
         except URLError, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)  # This '%s' string here has nothing to translate
+            self.set_error(str(e))  # This '%s' string here has nothing to translate
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
         Watch.timer_update(self)
 
     def get_gui_info(self):
@@ -114,7 +111,7 @@ class Watch_mail_gmail(Watch):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
-            text = _("<b>%s</b> has received a new message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, unread_messages[0].author, self.oldMsg)
+            text = _("New message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (unread_messages[0].author, self.oldMsg)
         else:
             i = 0 #show max 4 mails
             author_info = ""
@@ -124,7 +121,7 @@ class Watch_mail_gmail(Watch):
                     author_info += "and others..."
                 i += 1
             author_info = author_info.rstrip(", ")
-            text = _("<b>%s</b> has received %d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.name, self.newMsg, author_info, self.oldMsg)
+            text = _("%d new messages from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (self.newMsg, author_info, self.oldMsg)
         return text
 
     def get_extra_information(self):
