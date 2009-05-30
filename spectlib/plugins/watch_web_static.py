@@ -66,6 +66,8 @@ class Watch_web_static(Watch):
 
     def __init__(self, specto, id, values):
         watch_values = [("uri", spectlib.config.String(True)),
+                        ("username", spectlib.config.String(False)),
+                        ("password", spectlib.config.String(False)),
                         ("error_margin", spectlib.config.Dec(True)),
                         ("redirect", spectlib.config.Boolean(False))]
 
@@ -93,6 +95,13 @@ class Watch_web_static(Watch):
             cacheFileName = "".join(["%02x" % (ord(c), ) for c in digest])
             self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
             self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
+            if self.username:
+                pwd_mgr = web_proxy.urllib2.HTTPPasswordMgrWithDefaultRealm()
+                pwd_mgr.add_password(None, self.uri, self.username, self.password)
+                auth_hndlr = web_proxy.urllib2.HTTPBasicAuthHandler(pwd_mgr)
+                opener = web_proxy.urllib2.build_opener(auth_hndlr)
+            else:
+                opener = web_proxy.urllib2.build_opener()
             request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding": "gzip"})
             cache_res = ""
             if (self.cached == 1) or (os.path.exists(self.cacheFullPath_)):
@@ -104,7 +113,7 @@ class Watch_web_static(Watch):
                 except:
                     cache_res = ""
             try:
-                response = web_proxy.urllib2.urlopen(request)
+                response = opener.open(request)
             except (URLError, BadStatusLine), e:
                 self.set_error(str(e))
             else:
@@ -283,6 +292,8 @@ class Watch_web_static(Watch):
 
 def get_add_gui_info():
     return [("uri", spectlib.gtkconfig.Entry(_("URL"))),
+            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
             ("error_margin", spectlib.gtkconfig.Scale(_("Error margin (%)"), value=2.0, upper=50, step_incr=0.1, page_incr=1.0))]
 
 
