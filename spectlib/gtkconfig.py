@@ -317,12 +317,12 @@ class ErrorDialog():
 
     def __init__(self, specto, error_message):
         self.specto = specto
-        gladefile= self.specto.PATH + 'glade/notifier.glade'
-        windowname= "error_dialog"
-        self.wTree=gtk.glade.XML(gladefile, windowname, \
+        gladefile = self.specto.PATH + 'glade/notifier.glade'
+        windowname = "error_dialog"
+        self.wTree = gtk.glade.XML(gladefile, windowname, \
                                 self.specto.glade_gettext)
 
-        dic={"on_send_clicked": self.send,
+        dic = {"on_send_clicked": self.send,
         "on_ok_clicked": self.delete_event}
         #attach the events
         self.wTree.signal_autoconnect(dic)

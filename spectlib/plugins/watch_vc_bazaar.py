@@ -25,7 +25,6 @@ from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
 from spectlib.i18n import _
-import sys
 import os
 
 from bzrlib.missing import find_unmerged
@@ -73,20 +72,20 @@ class Watch_vc_bazaar(Watch):
             self.read_cache_file()
             local_branch = Branch.open_containing(self.folder)[0]
             remote_branch = Branch.open_containing(local_branch.get_parent())[0]
-            if local_branch.get_parent() <> None:
+            if local_branch.get_parent() != None:
                 self.remote_branch_label = local_branch.get_parent().replace("%7E", "~")
                 self.local_extra, self.remote_extra = find_unmerged(local_branch, remote_branch)
 
-                if len(self.local_extra) <> 0:
+                if len(self.local_extra) != 0:
                     if int(self.local_extra[len(self.local_extra) - 1][0]) > self.local_branch_:
                         self.actually_changed = True
                         self.write_cache_file()
 
-                if len(self.remote_extra) <> 0:
+                if len(self.remote_extra) != 0:
                     if int(self.remote_extra[len(self.remote_extra) - 1][0]) > self.remote_branch_:
                         self.actually_changed = True
                         self.write_cache_file()
-                        
+
                 if not self.local_extra and not self.remote_extra:
                     self.mark_as_read()
             else:
@@ -102,12 +101,12 @@ class Watch_vc_bazaar(Watch):
     def get_balloon_text(self):
         """ create the text for the balloon """
         msg = ""
-        if len(self.local_extra) <> 0:
+        if len(self.local_extra) != 0:
             if len(self.local_extra) == 1:
                 msg = _("One new local revision has not yet been merged with its parent branch.")
             else:
                 msg = _("%d new local revisions have not yet been merged with its parent branch.") % len(self.local_extra)
-        if len(self.remote_extra) <> 0:
+        if len(self.remote_extra) != 0:
             if len(self.remote_extra) == 1:
                 msg = _("One new revision on the remote branch.")
             else:
@@ -117,13 +116,13 @@ class Watch_vc_bazaar(Watch):
     def get_extra_information(self):
         i = 0
         author_info = ""
-        if len(self.remote_extra) <> 0:
+        if len(self.remote_extra) != 0:
             while i < len(self.remote_extra) and i < 4:
                 author_info += "<b>Rev " + str(self.remote_extra[i][0]) + "</b>: <i>" + str(self.remote_extra[i][1]).split("@")[0] + "</i>\n"
                 if i == 3 and i < len(self.remote_extra) - 1:
                     author_info += _("and others...")
                 i += 1
-        if len(self.local_extra) <> 0 and author_info == "":
+        if len(self.local_extra) != 0 and author_info == "":
             while i < len(self.local_extra) and i < 4:
                 author_info += "<b>Rev " + str(self.local_extra[i][0]) + "</b>: <i>" + str(self.local_extra[i][1]).split("@")[0] + "</i>\n"
                 if i == 3 and i < len(self.local_extra) - 1:

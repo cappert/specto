@@ -21,10 +21,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys
-import gobject
-from spectlib.i18n import _
-
 try:
     import pygtk
     pygtk.require("2.0")
@@ -40,26 +36,23 @@ except:
 
 
 class Add_watch:
-    """
-    Class to create the add watch dialog.
-    """
+    """Class to create the add watch dialog."""
     # Please do not use confusing widget names such as 'lbl' and 'tbl',
     # Use full names like 'label' and 'table'.
-
     def __init__(self, specto, notifier, watch_type):
         self.specto = specto
         self.notifier = notifier
         #create tree
-        gladefile= self.specto.PATH + 'glade/add_watch.glade'
-        windowname= "add_watch"
-        self.wTree=gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
+        gladefile = self.specto.PATH + 'glade/add_watch.glade'
+        windowname = "add_watch"
+        self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
 
         self.watch_type = watch_type
         #save the option for hiding the table
         self.option_visible = -1
 
         #catch some events
-        dic= {"on_button_cancel_clicked": self.cancel_clicked,
+        dic = {"on_button_cancel_clicked": self.cancel_clicked,
         "on_button_add_clicked": self.add_clicked,
         "on_button_help_clicked": self.help_clicked,
         "on_add_watch_delete_event": self.delete_event,
@@ -70,7 +63,7 @@ class Add_watch:
         #attach the events
         self.wTree.signal_autoconnect(dic)
 
-        self.add_watch=self.wTree.get_widget("add_watch")
+        self.add_watch = self.wTree.get_widget("add_watch")
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.add_watch.set_icon(icon)
         self.add_watch.set_resizable(False)
@@ -88,7 +81,7 @@ class Add_watch:
         #set the default values
         self.refresh_unit.set_active(2)
         self.refresh.set_value(1.0)
-        
+
         self.name.grab_focus()
 
     def set_options(self, watch_type):
@@ -226,13 +219,13 @@ class Unique_Dialog:
 
     def __init__(self, specto):
         self.specto = specto
-        self.gladefile= self.specto.PATH + 'glade/add_watch.glade'
+        self.gladefile = self.specto.PATH + 'glade/add_watch.glade'
         self.dialogname = "dialog"
 
     def run(self):
         """ Show the unique dialog. """
-        self.wTree=gtk.glade.XML(self.gladefile, self.dialogname)
-        self.unique_dialog=self.wTree.get_widget("dialog")
+        self.wTree = gtk.glade.XML(self.gladefile, self.dialogname)
+        self.unique_dialog = self.wTree.get_widget("dialog")
 
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.unique_dialog.set_icon(icon)
@@ -246,5 +239,5 @@ class Unique_Dialog:
 
 if __name__ == "__main__":
     #run the gui
-    app=add_watch()
+    app = Add_watch()
     gtk.main()

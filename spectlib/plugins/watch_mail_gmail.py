@@ -257,10 +257,10 @@ from xml import sax
 
 class Mail:
     # Auxiliar structure
-    title=""
-    summary=""
-    author_name=""
-    author_addr=""
+    title = ""
+    summary = ""
+    author_name = ""
+    author_addr = ""
 
 
 class MailHandler(ContentHandler):
@@ -288,16 +288,16 @@ class MailHandler(ContentHandler):
         self.startDocument()
 
     def startDocument(self):
-        self.entries=list()
-        self.actual=list()
-        self.mail_count="0"
+        self.entries = list()
+        self.actual = list()
+        self.mail_count = "0"
 
     def startElement(self, name, attrs):
         # update actual path
         self.actual.append(name)
 
         # add a new email to the list
-        if name=="entry":
+        if name == "entry":
             m = Mail()
             self.entries.append(m)
 
@@ -307,31 +307,31 @@ class MailHandler(ContentHandler):
 
     def characters(self, content):
         # New messages count
-        if (self.actual==self.PATH_FULLCOUNT):
+        if (self.actual == self.PATH_FULLCOUNT):
             self.mail_count = self.mail_count+content
 
         # Message title
-        if (self.actual==self.PATH_TITLE):
-            temp_mail=self.entries.pop()
-            temp_mail.title=temp_mail.title+content
+        if (self.actual == self.PATH_TITLE):
+            temp_mail = self.entries.pop()
+            temp_mail.title = temp_mail.title+content
             self.entries.append(temp_mail)
 
         # Message summary
-        if (self.actual==self.PATH_SUMMARY):
-            temp_mail=self.entries.pop()
-            temp_mail.summary=temp_mail.summary+content
+        if (self.actual == self.PATH_SUMMARY):
+            temp_mail = self.entries.pop()
+            temp_mail.summary = temp_mail.summary+content
             self.entries.append(temp_mail)
 
         # Message author name
-        if (self.actual==self.PATH_AUTHOR_NAME):
-            temp_mail=self.entries.pop()
-            temp_mail.author_name=temp_mail.author_name+content
+        if (self.actual == self.PATH_AUTHOR_NAME):
+            temp_mail = self.entries.pop()
+            temp_mail.author_name = temp_mail.author_name+content
             self.entries.append(temp_mail)
 
         # Message author email
-        if (self.actual==self.PATH_AUTHOR_EMAIL):
-            temp_mail=self.entries.pop()
-            temp_mail.author_addr=temp_mail.author_addr+content
+        if (self.actual == self.PATH_AUTHOR_EMAIL):
+            temp_mail = self.entries.pop()
+            temp_mail.author_addr = temp_mail.author_addr+content
             self.entries.append(temp_mail)
 
     def getUnreadMsgCount(self):

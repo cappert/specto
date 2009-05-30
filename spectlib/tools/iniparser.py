@@ -63,7 +63,6 @@ Convert it to ini format:
 
 # ---- Abstract classes
 
-
 class namespace(object):
 
     def __getitem__(self, key):
@@ -129,7 +128,6 @@ class unknown(object):
 
 
 # ---- Basic implementation of namespace
-
 
 class basic_namespace(namespace):
     """Represents a collection of named values
@@ -779,7 +777,7 @@ class ini_namespace(namespace):
                 pending_lines.append(lineobj)
 
         self._data.extend(pending_lines)
-        if line and line[-1]=='\n':
+        if line and line[-1] == '\n':
             self._data.add(empty_line())
 
         if exc:

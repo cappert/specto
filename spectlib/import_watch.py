@@ -52,10 +52,10 @@ class Import_watch:
 
     def create_import_window(self):
         #create tree
-        gladefile= self.specto.PATH + 'glade/import_export.glade'
-        windowname= "import_export"
-        self.wTree=gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
-        self.import_watch=self.wTree.get_widget("import_export")
+        gladefile = self.specto.PATH + 'glade/import_export.glade'
+        windowname = "import_export"
+        self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
+        self.import_watch = self.wTree.get_widget("import_export")
 
         self.import_watch.set_title(_("Import watches"))
         self.wTree.get_widget("button_action").set_label(_("Import watches"))
@@ -64,7 +64,7 @@ class Import_watch:
         self.new_watch_db = {}
 
         #catch some events
-        dic= {"on_button_select_all_clicked": self.select_all,
+        dic = {"on_button_select_all_clicked": self.select_all,
             "on_button_deselect_all_clicked": self.deselect_all,
             "on_button_action_clicked": self.import_watches,
             "on_button_close_clicked": self.delete_event}
@@ -75,7 +75,7 @@ class Import_watch:
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
         self.import_watch.set_icon(icon)
 
-        self.treeview=self.wTree.get_widget("treeview")
+        self.treeview = self.wTree.get_widget("treeview")
         self.treeview.set_model(self.model)
         self.treeview.set_flags(gtk.TREE_MODEL_ITERS_PERSIST)
         self.iter = {}
@@ -194,9 +194,7 @@ class Import_watch:
         """ Call the main function to start/stop the selected watch. """
         sel = self.treeview.get_selection()
         sel.select_path(path)
-
         model, iter = self.treeview.get_selection().get_selected()
-        i = int(model.get_value(iter, 3))
 
         if model.get_value(iter, 0):
             model.set_value(iter, 0, 0)
@@ -213,12 +211,12 @@ class Open_dialog:
         self.specto = specto
         self._import = _import
         # Create the tree
-        gladefile= self.specto.PATH + 'glade/import_export.glade'
-        windowname= "filechooser"
-        self.wTree=gtk.glade.XML(gladefile, windowname)
+        gladefile = self.specto.PATH + 'glade/import_export.glade'
+        windowname = "filechooser"
+        self.wTree = gtk.glade.XML(gladefile, windowname)
         self.open_dialog = self.wTree.get_widget("filechooser")
 
-        dic={"on_button_cancel_clicked": self.cancel,
+        dic = {"on_button_cancel_clicked": self.cancel,
             "on_button_save_clicked": self.open}
         # Attach the events
         self.wTree.signal_autoconnect(dic)
@@ -256,13 +254,14 @@ class Open_dialog:
                 values[i]['last_changed'] = ""
 
             # Import from Specto 0.2
+            # FIXME: wouldn't this code be more efficient with a case/switch?
             if values[i]['type'] == "0":
                 values[i]['type'] = "Watch_web_static"
             elif values[i]['type'] == "1":
                 if values[i]['prot'] == "0":
                     values[i]['type'] = "Watch_mail_pop3"
                 if values[i]['prot'] == "1":
-                    values[i]['type']= "Watch_mail_imap"
+                    values[i]['type'] = "Watch_mail_imap"
                 if values[i]['prot'] == "2":
                     values[i]['type'] = "Watch_mail_gmail"
                 del values[i]['prot']
@@ -287,5 +286,5 @@ class Open_dialog:
 
 if __name__ == "__main__":
     # Run the gui
-    app=import_watch()
+    app = Import_watch()
     gtk.main()

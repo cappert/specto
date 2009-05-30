@@ -40,11 +40,11 @@ class MockNetworkManager(object):
 
 
 class MockFailNetworkManager(MockNetworkManager):
-    excepitonMessage='The name org.freedesktop.NetworkManager was not provided\
+    exceptionMessage = 'The name org.freedesktop.NetworkManager was not provided\
     by any .service files'
 
     def state(self):
-        raise dbus.DBusException(self.excepitonMessage)
+        raise dbus.DBusException(self.exceptionMessage)
 
 
 class LogingCallback(object):

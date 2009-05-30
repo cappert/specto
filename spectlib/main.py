@@ -93,14 +93,14 @@ class Specto:
         self.watch_io = Watch_io(self, self.FILE)
 
         if (sys.argv[1:] and "--console" in sys.argv[1:][0]) or not self.GTK:
-                self.logger.log(_("Console mode enabled."), "debug", "specto")
-                self.GTK = False
-                self.CONSOLE = True
-                try:
-                    args = sys.argv[1:][1]
-                except:
-                    args = ""
-                self.console = Console(self, args)
+            self.logger.log(_("Console mode enabled."), "debug", "specto")
+            self.GTK = False
+            self.CONSOLE = True
+            try:
+                args = sys.argv[1:][1]
+            except:
+                args = ""
+            self.console = Console(self, args)
 
         elif self.GTK:
             self.GTK = True
@@ -163,7 +163,7 @@ class Specto:
         else:
             changed_sound = ""
 
-        self.default_settings= (
+        self.default_settings = (
             ["always_show_icon", False], #True would be against the HIG!
             ["debug_mode", False],
             ["follow_website_redirects", True],
@@ -207,7 +207,7 @@ class Specto:
                 sys.exit(0)
 
         #write the pid file
-        f=open(pidfile, "w")
+        f = open(pidfile, "w")
         f.write(str(os.getpid()))
         f.close()
 
@@ -225,7 +225,7 @@ class Specto:
         and the last state when you closed Specto.
         """
         #Creating the notifier window, but keeping it hidden
-        if self.notifier.get_state()==True and not self.notifier_hide:
+        if self.notifier.get_state() == True and not self.notifier_hide:
             self.specto_gconf.set_entry("show_notifier", True)
             self.notifier.restore_size_and_position()
             self.notifier.notifier.show()
@@ -251,7 +251,7 @@ class Specto:
             #create a close dialog
             self.dialog = gtk.Dialog(_("Cannot quit yet"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
             self.dialog.set_modal(False)  # Needed to prevent the notifier UI and refresh process from blocking. Also, do not use dialog.run(), because it automatically sets modal to true.
-            
+
             #HIG tricks
             self.dialog.set_has_separator(False)
 
@@ -281,7 +281,6 @@ class Specto:
             self.dialog.connect("response", self.dialog_response)
             self.dialog.show_all()
 
-                
     def dialog_response(self, widget, answer):
         if answer == 3:
             try:#go figure, it never works!
@@ -291,4 +290,4 @@ class Specto:
                 #kill the specto process with killall
                 os.system('killall specto')
         else:
-            self.dialog.hide()            
+            self.dialog.hide()

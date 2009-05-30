@@ -25,7 +25,6 @@ from spectlib.watch import Watch
 import spectlib.util
 
 import imaplib
-import sys
 import os
 from spectlib.i18n import _
 
@@ -76,12 +75,12 @@ class Watch_mail_imap(Watch):
         """ Check for new mails on your pop3 account. """
         try:
             if self.ssl == True:
-                if self.port <> -1:
+                if self.port != -1:
                     server = imaplib.IMAP4_SSL(self.host, self.port)
                 else:
                     server = imaplib.IMAP4_SSL(self.host)
             else:
-                if self.port <> -1:
+                if self.port != -1:
                     server = imaplib.IMAP4(self.host, self.port)
                 else:
                     server = imaplib.IMAP4(self.host)
@@ -89,7 +88,7 @@ class Watch_mail_imap(Watch):
         except imaplib.IMAP4.error, e:
             self.set_error(str(e))
         except:
-            self.set_error()           
+            self.set_error()
         else:
             try:
                 if self.folder != "":
@@ -131,8 +130,8 @@ class Watch_mail_imap(Watch):
                                     sender = sender.replace("From: ", "")
                                     mail = Email(id, sender, subject)
                                     if self.mail_info.add(mail): #check if it is a new email or just unread
-                                        self.actually_changed=True
-                                        self.newMsg+=1
+                                        self.actually_changed = True
+                                        self.newMsg += 1
                     self.mail_info.remove_old()
                     self.write_cache_file()
                     if len(self.mail_info) == 0:
@@ -160,7 +159,7 @@ class Watch_mail_imap(Watch):
                 author_info += self.mail_info[i].author + ", "
                 if i == 3 and i < len(unread_messages) - 1:
                     author_info += "and others..."
-                i+=1
+                i += 1
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")

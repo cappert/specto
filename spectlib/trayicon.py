@@ -22,9 +22,6 @@
 # Boston, MA 02111-1307, USA.
 
 import gtk
-import os
-import sys
-from spectlib import i18n
 from spectlib.i18n import _
 
 
@@ -44,7 +41,7 @@ class Tray:
         self.ICON_PATH = self.specto.PATH + "icons/specto_tray_1.svg"
         self.ICON2_PATH = self.specto.PATH + "icons/specto_tray_2.svg"
         # Create the tray icon object
-        self.tray=None
+        self.tray = None
         if not self.tray:
             self.tray = gtk.StatusIcon()
         self.tray.set_from_file(self.ICON_PATH)

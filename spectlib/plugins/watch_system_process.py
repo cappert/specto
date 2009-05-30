@@ -70,7 +70,7 @@ class Watch_system_process(Watch):
                 self.actually_changed = True
                 self.status = _("Running")
             else:
-                self.actually_changed=False
+                self.actually_changed = False
                 self.status = _("Unknown")
         except:
             self.set_error()
