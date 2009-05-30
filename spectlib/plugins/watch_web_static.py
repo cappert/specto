@@ -31,17 +31,14 @@ import gzip
 import os
 import md5
 import difflib
-import pprint
 from httplib import HTTPMessage, BadStatusLine
 from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
 from urllib2 import URLError
 from spectlib.i18n import _
-import time
 import formatter
 import htmllib
 import cStringIO
-import sys
 
 type = "Watch_web_static"
 type_desc = _("Webpage/feed")
@@ -139,11 +136,11 @@ class Watch_web_static(Watch):
                     #Atom : <feed xmlns=*>
                 if not (compile("<rdf:RDF xmlns:rdf=.*>").findall(self.page_source)==[]) or not(compile("<rss version=.*>").findall(self.page_source)==[]) or not (compile("<feed xmlns=.*>").findall(self.page_source)==[]):
                     #it seems like it is a syndication feed. Let's see if we can extract the home URL from it.
-                    self.regexed_contents=compile("<link>.*</link>").findall(self.page_source) # Grabs anything inside <link> and </link>; .* means "any characters
-                    self.rss_links=""
+                    self.regexed_contents = compile("<link>.*</link>").findall(self.page_source) # Grabs anything inside <link> and </link>; .* means "any characters
+                    self.rss_links = ""
                     for m in self.regexed_contents: # Iterates through and takes off the tags
-                        if self.rss_links=="":
-                            m=m.strip("<link>").strip("</link>")
+                        if self.rss_links == "":
+                            m = m.strip("<link>").strip("</link>")
                             self.rss_links = m
                     #change the uri_real attribute
                     if self.open_command == self.standard_open_command:
@@ -166,7 +163,7 @@ class Watch_web_static(Watch):
                     self.filesize_difference = 0
                 else:
                     self.old_filesize = self.read_filesize()
-                    if self.old_filesize!=0:#if 0, that would mean that read_option could not find the filesize in watches.list
+                    if self.old_filesize != 0:#if 0, that would mean that read_option could not find the filesize in watches.list
                     # If there is a previous filesize
                         # Calculate the % changed filesize
                         if int(self.old_filesize) != 0:
@@ -293,7 +290,6 @@ __author__ = 'Aaron Swartz <me@aaronsw.com>'
 __copyright__ = '(C) 2003 Aaron Swartz. GNU GPL 2.'
 __version__ = '0.22'
 
-import difflib
 import string
 
 

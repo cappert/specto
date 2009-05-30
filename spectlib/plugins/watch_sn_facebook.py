@@ -27,7 +27,6 @@ import spectlib.gtkconfig
 import spectlib.tools.web_proxy as web_proxy
 from spectlib.i18n import _
 
-import sys
 import os
 import formatter
 import htmllib
@@ -263,7 +262,7 @@ class Facebook():
         for line in messages_:
             #search subject
             title = re.search('<a href="/inbox/\?.+;refid=11"><b>(.+)</b></a><br /><small><a href="/profile.php', line)
-            if title <> None:
+            if title != None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(title.group(1))
@@ -272,16 +271,16 @@ class Facebook():
 
                 #search sender
                 sender = re.search('</a><br /><small><a href="/profile.php\?.+;refid=11">(.+)</a>(<br />|,)', line)
-                if sender <> None:
+                if sender != None:
                     sender = sender.group(1)
                 else: #multiple receipients
                     sender = re.search('</a><br /><small><a href="/profile.php\?.+;refid=11".+>(.+)</a>(<br />|,)', line)
-                    if sender <> None:
+                    if sender != None:
                         sender = sender.group(1)
             else: # group message
                 #search subject
                 title = re.search('<a href="/inbox/\?.+;refid=11"><b>(.+)</b></a><br /><small><a href="', line)
-                if title <> None:
+                if title != None:
                     outstream = StringIO()
                     p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                     p.feed(title.group(1))
@@ -290,10 +289,10 @@ class Facebook():
 
                     #search sender
                     sender = re.search('</a><br /><small><a href=".+group.php\?gid=.+">(.+)</a><br />', line)
-                    if sender <> None:
+                    if sender != None:
                         sender = sender.group(1)
 
-            if sender <> None and title <> None:
+            if sender != None and title != None:
                 messages.extend([FacebookMessage(sender.strip(), title.strip())])
 
         return messages
@@ -305,7 +304,7 @@ class Facebook():
         for line in messages:
             #search notification
             notification = re.search('</b><br /><a href="/profile.php\?.+>(.+)</div>', line)
-            if notification <> None:
+            if notification != None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(notification.group())
@@ -322,7 +321,7 @@ class Facebook():
         for line in messages:
             #search friend requests
             request = re.search('<a href="/profile.php\?.+refid=.+">(.+)<div><form action=', line) #PLEASE CHECK
-            if request <> None:
+            if request != None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(request.group(0))
@@ -331,7 +330,7 @@ class Facebook():
                 requests.extend([FacebookRequest(request.replace("\n", "").strip())])
             else: #event requests
                 request = re.search('<a href="/event.php\?.+refid=.+">(.+)<br />Place:', line)
-                if request <> None:
+                if request != None:
                     outstream = StringIO()
                     p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                     p.feed(request.group(0))
@@ -347,7 +346,7 @@ class Facebook():
         for line in messages:
             #search wall poster
             poster = re.search('<a href="/profile.php\?.+refid=.+>(.+)<br /><small>.+</small></div><div>', line)
-            if poster <> None:
+            if poster != None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(poster.group(0))
@@ -356,14 +355,14 @@ class Facebook():
 
             #search wall post
             post = re.search('</small></div><div>(.+)</div>', line)
-            if post <> None:
+            if post != None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
                 p.feed(post.group(0))
                 post = re.sub("(\[.+\])", "", outstream.getvalue()).replace("delete", "")
                 outstream.close()
 
-            if poster <> None and post <> None:
+            if poster != None and post != None:
                 walls.extend([FacebookWall(poster.strip(), post.strip().replace("\n", " "))])
         return walls
 

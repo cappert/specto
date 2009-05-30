@@ -28,8 +28,6 @@ from datetime import datetime
 import traceback
 import shutil
 
-from spectlib.i18n import _
-
 try:
     import pygtk
     pygtk.require("2.0")
@@ -66,7 +64,7 @@ class Log_dialog:
         #attach the events
         self.wTree.signal_autoconnect(dic)
 
-        self.log_dialog=self.wTree.get_widget("log_dialog")
+        self.log_dialog = self.wTree.get_widget("log_dialog")
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
                                     'icons/specto_window_icon.png')
         self.log_dialog.set_icon(icon)
@@ -76,7 +74,7 @@ class Log_dialog:
         #read the log file
         self.read_log()
 
-        self.logwindow=gtk.TextBuffer(None)
+        self.logwindow = gtk.TextBuffer(None)
         self.log_buffer = self.wTree.get_widget("log_field").get_buffer()
         self.log_buffer.create_tag("ERROR", foreground="#a40000")
         self.log_buffer.create_tag("INFO", foreground="#4e9a06")
@@ -186,9 +184,9 @@ class Save_dialog:
     def __init__(self, specto, *args):
         self.specto = specto
         #create tree
-        gladefile= self.specto.PATH + 'glade/log_dialog.glade'
-        windowname= "file_chooser"
-        self.wTree=gtk.glade.XML(gladefile, windowname)
+        gladefile = self.specto.PATH + 'glade/log_dialog.glade'
+        windowname = "file_chooser"
+        self.wTree = gtk.glade.XML(gladefile, windowname)
         self.save_dialog = self.wTree.get_widget("file_chooser")
 
         dic = {"on_button_cancel_clicked": self.cancel,
@@ -310,7 +308,7 @@ class Logger:
         filtered_log = ""
 
         for i in buffer_log:
-            if not re.search(watch_name, i) and i <> "":
+            if not re.search(watch_name, i) and i != "":
                 filtered_log += i + "\n"
 
         f = open(self.file_name, "w")

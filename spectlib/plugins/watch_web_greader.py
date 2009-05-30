@@ -250,9 +250,7 @@ Dependencies
 import urllib
 import urllib2
 import xml.dom.minidom
-import time
 import os.path
-import sys
 
 counter = 1 #boolean to show counter or not
 numberFeeds = 5 #default maximum number of feeds of which info is shows

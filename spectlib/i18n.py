@@ -23,7 +23,6 @@
 
 import sys
 import gettext
-from spectlib.i18n_safedict import SafeDict
 
 _translation = None
 MESSAGES_DIR = "%s/share/locale" % sys.prefix

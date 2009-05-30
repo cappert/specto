@@ -150,7 +150,7 @@ class Watch_system_folder(Watch):
                 self.actually_changed = True
             else:
                 self.old_values += old_values_[y] + "\n"
-            y+=1
+            y += 1
 
     def get_balloon_text(self):
         """ create the text for the balloon """

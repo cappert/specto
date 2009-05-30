@@ -31,12 +31,9 @@ import gtk
 import spectlib.config
 from spectlib.tools.iniparser import ini_namespace
 from ConfigParser import ConfigParser
-from spectlib import i18n
 from spectlib.i18n import _
 
-from time import sleep
 from datetime import datetime
-import base64 #encode/decode passwords
 
 try:
     from spectlib.tools.keyringmanager import Keyring
@@ -216,7 +213,7 @@ class Watch:
         if self.last_changed == "" or self.last_changed == _("No changes yet") or self.last_changed == "No changes yet": #otherwise, it will be saved untranslated in the watch list
             self.last_changed = _("No changes yet")
 
-        if len(error_fields) <> 0:
+        if len(error_fields) != 0:
             error_fields = error_fields.lstrip(",")
             raise AttributeError(error_fields)
         else:
@@ -303,7 +300,7 @@ class Watch_collection:
                 else:
                     self.watch_db.append(watch_)
                     _id.append(self.id)
-                    self.id+=1
+                    self.id += 1
 
         return _id
 

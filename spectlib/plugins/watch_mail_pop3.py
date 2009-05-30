@@ -29,7 +29,6 @@ import email
 import os
 from socket import error
 from spectlib.i18n import _
-import time
 import string
 
 type = "Watch_mail_pop3"
@@ -120,16 +119,16 @@ class Watch_mail_pop3(Watch):
                 self.mail_info.clear_old()
 
                 if self.unreadMsg > 0:
-                    i=1
+                    i = 1
                     while i < self.unreadMsg + 1:
                         str_msg = string.join(s.top(i, 0)[1], "\n")
                         msg = email.message_from_string(str_msg)
                         id = string.split(s.uidl(i))[2] #get unique info
                         mail = Email(id, msg["From"].replace("\n", ""), msg["Subject"].replace("\n", ""), msg["date"])
                         if self.mail_info.add(mail): #check if it is a new email or just unread
-                            self.actually_changed=True
-                            self.newMsg+=1
-                        i+=1
+                            self.actually_changed = True
+                            self.newMsg += 1
+                        i += 1
                     self.mail_info.sort()
                 self.mail_info.remove_old()
                 if len(self.mail_info) == 0:
@@ -161,7 +160,7 @@ class Watch_mail_pop3(Watch):
                 author_info += self.mail_info[i].author + ", "
                 if i == 3 and i < len(unread_messages) - 1:
                     author_info += _("and others...")
-                i+=1
+                i += 1
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")

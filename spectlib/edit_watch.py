@@ -21,7 +21,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys
 import os
 from spectlib.i18n import _
 try:
@@ -47,9 +46,9 @@ class Edit_watch:
         self.notifier = notifier
         self.watch = self.specto.watch_db[id]
         # Create the tree
-        gladefile= self.specto.PATH + 'glade/edit_watch.glade'
-        windowname= "edit_watch"
-        self.wTree=gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
+        gladefile = self.specto.PATH + 'glade/edit_watch.glade'
+        windowname = "edit_watch"
+        self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
 
         # Catch some events
         dic = {"on_button_cancel_clicked": self.cancel_clicked,
@@ -66,7 +65,7 @@ class Edit_watch:
         self.wTree.signal_autoconnect(dic)
 
         # Set the info from the watch
-        self.edit_watch=self.wTree.get_widget("edit_watch")
+        self.edit_watch = self.wTree.get_widget("edit_watch")
         self.edit_watch.set_title(_("Edit watch: ") + self.watch.name)
         self.wTree.get_widget("name").set_text(self.watch.name)
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
@@ -264,12 +263,12 @@ class Save_dialog:
         self.specto = specto
         self.text = args[0]
         # Create the tree
-        gladefile= self.specto.PATH + 'glade/edit_watch.glade'
-        windowname= "file_chooser"
-        self.wTree=gtk.glade.XML(gladefile, windowname)
+        gladefile = self.specto.PATH + 'glade/edit_watch.glade'
+        windowname = "file_chooser"
+        self.wTree = gtk.glade.XML(gladefile, windowname)
         self.save_dialog = self.wTree.get_widget("file_chooser")
 
-        dic={"on_button_cancel_clicked": self.cancel,
+        dic = {"on_button_cancel_clicked": self.cancel,
             "on_button_save_clicked": self.save}
         # Attach the events
         self.wTree.signal_autoconnect(dic)
@@ -295,5 +294,5 @@ class Save_dialog:
 
 if __name__ == "__main__":
     # Run the gui
-    app=edit_watch()
+    app = Edit_watch()
     gtk.main()

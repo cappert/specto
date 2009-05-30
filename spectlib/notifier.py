@@ -21,7 +21,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys
 import os
 from random import randrange
 from datetime import datetime
@@ -86,7 +85,7 @@ class Notifier:
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_STRING, pango.Weight)
 
         #catch some events
-        dic= {
+        dic = {
         "on_add_activate": self.show_add_watch_menu,
         "on_edit_activate": self.show_edit_watch,
         "on_clear_all_activate": self.mark_all_as_read,
@@ -113,7 +112,7 @@ class Notifier:
         "on_remove_activate": self.remove_watch}
         self.wTree.signal_autoconnect(dic)
 
-        self.notifier=self.wTree.get_widget("notifier")
+        self.notifier = self.wTree.get_widget("notifier")
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.svg')
         self.notifier.set_icon(icon)
         self.specto.notifier_initialized = True
@@ -560,7 +559,7 @@ class Notifier:
     def toggle_show_deactivated_watches(self, *widget):
         """ Display only active watches or all watches. """
         if self.startup !=True:
-            self.startup=False  # This is important to prevent *widget from messing with us. If you don't believe me, print startup ;)
+            self.startup = False  # This is important to prevent *widget from messing with us. If you don't believe me, print startup ;)
         if self.startup == True:
             self.startup = False
         else:
@@ -656,7 +655,7 @@ class Notifier:
 
     def create_notifier_gui(self):
         """ Create the gui from the notifier. """
-        self.treeview=self.wTree.get_widget("treeview")
+        self.treeview = self.wTree.get_widget("treeview")
         self.treeview.set_model(self.model)
         self.treeview.set_flags(gtk.TREE_MODEL_ITERS_PERSIST)
         self.treeview.connect("button_press_event", self.show_watch_popup, None)
@@ -880,7 +879,7 @@ class Notifier:
     def show_preferences(self, *args):
         """ Show the preferences window. """
         if not self.preferences_initialized or self.preferences.get_state() == True:
-            self.pref=Preferences(self.specto, self)
+            self.pref = Preferences(self.specto, self)
         else:
             self.pref.show()
 
@@ -948,11 +947,11 @@ class Notifier:
         """ Show the add watch window. """
         watch_type = args[1]
         if self.add_w == "":
-            self.add_w= Add_watch(self.specto, self, watch_type)
+            self.add_w = Add_watch(self.specto, self, watch_type)
         elif self.add_w.add_watch.flags() & gtk.MAPPED:
             pass
         else:
-            self.add_w= Add_watch(self.specto, self, watch_type)
+            self.add_w = Add_watch(self.specto, self, watch_type)
 
     def show_edit_watch(self, widget, *args):
         """ Show the edit watch window. """
@@ -971,20 +970,20 @@ class Notifier:
                     return
 
         if self.edit_w == "":
-            self.edit_w= Edit_watch(self.specto, self, id)
+            self.edit_w = Edit_watch(self.specto, self, id)
         elif self.edit_w.edit_watch.flags() & gtk.MAPPED:
             pass
         else:
-            self.edit_w= Edit_watch(self.specto, self, id)
+            self.edit_w = Edit_watch(self.specto, self, id)
 
     def show_error_log(self, *widget):
         """ Call the main function to show the log window. """
         if self.error_l == "":
-            self.error_l= Log_dialog(self.specto, self)
+            self.error_l = Log_dialog(self.specto, self)
         elif self.error_l.log_dialog.flags() & gtk.MAPPED:
             pass
         else:
-            self.error_l= Log_dialog(self.specto, self)
+            self.error_l = Log_dialog(self.specto, self)
 
     def show_help(self, *args):
         """ Call the main function to show the help. """
@@ -1018,5 +1017,5 @@ class Notifier:
 
 if __name__ == "__main__":
     #run the gui
-    app=Notifier()
+    app = Notifier()
     gtk.main()

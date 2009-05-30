@@ -93,14 +93,14 @@ class Specto:
         self.watch_io = Watch_io(self, self.FILE)
 
         if (sys.argv[1:] and "--console" in sys.argv[1:][0]) or not self.GTK:
-                self.logger.log(_("Console mode enabled."), "debug", "specto")
-                self.GTK = False
-                self.CONSOLE = True
-                try:
-                    args = sys.argv[1:][1]
-                except:
-                    args = ""
-                self.console = Console(self, args)
+            self.logger.log(_("Console mode enabled."), "debug", "specto")
+            self.GTK = False
+            self.CONSOLE = True
+            try:
+                args = sys.argv[1:][1]
+            except:
+                args = ""
+            self.console = Console(self, args)
 
         elif self.GTK:
             self.GTK = True
@@ -163,7 +163,7 @@ class Specto:
         else:
             changed_sound = ""
 
-        self.default_settings= (
+        self.default_settings = (
             ["always_show_icon", False], #True would be against the HIG!
             ["debug_mode", False],
             ["follow_website_redirects", True],
@@ -207,7 +207,7 @@ class Specto:
                 sys.exit(0)
 
         #write the pid file
-        f=open(pidfile, "w")
+        f = open(pidfile, "w")
         f.write(str(os.getpid()))
         f.close()
 
@@ -225,7 +225,7 @@ class Specto:
         and the last state when you closed Specto.
         """
         #Creating the notifier window, but keeping it hidden
-        if self.notifier.get_state()==True and not self.notifier_hide:
+        if self.notifier.get_state() == True and not self.notifier_hide:
             self.specto_gconf.set_entry("show_notifier", True)
             self.notifier.restore_size_and_position()
             self.notifier.notifier.show()

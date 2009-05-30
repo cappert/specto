@@ -777,7 +777,7 @@ class ini_namespace(namespace):
                 pending_lines.append(lineobj)
 
         self._data.extend(pending_lines)
-        if line and line[-1]=='\n':
+        if line and line[-1] == '\n':
             self._data.add(empty_line())
 
         if exc:
