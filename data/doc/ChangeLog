@@ -103,6 +103,7 @@ Bug fixes
     * Issue #222: folder-specific IMAP watch does not clear itself
     * Issue #225: "jump to" button for IMAP watches does not call the mail client by default
     * Issue #232: Gmail "jump to" doesn't work
+    * Issue #250: Actually check for the user setting before using notification balloons
     * Prevent fuzzy text in the notifier on startup, using pango.WEIGHT_NORMAL
     * Slight label alignment adjustment in the log viewer
     * Touch up the notification balloon punctuation for multiple items watches

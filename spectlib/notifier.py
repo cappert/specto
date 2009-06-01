@@ -222,7 +222,8 @@ class Notifier:
                 statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" has a problem.') % watch.name))
                 balloon_icon = self.get_icon("error", 0, True)
                 icon = self.get_icon("error", 50, False)
-                self.balloon.show_toast(watch.error_message, balloon_icon, urgency="critical", summary=(_("%s encountered a problem") % watch.name))
+                if self.specto.specto_gconf.get_entry("pop_toast") == True:
+                    self.balloon.show_toast(watch.error_message, balloon_icon, urgency="critical", summary=(_("%s encountered a problem") % watch.name))
                 if self.specto.specto_gconf.get_entry("use_problem_sound"):
                     problem_sound = self.specto.specto_gconf.get_entry("problem_sound")
                     gnome.sound_play(problem_sound)
@@ -241,7 +242,8 @@ class Notifier:
                 self.tray.show_tooltip()
 
                 balloon_icon = self.get_icon(watch.icon, 0, True)
-                self.balloon.show_toast(watch.get_balloon_text(), balloon_icon, summary=(_("%s has changed") % watch.name), name=watch.name)
+                if self.specto.specto_gconf.get_entry("pop_toast") == True:
+                    self.balloon.show_toast(watch.get_balloon_text(), balloon_icon, summary=(_("%s has changed") % watch.name), name=watch.name)
 
                 icon = self.get_icon(watch.icon, 0, False)
                 if self.specto.specto_gconf.get_entry("use_changed_sound"):
