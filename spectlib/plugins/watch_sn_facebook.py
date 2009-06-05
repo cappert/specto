@@ -262,7 +262,7 @@ class Facebook():
         unread = False
         for line in messages_:
             #search subject
-            title = re.search('<a href="/inbox/\?.+;refid=11"><b>(.+)</b></a><br /><small><a href="/profile.php', line)
+            title = re.search('<a href="/inbox/.+;refid=11">(.+)</a><br /><small><a href="/.+.php', line)
             if title <> None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
@@ -271,25 +271,11 @@ class Facebook():
                 outstream.close()
 
                 #search sender
-                sender = re.search('</a><br /><small><a href="/profile.php\?.+;refid=11">(.+)</a>(<br />|,)', line)
+                sender = re.search('</a><br /><small><a href="/.+.php\?.+;refid=11">(.+)</a>(<br />|,)', line)
                 if sender <> None:
                     sender = sender.group(1)
                 else: #multiple receipients
-                    sender = re.search('</a><br /><small><a href="/profile.php\?.+;refid=11".+>(.+)</a>(<br />|,)', line)
-                    if sender <> None:
-                        sender = sender.group(1)
-            else: # group message
-                #search subject
-                title = re.search('<a href="/inbox/\?.+;refid=11"><b>(.+)</b></a><br /><small><a href="', line)
-                if title <> None:
-                    outstream = StringIO()
-                    p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
-                    p.feed(title.group(1))
-                    title = outstream.getvalue().replace("&#8226;", "")
-                    outstream.close()
-
-                    #search sender
-                    sender = re.search('</a><br /><small><a href=".+group.php\?gid=.+">(.+)</a><br />', line)
+                    sender = re.search('</a><br /><small><a href="/.+.php\?.+;refid=11".+>(.+)</a>(<br />|,)', line)
                     if sender <> None:
                         sender = sender.group(1)
 
@@ -304,7 +290,7 @@ class Facebook():
         messages = connection.read().split("<hr />")
         for line in messages:
             #search notification
-            notification = re.search('</b><br /><a href="/profile.php\?.+>(.+)</div>', line)
+            notification = re.search('<div><a href="/.+.php\?.+>(.+)</div>', line)
             if notification <> None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
@@ -321,7 +307,7 @@ class Facebook():
         messages = connection.read().split("<hr />")
         for line in messages:
             #search friend requests
-            request = re.search('<a href="/profile.php\?.+refid=.+">(.+)<div><form action=', line) #PLEASE CHECK
+            request = re.search('<a href="/.+.php\?.+refid=.+">(.+)</a></b><br /><table><tr><td colspan="2">', line)
             if request <> None:
                 outstream = StringIO()
                 p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
@@ -329,15 +315,6 @@ class Facebook():
                 request = re.sub("(\[.\])", " ", outstream.getvalue())
                 p.close()
                 requests.extend([FacebookRequest(request.replace("\n", "").strip())])
-            else: #event requests
-                request = re.search('<a href="/event.php\?.+refid=.+">(.+)<br />Place:', line)
-                if request <> None:
-                    outstream = StringIO()
-                    p = htmllib.HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(outstream)))
-                    p.feed(request.group(0))
-                    request = re.sub("(\[.\])", " ", outstream.getvalue())
-                    p.close()
-                    requests.extend([FacebookRequest(request.replace("\n", "").strip())])
         return requests
 
     def get_wall(self):
