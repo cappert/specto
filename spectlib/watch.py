@@ -26,6 +26,7 @@ import time
 import gobject
 import thread
 import gtk
+from cgi import escape
 
 #specto imports
 import spectlib.config
@@ -224,7 +225,16 @@ class Watch:
         return "No message specified yet!" #no need to translate this, if users get to see this, it's no good
 
     def get_extra_information(self):
+        """Provide information to be shown in the Extra information tab in the notifier window.
+        Remember to use the escape method to sanitize special characters before adding formatting."""
         return _("No extra information available.")
+
+    def escape(self, text):
+        """Sanitize the input to remove special characters, PyGTK doesn't like them.
+        Use this in the get_extra_information method of watches."""
+        text = escape(text)  # Remove the biggest part using the CGI library's escape function
+        text = str(text).replace('<', "&lt;").replace('>', "&gt;") # Escape the < and > characters
+        return text
 
     def remove_cache_files(self):
         return ""

@@ -248,21 +248,6 @@ class Watch_web_static(Watch):
         content = response.read()
         return content
 
-    def escape(self, text, quotes=True):
-        """Create a Markup instance from a string and escape special characters
-        it may contain (<, >, & and ").
-
-        If the `quotes` parameter is set to `False`, the " character is left as
-        is. Escaping quotes is generally only required for strings that are to
-        be used in attribute values.
-        """
-        text = str(text).replace('&', '&amp;') \
-                        .replace('<', '&lt;') \
-                        .replace('>', '&gt;')
-        if quotes:
-            text = text.replace('"', '&#34;')
-        return text
-
     def get_balloon_text(self):
         """ create the text for the balloon """
         text = _("Difference percentage: %s percent") % (str(self.filesize_difference)[:5])
