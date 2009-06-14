@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,7 +21,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys
 import os
 from spectlib.i18n import _
 try:
@@ -39,37 +38,34 @@ except:
 
 
 class Edit_watch:
-    """
-    Class to create the edit watch dialog.
-    """
+    """Class to create the edit watch dialog."""
     # Please do not use confusing widget names such as 'lbl' and 'tbl',
     # use full names like 'label' and 'table'.
-
     def __init__(self, specto, notifier, id):
         self.specto = specto
         self.notifier = notifier
         self.watch = self.specto.watch_db[id]
         # Create the tree
-        gladefile= self.specto.PATH + 'glade/edit_watch.glade'
-        windowname= "edit_watch"
-        self.wTree=gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
+        gladefile = self.specto.PATH + 'glade/edit_watch.glade'
+        windowname = "edit_watch"
+        self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
 
         # Catch some events
         dic = {"on_button_cancel_clicked": self.cancel_clicked,
-        "on_button_save_clicked": self.save_clicked,
-        "on_button_remove_clicked": self.remove_clicked,
-        #"on_button_clear_clicked": self.clear_clicked,  # clear error_log textfield
-        "on_button_save_as_clicked": self.save_as_clicked,  # save error_log text
-        "on_edit_watch_delete_event": self.delete_event,
-        "check_command_toggled": self.command_toggled,
-        "check_open_toggled": self.open_toggled,
-        "on_refresh_unit_changed": self.set_refresh_values}
+            "on_button_save_clicked": self.save_clicked,
+            "on_button_remove_clicked": self.remove_clicked,
+            #"on_button_clear_clicked": self.clear_clicked,  # clear error_log textfield
+            "on_button_save_as_clicked": self.save_as_clicked,  # save error_log text
+            "on_edit_watch_delete_event": self.delete_event,
+            "check_command_toggled": self.command_toggled,
+            "check_open_toggled": self.open_toggled,
+            "on_refresh_unit_changed": self.set_refresh_values}
 
         # Attach the events
         self.wTree.signal_autoconnect(dic)
 
         # Set the info from the watch
-        self.edit_watch=self.wTree.get_widget("edit_watch")
+        self.edit_watch = self.wTree.get_widget("edit_watch")
         self.edit_watch.set_title(_("Edit watch: ") + self.watch.name)
         self.wTree.get_widget("name").set_text(self.watch.name)
         icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
@@ -97,10 +93,6 @@ class Edit_watch:
                 iter = self.log_buffer.get_iter_at_offset(0)
                 for line in log_text:
                     self.log_buffer.insert_with_tags_by_name(iter, line[1], line[0])
-
-                #self.wTree.get_widget("error_log").set_buffer(self.logwindow)
-
-                #self.logwindow.set_text(self.log)
 
     def cancel_clicked(self, widget):
         """ Destroy the edit watch dialog. """
@@ -271,12 +263,12 @@ class Save_dialog:
         self.specto = specto
         self.text = args[0]
         # Create the tree
-        gladefile= self.specto.PATH + 'glade/edit_watch.glade'
-        windowname= "file_chooser"
-        self.wTree=gtk.glade.XML(gladefile, windowname)
+        gladefile = self.specto.PATH + 'glade/edit_watch.glade'
+        windowname = "file_chooser"
+        self.wTree = gtk.glade.XML(gladefile, windowname)
         self.save_dialog = self.wTree.get_widget("file_chooser")
 
-        dic={"on_button_cancel_clicked": self.cancel,
+        dic = {"on_button_cancel_clicked": self.cancel,
             "on_button_save_clicked": self.save}
         # Attach the events
         self.wTree.signal_autoconnect(dic)
@@ -302,5 +294,5 @@ class Save_dialog:
 
 if __name__ == "__main__":
     # Run the gui
-    app=edit_watch()
+    app = Edit_watch()
     gtk.main()

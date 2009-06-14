@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import sys
 import os
 from distutils.core import setup
 
@@ -20,7 +19,7 @@ def give_files(dir, *extension):
 
 
 # List all the languages, separated by one whitespace
-i18n_languages = "fr cs de es it pt_BR ro sv tr"
+i18n_languages = "fr cs de es it pt_BR ro ru sv tr zh_CN"
 
 
 def give_mo_file(lang):

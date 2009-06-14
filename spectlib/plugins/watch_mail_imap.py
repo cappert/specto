@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -25,7 +25,6 @@ from spectlib.watch import Watch
 import spectlib.util
 
 import imaplib
-import sys
 import os
 from spectlib.i18n import _
 
@@ -39,7 +38,8 @@ def get_add_gui_info():
     return [("username", spectlib.gtkconfig.Entry(_("Username"))),
             ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
             ("host", spectlib.gtkconfig.Entry(_("Host"))),
-            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL")))]
+            ("ssl", spectlib.gtkconfig.CheckButton(_("Use SSL"))),
+            ("folder", spectlib.gtkconfig.Entry(_("Folder (optional)")))]
 
 
 class Watch_mail_imap(Watch):
@@ -55,7 +55,7 @@ class Watch_mail_imap(Watch):
                         ("port", spectlib.config.Integer(False)),
                         ("folder", spectlib.config.String(False))]
 
-        self.stardard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
+        self.standard_open_command = spectlib.util.open_gconf_application("/desktop/gnome/url-handlers/mailto")
 
         Watch.__init__(self, specto, id, values, watch_values)
 
@@ -75,32 +75,36 @@ class Watch_mail_imap(Watch):
         """ Check for new mails on your pop3 account. """
         try:
             if self.ssl == True:
-                if self.port <> -1:
+                if self.port != -1:
                     server = imaplib.IMAP4_SSL(self.host, self.port)
                 else:
                     server = imaplib.IMAP4_SSL(self.host)
             else:
-                if self.port <> -1:
+                if self.port != -1:
                     server = imaplib.IMAP4(self.host, self.port)
                 else:
                     server = imaplib.IMAP4(self.host)
             server.login(self.username, self.password)
         except imaplib.IMAP4.error, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)
+            self.set_error(str(e))
+        except:
+            self.set_error()
         else:
             try:
-                if folder <> "":
+                if self.folder != "":
                     try:
-                        server.select(folder, readonly=1)
+                        server.select(self.folder, readonly=1)
                     except:
-                        pass
+                        self.set_error()
                 else:
                     server.select(readonly=1)
                 (retcode, messages) = server.search(None, '(UNSEEN)')
                 self.mail_info.clear_old()
                 messages = messages[0].split(' ')
-                self.unreadMsg = len(messages)
+                if messages[0] != "":
+                    self.unreadMsg = len(messages)
+                else:
+                    self.unreadMsg = 0
                 self.newMsg = 0
                 if retcode == 'OK':
                     for message in messages:
@@ -126,19 +130,19 @@ class Watch_mail_imap(Watch):
                                     sender = sender.replace("From: ", "")
                                     mail = Email(id, sender, subject)
                                     if self.mail_info.add(mail): #check if it is a new email or just unread
-                                        self.actually_changed=True
-                                        self.newMsg+=1
+                                        self.actually_changed = True
+                                        self.newMsg += 1
                     self.mail_info.remove_old()
                     self.write_cache_file()
+                    if len(self.mail_info) == 0:
+                        self.mark_as_read()
 
                 server.logout()
 
             except imaplib.IMAP4.error, e:
-                self.error = True
-                self.specto.logger.log(('%s') % str(e), "error", self.name)
+                self.set_error(str(e))
             except:
-                self.error = True
-                self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+                self.set_error()
 
         Watch.timer_update(self)
         self.oldMsg = self.newMsg
@@ -155,7 +159,7 @@ class Watch_mail_imap(Watch):
                 author_info += self.mail_info[i].author + ", "
                 if i == 3 and i < len(unread_messages) - 1:
                     author_info += "and others..."
-                i+=1
+                i += 1
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")

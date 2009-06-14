@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,12 +31,9 @@ import gtk
 import spectlib.config
 from spectlib.tools.iniparser import ini_namespace
 from ConfigParser import ConfigParser
-from spectlib import i18n
 from spectlib.i18n import _
 
-from time import sleep
 from datetime import datetime
-import base64 #encode/decode passwords
 
 try:
     from spectlib.tools.keyringmanager import Keyring
@@ -68,6 +65,7 @@ class Watch:
         self.actually_changed = False
         self.timer_id = -1
         self.deleted = False
+        self.error_message = ""
 
         self.watch_values = watch_values
         self.set_values(values)
@@ -84,8 +82,7 @@ class Watch:
             self.start_checking()
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error starting the watch"),\
-                                                            "error", self.name)
+            self.set_error(_("There was an error starting the watch"))
 
     def stop(self):
         """ Stop the watch. """
@@ -95,8 +92,7 @@ class Watch:
             gobject.source_remove(self.timer_id)
         except:
             self.error = True
-            self.specto.logger.log(_("There was an error stopping the watch"),\
-                                                            "error", self.name)
+            self.set_error(_("There was an error stopping the watch"))
 
     def mark_as_read(self):
         """ mark the watch as read """
@@ -106,9 +102,7 @@ class Watch:
             if not self.error:
                 self.specto.mark_watch_status("idle", self.id)
         except:
-            self.error = True
-            self.specto.logger.log(_("There was an error marking the watch as read"),\
-                                                            "error", self.name)
+            self.set_error(_("There was an error marking the watch as read"))
 
     def restart(self):
         """ restart the watch """
@@ -136,9 +130,7 @@ class Watch:
                     gtk.main_iteration()
                 time.sleep(0.05)
         except:
-            self.error = True
-            self.specto.logger.log(_("There was an error checking the watch"),\
-                                                            "error", self.name)
+            self.set_error(_("There was an error checking the watch"))
 
     def watch_changed(self):
         try:
@@ -153,8 +145,7 @@ class Watch:
             if self.command != "": #run watch specific "changed" command
                 os.system(self.command + " &")
         except:
-            self.error = True
-            self.specto.logger.log(_("There was an error marking the watch as changed"), "error", self.name)
+            self.set_error(_("There was an error marking the watch as changed"))
 
     def timer_update(self):
         """ update the timer """
@@ -173,8 +164,7 @@ class Watch:
             except:
                 self.timer_id = gobject.timeout_add(self.refresh, self.check)
         except:
-            self.error = True
-            self.specto.logger.log(_("There was an error checking the watch"), "error", self.name)
+            self.set_error(_("There was an error checking the watch"))
 
     def check_connection(self):
         if not self.specto.connection_manager.connected():
@@ -223,7 +213,7 @@ class Watch:
         if self.last_changed == "" or self.last_changed == _("No changes yet") or self.last_changed == "No changes yet": #otherwise, it will be saved untranslated in the watch list
             self.last_changed = _("No changes yet")
 
-        if len(error_fields) <> 0:
+        if len(error_fields) != 0:
             error_fields = error_fields.lstrip(",")
             raise AttributeError(error_fields)
         else:
@@ -238,6 +228,15 @@ class Watch:
 
     def remove_cache_files(self):
         return ""
+
+    def set_error(self, message=""):
+        self.error = True
+        if message != "":
+            self.error_message = str(message)
+            self.specto.logger.log(('%s') % str(message), "error", self.name)
+        else:
+            self.error_message = _("Unexpected error:") + " " + str(sys.exc_info()[1])
+            self.specto.logger.log(self.error_message, "error", self.name)
 
 
 class Watch_collection:
@@ -301,7 +300,7 @@ class Watch_collection:
                 else:
                     self.watch_db.append(watch_)
                     _id.append(self.id)
-                    self.id+=1
+                    self.id += 1
 
         return _id
 

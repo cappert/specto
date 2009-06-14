@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -20,10 +20,6 @@
 # License along with this program; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-
-import sys
-import os
-from spectlib.i18n import _
 
 try:
     import pygtk
@@ -46,13 +42,13 @@ class Preferences:
     def __init__(self, specto, notifier):
         self.specto = specto
         self.notifier = notifier
-        gladefile= self.specto.PATH + 'glade/preferences.glade'
-        windowname= "preferences"
-        self.wTree=gtk.glade.XML(gladefile, windowname, \
+        gladefile = self.specto.PATH + 'glade/preferences.glade'
+        windowname = "preferences"
+        self.wTree = gtk.glade.XML(gladefile, windowname, \
                             self.specto.glade_gettext)
 
         #catch some events
-        dic= {"on_cancel_clicked": self.delete_event,
+        dic = {"on_cancel_clicked": self.delete_event,
               "on_preferences_delete_event": self.delete_event,
               "on_save_clicked": self.save_clicked,
               "on_help_clicked": self.help_clicked,
@@ -64,7 +60,7 @@ class Preferences:
         #attach the events
         self.wTree.signal_autoconnect(dic)
 
-        self.preferences=self.wTree.get_widget("preferences")
+        self.preferences = self.wTree.get_widget("preferences")
 
         #set the preferences
         self.get_preferences()
@@ -208,5 +204,5 @@ class Preferences:
 
 if __name__ == "__main__":
     #run the gui
-    app=preferences()
+    app = Preferences()
     gtk.main()

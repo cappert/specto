@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -38,7 +38,8 @@ category = _("Mail")
 
 def get_add_gui_info():
     return [("username", spectlib.gtkconfig.Entry(_("Username"))),
-            ("password", spectlib.gtkconfig.PasswordEntry(_("Password")))]
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
+            ("label", spectlib.gtkconfig.Entry(_("Label"), "Inbox"))]
 
 
 class Watch_mail_gmail(Watch):
@@ -48,7 +49,8 @@ class Watch_mail_gmail(Watch):
 
     def __init__(self, specto, id, values):
         watch_values = [("username", spectlib.config.String(True)),
-                        ("password", spectlib.config.String(True))]
+                        ("password", spectlib.config.String(True)),
+                        ("label", spectlib.config.String(False))]
         url = "https://mail.google.com"
         self.standard_open_command = spectlib.util.return_webpage(url)
 
@@ -56,7 +58,7 @@ class Watch_mail_gmail(Watch):
         Watch.__init__(self, specto, id, values, watch_values)
 
         if self.open_command == self.standard_open_command: #check if google apps url has to be used
-            if "@" in self.username and not "@gmail.com" in self.username:
+            if "@" in self.username and not "@gmail.com" and not "@googlemail.com" in self.username:
                 url = "http://mail.google.com/a/" + self.username.split("@")[1]  # We use mail.google.com instead of gmail.com because of the trademark issue in Germany
                 self.standard_open_command = spectlib.util.return_webpage(url)
                 self.open_command = self.standard_open_command
@@ -78,7 +80,7 @@ class Watch_mail_gmail(Watch):
         try:
             if "@" not in self.username:
                 self.username += "@gmail.com"
-            s = GmailAtom(self.username, self.password)
+            s = GmailAtom(self.username, self.password, self.label)
             s.refreshInfo()
             self.oldMsg = s.getUnreadMsgCount()
             self.newMsg = 0
@@ -96,11 +98,9 @@ class Watch_mail_gmail(Watch):
             self.mail_info.remove_old()
             self.write_cache_file()
         except URLError, e:
-            self.error = True
-            self.specto.logger.log(('%s') % str(e), "warning", self.name)  # This '%s' string here has nothing to translate
+            self.set_error(str(e))  # This '%s' string here has nothing to translate
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
         Watch.timer_update(self)
 
     def get_gui_info(self):
@@ -257,10 +257,10 @@ from xml import sax
 
 class Mail:
     # Auxiliar structure
-    title=""
-    summary=""
-    author_name=""
-    author_addr=""
+    title = ""
+    summary = ""
+    author_name = ""
+    author_addr = ""
 
 
 class MailHandler(ContentHandler):
@@ -288,16 +288,16 @@ class MailHandler(ContentHandler):
         self.startDocument()
 
     def startDocument(self):
-        self.entries=list()
-        self.actual=list()
-        self.mail_count="0"
+        self.entries = list()
+        self.actual = list()
+        self.mail_count = "0"
 
     def startElement(self, name, attrs):
         # update actual path
         self.actual.append(name)
 
         # add a new email to the list
-        if name=="entry":
+        if name == "entry":
             m = Mail()
             self.entries.append(m)
 
@@ -307,31 +307,31 @@ class MailHandler(ContentHandler):
 
     def characters(self, content):
         # New messages count
-        if (self.actual==self.PATH_FULLCOUNT):
+        if (self.actual == self.PATH_FULLCOUNT):
             self.mail_count = self.mail_count+content
 
         # Message title
-        if (self.actual==self.PATH_TITLE):
-            temp_mail=self.entries.pop()
-            temp_mail.title=temp_mail.title+content
+        if (self.actual == self.PATH_TITLE):
+            temp_mail = self.entries.pop()
+            temp_mail.title = temp_mail.title+content
             self.entries.append(temp_mail)
 
         # Message summary
-        if (self.actual==self.PATH_SUMMARY):
-            temp_mail=self.entries.pop()
-            temp_mail.summary=temp_mail.summary+content
+        if (self.actual == self.PATH_SUMMARY):
+            temp_mail = self.entries.pop()
+            temp_mail.summary = temp_mail.summary+content
             self.entries.append(temp_mail)
 
         # Message author name
-        if (self.actual==self.PATH_AUTHOR_NAME):
-            temp_mail=self.entries.pop()
-            temp_mail.author_name=temp_mail.author_name+content
+        if (self.actual == self.PATH_AUTHOR_NAME):
+            temp_mail = self.entries.pop()
+            temp_mail.author_name = temp_mail.author_name+content
             self.entries.append(temp_mail)
 
         # Message author email
-        if (self.actual==self.PATH_AUTHOR_EMAIL):
-            temp_mail=self.entries.pop()
-            temp_mail.author_addr=temp_mail.author_addr+content
+        if (self.actual == self.PATH_AUTHOR_EMAIL):
+            temp_mail = self.entries.pop()
+            temp_mail.author_addr = temp_mail.author_addr+content
             self.entries.append(temp_mail)
 
     def getUnreadMsgCount(self):
@@ -346,7 +346,9 @@ class GmailAtom:
     host = "https://mail.google.com"
     url = host + "/mail/feed/atom"
 
-    def __init__(self, user, pswd):
+    def __init__(self, user, pswd, label):
+        if label:
+            self.url = self.url + "/" + label
         self.m = MailHandler()
         # initialize authorization handler
         auth_handler = web_proxy.urllib2.HTTPBasicAuthHandler()

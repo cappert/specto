@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -93,14 +93,14 @@ class Specto:
         self.watch_io = Watch_io(self, self.FILE)
 
         if (sys.argv[1:] and "--console" in sys.argv[1:][0]) or not self.GTK:
-                self.logger.log(_("Console mode enabled."), "debug", "specto")
-                self.GTK = False
-                self.CONSOLE = True
-                try:
-                    args = sys.argv[1:][1]
-                except:
-                    args = ""
-                self.console = Console(self, args)
+            self.logger.log(_("Console mode enabled."), "debug", "specto")
+            self.GTK = False
+            self.CONSOLE = True
+            try:
+                args = sys.argv[1:][1]
+            except:
+                args = ""
+            self.console = Console(self, args)
 
         elif self.GTK:
             self.GTK = True
@@ -163,7 +163,7 @@ class Specto:
         else:
             changed_sound = ""
 
-        self.default_settings= (
+        self.default_settings = (
             ["always_show_icon", False], #True would be against the HIG!
             ["debug_mode", False],
             ["follow_website_redirects", True],
@@ -207,7 +207,7 @@ class Specto:
                 sys.exit(0)
 
         #write the pid file
-        f=open(pidfile, "w")
+        f = open(pidfile, "w")
         f.write(str(os.getpid()))
         f.close()
 
@@ -225,7 +225,7 @@ class Specto:
         and the last state when you closed Specto.
         """
         #Creating the notifier window, but keeping it hidden
-        if self.notifier.get_state()==True and not self.notifier_hide:
+        if self.notifier.get_state() == True and not self.notifier_hide:
             self.specto_gconf.set_entry("show_notifier", True)
             self.notifier.restore_size_and_position()
             self.notifier.notifier.show()
@@ -243,47 +243,51 @@ class Specto:
 
     def quit(self, *args):
         """ Save the save and position from the notifier and quit Specto. """
-        if self.notifier.get_state()==True and self.notifier_hide:
+        if self.notifier.get_state() == True and self.notifier_hide:
             self.notifier.save_size_and_position()
         try:
             gtk.main_quit()
         except:
             #create a close dialog
-            dialog = gtk.Dialog(_("Cannot quit yet"), None, \
-                gtk.DIALOG_MODAL | gtk.DIALOG_NO_SEPARATOR | \
-                            gtk.DIALOG_DESTROY_WITH_PARENT, None)
+            self.dialog = gtk.Dialog(_("Cannot quit yet"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+            self.dialog.set_modal(False)  # Needed to prevent the notifier UI and refresh process from blocking. Also, do not use dialog.run(), because it automatically sets modal to true.
+
             #HIG tricks
-            dialog.set_has_separator(False)
+            self.dialog.set_has_separator(False)
 
-            dialog.add_button(_("Murder!"), 3)
-            dialog.add_button(gtk.STOCK_CANCEL, -1)
+            self.dialog.add_button(_("Murder!"), 3)
+            self.dialog.add_button(gtk.STOCK_CANCEL, -1)
 
-            dialog.label_hbox = gtk.HBox(spacing=6)
+            self.dialog.label_hbox = gtk.HBox(spacing=6)
 
             icon = gtk.Image()
             icon.set_from_pixbuf(self.icon_theme.\
                         load_icon("dialog-warning", 64, 0))
-            dialog.label_hbox.pack_start(icon, True, True, 6)
+            self.dialog.label_hbox.pack_start(icon, True, True, 6)
             icon.show()
 
             label = gtk.Label(_('<b><big>Specto is currently busy and cannot quit yet.</big></b>\n\nThis may be because it is checking for watch changes.\nHowever, you can try forcing it to quit by clicking the murder button.'))
             label.set_use_markup(True)
-            dialog.label_hbox.pack_start(label, True, True, 6)
+            self.dialog.label_hbox.pack_start(label, True, True, 6)
             label.show()
 
-            dialog.vbox.pack_start(dialog.label_hbox, True, True, 12)
-            dialog.label_hbox.show()
+            self.dialog.vbox.pack_start(self.dialog.label_hbox, True, True, 12)
+            self.dialog.label_hbox.show()
 
             icon = gtk.gdk.pixbuf_new_from_file(self.PATH + \
                                 'icons/specto_window_icon.svg')
-            dialog.set_icon(icon)
-            answer = dialog.run()
-            if answer == 3:
-                try:#go figure, it never works!
-                    self.notifier.stop_refresh = True
-                    sys.exit(0)
-                except:
-                    #kill the specto process with killall
-                    os.system('killall specto')
-            else:
-                dialog.destroy()
+            self.dialog.set_icon(icon)
+            self.dialog.connect("delete_event", self.dialog_response)
+            self.dialog.connect("response", self.dialog_response)
+            self.dialog.show_all()
+
+    def dialog_response(self, widget, answer):
+        if answer == 3:
+            try:#go figure, it never works!
+                self.notifier.stop_refresh = True
+                sys.exit(0)
+            except:
+                #kill the specto process with killall
+                os.system('killall specto')
+        else:
+            self.dialog.hide()

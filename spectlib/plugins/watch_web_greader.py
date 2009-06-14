@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or(at your option) any later version.
+# version 2 of the License, or(at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,6 +24,7 @@ from spectlib.watch import Watch
 import spectlib.config
 from spectlib.i18n import _
 import spectlib.util
+import spectlib.tools.web_proxy as web_proxy
 
 type = "Watch_web_greader"
 type_desc = _("Google Reader")
@@ -94,8 +95,8 @@ class Watch_web_greader(Watch):
                 self.write_cache_file()
 
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
+
         Watch.timer_update(self)
 
     def get_gui_info(self):
@@ -249,9 +250,7 @@ Dependencies
 import urllib
 import urllib2
 import xml.dom.minidom
-import time
 import os.path
-import sys
 
 counter = 1 #boolean to show counter or not
 numberFeeds = 5 #default maximum number of feeds of which info is shows
@@ -286,8 +285,8 @@ def getcookies():
             import ClientCookie
         except ImportError:
         # ClientCookie isn't available either
-            urlopen = urllib2.urlopen
-            Request = urllib2.Request
+            urlopen = web_proxy.urllib2.urlopen
+            Request = web_proxy.urllib2.Request
         else:
         # imported ClientCookie
             urlopen = ClientCookie.urlopen
@@ -296,8 +295,8 @@ def getcookies():
 
     else:
         # importing cookielib worked
-        urlopen = urllib2.urlopen
-        Request = urllib2.Request
+        urlopen = web_proxy.urllib2.urlopen
+        Request = web_proxy.urllib2.Request
         cj = cookielib.LWPCookieJar()
         # This is a subclass of FileCookieJar
         # that has useful load and save methods
@@ -311,9 +310,9 @@ def getcookies():
         if cookielib is not None:
         # if we use cookielib
         # then we get the HTTPCookieProcessor
-        # and install the opener in urllib2
-            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-            urllib2.install_opener(opener)
+        # and install the opener in web_proxy.urllib2
+            opener = web_proxy.urllib2.build_opener(web_proxy.urllib2.HTTPCookieProcessor(cj))
+            web_proxy.urllib2.install_opener(opener)
 
         else:
         # if we use ClientCookie
@@ -366,7 +365,7 @@ def getUnreadItems(Request):
     url = 'https://www.google.com/reader/api/0/unread-count?all=true'
     try:
         req = Request(url)
-        response = urllib2.urlopen(req)
+        response = web_proxy.urllib2.urlopen(req)
         del req
     except IOError, e:
         return 2         #we didn't get a connection
@@ -413,7 +412,7 @@ def updateFeeds(Request):
     url = 'http://www.google.com/reader/api/0/subscription/list'
     try:
         req = Request(url)
-        response = urllib2.urlopen(req)
+        response = web_proxy.urllib2.urlopen(req)
         del req
     except IOError, e:
         return 2  # We didn't get a connection

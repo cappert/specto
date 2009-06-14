@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -114,8 +114,7 @@ class Watch_system_file(Watch):
                 self.update_cache_file()
                 self.first_time = False
         except:
-            self.error = True
-            self.specto.logger.log(_("Unexpected error:") + " " + str(sys.exc_info()[0]), "error", self.name)
+            self.set_error()
 
         Watch.timer_update(self)
 
@@ -125,7 +124,7 @@ class Watch_system_file(Watch):
             f = file(self.cache_file, "w")
             f.write(str(self.info))
         except:
-            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "error", self.name)
+            self.specto.logger.log(_("There was an error writing to the file %s") % self.cache_file, "critical", self.name)
         finally:
             f.close()
 

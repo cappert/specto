@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,7 +21,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys
 import os
 import pygtk
 pygtk.require("2.0")
@@ -66,7 +65,7 @@ class About:
         translator_credits = _("translator-credits")
 
         #create tree
-        self.about=gtk.AboutDialog()
+        self.about = gtk.AboutDialog()
 
         self.about.set_name("Specto")
         self.about.set_version(version)
@@ -100,5 +99,5 @@ class About:
 
 if __name__ == "__main__":
     #run the gui
-    app=About()
+    app = About()
     gtk.main()
