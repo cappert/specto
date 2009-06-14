@@ -100,35 +100,35 @@ class Watch_vc_bazaar(Watch):
 
     def get_balloon_text(self):
         """ create the text for the balloon """
-        msg = ""
+        text = ""
         if len(self.local_extra) != 0:
             if len(self.local_extra) == 1:
-                msg = _("One new local revision has not yet been merged with its parent branch.")
+                text = _("One new local revision has not yet been merged with its parent branch.")
             else:
-                msg = _("%d new local revisions have not yet been merged with its parent branch.") % len(self.local_extra)
+                text = _("%d new local revisions have not yet been merged with its parent branch.") % len(self.local_extra)
         if len(self.remote_extra) != 0:
             if len(self.remote_extra) == 1:
-                msg = _("One new revision on the remote branch.")
+                text = _("One new revision on the remote branch.")
             else:
-                msg = _("%d new revisions on the remote branch.") % len(self.remote_extra)
-        return msg
+                text = _("%d new revisions on the remote branch.") % len(self.remote_extra)
+        return text
 
     def get_extra_information(self):
         i = 0
-        author_info = ""
+        text = ""
         if len(self.remote_extra) != 0:
             while i < len(self.remote_extra) and i < 4:
-                author_info += "<b>Rev " + str(self.remote_extra[i][0]) + "</b>: <i>" + str(self.remote_extra[i][1]).split("@")[0] + "</i>\n"
+                text += "<b>Rev " + str(self.remote_extra[i][0]) + "</b>: <i>" + str(self.remote_extra[i][1]).split("@")[0] + "</i>\n"
                 if i == 3 and i < len(self.remote_extra) - 1:
-                    author_info += _("and others...")
+                    text += _("and others...")
                 i += 1
-        if len(self.local_extra) != 0 and author_info == "":
+        if len(self.local_extra) != 0 and text == "":
             while i < len(self.local_extra) and i < 4:
-                author_info += "<b>Rev " + str(self.local_extra[i][0]) + "</b>: <i>" + str(self.local_extra[i][1]).split("@")[0] + "</i>\n"
+                text += "<b>Rev " + str(self.local_extra[i][0]) + "</b>: <i>" + str(self.local_extra[i][1]).split("@")[0] + "</i>\n"
                 if i == 3 and i < len(self.local_extra) - 1:
-                    author_info += _("and others...")
+                    text += _("and others...")
                 i += 1
-        return author_info
+        return text
 
     def read_cache_file(self):
         if os.path.exists(self.cache_file):

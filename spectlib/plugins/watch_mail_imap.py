@@ -168,17 +168,17 @@ class Watch_mail_imap(Watch):
 
     def get_extra_information(self):
         i = 0
-        author_info = ""
+        text = ""
         text = ""
         while i < len(self.mail_info) and i < 4:
             name = self.mail_info[i].author.split("<")[0]
             subject = self.mail_info[i].subject
-            author_info += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
+            text += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
-                author_info += _("and others...")
+                text += _("and others...")
             i += 1
 
-        return author_info
+        return text
 
     def get_gui_info(self):
         return [(_('Name'), self.name),

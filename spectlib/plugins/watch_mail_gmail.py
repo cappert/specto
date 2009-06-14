@@ -128,13 +128,13 @@ class Watch_mail_gmail(Watch):
 
     def get_extra_information(self):
         i = 0
-        author_info = ""
+        text = ""
         while i < len(self.mail_info) and i < 4:
-            author_info += "<b>" + self.escape(self.mail_info[i].author) + "</b>: <i>" + self.escape(self.mail_info[i].subject) + "</i>\n"
+            text += "<b>" + self.escape(self.mail_info[i].author) + "</b>: <i>" + self.escape(self.mail_info[i].subject) + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
-                author_info += _("and others...")
+                text += _("and others...")
             i += 1
-        return author_info
+        return text
 
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
