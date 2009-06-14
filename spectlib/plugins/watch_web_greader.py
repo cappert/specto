@@ -126,6 +126,7 @@ class Watch_web_greader(Watch):
         i = 0
         feed_info = ""
         while i < len(self.news_info) and i < 4:
+            # TODO: do we need to self.escape the name and messages?
             feed_info += "<b>" + self.news_info[i].name + "</b>: <i>" + str(self.news_info[i].messages) + "</i>\n"
             if i == 3 and i < len(self.news_info) - 1:
                 feed_info += _("and others...")

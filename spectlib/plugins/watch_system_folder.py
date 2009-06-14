@@ -190,12 +190,6 @@ class Watch_system_folder(Watch):
 
         return text
 
-    def escape(self, text):
-        text = text.replace('&', '&amp;') \
-                   .replace('<', '&lt;') \
-                   .replace('>', '&gt;')
-        return text
-
     def update_cache_file(self):
         """ Write the new values in the cache file. """
         try:

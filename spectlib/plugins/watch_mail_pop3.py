@@ -171,8 +171,8 @@ class Watch_mail_pop3(Watch):
         i = 0
         text = ""
         while i < len(self.mail_info) and i < 4:
-            name = self.mail_info[i].author.split("<")[0]
-            subject = self.mail_info[i].subject
+            name = self.escape(self.mail_info[i].author.split("<")[0])
+            subject = self.escape(self.mail_info[i].subject)
             text += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
                 text += _("and others...")
