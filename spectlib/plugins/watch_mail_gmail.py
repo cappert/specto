@@ -130,7 +130,9 @@ class Watch_mail_gmail(Watch):
         i = 0
         text = ""
         while i < len(self.mail_info) and i < 4:
-            text += "<b>" + self.escape(self.mail_info[i].author) + "</b>: <i>" + self.escape(self.mail_info[i].subject) + "</i>\n"
+            name = self.escape(self.mail_info[i].author)
+            subject = self.escape(self.mail_info[i].subject)
+            text += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
                 text += _("and others...")
             i += 1

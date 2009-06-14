@@ -170,7 +170,6 @@ class Watch_mail_pop3(Watch):
     def get_extra_information(self):
         i = 0
         text = ""
-        text = ""
         while i < len(self.mail_info) and i < 4:
             name = self.mail_info[i].author.split("<")[0]
             subject = self.mail_info[i].subject
