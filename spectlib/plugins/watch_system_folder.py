@@ -48,7 +48,7 @@ class Watch_system_folder(Watch):
         watch_values = [("folder", spectlib.config.String(True))]
 
         self.icon = icon
-        self.standard_open_command = "xdg-open %s" % values['folder']
+        self.standard_open_command = "xdg-open '%s'" % values['folder']
         self.type_desc = type_desc
 
         #Init the superclass and set some specto values
