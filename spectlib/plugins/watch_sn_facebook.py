@@ -175,12 +175,6 @@ class Watch_sn_facebook(Watch):
 
         return self.escape(info)
 
-    def escape(self, text):
-        text = text.replace('&', '&amp;') \
-                   .replace('<', '&lt;') \
-                   .replace('>', '&gt;')
-        return text
-
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
             try:

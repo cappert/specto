@@ -22,8 +22,8 @@
 # Boston, MA 02111-1307, USA.
 import os
 from urllib2 import URLError
-import spectlib.tools.web_proxy as web_proxy
 
+import spectlib.tools.web_proxy as web_proxy
 from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
@@ -128,13 +128,15 @@ class Watch_mail_gmail(Watch):
 
     def get_extra_information(self):
         i = 0
-        author_info = ""
+        text = ""
         while i < len(self.mail_info) and i < 4:
-            author_info += "<b>" + self.mail_info[i].author + "</b>: <i>" + self.mail_info[i].subject + "</i>\n"
+            name = self.escape(self.mail_info[i].author)
+            subject = self.escape(self.mail_info[i].subject)
+            text += "<b>" + name + "</b>: <i>" + subject + "</i>\n"
             if i == 3 and i < len(self.mail_info) - 1:
-                author_info += _("and others...")
+                text += _("and others...")
             i += 1
-        return author_info
+        return text
 
     def read_cache_file(self):
         if os.path.exists(self.cache_file):
