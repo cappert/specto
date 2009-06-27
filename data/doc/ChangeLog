@@ -106,6 +106,7 @@ Bug fixes
     * Issue #250: Actually check for the user setting before using notification balloons
     * Issue #241: Facebook watch not working anymore
     * Issue #255: entity problem for extra information pane
+    * Issue #258: Use os.path.join in the About dialog
     * Prevent fuzzy text in the notifier on startup, using pango.WEIGHT_NORMAL
     * Slight label alignment adjustment in the log viewer
     * Touch up the notification balloon punctuation for multiple items watches
