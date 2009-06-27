@@ -79,7 +79,7 @@ class Notifier:
 
         #create tree
         self.iter = {}
-        gladefile = self.specto.PATH + 'glade/notifier.glade'
+        gladefile = os.path.join(self.specto.PATH, "glade/notifier.glade")
         windowname = "notifier"
         self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_STRING, pango.Weight)
@@ -113,7 +113,7 @@ class Notifier:
         self.wTree.signal_autoconnect(dic)
 
         self.notifier = self.wTree.get_widget("notifier")
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.svg')
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.svg"))
         self.notifier.set_icon(icon)
         self.specto.notifier_initialized = True
         self.create_notifier_gui()
@@ -286,9 +286,9 @@ class Notifier:
             icon = self.specto.icon_theme.load_icon(icon, size, 0)
         except gobject.GError:
             try:
-                icon = gtk.gdk.pixbuf_new_from_file_at_size(self.specto.PATH + "icons/" + icon + ".svg", size, size)
+                icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, ("icons/" + icon + ".svg")), size, size)
             except:
-                icon = gtk.gdk.pixbuf_new_from_file_at_size(self.specto.PATH + "icons/specto_tray_1.svg", size, size)
+                icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, "icons/specto_tray_1.svg"), size, size)
 
         icon = icon.add_alpha(False, '0', '0', '0')
         for row in icon.get_pixels_array():
@@ -564,7 +564,7 @@ class Notifier:
 
     def toggle_show_deactivated_watches(self, *widget):
         """ Display only active watches or all watches. """
-        if self.startup !=True:
+        if self.startup != True:
             self.startup = False  # This is important to prevent *widget from messing with us. If you don't believe me, print startup ;)
         if self.startup == True:
             self.startup = False

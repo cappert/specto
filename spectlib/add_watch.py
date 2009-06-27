@@ -21,6 +21,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import os
 try:
     import pygtk
     pygtk.require("2.0")
@@ -43,7 +44,7 @@ class Add_watch:
         self.specto = specto
         self.notifier = notifier
         #create tree
-        gladefile = self.specto.PATH + 'glade/add_watch.glade'
+        gladefile = os.path.join(self.specto.PATH, "glade/add_watch.glade")
         windowname = "add_watch"
         self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
 
@@ -64,7 +65,7 @@ class Add_watch:
         self.wTree.signal_autoconnect(dic)
 
         self.add_watch = self.wTree.get_widget("add_watch")
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.add_watch.set_icon(icon)
         self.add_watch.set_resizable(False)
 
@@ -219,7 +220,7 @@ class Unique_Dialog:
 
     def __init__(self, specto):
         self.specto = specto
-        self.gladefile = self.specto.PATH + 'glade/add_watch.glade'
+        self.gladefile = os.path.join(self.specto.PATH, "glade/add_watch.glade")
         self.dialogname = "dialog"
 
     def run(self):
@@ -227,7 +228,7 @@ class Unique_Dialog:
         self.wTree = gtk.glade.XML(self.gladefile, self.dialogname)
         self.unique_dialog = self.wTree.get_widget("dialog")
 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + 'icons/specto_window_icon.png')
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.unique_dialog.set_icon(icon)
         self.unique_dialog.set_resizable(False)
         self.result = self.unique_dialog.run()

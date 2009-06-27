@@ -317,7 +317,7 @@ class ErrorDialog():
 
     def __init__(self, specto, error_message):
         self.specto = specto
-        gladefile = self.specto.PATH + 'glade/notifier.glade'
+        gladefile = os.path.join(self.specto.PATH, "glade/notifier.glade")
         windowname = "error_dialog"
         self.wTree = gtk.glade.XML(gladefile, windowname, \
                                 self.specto.glade_gettext)
@@ -329,8 +329,7 @@ class ErrorDialog():
 
         self.error_dialog = self.wTree.get_widget("error_dialog")
         self.error_dialog.show()
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
-                                'icons/specto_window_icon.png')
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.error_dialog.set_icon(icon)
 
         self.errorwindow = gtk.TextBuffer(None)
