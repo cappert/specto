@@ -697,7 +697,7 @@ class Notifier:
         self.columnCheck_renderer.set_property("activatable", True)
         self.columnCheck_renderer.connect("toggled", self.check_clicked, self.model)
         self.columnCheck = gtk.TreeViewColumn(_("Active"), self.columnCheck_renderer, active=0)
-        self.columnCheck.connect("clicked", self.sort_column_active)
+        self.columnCheck.connect("clicked", self.sort_active_from_treeview_headers)
         self.columnCheck.set_sort_column_id(0)
         self.treeview.append_column(self.columnCheck)
 
@@ -705,7 +705,7 @@ class Notifier:
         self.columnIcon_renderer = gtk.CellRendererPixbuf()
         self.columnIcon = gtk.TreeViewColumn(_("Type"), self.columnIcon_renderer, pixbuf=1)
         self.columnIcon.set_clickable(True)
-        self.columnIcon.connect("clicked", self.sort_column_type)
+        self.columnIcon.connect("clicked", self.sort_type_from_treeview_headers)
         self.treeview.append_column(self.columnIcon)
 
         ### Titre
@@ -713,7 +713,7 @@ class Notifier:
         #self.columnTitle_renderer.set_property("editable", True)
         #self.columnTitle_renderer.connect('edited', self.change_entry_name)
         self.columnTitle = gtk.TreeViewColumn(_("Name"), self.columnTitle_renderer, text=2, weight=5)
-        self.columnTitle.connect("clicked", self.sort_column_name)
+        self.columnTitle.connect("clicked", self.sort_name_from_treeview_headers)
         self.columnTitle.set_expand(True)
         self.columnTitle.set_resizable(True)
         self.columnTitle.set_sort_column_id(2)
@@ -841,7 +841,7 @@ class Notifier:
 
         return sort_order
 
-    def sort_column_name(self, *widget):
+    def sort_name_from_treeview_headers(self, *widget):
         """ Call the sort_name function and set the sort_name menu item to active. """
         self.wTree.get_widget("by_name").set_active(True)
         self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(not self.columnTitle.get_sort_order()))
@@ -851,7 +851,7 @@ class Notifier:
         self.model.set_sort_column_id(2, not self.columnTitle.get_sort_order())
         self.specto.specto_gconf.set_entry("sort_function", "name")
 
-    def sort_column_type(self, *widget):
+    def sort_type_from_treeview_headers(self, *widget):
         """ Call the sort_type function and set the sort_type menu item to active. """
         self.wTree.get_widget("by_watch_type").set_active(True)
         self.sort_type()
@@ -862,7 +862,7 @@ class Notifier:
         self.specto.specto_gconf.set_entry("sort_function", "type")
         self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(self.columnType.get_sort_order()))
 
-    def sort_column_active(self, *widget):
+    def sort_active_from_treeview_headers(self, *widget):
         """ Call the sort_active function and set the sort_active menu item to active. """
         self.wTree.get_widget("by_watch_active").set_active(True)
         self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(not self.columnCheck.get_sort_order()))
