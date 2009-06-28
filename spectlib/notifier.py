@@ -829,7 +829,6 @@ class Notifier:
             sort_order = gtk.SORT_ASCENDING
         else:
             sort_order = gtk.SORT_DESCENDING
-
         return sort_order
 
     def set_gconf_sort_order(self, order):
@@ -838,23 +837,12 @@ class Notifier:
             sort_order = "asc"
         else:
             sort_order = "desc"
-
         return sort_order
-
-    def sort_name_from_treeview_headers(self, *widget):
-        """ Call the sort_name function and set the sort_name menu item to active. """
-        self.wTree.get_widget("by_name").set_active(True)
-        self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(not self.columnTitle.get_sort_order()))
 
     def sort_name(self, *args):
         """ Sort by watch name. """
         self.model.set_sort_column_id(2, not self.columnTitle.get_sort_order())
         self.specto.specto_gconf.set_entry("sort_function", "name")
-
-    def sort_type_from_treeview_headers(self, *widget):
-        """ Call the sort_type function and set the sort_type menu item to active. """
-        self.wTree.get_widget("by_watch_type").set_active(True)
-        self.sort_type()
 
     def sort_type(self, *args):
         """ Sort by watch type. """
@@ -862,15 +850,28 @@ class Notifier:
         self.specto.specto_gconf.set_entry("sort_function", "type")
         self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(self.columnType.get_sort_order()))
 
-    def sort_active_from_treeview_headers(self, *widget):
-        """ Call the sort_active function and set the sort_active menu item to active. """
-        self.wTree.get_widget("by_watch_active").set_active(True)
-        self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(not self.columnCheck.get_sort_order()))
-
     def sort_active(self, *args):
         """ Sort by active watches. """
         self.model.set_sort_column_id(0, not self.columnCheck.get_sort_order())
         self.specto.specto_gconf.set_entry("sort_function", "active")
+
+    def sort_name_from_treeview_headers(self, *widget):
+        """When treeview headers are clicked, GTK already does the sorting.
+        Just change the active sorting radio button to 'name' in the menus, save the sorting preference."""
+        self.wTree.get_widget("by_name").set_active(True)
+        self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(not self.columnTitle.get_sort_order()))
+
+    def sort_type_from_treeview_headers(self, *widget):
+        """When treeview headers are clicked, GTK already does the sorting.
+        Just change the active sorting radio button to 'type' in the menus, save the sorting preference."""
+        self.wTree.get_widget("by_watch_type").set_active(True)
+        self.sort_type()
+
+    def sort_active_from_treeview_headers(self, *widget):
+        """When treeview headers are clicked, GTK already does the sorting.
+        Just change the active sorting radio button to 'active' in the menus, save the sorting preference."""
+        self.wTree.get_widget("by_watch_active").set_active(True)
+        self.specto.specto_gconf.set_entry("sort_order", self.set_gconf_sort_order(not self.columnCheck.get_sort_order()))
 
     def recreate_tray(self, *args):
         """ Recreate a tray icon if the notification area unexpectedly quits. """
