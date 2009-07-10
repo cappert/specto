@@ -21,6 +21,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import os
 try:
     import pygtk
     pygtk.require("2.0")
@@ -42,7 +43,7 @@ class Preferences:
     def __init__(self, specto, notifier):
         self.specto = specto
         self.notifier = notifier
-        gladefile = self.specto.PATH + 'glade/preferences.glade'
+        gladefile = os.path.join(self.specto.PATH, "glade/preferences.glade")
         windowname = "preferences"
         self.wTree = gtk.glade.XML(gladefile, windowname, \
                             self.specto.glade_gettext)

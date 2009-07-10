@@ -22,6 +22,7 @@
 # Boston, MA 02111-1307, USA.
 
 import gtk
+import os
 from spectlib.i18n import _
 
 
@@ -38,8 +39,8 @@ class Tray:
         self.specto = specto
         self.notifier = notifier
 
-        self.ICON_PATH = self.specto.PATH + "icons/specto_tray_1.svg"
-        self.ICON2_PATH = self.specto.PATH + "icons/specto_tray_2.svg"
+        self.ICON_PATH = os.path.join(self.specto.PATH, "icons/specto_tray_1.svg")
+        self.ICON2_PATH = os.path.join(self.specto.PATH, "icons/specto_tray_2.svg")
         # Create the tray icon object
         self.tray = None
         if not self.tray:
