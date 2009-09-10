@@ -111,7 +111,9 @@ class Add_watch:
         digits = 0
         climb_rate = 1.0
         refresh_unit = self.refresh_unit.get_active()
+        self.old_refresh_value = self.refresh.get_value_as_int()  # Grab the current value for reuse after the scale changes
 
+        # Set the new ranges for the refresh value spinbutton
         if refresh_unit == 0 or refresh_unit == 1:
             adjustment = gtk.Adjustment(value=1, lower=1, upper=60, step_incr=1, page_incr=10, page_size=0)
         if refresh_unit == 2:
@@ -120,6 +122,7 @@ class Add_watch:
             adjustment = gtk.Adjustment(value=1, lower=1, upper=365, step_incr=1, page_incr=30, page_size=0)
 
         self.refresh.configure(adjustment, climb_rate, digits)
+        self.refresh.set_value(self.old_refresh_value)  # Reuse the previous value, otherwise setting the new scales will reset it to 1
 
     def add_clicked(self, widget):
         """
