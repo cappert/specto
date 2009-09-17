@@ -288,7 +288,10 @@ class Notifier:
             try:
                 icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, ("icons/" + icon + ".svg")), size, size)
             except:
-                icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, "icons/specto_tray_1.svg"), size, size)
+                try:
+                    icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, ("icons/" + icon + ".png")), size, size)
+                except:
+                    icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, "icons/specto_tray_1.svg"), size, size)
 
         icon = icon.add_alpha(False, '0', '0', '0')
         for row in icon.get_pixels_array():

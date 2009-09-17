@@ -28,7 +28,7 @@ import spectlib.tools.web_proxy as web_proxy
 
 type = "Watch_web_greader"
 type_desc = _("Google Reader")
-icon = 'internet-news-reader'
+icon = 'greader'
 category = _("Internet")
 
 
