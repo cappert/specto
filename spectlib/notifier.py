@@ -412,7 +412,7 @@ class Notifier:
                 else:
                     #create label
                     self.info_labels[i][0].set_label("<b>" + str(watch_values[i][0]) + ":</b>")
-                    label = str(watch_values[i][1]).replace("&", "&amp;")
+                    label = str(watch_values[i][1]).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                     self.info_labels[i][1].set_label(label)
 
                 i += 1
