@@ -48,7 +48,7 @@ class Watch_system_folder(Watch):
         watch_values = [("folder", spectlib.config.String(True))]
 
         self.icon = icon
-        self.standard_open_command = "xdg-open %s" % values['folder']
+        self.standard_open_command = "xdg-open '%s'" % values['folder']
         self.type_desc = type_desc
 
         #Init the superclass and set some specto values
@@ -188,12 +188,6 @@ class Watch_system_folder(Watch):
         if modified > 0:
             text += '<span foreground=\"yellow\">' + self.escape(self.info['modified'][1]) + '</span>'
 
-        return text
-
-    def escape(self, text):
-        text = text.replace('&', '&amp;') \
-                   .replace('<', '&lt;') \
-                   .replace('>', '&gt;')
         return text
 
     def update_cache_file(self):

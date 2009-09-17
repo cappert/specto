@@ -29,7 +29,7 @@ import spectlib.tools.web_proxy as web_proxy
 import StringIO
 import gzip
 import os
-import md5
+from hashlib import md5
 import difflib
 from httplib import HTTPMessage, BadStatusLine
 from math import fabs
@@ -88,7 +88,7 @@ class Watch_web_static(Watch):
             if self.uri[:7] != "http://" and self.uri[:8] != "https://" and self.uri[:6] != "ftp://":
                 self.uri = "http://" + self.uri
             self.url_ = self.uri
-            digest = md5.new(self.url_).digest()
+            digest = md5(self.url_).digest()
             cacheFileName = "".join(["%02x" % (ord(c), ) for c in digest])
             self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
             self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
@@ -118,7 +118,7 @@ class Watch_web_static(Watch):
                 self.url2_ = response.geturl()
                 self.content_ = self._writeContent(response)
                 self.info_['Url'] = self.uri
-                self.digest_ = md5.new(self.content_).digest()
+                self.digest_ = md5(self.content_).digest()
                 self.digest_ = "".join(["%02x" % (ord(c), ) for c in self.digest_])
                 self.info_['md5sum'] = self.digest_
 
@@ -247,21 +247,6 @@ class Watch_web_static(Watch):
         content = ""
         content = response.read()
         return content
-
-    def escape(self, text, quotes=True):
-        """Create a Markup instance from a string and escape special characters
-        it may contain (<, >, & and ").
-
-        If the `quotes` parameter is set to `False`, the " character is left as
-        is. Escaping quotes is generally only required for strings that are to
-        be used in attribute values.
-        """
-        text = str(text).replace('&', '&amp;') \
-                        .replace('<', '&lt;') \
-                        .replace('>', '&gt;')
-        if quotes:
-            text = text.replace('"', '&#34;')
-        return text
 
     def get_balloon_text(self):
         """ create the text for the balloon """

@@ -48,7 +48,7 @@ class Export_watch:
         self.notifier = notifier
 
         #create tree
-        gladefile = self.specto.PATH + 'glade/import_export.glade'
+        gladefile = os.path.join(self.specto.PATH, "glade/import_export.glade")
         windowname = "import_export"
         self.wTree = gtk.glade.XML(gladefile, windowname, \
                                    self.specto.glade_gettext)
@@ -69,8 +69,7 @@ class Export_watch:
         #attach the events
         self.wTree.signal_autoconnect(dic)
 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
-                    'icons/specto_window_icon.png')
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.export_watch.set_icon(icon)
 
         self.treeview = self.wTree.get_widget("treeview")
@@ -191,7 +190,7 @@ class Save_dialog:
         self.specto = specto
         self._export = _import
         #create tree
-        gladefile = self.specto.PATH + 'glade/import_export.glade'
+        gladefile = os.path.join(self.specto.PATH, "glade/import_export.glade")
         windowname = "filechooser"
         self.wTree = gtk.glade.XML(gladefile, windowname)
         self.save_dialog = self.wTree.get_widget("filechooser")
@@ -206,8 +205,7 @@ class Save_dialog:
         #attach the events
         self.wTree.signal_autoconnect(dic)
 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
-                            'icons/specto_window_icon.png')
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.save_dialog.set_icon(icon)
         self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
 

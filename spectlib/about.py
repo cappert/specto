@@ -37,28 +37,24 @@ class About:
 
     def __init__(self, specto):
         self.specto = specto
-        version_file_path = (spectlib.util.get_path(category="doc") \
-                                                          + 'VERSION')
+        version_file_path = (os.path.join(spectlib.util.get_path(category="doc"), "VERSION"))
         version_file = open(version_file_path, 'r')
         version = str(version_file.readline()[:-1])
         version_file.close
 
-        license_file_path = (spectlib.util.get_path(category="doc") \
-                                                          + 'COPYING')
+        license_file_path = (os.path.join(spectlib.util.get_path(category="doc"), "COPYING"))
         license_file = open(license_file_path, "r")
         license = license_file.read()
         license_file.close()
         license = str(license)
 
-        authors_file_path = (spectlib.util.get_path(category="doc") \
-                                                          + 'AUTHORS')
+        authors_file_path = (os.path.join(spectlib.util.get_path(category="doc"), "AUTHORS"))
         authors_file = open(authors_file_path, "r")
         # this is a hack, because gtk.AboutDialog expects a list, not a file
         authors = authors_file.readlines()
         authors_file.close()
 
-        logo = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
-                                        'icons/specto_about.png')
+        logo = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_about.png"))
 
         # gtk.AboutDialog will detect if "translator-credits" is untranslated,
         # and hide the tab.
@@ -82,8 +78,7 @@ class About:
         self.about.set_translator_credits(translator_credits)
         self.about.set_logo(logo)
 
-        icon = gtk.gdk.pixbuf_new_from_file(self.specto.PATH + \
-                                        'icons/specto_window_icon.png')
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.about.set_icon(icon)
 
         self.about.connect("response", lambda d, r: self.close())
