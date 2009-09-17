@@ -2,7 +2,7 @@
 Individual entries in these release notes are alphabetical, not chronological.
 This file is updated only at "release time".
 
-Specto 0.3: 2009 03 20
+Specto 0.3: 2009 06 06
 ======================
 Upgrading to this release is strongly recommended, as it solves a huge amount of issues reported in the 0.2.x series, is more stable, implements new features, is more secure and easier to maintain.
 This release contains lots of architectural changes. The watch system is now a plugin system, the watch list has changed, GNOME keyring is now used for encrypting passwords by default (though you can disable it), and the configuration/cache directories are now based on the XDG user directory specification. As such, you will need to import your watch list if upgrading from Specto 0.2.x. You may also need to reset (overwrite) your passwords, or convert them to plain text before upgrading.
@@ -15,6 +15,7 @@ Features
     * Add a "clear" button in the edit menu
     * Add a "Mark as read" menu to the notification icon popup-menu
     * Add a "Refresh all" button to the trayicon menu
+    * Add an optional "Label" field for GMail watches
     * Adding watches is now done from the menubar or a menu from the toolbar
     * A dialog with debug info appears when a system/programming error occurs
     * Clarify the labels in the preferences
@@ -101,6 +102,9 @@ Bug fixes
     * Issue #185: network-manager 0.7 compatibility
     * Issue #222: folder-specific IMAP watch does not clear itself
     * Issue #225: "jump to" button for IMAP watches does not call the mail client by default
+    * Issue #232: Gmail "jump to" doesn't work
+    * Issue #250: Actually check for the user setting before using notification balloons
+    * Issue #241: Facebook watch not working anymore
     * Prevent fuzzy text in the notifier on startup, using pango.WEIGHT_NORMAL
     * Slight label alignment adjustment in the log viewer
     * Touch up the notification balloon punctuation for multiple items watches
@@ -124,6 +128,7 @@ Maintainability
     * Issue #211: remove the --help commandline parameter
     * Issue #215: remove balloon duration and action features to conform to notify-osd
     * Issue #221: error notifications should be meaningful
+    * Issue #244: License 'error'
     * Move copyright headers to AUTHORS file to ease maintenance and relevance
     * New "watches as plugins" system
     * Refactor this ChangeLog to make it as release notes only

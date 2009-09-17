@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,17 +31,14 @@ import gzip
 import os
 import md5
 import difflib
-import pprint
 from httplib import HTTPMessage, BadStatusLine
 from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
 from urllib2 import URLError
 from spectlib.i18n import _
-import time
 import formatter
 import htmllib
 import cStringIO
-import sys
 
 type = "Watch_web_static"
 type_desc = _("Webpage/feed")
@@ -66,6 +63,8 @@ class Watch_web_static(Watch):
 
     def __init__(self, specto, id, values):
         watch_values = [("uri", spectlib.config.String(True)),
+                        ("username", spectlib.config.String(False)),
+                        ("password", spectlib.config.String(False)),
                         ("error_margin", spectlib.config.Dec(True)),
                         ("redirect", spectlib.config.Boolean(False))]
 
@@ -93,6 +92,13 @@ class Watch_web_static(Watch):
             cacheFileName = "".join(["%02x" % (ord(c), ) for c in digest])
             self.cacheFullPath_ = os.path.join(self.cacheSubDir__, cacheFileName)
             self.cacheFullPath2_ = os.path.join(self.cacheSubDir__, cacheFileName + "size")
+            if self.username:
+                pwd_mgr = web_proxy.urllib2.HTTPPasswordMgrWithDefaultRealm()
+                pwd_mgr.add_password(None, self.uri, self.username, self.password)
+                auth_hndlr = web_proxy.urllib2.HTTPBasicAuthHandler(pwd_mgr)
+                opener = web_proxy.urllib2.build_opener(auth_hndlr)
+            else:
+                opener = web_proxy.urllib2.build_opener()
             request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding": "gzip"})
             cache_res = ""
             if (self.cached == 1) or (os.path.exists(self.cacheFullPath_)):
@@ -104,7 +110,7 @@ class Watch_web_static(Watch):
                 except:
                     cache_res = ""
             try:
-                response = web_proxy.urllib2.urlopen(request)
+                response = opener.open(request)
             except (URLError, BadStatusLine), e:
                 self.set_error(str(e))
             else:
@@ -139,11 +145,11 @@ class Watch_web_static(Watch):
                     #Atom : <feed xmlns=*>
                 if not (compile("<rdf:RDF xmlns:rdf=.*>").findall(self.page_source)==[]) or not(compile("<rss version=.*>").findall(self.page_source)==[]) or not (compile("<feed xmlns=.*>").findall(self.page_source)==[]):
                     #it seems like it is a syndication feed. Let's see if we can extract the home URL from it.
-                    self.regexed_contents=compile("<link>.*</link>").findall(self.page_source) # Grabs anything inside <link> and </link>; .* means "any characters
-                    self.rss_links=""
+                    self.regexed_contents = compile("<link>.*</link>").findall(self.page_source) # Grabs anything inside <link> and </link>; .* means "any characters
+                    self.rss_links = ""
                     for m in self.regexed_contents: # Iterates through and takes off the tags
-                        if self.rss_links=="":
-                            m=m.strip("<link>").strip("</link>")
+                        if self.rss_links == "":
+                            m = m.strip("<link>").strip("</link>")
                             self.rss_links = m
                     #change the uri_real attribute
                     if self.open_command == self.standard_open_command:
@@ -166,7 +172,7 @@ class Watch_web_static(Watch):
                     self.filesize_difference = 0
                 else:
                     self.old_filesize = self.read_filesize()
-                    if self.old_filesize!=0:#if 0, that would mean that read_option could not find the filesize in watches.list
+                    if self.old_filesize != 0:#if 0, that would mean that read_option could not find the filesize in watches.list
                     # If there is a previous filesize
                         # Calculate the % changed filesize
                         if int(self.old_filesize) != 0:
@@ -283,6 +289,8 @@ class Watch_web_static(Watch):
 
 def get_add_gui_info():
     return [("uri", spectlib.gtkconfig.Entry(_("URL"))),
+            ("username", spectlib.gtkconfig.Entry(_("Username"))),
+            ("password", spectlib.gtkconfig.PasswordEntry(_("Password"))),
             ("error_margin", spectlib.gtkconfig.Scale(_("Error margin (%)"), value=2.0, upper=50, step_incr=0.1, page_incr=1.0))]
 
 
@@ -293,7 +301,6 @@ __author__ = 'Aaron Swartz <me@aaronsw.com>'
 __copyright__ = '(C) 2003 Aaron Swartz. GNU GPL 2.'
 __version__ = '0.22'
 
-import difflib
 import string
 
 

@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,12 +31,9 @@ import gtk
 import spectlib.config
 from spectlib.tools.iniparser import ini_namespace
 from ConfigParser import ConfigParser
-from spectlib import i18n
 from spectlib.i18n import _
 
-from time import sleep
 from datetime import datetime
-import base64 #encode/decode passwords
 
 try:
     from spectlib.tools.keyringmanager import Keyring
@@ -216,7 +213,7 @@ class Watch:
         if self.last_changed == "" or self.last_changed == _("No changes yet") or self.last_changed == "No changes yet": #otherwise, it will be saved untranslated in the watch list
             self.last_changed = _("No changes yet")
 
-        if len(error_fields) <> 0:
+        if len(error_fields) != 0:
             error_fields = error_fields.lstrip(",")
             raise AttributeError(error_fields)
         else:
@@ -231,7 +228,7 @@ class Watch:
 
     def remove_cache_files(self):
         return ""
-    
+
     def set_error(self, message=""):
         self.error = True
         if message != "":
@@ -239,7 +236,7 @@ class Watch:
             self.specto.logger.log(('%s') % str(message), "error", self.name)
         else:
             self.error_message = _("Unexpected error:") + " " + str(sys.exc_info()[1])
-            self.specto.logger.log(self.error_message, "error", self.name)                      
+            self.specto.logger.log(self.error_message, "error", self.name)
 
 
 class Watch_collection:
@@ -303,7 +300,7 @@ class Watch_collection:
                 else:
                     self.watch_db.append(watch_)
                     _id.append(self.id)
-                    self.id+=1
+                    self.id += 1
 
         return _id
 

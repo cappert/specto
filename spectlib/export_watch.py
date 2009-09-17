@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,7 +23,6 @@
 from spectlib.i18n import _
 import os
 from spectlib.watch import Watch_io
-from spectlib.watch import Watch_collection
 
 try:
     import pygtk
@@ -49,11 +48,11 @@ class Export_watch:
         self.notifier = notifier
 
         #create tree
-        gladefile= self.specto.PATH + 'glade/import_export.glade'
-        windowname= "import_export"
-        self.wTree=gtk.glade.XML(gladefile, windowname, \
+        gladefile = self.specto.PATH + 'glade/import_export.glade'
+        windowname = "import_export"
+        self.wTree = gtk.glade.XML(gladefile, windowname, \
                                    self.specto.glade_gettext)
-        self.export_watch=self.wTree.get_widget("import_export")
+        self.export_watch = self.wTree.get_widget("import_export")
         self.export_watch.set_title(_("Export watches"))
         self.wTree.get_widget("button_action").set_label(_("Export watches"))
 
@@ -62,7 +61,7 @@ class Export_watch:
         self.new_watch_db = {}
 
         #catch some events
-        dic= {"on_button_select_all_clicked": self.select_all,
+        dic = {"on_button_select_all_clicked": self.select_all,
               "on_button_deselect_all_clicked": self.deselect_all,
               "on_button_action_clicked": self.do_action,
               "on_button_close_clicked": self.delete_event}
@@ -74,7 +73,7 @@ class Export_watch:
                     'icons/specto_window_icon.png')
         self.export_watch.set_icon(icon)
 
-        self.treeview=self.wTree.get_widget("treeview")
+        self.treeview = self.wTree.get_widget("treeview")
         self.treeview.set_model(self.model)
         self.treeview.set_flags(gtk.TREE_MODEL_ITERS_PERSIST)
         self.iter = {}
@@ -175,9 +174,7 @@ class Export_watch:
         """ Call the main function to start/stop the selected watch. """
         sel = self.treeview.get_selection()
         sel.select_path(path)
-
         model, iter = self.treeview.get_selection().get_selected()
-        i = int(model.get_value(iter, 3))
 
         if model.get_value(iter, 0):
             model.set_value(iter, 0, 0)
@@ -194,9 +191,9 @@ class Save_dialog:
         self.specto = specto
         self._export = _import
         #create tree
-        gladefile= self.specto.PATH + 'glade/import_export.glade'
-        windowname= "filechooser"
-        self.wTree=gtk.glade.XML(gladefile, windowname)
+        gladefile = self.specto.PATH + 'glade/import_export.glade'
+        windowname = "filechooser"
+        self.wTree = gtk.glade.XML(gladefile, windowname)
         self.save_dialog = self.wTree.get_widget("filechooser")
         self.action_type = action_type
 
@@ -204,7 +201,7 @@ class Save_dialog:
         self.wTree.get_widget("button_save").set_label("gtk-save")
         self.watches_db = watches_db
 
-        dic= {"on_button_cancel_clicked": self.cancel,
+        dic = {"on_button_cancel_clicked": self.cancel,
              "on_button_save_clicked": self.save}
         #attach the events
         self.wTree.signal_autoconnect(dic)
@@ -245,5 +242,5 @@ class Save_dialog:
 
 if __name__ == "__main__":
     #run the gui
-    app=export_watch()
+    app = Export_watch()
     gtk.main()

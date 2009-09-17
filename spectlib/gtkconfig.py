@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -317,12 +317,12 @@ class ErrorDialog():
 
     def __init__(self, specto, error_message):
         self.specto = specto
-        gladefile= self.specto.PATH + 'glade/notifier.glade'
-        windowname= "error_dialog"
-        self.wTree=gtk.glade.XML(gladefile, windowname, \
+        gladefile = self.specto.PATH + 'glade/notifier.glade'
+        windowname = "error_dialog"
+        self.wTree = gtk.glade.XML(gladefile, windowname, \
                                 self.specto.glade_gettext)
 
-        dic={"on_send_clicked": self.send,
+        dic = {"on_send_clicked": self.send,
         "on_ok_clicked": self.delete_event}
         #attach the events
         self.wTree.signal_autoconnect(dic)

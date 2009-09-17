@@ -9,7 +9,7 @@
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
 # License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
+# version 2 of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -29,7 +29,6 @@ import email
 import os
 from socket import error
 from spectlib.i18n import _
-import time
 import string
 
 type = "Watch_mail_pop3"
@@ -99,7 +98,7 @@ class Watch_mail_pop3(Watch):
                     except:
                         self.set_error()
                         Watch.timer_update(self)
-                        return ""                    
+                        return ""
                 else:
                     try:
                         s = poplib.POP3(self.host)
@@ -120,16 +119,16 @@ class Watch_mail_pop3(Watch):
                 self.mail_info.clear_old()
 
                 if self.unreadMsg > 0:
-                    i=1
+                    i = 1
                     while i < self.unreadMsg + 1:
                         str_msg = string.join(s.top(i, 0)[1], "\n")
                         msg = email.message_from_string(str_msg)
                         id = string.split(s.uidl(i))[2] #get unique info
                         mail = Email(id, msg["From"].replace("\n", ""), msg["Subject"].replace("\n", ""), msg["date"])
                         if self.mail_info.add(mail): #check if it is a new email or just unread
-                            self.actually_changed=True
-                            self.newMsg+=1
-                        i+=1
+                            self.actually_changed = True
+                            self.newMsg += 1
+                        i += 1
                     self.mail_info.sort()
                 self.mail_info.remove_old()
                 if len(self.mail_info) == 0:
@@ -146,14 +145,13 @@ class Watch_mail_pop3(Watch):
         self.oldMsg = self.newMsg
         Watch.timer_update(self)
 
-
     def get_balloon_text(self):
         """ create the text for the balloon """
         unread_messages = self.mail_info.get_unread_messages()
         if len(unread_messages) == 1:
             author_info = unread_messages[0].author.split(":")[0]
             author_info = author_info.replace("<", "(")
-            author_info = author_info.replace(">", ")")            
+            author_info = author_info.replace(">", ")")
             text = _("New message from <b>%s</b>...\n\n... <b>totalling %d</b> unread mails.") % (author_info, self.unreadMsg)
         else:
             i = 0 #show max 4 mails
@@ -162,7 +160,7 @@ class Watch_mail_pop3(Watch):
                 author_info += self.mail_info[i].author + ", "
                 if i == 3 and i < len(unread_messages) - 1:
                     author_info += _("and others...")
-                i+=1
+                i += 1
             author_info = author_info.rstrip(", ")
             author_info = author_info.replace("<", "(")
             author_info = author_info.replace(">", ")")
