@@ -37,10 +37,6 @@ class About:
 
     def __init__(self, specto):
         self.specto = specto
-        version_file_path = (os.path.join(spectlib.util.get_path(category="doc"), "VERSION"))
-        version_file = open(version_file_path, 'r')
-        version = str(version_file.readline()[:-1])
-        version_file.close
 
         license_file_path = (os.path.join(spectlib.util.get_path(category="doc"), "COPYING"))
         license_file = open(license_file_path, "r")
@@ -64,7 +60,7 @@ class About:
         self.about = gtk.AboutDialog()
 
         self.about.set_name("Specto")
-        self.about.set_version(version)
+        self.about.set_version(self.specto.VERSION)
         self.about.set_copyright("Copyright © Jean-François Fortin Tam & Wout Clymans")
         #self.wTree.set_comments(comments)
         self.about.set_license(license)
