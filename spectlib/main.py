@@ -81,6 +81,7 @@ class Specto:
         self.logger = Logger(self)
 
         self.check_instance() #see if specto is already running
+        self.VERSION = self.get_version_number()  # The Specto version number
         self.specto_gconf = specto_gconf
         self.check_default_settings()
         self.GTK = GTK
@@ -183,6 +184,14 @@ class Specto:
             if self.specto_gconf.get_entry(default_setting[0]) == None:
                 self.specto_gconf.set_entry(default_setting[0], \
                                                     default_setting[1])
+
+    def get_version_number(self):
+        """Return the Specto version number"""
+        version_file_path = (os.path.join(self.util.get_path(category="doc"), "VERSION"))
+        version_file = open(version_file_path, 'r')
+        version = str(version_file.readline()[:-1])
+        version_file.close
+        return version
 
     def check_instance(self):
         """ Check if specto is already running. """
