@@ -228,6 +228,25 @@ class Watch:
         """Provide information to be shown in the Extra information tab in the notifier window.
         Remember to use the escape method to sanitize special characters before adding formatting."""
         return _("No extra information available.")
+    
+    def open_watch(self):
+        open_command = self.replace_variables() 
+        if open_command != "":
+            os.system(open_command + " &")
+            return True
+        else:
+            return False
+        
+    def replace_variables(self):
+        open_command = self.open_command
+        available_variables = {"%extra_information": "'" + self.get_extra_information() + "'",
+                               "%information": "'" + self.get_balloon_text() + "'",
+                               "%name": "'" +  self.name + "'",
+                               "%last_changed": "'" + self.last_changed + "'"}
+        for variable in available_variables:
+            open_command = open_command.replace(variable, available_variables[variable])
+            
+        return open_command
 
     def escape(self, text):
         """Sanitize the input to remove special characters, PyGTK doesn't like them.

@@ -429,15 +429,7 @@ class Notifier:
         Open the selected watch.
         Returns False if the watch failed to open
         """
-        res = True
-        try:
-            watch = self.specto.watch_db[id]
-            if watch.open_command != "":
-                self.specto.logger.log(_("Watch opened"), "info", self.specto.watch_db[id].name)
-                os.system(watch.open_command + " &")
-        except:
-            res = False
-        return res
+        return self.specto.watch_db[id].open_watch()
 
     def open_watch_callback(self, *args):
         """
