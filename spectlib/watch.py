@@ -143,8 +143,9 @@ class Watch:
             self.watch_io.write_option(self.name, 'last_changed', \
                                                        self.last_changed)
             self.specto.mark_watch_status("changed", self.id)
-            if self.command != "": #run watch specific "changed" command
-                os.system(self.command + " &")
+            command = self.replace_variables(self.command)
+            if command != "": #run watch specific "changed" command
+                os.system(command + " &")
         except:
             self.set_error(_("There was an error marking the watch as changed"))
 
@@ -230,23 +231,23 @@ class Watch:
         return _("No extra information available.")
     
     def open_watch(self):
-        open_command = self.replace_variables() 
+        open_command = self.replace_variables(self.open_command) 
         if open_command != "":
             os.system(open_command + " &")
             return True
         else:
             return False
         
-    def replace_variables(self):
-        open_command = self.open_command
-        available_variables = {"%extra_information": "'" + self.get_extra_information() + "'",
-                               "%information": "'" + self.get_balloon_text() + "'",
-                               "%name": "'" +  self.name + "'",
-                               "%last_changed": "'" + self.last_changed + "'"}
+    def replace_variables(self, command):
+        _command = command
+        available_variables = {"%extra_information": "'" + self.get_extra_information().replace("'", "") + "'",
+                               "%information": "'" + self.get_balloon_text().replace("'", "") + "'",
+                               "%name": "'" +  self.name.replace("'", "\'") + "'",
+                               "%last_changed": "'" + self.last_changed.replace("'", "") + "'"}
         for variable in available_variables:
-            open_command = open_command.replace(variable, available_variables[variable])
+            _command = _command.replace(variable, available_variables[variable])
             
-        return open_command
+        return _command
 
     def escape(self, text):
         """Sanitize the input to remove special characters, PyGTK doesn't like them.
