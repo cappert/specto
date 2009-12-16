@@ -311,7 +311,7 @@ class Specto:
     def already_running_dialog(self, *args):
         """ Save the save and position from the notifier and quit Specto. """
         #create a dialog
-        self.dialog = gtk.Dialog(_("Specto is already running"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+        self.dialog = gtk.Dialog(_("Error"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
         self.dialog.set_modal(False)  # Needed to prevent the notifier UI and refresh process from blocking. Also, do not use dialog.run(), because it automatically sets modal to true.
 
         #HIG tricks
@@ -327,7 +327,7 @@ class Specto:
         self.dialog.label_hbox.pack_start(icon, True, True, 6)
         icon.show()
 
-        label = gtk.Label(_('<b><big>Specto is already running.</big></b>'))
+        label = gtk.Label(_('Specto is already running!'))
         label.set_use_markup(True)
         self.dialog.label_hbox.pack_start(label, True, True, 6)
         label.show()
