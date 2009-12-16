@@ -80,67 +80,70 @@ class Specto:
         self.glade_gettext = gettext.textdomain("specto")
         self.logger = Logger(self)
 
-        self.check_instance() #see if specto is already running
         self.VERSION = self.get_version_number()  # The Specto version number
-        self.specto_gconf = specto_gconf
-        self.check_default_settings()
+
         self.GTK = GTK
+        if not self.check_instance(): #see if specto is already running
+            self.specto_gconf = specto_gconf
+            self.check_default_settings()
 
-        self.connection_manager = conmgr.get_net_listener()
-        self.use_keyring = self.specto_gconf.get_entry("use_keyring")
+            self.connection_manager = conmgr.get_net_listener()
+            self.use_keyring = self.specto_gconf.get_entry("use_keyring")
 
-        #create the watch collection and add the watches
-        self.watch_db = Watch_collection(self)
-        self.watch_io = Watch_io(self, self.FILE)
+            #create the watch collection and add the watches
+            self.watch_db = Watch_collection(self)
+            self.watch_io = Watch_io(self, self.FILE)
 
-        if (sys.argv[1:] and "--console" in sys.argv[1:][0]) or not self.GTK:
-            self.logger.log(_("Console mode enabled."), "debug", "specto")
-            self.GTK = False
-            self.CONSOLE = True
+            if (sys.argv[1:] and "--console" in sys.argv[1:][0]) or not self.GTK:
+                self.logger.log(_("Console mode enabled."), "debug", "specto")
+                self.GTK = False
+                self.CONSOLE = True
+                try:
+                    args = sys.argv[1:][1]
+                except:
+                    args = ""
+                self.console = Console(self, args)
+
+            elif self.GTK:
+                self.GTK = True
+                self.CONSOLE = False
+                self.icon_theme = gtk.icon_theme_get_default()
+                self.notifier = Notifier(self)
+
+                if self.specto_gconf.get_entry("always_show_icon") == False:
+                    self.notifier_hide = False
+                elif self.specto_gconf.get_entry("show_notifier")==True:
+                    self.notifier_hide = False
+                    self.toggle_notifier()
+                elif self.specto_gconf.get_entry("show_notifier")==False:
+                    self.notifier_hide = True
+                else:#just in case the entry was never created in gconf
+                    self.notifier_keep_hidden = False
+            else:
+                sys.exit(0)
+
+            #listen for gconf keys
+            self.specto_gconf.notify_entry("debug_mode", self.key_changed, "debug")
+
+            values = self.watch_io.read_all_watches(True)
             try:
-                args = sys.argv[1:][1]
-            except:
-                args = ""
-            self.console = Console(self, args)
+                self.watch_db.create(values)
+            except AttributeError, error_fields:
+                self.logger.log(_("Could not create a watch, because it is corrupt."), \
+                                    "critical", "specto")
 
-        elif self.GTK:
-            self.GTK = True
-            self.CONSOLE = False
-            self.icon_theme = gtk.icon_theme_get_default()
-            self.notifier = Notifier(self)
 
-            if self.specto_gconf.get_entry("always_show_icon") == False:
-                self.notifier_hide = False
-            elif self.specto_gconf.get_entry("show_notifier")==True:
-                self.notifier_hide = False
-                self.toggle_notifier()
-            elif self.specto_gconf.get_entry("show_notifier")==False:
-                self.notifier_hide = True
-            else:#just in case the entry was never created in gconf
-                self.notifier_keep_hidden = False
-        else:
-            sys.exit(0)
+            if self.GTK:
+                for watch in self.watch_db:
+                    self.notifier.add_notifier_entry(watch.id)
 
-        #listen for gconf keys
-        self.specto_gconf.notify_entry("debug_mode", self.key_changed, "debug")
-
-        values = self.watch_io.read_all_watches(True)
-        try:
-            self.watch_db.create(values)
-        except AttributeError, error_fields:
-            self.logger.log(_("Could not create a watch, because it is corrupt."), \
-                                "critical", "specto")
-
+                self.notifier.refresh_all_watches()
+            else:
+                self.console.start_watches()
 
         if self.GTK:
-            for watch in self.watch_db:
-                self.notifier.add_notifier_entry(watch.id)
-
-            self.notifier.refresh_all_watches()
-
             gtk.main()
         else:
-            self.console.start_watches()
             try:
                 self.go = gobject.MainLoop()
                 self.go.run()
@@ -209,11 +212,15 @@ class Specto:
             p = os.system("ps --no-heading --pid " + pid)
             p_name = os.popen("ps -f --pid " + pid).read()
             if p == 0 and "specto" in p_name:
-                if DEBUG:
+                if self.GTK:
+                    self.already_running_dialog()
+                    return True
+                elif DEBUG:
                     self.logger.log(_("Specto is already running!"), "critical", "specto")
+                    sys.exit(0)
                 else:
                     print _("Specto is already running!")
-                sys.exit(0)
+                    sys.exit(0)
 
         #write the pid file
         f = open(pidfile, "w")
@@ -286,11 +293,11 @@ class Specto:
             icon = gtk.gdk.pixbuf_new_from_file(self.PATH + \
                                 'icons/specto_window_icon.svg')
             self.dialog.set_icon(icon)
-            self.dialog.connect("delete_event", self.dialog_response)
-            self.dialog.connect("response", self.dialog_response)
+            self.dialog.connect("delete_event", self.quit_dialog_response)
+            self.dialog.connect("response", self.quit_dialog_response)
             self.dialog.show_all()
 
-    def dialog_response(self, widget, answer):
+    def quit_dialog_response(self, widget, answer):
         if answer == 3:
             try:#go figure, it never works!
                 self.notifier.stop_refresh = True
@@ -300,3 +307,40 @@ class Specto:
                 os.system('killall specto')
         else:
             self.dialog.hide()
+            
+    def already_running_dialog(self, *args):
+        """ Save the save and position from the notifier and quit Specto. """
+        #create a dialog
+        self.dialog = gtk.Dialog(_("Specto is already running"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+        self.dialog.set_modal(False)  # Needed to prevent the notifier UI and refresh process from blocking. Also, do not use dialog.run(), because it automatically sets modal to true.
+
+        #HIG tricks
+        self.dialog.set_has_separator(False)
+
+        #self.dialog.add_button(_("Murder!"), 3)
+        self.dialog.add_button(gtk.STOCK_OK, 3)
+
+        self.dialog.label_hbox = gtk.HBox(spacing=6)
+
+        icon = gtk.Image()
+        icon.set_from_stock(gtk.STOCK_DIALOG_INFO, gtk.ICON_SIZE_DIALOG)
+        self.dialog.label_hbox.pack_start(icon, True, True, 6)
+        icon.show()
+
+        label = gtk.Label(_('<b><big>Specto is already running.</big></b>'))
+        label.set_use_markup(True)
+        self.dialog.label_hbox.pack_start(label, True, True, 6)
+        label.show()
+
+        self.dialog.vbox.pack_start(self.dialog.label_hbox, True, True, 12)
+        self.dialog.label_hbox.show()
+
+        icon = gtk.gdk.pixbuf_new_from_file(self.PATH + 'icons/specto_window_icon.svg')
+        self.dialog.set_icon(icon)
+        self.dialog.connect("delete_event", self.running_dialog_response)
+        self.dialog.connect("response", self.running_dialog_response)
+        self.dialog.show_all()
+
+    def running_dialog_response(self, widget, answer):
+        if answer == 3:
+            sys.exit(0)

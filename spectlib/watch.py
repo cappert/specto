@@ -143,8 +143,9 @@ class Watch:
             self.watch_io.write_option(self.name, 'last_changed', \
                                                        self.last_changed)
             self.specto.mark_watch_status("changed", self.id)
-            if self.command != "": #run watch specific "changed" command
-                os.system(self.command + " &")
+            command = self.replace_variables(self.command)
+            if command != "": #run watch specific "changed" command
+                os.system(command + " &")
         except:
             self.set_error(_("There was an error marking the watch as changed"))
 
@@ -228,6 +229,25 @@ class Watch:
         """Provide information to be shown in the Extra information tab in the notifier window.
         Remember to use the escape method to sanitize special characters before adding formatting."""
         return _("No extra information available.")
+    
+    def open_watch(self):
+        open_command = self.replace_variables(self.open_command) 
+        if open_command != "":
+            os.system(open_command + " &")
+            return True
+        else:
+            return False
+        
+    def replace_variables(self, command):
+        _command = command
+        available_variables = {"%extra_information": "'" + self.get_extra_information().replace("'", "") + "'",
+                               "%information": "'" + self.get_balloon_text().replace("'", "") + "'",
+                               "%name": "'" +  self.name.replace("'", "\'") + "'",
+                               "%last_changed": "'" + self.last_changed.replace("'", "") + "'"}
+        for variable in available_variables:
+            _command = _command.replace(variable, available_variables[variable])
+            
+        return _command
 
     def escape(self, text):
         """Sanitize the input to remove special characters, PyGTK doesn't like them.

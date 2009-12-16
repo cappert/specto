@@ -223,7 +223,8 @@ class Notifier:
                 balloon_icon = self.get_icon("error", 0, True)
                 icon = self.get_icon("error", 50, False)
                 if self.specto.specto_gconf.get_entry("pop_toast") == True:
-                    self.balloon.show_toast(watch.error_message, balloon_icon, urgency="critical", summary=(_("%s encountered a problem") % watch.name))
+                    body = watch.escape(watch.error_message)
+                    self.balloon.show_toast(body, balloon_icon, urgency="critical", summary=(_("%s encountered a problem") % watch.name))
                 if self.specto.specto_gconf.get_entry("use_problem_sound"):
                     problem_sound = self.specto.specto_gconf.get_entry("problem_sound")
                     gnome.sound_play(problem_sound)
@@ -288,7 +289,10 @@ class Notifier:
             try:
                 icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, ("icons/" + icon + ".svg")), size, size)
             except:
-                icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, "icons/specto_tray_1.svg"), size, size)
+                try:
+                    icon = gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(self.specto.PATH, ("icons/" + icon + ".png")), size, size)
+                except:
+                    return None
 
         icon = icon.add_alpha(False, '0', '0', '0')
         for row in icon.get_pixels_array():
@@ -412,7 +416,7 @@ class Notifier:
                 else:
                     #create label
                     self.info_labels[i][0].set_label("<b>" + str(watch_values[i][0]) + ":</b>")
-                    label = str(watch_values[i][1]).replace("&", "&amp;")
+                    label = watch.escape(str(watch_values[i][1]))
                     self.info_labels[i][1].set_label(label)
 
                 i += 1
@@ -425,15 +429,7 @@ class Notifier:
         Open the selected watch.
         Returns False if the watch failed to open
         """
-        res = True
-        try:
-            watch = self.specto.watch_db[id]
-            if watch.open_command != "":
-                self.specto.logger.log(_("Watch opened"), "info", self.specto.watch_db[id].name)
-                os.system(watch.open_command + " &")
-        except:
-            res = False
-        return res
+        return self.specto.watch_db[id].open_watch()
 
     def open_watch_callback(self, *args):
         """
