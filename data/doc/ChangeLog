@@ -8,6 +8,7 @@ Bug fixes
     * Issue 267: Specto should provide its name in user agent
     * Issue 270: Changing the units in the Refresh Interval option resets any previously entered value to "1".
     * Issue 272: show a graphical dialog when "Specto is already running"
+    * Fix a critical bug in the process watch, which prevented Specto from starting if there was a system process with whitespaces in its name
 
 Features
     * Issue 269: allow parameters to be passed to custom commands

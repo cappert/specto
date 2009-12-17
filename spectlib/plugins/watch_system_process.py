@@ -26,6 +26,7 @@ import spectlib.config
 from spectlib.i18n import _
 import os
 import signal
+import re
 
 type = "Watch_system_process"
 type_desc = _("Process")
@@ -103,6 +104,7 @@ class Watch_system_process(Watch):
 Nick Craig-Wood <nick at craig-wood.com> -- http://www.craig-wood.com/nick
 
 Manage Processes and a ProcessList under Linux.
+Some adaptations/fixes made for Specto.
 """
 
 
@@ -112,10 +114,39 @@ class Process(object):
     def __init__(self, pid):
         """Make a new Process object"""
         self.proc = "/proc/%d" % pid
-        pid, command, state, parent_pid = file(os.path.join(self.proc, "stat")).read().strip().split()[:4]
-        command = command[1:-1]
+        self.proc_stat_file = file(os.path.join(self.proc, "stat")).read()
+        
+        """
+        Here's how we split the values in the stat file with a regex.
+        This is to prevent a very rare, corner-case bug in Specto. When you have a running process whose name contains spaces, its mere presence will prevent Specto from launching at all. The reason is that we used a naive approach to splitting (splitting with spaces).
+
+        A normal stat file looks somewhat like this:
+            19217 (some_script ) S 17776 19217
+
+        However, it can look like this, if the process name has spaces:
+            19217 (some script ) S 17776 19217
+
+        To split this properly, we need to use this regex:
+            \([^()]*\)|\S+
+
+        Which can be decomposed as:
+            \(      = the "(" character
+            [^()]*  = a serie of zero or more characters, except "(" or ")"
+            \)      = the ")" character
+            |       = OR operator
+            \S+     = match at least 1 character that is not a "space" (blank space, \t, \n, etc.)
+
+        So, it looks like this:
+            re.findall(r'\([^()]*\)|\S+', the_string_to_parse)
+
+        Or, in a more readable way (with "re.X" to remove the whitespaces in the regex):
+            re.findall(r' \( [^()]* \) | \S+ ', the_string_to_parse, re.X)
+        """
+        
+        pid, command, state, parent_pid = re.findall(r' \( [^()]* \) | \S+ ', self.proc_stat_file, re.X)[:4]  # Only keep the first 4 items
+        command = command[1:-1]  # Remove the surrounding "(" and ")"
         self.pid = int(pid)
-        self.command = command
+        self.command = command  # FIXME process names are truncated in the stat file. Not sure what we can do about this, other than truncate our own process names in the "named" function near (see further below).
         self.state = state
         self.parent_pid = int(parent_pid)
         self.parent = None
@@ -147,7 +178,6 @@ class ProcessList(object):
             if f.isdigit():
                 process = Process(int(f))
                 self.by_pid[process.pid] = process
-                #print process.command#FIXME ah-ha! there's a bug here, process names are truncated
                 self.by_command.setdefault(process.command, []).append(process)
         for process in self.by_pid.values():
             try:
