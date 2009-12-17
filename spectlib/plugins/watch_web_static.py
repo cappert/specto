@@ -99,7 +99,8 @@ class Watch_web_static(Watch):
                 opener = web_proxy.urllib2.build_opener(auth_hndlr)
             else:
                 opener = web_proxy.urllib2.build_opener()
-            request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding": "gzip"})
+            self.user_agent = "Specto/" + self.specto.VERSION + " +http://specto.sf.net"
+            request = web_proxy.urllib2.Request(self.uri, None, {"Accept-encoding": "gzip",'User-Agent':self.user_agent})
             cache_res = ""
             if (self.cached == 1) or (os.path.exists(self.cacheFullPath_)):
                 self.cached = 1

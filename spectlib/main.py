@@ -79,7 +79,9 @@ class Specto:
 
         self.glade_gettext = gettext.textdomain("specto")
         self.logger = Logger(self)
-        
+
+        self.VERSION = self.get_version_number()  # The Specto version number
+
         self.GTK = GTK
         if not self.check_instance(): #see if specto is already running
             self.specto_gconf = specto_gconf
@@ -185,6 +187,14 @@ class Specto:
             if self.specto_gconf.get_entry(default_setting[0]) == None:
                 self.specto_gconf.set_entry(default_setting[0], \
                                                     default_setting[1])
+
+    def get_version_number(self):
+        """Return the Specto version number"""
+        version_file_path = (os.path.join(self.util.get_path(category="doc"), "VERSION"))
+        version_file = open(version_file_path, 'r')
+        version = str(version_file.readline()[:-1])
+        version_file.close
+        return version
 
     def check_instance(self):
         """ Check if specto is already running. """
@@ -301,7 +311,7 @@ class Specto:
     def already_running_dialog(self, *args):
         """ Save the save and position from the notifier and quit Specto. """
         #create a dialog
-        self.dialog = gtk.Dialog(_("Specto is already running"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
+        self.dialog = gtk.Dialog(_("Error"), None, gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
         self.dialog.set_modal(False)  # Needed to prevent the notifier UI and refresh process from blocking. Also, do not use dialog.run(), because it automatically sets modal to true.
 
         #HIG tricks
@@ -317,7 +327,7 @@ class Specto:
         self.dialog.label_hbox.pack_start(icon, True, True, 6)
         icon.show()
 
-        label = gtk.Label(_('<b><big>Specto is already running.</big></b>'))
+        label = gtk.Label(_('Specto is already running!'))
         label.set_use_markup(True)
         self.dialog.label_hbox.pack_start(label, True, True, 6)
         label.show()
