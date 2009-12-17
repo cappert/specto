@@ -42,9 +42,7 @@ class Tray:
         self.ICON_PATH = os.path.join(self.specto.PATH, "icons/specto_tray_1.svg")
         self.ICON2_PATH = os.path.join(self.specto.PATH, "icons/specto_tray_2.svg")
         # Create the tray icon object
-        self.tray = None
-        if not self.tray:
-            self.tray = gtk.StatusIcon()
+        self.tray = gtk.StatusIcon()
         self.tray.set_from_file(self.ICON_PATH)
         self.tray.connect("activate", self.show_notifier)
         self.tray.connect("popup-menu", self.show_popup)

@@ -34,6 +34,13 @@ from spectlib.balloons import NotificationToast
 from spectlib.import_watch import Import_watch
 from spectlib.export_watch import Export_watch
 from spectlib.trayicon import Tray
+    
+try:
+    from spectlib.tools.indicator import Indicator
+except:
+    INDICATOR = False
+else:
+    INDICATOR = True
 
 
 import spectlib.util
@@ -72,7 +79,12 @@ class Notifier:
         In this init we are going to display the main notifier window.
         """
         self.specto = specto
-        self.tray = Tray(specto, self)
+        if INDICATOR:
+            self.indicator = Indicator(specto)
+            self.tray = None
+        else:
+            self.tray = Tray(specto, self)
+            self.indicator = None
         self.balloon = NotificationToast(specto, self)
         self.preferences_initialized = False
         gnome.sound_init('localhost')
@@ -202,7 +214,8 @@ class Notifier:
                 statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" is checking.') % watch.name))
 
             elif status == "idle":
-                self.tray.show_tooltip() #check if all watches are cleared
+                if self.tray:
+                    self.tray.show_tooltip() #check if all watches are cleared
                 if watch.changed == True:
                     self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_BOLD)
                     self.wTree.get_widget("button_clear_all").set_sensitive(True)
@@ -213,9 +226,11 @@ class Notifier:
                     self.wTree.get_widget("clear_all1").set_sensitive(False)
                     icon = self.get_icon(watch.icon, 50, False)
                 statusbar.push(0, "")  # As per HIG, make the status bar empty when nothing is happening
+                
             elif status == "no-network":
                 statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The network connection seems to be down, networked watches will not check until then.')))
-                self.tray.show_tooltip()
+                if self.tray:
+                    self.tray.show_tooltip()
                 icon = self.get_icon(watch.icon, 50, False)
 
             elif status == "error":
@@ -230,6 +245,8 @@ class Notifier:
                     gnome.sound_play(problem_sound)
 
             elif status == "changed":
+                if self.indicator:
+                    self.indicator.add_indicator(watch)
                 statusbar.push(0, (datetime.today().strftime("%H:%M") + " - " + _('The watch "%s" has changed.') % watch.name))
 
                 self.model.set(self.iter[id], 2, "%s" % watch.name, 5, pango.WEIGHT_BOLD)
@@ -240,7 +257,8 @@ class Notifier:
                 if self.model.iter_is_valid(self.iter[id]):
                     icon = self.get_icon(watch.icon, 0, False)
 
-                self.tray.show_tooltip()
+                if self.tray:
+                    self.tray.show_tooltip()
 
                 balloon_icon = self.get_icon(watch.icon, 0, True)
                 if self.specto.specto_gconf.get_entry("pop_toast") == True:
@@ -250,6 +268,10 @@ class Notifier:
                 if self.specto.specto_gconf.get_entry("use_changed_sound"):
                     changed_sound = self.specto.specto_gconf.get_entry("changed_sound")
                     gnome.sound_play(changed_sound)
+                    
+            elif status == "read":
+                if self.indicator:
+                    self.indicator.remove_indicator(id)
 
             self.model.set_value(self.iter[id], 1, icon)
 
@@ -601,7 +623,8 @@ class Notifier:
                 self.remove_notifier_entry(id)
                 self.specto.watch_db.remove(id) #remove the watch
                 self.specto.watch_io.remove_watch(self.specto.watch_db[id].name)
-                self.tray.show_tooltip()
+                if self.tray:
+                    self.tray.show_tooltip()
 
     def delete_event(self, *args):
         """
@@ -609,6 +632,16 @@ class Notifier:
         Return True to stop destroying the main window.
         """
         self.save_size_and_position()
+        
+        if self.indicator:
+            if args and args[0].get_name() == "close":
+                self.specto.quit()
+                return True
+            else:
+                self.notifier.hide()
+                self.specto.specto_gconf.set_entry("show_notifier", False)#save the window state for the next time specto starts
+                return True               
+
         if self.specto.specto_gconf.get_entry("always_show_icon") == True:
             self.notifier.hide()
             self.specto.specto_gconf.set_entry("show_notifier", False)#save the window state for the next time specto starts

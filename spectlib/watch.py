@@ -118,6 +118,7 @@ class Watch:
             self.changed = False
             self.watch_io.write_option(self.name, 'changed', self.changed)
             if not self.error:
+                self.specto.mark_watch_status("read", self.id)
                 self.specto.mark_watch_status("idle", self.id)
         except:
             self.set_error(_("There was an error marking the watch as read"))
@@ -261,10 +262,11 @@ class Watch:
         Remember to use the escape method to sanitize special characters before adding formatting."""
         return _("No extra information available.")
     
-    def open_watch(self):
+    def open_watch(self, *args):
         open_command = self.replace_variables(self.open_command) 
         if open_command != "":
             os.system(open_command + " &")
+            self.mark_as_read()
             return True
         else:
             return False
