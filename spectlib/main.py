@@ -138,20 +138,20 @@ class Specto:
                 for watch in self.watch_db:
                     self.notifier.add_notifier_entry(watch.id)
                 
-                #Listen for USR1. If received, answer and show the window
-                def listenforUSR1(signum, frame):
+                # Listen for USR1. If received, answer and show the window
+                def listen_for_USR1(signum, frame):
                     f = open(self.SPECTO_DIR + "/" + "specto.pid.boot")
                     pid = int(f.readline())
                     f.close()
                     os.kill(pid, signal.SIGUSR1)
-                    #If window was not shown, make it appear
+                    # If window was not shown, make it appear
                     if not self.notifier.get_state():
-                        print _("Showing window, the user ran another instance of specto")
+                        self.logger.log("Showing window, the user ran another instance of specto", "debug", "specto")
                         self.toggle_notifier()
                     else:
-                        print _("Window is already visible! Not doing anything")
+                        self.logger.log("Window is already visible! Not doing anything.", "debug", "specto")
                 
-                signal.signal(signal.SIGUSR1, listenforUSR1)
+                signal.signal(signal.SIGUSR1, listen_for_USR1)
                 
                 self.notifier.refresh_all_watches()
             else:
@@ -229,31 +229,32 @@ class Specto:
             p_name = os.popen("ps -f --pid " + pid).read()
             if p == 0 and "specto" in p_name:
                 if self.GTK:
-                    #save our pid and prepare a 'pong' system
+                    # Save our pid and prepare a 'pong' system
                     f = open(pidfile + ".boot", "w")
                     f.write(str(os.getpid()))
                     f.close()
                     
-                    def notresponding(signum, frame):
+                    def not_responding(signum, frame):
                         """ Launch the already running dialog if the
                             other instance doesn't respond """
                         os.unlink(pidfile + ".boot")
                         self.already_running_dialog()
                         
-                    def responsereceived(signum, frame):
+                    def response_received(signum, frame):
                         """ Kill this specto if the other one answers """
                         signal.alarm(0)
                         os.unlink(pidfile + ".boot")
-                        print _("Specto is already running! The old instance will be brought to front.")
+                        self.logger.log("Specto is already running! The old instance will be brought to front.", "debug", "specto")
                         sys.exit(0)
                         
-                    signal.signal(signal.SIGALRM, notresponding)
-                    signal.signal(signal.SIGUSR1, responsereceived)
+                    signal.signal(signal.SIGALRM, not_responding)
+                    signal.signal(signal.SIGUSR1, response_received)
                     signal.alarm(5)
-                    #send signal to raise window
+                    
+                    # Send signal to raise window
                     os.kill(int(pid), signal.SIGUSR1)
                     
-                    #Wait for signals
+                    # Wait for signals
                     signal.pause()
                     
                     return True
