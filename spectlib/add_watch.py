@@ -88,6 +88,14 @@ class Add_watch:
     def set_options(self, watch_type):
         """ Show the table with the right watch options. """
         values = self.specto.watch_db.plugin_dict[watch_type].get_add_gui_info()
+        
+        try:
+            if self.specto.watch_db.plugin_dict[watch_type].dbus_watch == True:
+                self.refresh.hide()
+                self.refresh_unit.hide()
+                self.wTree.get_widget("label_refresh1").hide()
+        except:
+            pass
 
         #create the options gui
         self.table = gtk.Table(rows=len(values), columns=1, homogeneous=False)

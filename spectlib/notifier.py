@@ -310,11 +310,15 @@ class Notifier:
 
         self.iter[id] = self.model.insert_before(None, None)
         self.model.set_value(self.iter[id], 0, active)
-        self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50, False))
+        if watch.changed == True:
+            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 0, False))
+            self.model.set(self.iter[id], 5, pango.WEIGHT_BOLD)
+        else:
+            self.model.set_value(self.iter[id], 1, self.get_icon(watch.icon, 50, False))
+            self.model.set(self.iter[id], 5, pango.WEIGHT_NORMAL)            
         self.model.set_value(self.iter[id], 2, watch.name)
         self.model.set_value(self.iter[id], 3, watch.id)
         self.model.set_value(self.iter[id], 4, watch.type)
-        self.model.set(self.iter[id], 5, pango.WEIGHT_NORMAL)#make sure the text is not fuzzy on startup
 
         if not self.wTree.get_widget("display_all_watches").active and active == 0: #dont creat the entry
             self.remove_notifier_entry(id)

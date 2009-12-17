@@ -28,6 +28,12 @@ import thread
 import gtk
 from cgi import escape
 
+try:
+    import dbus
+    DBUS = True
+except:
+    DBUS = False
+
 #specto imports
 import spectlib.config
 from spectlib.tools.iniparser import ini_namespace
@@ -64,6 +70,8 @@ class Watch:
         self.use_network = False
         self.error = False
         self.actually_changed = False
+        self.dbus = False
+        self.session_bus = None
         self.timer_id = -1
         self.deleted = False
         self.error_message = ""
@@ -90,7 +98,16 @@ class Watch:
         try:
             self.active = False
             self.watch_io.write_option(self.name, 'active', self.active)
-            gobject.source_remove(self.timer_id)
+            if self.dbus and self.session_bus:
+                for signal, call_back in self.signals.items():
+                    self.session_bus.remove_signal_receiver(
+                        call_back,
+                        signal,
+                        self.dbus_interface,
+                        self.dbus_name,
+                        self.dbus_path)
+            else:
+                gobject.source_remove(self.timer_id)
         except:
             self.error = True
             self.set_error(_("There was an error stopping the watch"))
@@ -113,23 +130,37 @@ class Watch:
 
     def start_checking(self):
         try:
-            if self.use_network:
-                if not self.check_connection():
-                    return
             self.specto.logger.log(_("Watch started checking."),\
                                                  "debug", self.name)
-            self.specto.mark_watch_status("checking", self.id)
             self.error = False
             self.actually_changed = False
-            #self.check()
-            #return
-            self.lock = thread.allocate_lock()
-            self.lock.acquire()
-            thread.start_new_thread(self.check, ())
-            while self.lock.locked():
-                while gtk.events_pending():
-                    gtk.main_iteration()
-                time.sleep(0.05)
+            
+            if self.dbus and DBUS:
+                self.session_bus = dbus.SessionBus()
+                self.obj = self.session_bus.get_object(self.dbus_name, self.dbus_path)
+                self.iface = dbus.Interface(self.obj, self.dbus_interface)
+                
+                for signal, call_back in self.signals.items():
+                    self.session_bus.add_signal_receiver(
+                        call_back,
+                        signal,
+                        self.dbus_interface,
+                        self.dbus_name,
+                        self.dbus_path)
+            else:
+                if self.use_network:
+                    if not self.check_connection():
+                        return                
+                self.specto.mark_watch_status("checking", self.id) 
+                               
+                self.lock = thread.allocate_lock()
+                self.lock.acquire()
+                thread.start_new_thread(self.check, ())
+                
+                while self.lock.locked():
+                    while gtk.events_pending():
+                        gtk.main_iteration()
+                    time.sleep(0.05)
         except:
             self.set_error(_("There was an error checking the watch"))
 
