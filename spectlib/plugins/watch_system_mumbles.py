@@ -2,7 +2,7 @@
 
 # Specto , Unobtrusive event notifier
 #
-#       watch_im_pidgin.py
+#       watch_system_mumbles.py
 #
 # See the AUTHORS file for copyright ownership information
 
@@ -28,7 +28,6 @@ from spectlib.i18n import _
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
-import re
 
 type = "Watch_system_mumbles"
 type_desc = _("Mumbles")
@@ -95,7 +94,6 @@ class Watch_system_mumbles(Watch):
         
         
     def notify(self, subject, content):
-        print "notify"
         self.message = subject
         self.extra_info = content
         self.watch_changed()
