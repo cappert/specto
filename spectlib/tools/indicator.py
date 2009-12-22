@@ -160,7 +160,8 @@ class Indicator:
         _indicator.set_property("sender", watch.name)
         _indicator.set_property("body", watch.get_balloon_text())
         _indicator.set_property_time("time", time.time())
-        _indicator.set_property_icon("icon", icon)
+        if icon:
+            _indicator.set_property_icon("icon", icon)
         _indicator.set_property('draw-attention', 'true')
         _indicator.connect("user-display", watch.open_watch)
         _indicator.show()
