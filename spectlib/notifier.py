@@ -41,6 +41,13 @@ except:
     INDICATOR = False
 else:
     INDICATOR = True
+    
+try:
+    from spectlib.tools.sound import Sound
+except:
+    SOUND = False
+else:
+    SOUND = True
 
 
 import spectlib.util
@@ -58,7 +65,6 @@ try:
     import gtk.glade
     import gobject
     import pango
-    import gnome
 except:
     pass
 
@@ -85,9 +91,12 @@ class Notifier:
         else:
             self.tray = Tray(specto, self)
             self.indicator = None
+        if SOUND:
+            self.sound = Sound()
+        else:
+            self.sound = None
         self.balloon = NotificationToast(specto, self)
         self.preferences_initialized = False
-        gnome.sound_init('localhost')
 
         #create tree
         self.iter = {}
@@ -240,9 +249,9 @@ class Notifier:
                 if self.specto.specto_gconf.get_entry("pop_toast") == True:
                     body = watch.escape(watch.error_message)
                     self.balloon.show_toast(body, balloon_icon, urgency="critical", summary=(_("%s encountered a problem") % watch.name))
-                if self.specto.specto_gconf.get_entry("use_problem_sound"):
+                if self.specto.specto_gconf.get_entry("use_problem_sound") and self.sound:
                     problem_sound = self.specto.specto_gconf.get_entry("problem_sound")
-                    gnome.sound_play(problem_sound)
+                    self.sound.play(problem_sound)
 
             elif status == "changed":
                 if self.indicator:
@@ -265,9 +274,9 @@ class Notifier:
                     self.balloon.show_toast(watch.get_balloon_text(), balloon_icon, summary=(_("%s has changed") % watch.name), name=watch.name)
 
                 icon = self.get_icon(watch.icon, 0, False)
-                if self.specto.specto_gconf.get_entry("use_changed_sound"):
+                if self.specto.specto_gconf.get_entry("use_changed_sound") and self.sound:
                     changed_sound = self.specto.specto_gconf.get_entry("changed_sound")
-                    gnome.sound_play(changed_sound)
+                    self.sound.play(changed_sound)
                     
             elif status == "read":
                 if self.indicator:
