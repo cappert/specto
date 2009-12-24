@@ -24,7 +24,12 @@ from spectlib.watch import Watch
 import spectlib.config
 from spectlib.i18n import _
 import spectlib.util
-import spectlib.tools.web_proxy as web_proxy
+import urllib2
+import urllib 
+import re
+import os
+from xml.dom import minidom
+from xml.etree import ElementTree as ET
 
 type = "Watch_web_greader"
 type_desc = _("Google Reader")
@@ -69,30 +74,23 @@ class Watch_web_greader(Watch):
         """ Check for new news on your greader account. """
         try:
             self.newMsg = 0
-            greader = Greader(self.username, self.password)
-            unread, info_friends, info = greader.refresh()
-            if unread[0] == -1:
-                self.error = True
-                self.specto.logger.log(('%s') % unread[1], "error", self.name)
-            elif unread[0] == 1:#no unread items, we need to clear the watch
+            self.unreadMsg = 0
+            greader = Greader(self.username, self.password, "specto")
+            SID = greader.login()
+            feed_db = greader.get_unread_items(SID)
+            for feed in feed_db:
+                self.unreadMsg += feed.messages
+                if feed.messages > 0 and self.news_info.add(feed):
+                    self.actually_changed = True
+                    self.newMsg += feed.messages
+            if self.unreadMsg == 0:#no unread items, we need to clear the watch
                 self.mark_as_read()
                 self.news_info = Feed_collection()
             else:
-                self.unreadMsg = int(unread[1])
-
                 if self.unreadMsg == 1000:
                     self.or_more = _(" or more")
-
-                self.news_info.clear_old()
-
-                for feed in info:
-                    _feed = Feed(feed, info[feed])
-                    if self.news_info.add(_feed):
-                        self.actually_changed = True
-                        self.newMsg += 1
-
-                self.news_info.remove_old()
-                self.write_cache_file()
+                
+            self.write_cache_file()
 
         except:
             self.set_error()
@@ -149,6 +147,7 @@ class Watch_web_greader(Watch):
                 f.close()
 
     def write_cache_file(self):
+        self.news_info.remove_old()
         try:
             f = open(self.cache_file, "w")
         except:
@@ -232,295 +231,81 @@ class Feed_collection():
                 unread.append(_feed)
         return unread
 
-
-"""
-grnotify
----------
-GrNotify is a simple Python written tray application that will allow you to know when there are new items in the Google Reader.
-
-GrNotify is written by Kristof Bamps
-- And maintained by Bram Bonne and Eric Lembregts
-
-
-Dependencies
---------------
-  * Python >= 2.2 <http://www.python.org>
-  * PyXML >= 0.8.3 <http://pyxml.sourceforge.net>
-  * PyGTK >= 2.0 <http://www.pygtk.org>
-"""
-import urllib
-import urllib2
-import xml.dom.minidom
-import os.path
-
-counter = 1 #boolean to show counter or not
-numberFeeds = 5 #default maximum number of feeds of which info is shows
-L = [] #contains feed ids and their number of unread items
-names = [] #contains names of all feeds
-feeds = 0 # number of feeds user is subscribed to
-email = ''
-passwd = ''
-cookies = -1
-old_unread = -1
-unread = 0
-
-
-def getcookies():
-    """
-    Use cookies
-    """
-    COOKIEFILE = os.path.join(spectlib.util.get_path('tmp'), 'cookies.lwp')
-    # the path and filename to save your cookies in
-
-    cj = None
-    ClientCookie = None
-    cookielib = None
-
-    # Let's see if cookielib is available
-    try:
-        import cookielib
-    except ImportError:
-        # If importing cookielib fails
-        # let's try ClientCookie
-        try:
-            import ClientCookie
-        except ImportError:
-        # ClientCookie isn't available either
-            urlopen = web_proxy.urllib2.urlopen
-            Request = web_proxy.urllib2.Request
-        else:
-        # imported ClientCookie
-            urlopen = ClientCookie.urlopen
-            Request = ClientCookie.Request
-            cj = ClientCookie.LWPCookieJar()
-
-    else:
-        # importing cookielib worked
-        urlopen = web_proxy.urllib2.urlopen
-        Request = web_proxy.urllib2.Request
-        cj = cookielib.LWPCookieJar()
-        # This is a subclass of FileCookieJar
-        # that has useful load and save methods
-
-    if cj is not None:
-    # we successfully imported
-    # one of the two cookie handling modules
-        # Now we need to get our Cookie Jar
-        # installed in the opener;
-        # for fetching URLs
-        if cookielib is not None:
-        # if we use cookielib
-        # then we get the HTTPCookieProcessor
-        # and install the opener in web_proxy.urllib2
-            opener = web_proxy.urllib2.build_opener(web_proxy.urllib2.HTTPCookieProcessor(cj))
-            web_proxy.urllib2.install_opener(opener)
-
-        else:
-        # if we use ClientCookie
-        # then we get the HTTPCookieProcessor
-        # and install the opener in ClientCookie
-            opener = ClientCookie.build_opener(ClientCookie.HTTPCookieProcessor(cj))
-            ClientCookie.install_opener(opener)
-
-    url = 'https://www.google.com/accounts/ServiceLoginAuth'
-    user_agent = 'Mozilla/4.0(compatible; MSIE 5.5; Windows NT)'
-    login = {'Email': email, 'Passwd': passwd}
-
-    data = urllib.urlencode(login)
-
-    theurl = url
-    # an example url that sets a cookie,
-    # try different urls here and see the cookie collection you can make !
-
-    txdata = data
-    # if we were making a POST type request,
-    # we could encode a dictionary of values here,
-    # using urllib.urlencode(somedict)
-
-    txheaders = {'User-agent': 'Mozilla/4.0(compatible; MSIE 5.5; Windows NT)'}
-    # fake a user agent, some websites(like google) don't like automated exploration
-
-    try:
-        req = Request(theurl, txdata, txheaders)
-        # create a request object
-
-        handle = urlopen(req)
-        # and open it to return a handle on the url
-
-        del req
-
-    except IOError, e:
-        return 2         #we didn't get a connection
-
-    if cj is None:
-        return 3         #we got a connection, but didn't get any cookies
-    else:
-        cj.save(COOKIEFILE)                     # save the cookies again
-        return 1, Request, cj        #everything went ok
-
-
-def getUnreadItems(Request):
-    """ Get the number of unread items """
-    global unread, L, feeds
-    LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'list.xml')
-    url = 'https://www.google.com/reader/api/0/unread-count?all=true'
-    try:
-        req = Request(url)
-        response = web_proxy.urllib2.urlopen(req)
-        del req
-    except IOError, e:
-        return 2         #we didn't get a connection
-    testxml = response.read()
-    del response
-    if '<object>' in testxml:
-        fileHandle = open(LISTFILE, 'w')
-        fileHandle.write(testxml)
-        del testxml
-        fileHandle.close()
-        fileHandle = open(LISTFILE)
-        unread = xml.dom.minidom.parse(fileHandle)
-        fileHandle.close()
-        del fileHandle
-        countlist = unread.getElementsByTagName('number')
-        namelist = unread.getElementsByTagName('string')
-        for count in countlist:
-            if count.attributes["name"].value != 'count':
-                countlist.remove(count)
-        del unread
-        del L[:]
-        found = 0
-        for i in xrange(0, len(countlist)):
-            if 'state/com.google/reading-list' in namelist[i].firstChild.toxml():
-                unread = countlist[i].firstChild.toxml()
-                found = 1
-            else:
-                L.append((countlist[i].firstChild.toxml(), namelist[i].firstChild.toxml()))
-        del countlist[:]
-        del namelist[:]
-        if not found: # If there are no subscribed feeds
-            unread = '-1'
-        L = sorted(L, compare)
-        feeds = len(L)
-        return 1
-    else:
-        return 0
-
-
-def updateFeeds(Request):
-    """ Set the names of feeds the user is subscribed to """
-    global names, feeds
-    LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'names.xml')
-    url = 'http://www.google.com/reader/api/0/subscription/list'
-    try:
-        req = Request(url)
-        response = web_proxy.urllib2.urlopen(req)
-        del req
-    except IOError, e:
-        return 2  # We didn't get a connection
-    testxml = response.read()    #read the opened page
-    del response
-    if '<object>' in testxml:  # If we got a XML file
-        fileHandle = open(LISTFILE, 'w')
-        fileHandle.write(testxml)
-        del testxml
-        fileHandle.close
-        fileHandle = open(LISTFILE)
-        document = xml.dom.minidom.parse(fileHandle)
-        fileHandle.close()
-        del fileHandle
-        del names[:]
-        feedlist = document.getElementsByTagName('string')
-        for j in xrange(0, len(feedlist)):
-            if(feedlist[j].attributes["name"].value == 'id' or feedlist[j].attributes["name"].value == 'title'):
-                if('/state/com.google/broadcast' in feedlist[j].firstChild.toxml() or feedlist[j].firstChild.toxml()[0] != 'u'):
-                    names.append(feedlist[j].firstChild.toxml())
-        del document
-        del feedlist[:]
-
-
-def readFeeds(Request):
-    global names
-    LISTFILE = os.path.join(spectlib.util.get_path('tmp'), 'names.xml')
-    if os.path.isfile(LISTFILE):
-        fileHandle = open(LISTFILE)
-        document = xml.dom.minidom.parse(fileHandle)
-        del names[:]
-        feedlist = document.getElementsByTagName('string')
-        for j in xrange(0, len(feedlist)):
-            if(feedlist[j].attributes["name"].value == 'id' or feedlist[j].attributes["name"].value == 'title'):
-                if('/state/com.google/broadcast' in feedlist[j].firstChild.toxml() or feedlist[j].firstChild.toxml()[0] != 'u'):
-                    names.append(feedlist[j].firstChild.toxml())
-        del document
-        del feedlist[:]
-        fileHandle.close()
-    else:
-        updateFeeds(Request)
-
-
-def compare(a, b):
-    """ Compare function to sort the feeds by number of unread items """
-    return cmp(int(b[0]), int(a[0]))
-
-
-class Greader():
-
-    def __init__(self, username, password):
-        global unread, info, extra_info, extra_info_friends, email, passwd
-        global config_changed
-        email = username
-        passwd = password
-        request = ""
-
-    def refresh(self):
-        cookies = getcookies()
-        if(cookies[0] == 1):
-            request = cookies[1]
-            cj = cookies[2]
-            cookies = getUnreadItems(request)
-        if(cookies == 0):
-            info = -1, _('Wrong username or password')
-            extra_info = ''
-        if(cookies == 2):
-            info = -1, _('Could not establish a connection to server')
-            extra_info = ''
-        if(cookies == 3):
-            info = -1, _('Could not get cookies')
-            extra_info = ''
-        if(cookies != 1):
-            cookies = getcookies()
-
-        if(unread == '-1'):
-            info = 1, _('You are not subscribed to any feeds')
-        elif(unread == '0'):
-            info = 1, _('No unread items')
-        elif(unread >= '1'):
-            info = 2, unread
-
-        readFeeds(request)
-        if(len(L) >= numberFeeds):
-            i = numberFeeds
-        else:
-            i = len(L)# - 1
-        extra_info = {}
-        extra_info_friends = ''
-        for i in xrange(0, i):
-            found = 0
-            for j in xrange(0, len(names)):
-                if not found:
-                    if(str(L[i][1]) == names[j] or '/state/com.google/broadcast-friends' in L[i][1]) and int(L[i][0]) != 0:
-                        found = 1
-                        if('/state/com.google/broadcast-friends' in L[i][1]):
-                            extra_info_friends += str(L[i][0])
-                        else:
-                            extra_info.update({names[j+1]: int(L[i][0])})
-        del L[:]   #set the table back to empty, so same items don't get added time after time
-
-        try:
-            #remove the cache files
-            os.unlink(os.path.join(spectlib.util.get_path('tmp'), 'names.xml'))
-            os.unlink(os.path.join(spectlib.util.get_path('tmp'), 'cookies.lwp'))
-            os.unlink(os.path.join(spectlib.util.get_path('tmp'), 'list.xml'))
-        except:
-            pass
-        cj.clear_session_cookies()
-        return info, extra_info_friends, extra_info
+class Greader:
+    def __init__(self, user, password, source):    
+        self.google_url = 'http://www.google.com'  
+        self.reader_url = self.google_url + '/reader'  
+        self.login_url = 'https://www.google.com/accounts/ClientLogin'  
+        self.read_items_url = self.reader_url + '/api/0/unread-count'
+        self.list_feeds_url = self.reader_url + '/api/0/subscription/list'
+        self.source = source
+        self.user = user
+        self.password = password
+    
+    def login(self):
+        #login / get SED    
+        header = {'User-agent' : self.source}  
+        post_data = urllib.urlencode({ 'Email': self.user, 'Passwd': self.password, 'service': 'reader', 'source': self.source, 'continue': self.google_url, })  
+        request = urllib2.Request(self.login_url, post_data, header)  
+          
+        try :  
+            f = urllib2.urlopen( request )  
+            result = f.read()  
+          
+        except:  
+            raise Exception('Error logging in')
+              
+        return re.search('SID=(\S*)', result).group(1)  
+  
+    def get_results(self, SID, url):
+        #get results from url  
+        header = {'User-agent' : self.source}  
+        header['Cookie']='Name=SID;SID=%s;Domain=.google.com;Path=/;Expires=160000000000' % SID  
+      
+        request = urllib2.Request(url, None, header)  
+          
+        try :  
+            f = urllib2.urlopen( request )  
+            result = f.read()  
+          
+        except:  
+            raise Exception('Error getting data from %s' % url)  
+          
+        return result  
+  
+    #get a feed of the users read items      
+    def get_unread_items(self, SID):
+        feed_db = []  
+        data = self.get_results(SID, self.read_items_url)
+        feed_data = self.list_feeds(SID)
+        node = ET.XML(data)
+        feed_node = ET.XML(feed_data)
+        
+        total_unread = 0
+        node = node.find("list")
+        feed_node = feed_node.find("list")
+        for o in node.findall("object"):
+            feed = ""
+            total_unread = 0
+            feed_title = ""
+            for n in o.findall("string"):
+                if (n.attrib["name"] == "id"):
+                    feed = n.text
+            for n in o.findall("number"):
+                if (n.attrib["name"] == "count"):
+                    total_unread = int(n.text)
+            if feed[0:5] != "user/":
+                for x in feed_node.findall("object"):
+                    found = False
+                    for y in x.findall("string"):
+                        if(y.attrib["name"] == "id" and y.text == feed):
+                            found = True
+                        if(y.attrib["name"] == "title" and found == True):
+                            feed_title = y.text
+                if feed_title != "" and total_unread > 0:
+                    f = Feed(feed_title, total_unread)
+                    feed_db.append(f)
+        return feed_db
+    
+    def list_feeds(self, SID):
+        return self.get_results(SID, self.list_feeds_url)
