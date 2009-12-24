@@ -126,7 +126,8 @@ class Preferences:
             self.specto.specto_gconf.set_entry("always_show_icon", True)
         else:
             self.specto.specto_gconf.set_entry("always_show_icon", False)
-        self.notifier.recreate_tray()
+        if not self.notifier.indicator:
+            self.notifier.recreate_tray()
 
         #see if debug mode has to be saved
         if self.wTree.get_widget("chk_debug").get_active():

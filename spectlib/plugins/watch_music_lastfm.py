@@ -71,14 +71,14 @@ class Watch_music_lastfm(Watch):
         return [(_("Name"), self.name),
                 (_("Last changed"), self.last_changed),
                 (_("Username"), self.username),
-                (_("Last song"), self.lastfm_.getLastSong())]
+                (_("Last song"), self.previous_song)]
 
     def get_balloon_text(self):
         """ create the text for the balloon """
-        return self.lastfm_.getLastSong()
+        return self.previous_song
 
     def get_extra_information(self):
-        self.extra_information = self.lastfm_.getLastSong() + "\n" + self.extra_information
+        self.extra_information = self.previous_song + "\n" + self.extra_information
         return self.extra_information
         
 class LastFM:
