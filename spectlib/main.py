@@ -149,7 +149,9 @@ class Specto:
                         self.logger.log("Showing window, the user ran another instance of specto", "debug", "specto")
                         self.toggle_notifier()
                     else:
-                        self.logger.log("Window is already visible! Not doing anything.", "debug", "specto")
+                        # Based on http://www.pygtk.org/docs/pygtk/class-gtkwindow.html#method-gtkwindow--present
+                        self.logger.log("Window is already visible! Raising it to the front.", "debug", "specto")
+                        self.notifier.notifier.present()
                 
                 signal.signal(signal.SIGUSR1, listen_for_USR1)
                 
