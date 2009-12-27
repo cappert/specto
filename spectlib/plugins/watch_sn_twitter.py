@@ -56,7 +56,7 @@ class Watch_sn_twitter(Watch):
     def __init__(self, specto, id, values):
         watch_values = [("username", spectlib.config.String(True)),
                         ("password", spectlib.config.String(True))]
-        self.url = ""
+        self.url = "http://twitter.com/"
         self.lastCheck = None
         self.num_notifications = 0
         self.max_notifications = 5
@@ -96,8 +96,8 @@ class Watch_sn_twitter(Watch):
                 screen_name = msg.GetUser().screen_name
                 text = self.unescape(msg.GetText())              
                 if id > self.twitter_id:
+                    self.twitter_id = id
                     self.write_cache_file(id)
-                    self.url = "http://twitter.com/"+screen_name+"/statuses/"+str(self.twitter_id)
 
             if self.num_notifications > 0 and self.first_time == False:
                 self.actually_changed = True
