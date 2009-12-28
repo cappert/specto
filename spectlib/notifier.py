@@ -85,6 +85,10 @@ class Notifier:
         In this init we are going to display the main notifier window.
         """
         self.specto = specto
+        gladefile = os.path.join(self.specto.PATH, "glade/notifier.glade")
+        windowname = "notifier"
+        self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
+        self.notifier = self.wTree.get_widget("notifier")        
         if INDICATOR:
             self.indicator = Indicator(specto)
             self.tray = None
@@ -100,9 +104,6 @@ class Notifier:
 
         #create tree
         self.iter = {}
-        gladefile = os.path.join(self.specto.PATH, "glade/notifier.glade")
-        windowname = "notifier"
-        self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_STRING, pango.Weight)
 
         #catch some events
@@ -112,7 +113,8 @@ class Notifier:
         "on_clear_all_activate": self.mark_all_as_read,
         "on_preferences_activate": self.show_preferences,
         "on_refresh_activate": self.refresh_all_watches,
-        "on_close_activate": self.delete_event,
+        "on_close_activate": self.close_event,
+        "on_quit_activate": self.delete_event,
         "on_import_watches_activate": self.import_watches,
         "on_export_watches_activate": self.export_watches,
         "on_error_log_activate": self.show_error_log,
@@ -133,7 +135,6 @@ class Notifier:
         "on_remove_activate": self.remove_watch}
         self.wTree.signal_autoconnect(dic)
 
-        self.notifier = self.wTree.get_widget("notifier")
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.svg"))
         self.notifier.set_icon(icon)
         self.specto.notifier_initialized = True
@@ -637,27 +638,24 @@ class Notifier:
 
     def delete_event(self, *args):
         """
-        Return False to destroy the main window.
-        Return True to stop destroying the main window.
+        close the notifier window.
         """
         self.save_size_and_position()
-        
-        if self.indicator:
-            if args and args[0].get_name() == "close":
-                self.specto.quit()
-                return True
-            else:
-                self.notifier.hide()
-                self.specto.specto_gconf.set_entry("show_notifier", False)#save the window state for the next time specto starts
-                return True               
+        self.specto.quit()
+        return True
 
+            
+    def close_event(self, *args):
+        """
+        Return False to destroy the main window.
+        """
         if self.specto.specto_gconf.get_entry("always_show_icon") == True:
             self.notifier.hide()
             self.specto.specto_gconf.set_entry("show_notifier", False)#save the window state for the next time specto starts
             return True
         else:
             self.specto.quit()
-            return True
+            return True            
 
     def restore_size_and_position(self):
         """
@@ -709,6 +707,9 @@ class Notifier:
         self.treeview.connect("button_press_event", self.show_watch_popup, None)
         self.wTree.get_widget("button_clear_all").set_sensitive(False)
         self.wTree.get_widget("clear_all1").set_sensitive(False)
+        
+        if self.specto.specto_gconf.get_entry("always_show_icon") == False and not self.indicator:
+            self.wTree.get_widget("close").set_sensitive(False)
 
         if self.specto.specto_gconf.get_entry("show_in_windowlist") == False:
             self.notifier.set_skip_taskbar_hint(True)
