@@ -649,7 +649,7 @@ class Notifier:
         """
         Return False to destroy the main window.
         """
-        if self.specto.specto_gconf.get_entry("always_show_icon") == True:
+        if self.specto.specto_gconf.get_entry("always_show_icon") == True or self.indicator:
             self.notifier.hide()
             self.specto.specto_gconf.set_entry("show_notifier", False)#save the window state for the next time specto starts
             return True
