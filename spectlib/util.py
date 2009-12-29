@@ -30,7 +30,11 @@ def return_webpage(webpage):
     """ Open the webpage in the default browser. """
     specto_gconf = Specto_gconf("/desktop/gnome/url-handlers/http")
     default_browser = specto_gconf.get_entry("command")
-    return (default_browser % webpage) #return the browser with the page
+    # Return the browser executable with the URL
+    if "%s" in default_browser:  # Most browsers
+        return (default_browser % webpage)
+    else:  # TODO: This is a hack for Google Chrome. We should use xdg-open instead, ideally. See bug #284.
+        return ("%s %s" % (default_browser, webpage))
 
 
 def show_webpage(webpage):
