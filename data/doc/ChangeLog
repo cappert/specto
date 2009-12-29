@@ -1,21 +1,32 @@
 "Release changes log" for Specto
 Individual entries in these release notes are alphabetical, not chronological.
-This file is updated only at "release time".
+This file is updated at "release time" or when merging branches.
 
 Upcoming release
 ==============
 Bug fixes
+    * Fix a critical bug in the process watch, which prevented Specto from starting if there was a system process with whitespaces in its name
+    * Issue 242: Reverse the button ordering in the "remove watch" dialog
+    * Issue 242: Reverse the button ordering in the "remove watch" dialog
     * Issue 267: Specto should provide its name in user agent
     * Issue 270: Changing the units in the Refresh Interval option resets any previously entered value to "1".
     * Issue 272: show a graphical dialog when "Specto is already running"
-    * Fix a critical bug in the process watch, which prevented Specto from starting if there was a system process with whitespaces in its name
+    * Issue 283: Google Reader watch no longer works
+    * Issue 284: Implement a stopgap measure to handle Google Chrome
+    * Issue 289: Sounds do not work (use GStreamer)
 
 Features
+    * DBUS watch, including: Pidgin, Mumbles, Rhythmbox, Banshee (untested), Amarok (untested), Evolution (untested)
+    * Integration with Ubuntu's indicator applet
     * Issue 269: allow parameters to be passed to custom commands
+    * Issue 299: Try raising the window when Specto is already running
+    * Twitter, Last.FM and Google Wave watches
 
 Maintainability
-    * Issue 216: Python 2.6 support
+    * Add a "Quit" button in addition to the "Close" button to reduce confusion
     * Facebook and Google Reader icons re-added
+    * Issue 216: Python 2.6 support
+    * Remove the GNOME dependency for playing sounds
 
 Specto 0.3.1: 2009 07 12
 ======================
@@ -194,7 +205,7 @@ Bug fixes
 
 Maintainability
     * Fix 'help' URLs that still pointed to the old wiki
-	* Fix remaining bits of modules that still wanted to use the old icons
+    * Fix remaining bits of modules that still wanted to use the old icons
     * Flip the gconf keys in the right direction ("show_toolbar" instead of "hide_toolbar" which was an unelegant hack)
     * Issue #41: check if gconf values are set or not. Who needs stinking gconf schemas?
     * Kill the gconf subfolders '/apps/Specto/preferences/' and '/apps/Specto/ui/' by merging them in '/apps/Specto/'
@@ -203,7 +214,7 @@ Maintainability
     * Now possible to make icons transparent
     * Remove remaining "territory marks" (as per previous discussion)
     * Remove shebangs from non-scripts
-	* Remove useless icons since we can now make stock icons transparent
+    * Remove useless icons since we can now make stock icons transparent
 
 Specto 0.2.1: 2007-04-22
 ========================
@@ -244,9 +255,9 @@ Features
     * Issue #22: SSL support for mail watches
     * Libnotify balloons are now attached to the tray icon
     * Make the blue icon lighter again
-	* Make the google-pinger smarter (once every 10 minutes, and assume that the network is still in the previous state between pings).
+    * Make the google-pinger smarter (once every 10 minutes, and assume that the network is still in the previous state between pings).
     * Make the utils module return absolute paths
-	* Make the web and email watches network-aware
+    * Make the web and email watches network-aware
     * Network-Manager support
     * New watch type: process watch
     * Specto can now be launched without installing
@@ -278,18 +289,18 @@ Specto 0.1: 2006-10-26
 
 Features
     * Ability to play sounds on updates
-	* Checkbox is checked before the update from the watch when you activate it
+    * Checkbox is checked before the update from the watch when you activate it
     * Display the number of unread gmail messages
-	* Error icon is shown when there was an error in the update
+    * Error icon is shown when there was an error in the update
     * File watch
     * Gettext support, so that Specto can be translated
     * GMail watches clear themselves when unread message count reaches zero
-	* Log file can be opened and cleared from the preferences dialog
+    * Log file can be opened and cleared from the preferences dialog
     * Proper libnotify support with python-notify
-	* Sorting choice is stored in a gconf key
+    * Sorting choice is stored in a gconf key
     * SSL support for POP3/IMAP email watches
-	* Watches are always updated top-down
-	* When you add a web watch,"http://" is added if necessary
+    * Watches are always updated top-down
+    * When you add a web watch,"http://" is added if necessary
 
 Bug fixes
     * Bug #49616: warning dialog if you try to quitting during the initial refresh
