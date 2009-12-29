@@ -43,7 +43,8 @@ temp_files = [
     ('share/icons/hicolor/scalable/apps', ['data/icons/hicolor/scalable/specto.svg']),
     ('share/applications', ['specto.desktop']),
     ('share/specto/icons', give_files('data/icons/', '.png', '.svg')),
-    ('share/specto/glade', give_files('data/glade/', '.glade'))]
+    ('share/specto/glade', give_files('data/glade/', '.glade')),
+    ('share/indicators/messages/applications', ['data/indicator/specto'])]
 
 for lang_tuple in give_mo_tuples(i18n_languages):
     temp_files.append(lang_tuple)
@@ -55,7 +56,5 @@ setup(name = "specto",
     author_email = "nekohayo at gmail dot com",
     url = "http://specto.sourceforge.net",
     packages = [('spectlib'), ('spectlib/plugins'), ('spectlib/tools')],
-    #package_dir = {'': 'src'},
-    #package_data = {'specto': ['preferences.glade', 'notify.glade']},
     scripts = ['specto'],
     data_files = temp_files)

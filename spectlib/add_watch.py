@@ -87,24 +87,37 @@ class Add_watch:
 
     def set_options(self, watch_type):
         """ Show the table with the right watch options. """
-        values = self.specto.watch_db.plugin_dict[watch_type].get_add_gui_info()
+        self.watch_options[watch_type] = []
+        if hasattr(self.specto.watch_db.plugin_dict[watch_type], 'get_add_gui_info'):
+            values = self.specto.watch_db.plugin_dict[watch_type].get_add_gui_info()
+        else:
+            values = []
+        
+        try:
+            if self.specto.watch_db.plugin_dict[watch_type].dbus_watch == True:
+                self.refresh.hide()
+                self.refresh_unit.hide()
+                self.wTree.get_widget("label_refresh1").hide()
+        except:
+            pass
 
         #create the options gui
-        self.table = gtk.Table(rows=len(values), columns=1, homogeneous=False)
-        self.table.set_row_spacings(6)
-        self.table.set_col_spacings(6)
-        self.watch_options[watch_type] = {}
+        if len(values) > 0:
+            self.table = gtk.Table(rows=len(values), columns=1, homogeneous=False)
+            self.table.set_row_spacings(6)
+            self.table.set_col_spacings(6)
+            self.watch_options[watch_type] = {}
 
-        i = 0
-        for value, widget in values:
-            table, _widget = widget.get_widget()
-            self.table.attach(table, 0, 1, i, i + 1)
-            self.watch_options[watch_type].update({value: widget})
-            i += 1
+            i = 0
+            for value, widget in values:
+                table, _widget = widget.get_widget()
+                self.table.attach(table, 0, 1, i, i + 1)
+                self.watch_options[watch_type].update({value: widget})
+                i += 1
 
-        self.table.show()
-        vbox = self.wTree.get_widget("vbox_watch_options")
-        vbox.pack_start(self.table, False, False, 0)
+            self.table.show()
+            vbox = self.wTree.get_widget("vbox_watch_options")
+            vbox.pack_start(self.table, False, False, 0)
 
     def set_refresh_values(self, widget):
         """ Set the max and min values for the refresh unit. """
@@ -158,8 +171,9 @@ class Add_watch:
             else:
                 values['open_command'] = ""
                 open = True
-
-            gui_values = self.specto.watch_db.plugin_dict[values['type']].get_add_gui_info()
+            
+            if hasattr(self.specto.watch_db.plugin_dict[values['type']], 'get_add_gui_info'):
+                gui_values = self.specto.watch_db.plugin_dict[values['type']].get_add_gui_info()
             window_options = self.watch_options[values['type']]
 
             for key in window_options:

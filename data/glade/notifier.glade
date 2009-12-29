@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--*- mode: xml -*-->
+<?xml version="1.0"?>
 <glade-interface>
+  <!-- interface-requires gtk+ 2.10 -->
+  <!-- interface-naming-policy toplevel-contextual -->
   <widget class="GtkWindow" id="notifier">
     <property name="title" translatable="yes">Notifications</property>
     <property name="icon_name">gtk-dialog-info</property>
@@ -9,6 +9,7 @@
     <child>
       <widget class="GtkVBox" id="vbox">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <widget class="GtkMenuBar" id="menubar1">
             <property name="visible">True</property>
@@ -21,34 +22,30 @@
                   <widget class="GtkMenu" id="menu_file_menu">
                     <child>
                       <widget class="GtkImageMenuItem" id="import_watches">
-                        <property name="visible">True</property>
                         <property name="label" translatable="yes">_Import Watches</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
+                        <property name="use_stock">False</property>
                         <signal name="activate" handler="on_import_watches_activate"/>
                         <child internal-child="image">
-                          <widget class="GtkImage" id="image117">
+                          <widget class="GtkImage" id="image1">
                             <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="stock">gtk-open</property>
-                            <property name="icon_size">1</property>
                           </widget>
                         </child>
                       </widget>
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="export_watches">
-                        <property name="visible">True</property>
                         <property name="label" translatable="yes">_Export Watches</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
+                        <property name="use_stock">False</property>
                         <signal name="activate" handler="on_export_watches_activate"/>
                         <child internal-child="image">
-                          <widget class="GtkImage" id="image118">
+                          <widget class="GtkImage" id="image2">
                             <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
-                            <property name="stock">gtk-save-as</property>
-                            <property name="icon_size">1</property>
+                            <property name="stock">gtk-save</property>
                           </widget>
                         </child>
                       </widget>
@@ -60,11 +57,20 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="close">
-                        <property name="visible">True</property>
                         <property name="label">gtk-close</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_close_activate"/>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkImageMenuItem" id="quit">
+                        <property name="label">gtk-quit</property>
+                        <property name="visible">True</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_quit_activate"/>
                       </widget>
                     </child>
                   </widget>
@@ -80,16 +86,16 @@
                   <widget class="GtkMenu" id="menu_edit_menu">
                     <child>
                       <widget class="GtkImageMenuItem" id="add">
-                        <property name="visible">True</property>
                         <property name="label">gtk-add</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </widget>
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="remove">
-                        <property name="visible">True</property>
                         <property name="label">gtk-remove</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_remove_activate"/>
@@ -97,8 +103,8 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="edit">
-                        <property name="visible">True</property>
                         <property name="label">gtk-edit</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_edit_activate"/>
@@ -106,10 +112,17 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="clear">
-                        <property name="visible">True</property>
                         <property name="label" translatable="yes">Mark as read</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
+                        <property name="use_stock">False</property>
                         <signal name="activate" handler="on_clear_activate"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="image3">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-clear</property>
+                          </widget>
+                        </child>
                       </widget>
                     </child>
                     <child>
@@ -119,8 +132,8 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="preferences">
-                        <property name="visible">True</property>
                         <property name="label">gtk-preferences</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_preferences_activate"/>
@@ -139,8 +152,8 @@
                   <widget class="GtkMenu" id="menu_view_menu">
                     <child>
                       <widget class="GtkImageMenuItem" id="refresh">
-                        <property name="visible">True</property>
                         <property name="label">gtk-refresh</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_refresh_activate"/>
@@ -148,17 +161,15 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="clear_all1">
-                        <property name="visible">True</property>
                         <property name="label" translatable="yes">_Mark all read</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
+                        <property name="use_stock">False</property>
                         <signal name="activate" handler="on_clear_all_activate"/>
                         <child internal-child="image">
-                          <widget class="GtkImage" id="image119">
+                          <widget class="GtkImage" id="image4">
                             <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="stock">gtk-clear</property>
-                            <property name="icon_size">1</property>
                           </widget>
                         </child>
                       </widget>
@@ -183,9 +194,10 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="sorting">
-                        <property name="visible">True</property>
                         <property name="label" translatable="yes">Sorting</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
+                        <property name="use_stock">False</property>
                         <signal name="activate" handler="on_sorting_activate"/>
                         <child>
                           <widget class="GtkMenu" id="sorting_menu">
@@ -219,12 +231,9 @@
                           </widget>
                         </child>
                         <child internal-child="image">
-                          <widget class="GtkImage" id="image120">
+                          <widget class="GtkImage" id="image5">
                             <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="stock">gtk-sort-ascending</property>
-                            <property name="icon_size">1</property>
                           </widget>
                         </child>
                       </widget>
@@ -264,8 +273,8 @@
                   <widget class="GtkMenu" id="menu_help_menu">
                     <child>
                       <widget class="GtkImageMenuItem" id="help">
-                        <property name="visible">True</property>
                         <property name="label">gtk-help</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_help_activate"/>
@@ -273,8 +282,8 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="about">
-                        <property name="visible">True</property>
                         <property name="label">gtk-about</property>
+                        <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_about_activate"/>
@@ -288,6 +297,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
@@ -304,6 +314,7 @@
               </widget>
               <packing>
                 <property name="expand">False</property>
+                <property name="homogeneous">True</property>
               </packing>
             </child>
             <child>
@@ -317,6 +328,7 @@
               </widget>
               <packing>
                 <property name="expand">False</property>
+                <property name="homogeneous">True</property>
               </packing>
             </child>
             <child>
@@ -328,7 +340,6 @@
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="homogeneous">False</property>
               </packing>
             </child>
           </widget>
@@ -342,17 +353,17 @@
           <widget class="GtkScrolledWindow" id="scrolledwindow">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
-            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-            <property name="shadow_type">GTK_SHADOW_IN</property>
+            <property name="hscrollbar_policy">never</property>
+            <property name="vscrollbar_policy">automatic</property>
+            <property name="shadow_type">in</property>
             <child>
               <widget class="GtkTreeView" id="treeview">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="rules_hint">True</property>
                 <property name="enable_search">False</property>
-                <signal name="row_activated" handler="on_treeview_row_activated"/>
                 <signal name="cursor_changed" handler="on_treeview_cursor_changed"/>
+                <signal name="row_activated" handler="on_treeview_row_activated"/>
               </widget>
             </child>
           </widget>
@@ -388,6 +399,7 @@
                           </widget>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="position">0</property>
                           </packing>
                         </child>
                         <child>
@@ -412,8 +424,8 @@
                         <property name="label" translatable="yes">General</property>
                       </widget>
                       <packing>
-                        <property name="type">tab</property>
                         <property name="tab_fill">False</property>
+                        <property name="type">tab</property>
                       </packing>
                     </child>
                     <child>
@@ -424,8 +436,8 @@
                         <property name="xpad">6</property>
                         <property name="ypad">6</property>
                         <property name="use_markup">True</property>
-                        <property name="wrap_mode">PANGO_WRAP_CHAR</property>
-                        <property name="ellipsize">PANGO_ELLIPSIZE_END</property>
+                        <property name="wrap_mode">char</property>
+                        <property name="ellipsize">end</property>
                       </widget>
                       <packing>
                         <property name="position">1</property>
@@ -438,9 +450,9 @@
                         <property name="label" translatable="yes">Extra information</property>
                       </widget>
                       <packing>
-                        <property name="type">tab</property>
                         <property name="position">1</property>
                         <property name="tab_fill">False</property>
+                        <property name="type">tab</property>
                       </packing>
                     </child>
                   </widget>
@@ -449,54 +461,67 @@
                   </packing>
                 </child>
               </widget>
+              <packing>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
               <widget class="GtkVButtonBox" id="vbox_panel_buttons">
                 <property name="visible">True</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
-                <property name="layout_style">GTK_BUTTONBOX_START</property>
+                <property name="layout_style">start</property>
                 <child>
                   <widget class="GtkButton" id="btnOpen">
+                    <property name="label">gtk-jump-to</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
-                    <property name="label">gtk-jump-to</property>
+                    <property name="receives_default">False</property>
                     <property name="use_stock">True</property>
-                    <property name="response_id">0</property>
                     <signal name="clicked" handler="on_btnOpen_clicked"/>
                   </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
                 </child>
                 <child>
                   <widget class="GtkButton" id="btnClear">
+                    <property name="label" translatable="yes">Mark as read</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
-                    <property name="label" translatable="yes">Mark as read</property>
-                    <property name="response_id">0</property>
+                    <property name="receives_default">False</property>
                     <signal name="clicked" handler="on_btnClear_clicked"/>
                   </widget>
                   <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkButton" id="btnEdit">
+                    <property name="label">gtk-edit</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
-                    <property name="label">gtk-edit</property>
+                    <property name="receives_default">False</property>
                     <property name="use_stock">True</property>
-                    <property name="response_id">0</property>
                     <signal name="clicked" handler="on_btnEdit_clicked"/>
                   </widget>
                   <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="pack_type">GTK_PACK_END</property>
+                <property name="pack_type">end</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -508,8 +533,7 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkStatusbar" id="statusbar1">
-          </widget>
+          <widget class="GtkStatusbar" id="statusbar1"/>
           <packing>
             <property name="expand">False</property>
             <property name="position">4</property>
@@ -521,7 +545,7 @@
   <widget class="GtkWindow" id="error_dialog">
     <property name="title" translatable="yes">Error</property>
     <property name="resizable">False</property>
-    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="window_position">center-on-parent</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -534,6 +558,9 @@
                 <property name="visible">True</property>
                 <property name="stock">gtk-missing-image</property>
               </widget>
+              <packing>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
               <widget class="GtkLabel" id="label4">
@@ -549,6 +576,7 @@
             <property name="expand">False</property>
             <property name="fill">False</property>
             <property name="padding">6</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
@@ -559,8 +587,8 @@
               <widget class="GtkScrolledWindow" id="scrolledwindow1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="vscrollbar_policy">automatic</property>
                 <child>
                   <widget class="GtkTextView" id="error_message">
                     <property name="height_request">200</property>
@@ -600,15 +628,15 @@
             <property name="visible">True</property>
             <child>
               <widget class="GtkButton" id="send">
+                <property name="label" translatable="yes">Visit the issue tracker</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label" translatable="yes">Visit the issue tracker</property>
-                <property name="response_id">0</property>
                 <signal name="clicked" handler="on_send_clicked"/>
               </widget>
               <packing>
                 <property name="padding">6</property>
+                <property name="position">0</property>
               </packing>
             </child>
             <child>
@@ -630,12 +658,11 @@
             </child>
             <child>
               <widget class="GtkButton" id="ok">
+                <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label">gtk-ok</property>
                 <property name="use_stock">True</property>
-                <property name="response_id">0</property>
                 <signal name="clicked" handler="on_ok_clicked"/>
               </widget>
               <packing>

@@ -134,7 +134,8 @@ class Edit_watch:
         else:
             values['open_command'] = ""
 
-        gui_values = self.specto.watch_db.plugin_dict[values['type']].get_add_gui_info()
+        if hasattr(self.specto.watch_db.plugin_dict[values['type']], 'get_add_gui_info'):
+            gui_values = self.specto.watch_db.plugin_dict[values['type']].get_add_gui_info()
         window_options = self.watch_options[values['type']]
 
         for key in window_options:
@@ -183,7 +184,8 @@ class Edit_watch:
             self.notifier.remove_notifier_entry(self.watch.id)
             self.specto.watch_db.remove(self.watch.id) #remove the watch
             self.specto.watch_io.remove_watch(self.watch.name)
-            self.notifier.tray.show_tooltip()
+            if self.notifier.tray:
+                self.notifier.tray.show_tooltip()
 
     def clear_clicked(self, widget):
         """ Clear the log window. """
@@ -203,13 +205,26 @@ class Edit_watch:
     def create_edit_gui(self):
         """ Create the gui for the different kinds of watches. """
         vbox_options = self.wTree.get_widget("vbox_watch_options")
+        watch_type = self.watch.type
+        self.watch_options[watch_type] = []
         try:
             self.table.destroy()
         except:
             pass
-
-        watch_type = self.watch.type
-        values = self.specto.watch_db.plugin_dict[watch_type].get_add_gui_info()
+        
+        try:
+            if self.specto.watch_db.plugin_dict[watch_type].dbus_watch == True:
+                self.wTree.get_widget("refresh").hide()
+                self.wTree.get_widget("refresh_unit").hide()
+                self.wTree.get_widget("label_refresh1").hide()
+        except:
+            pass
+        
+        if hasattr(self.specto.watch_db.plugin_dict[watch_type], 'get_add_gui_info'):
+            values = self.specto.watch_db.plugin_dict[watch_type].get_add_gui_info()
+        else:
+            values = []
+            
         watch_values = self.watch.get_values()
 
         if watch_values['command'] != "":
@@ -228,21 +243,22 @@ class Edit_watch:
 
 
         # Create the options gui
-        self.table = gtk.Table(rows=len(values), columns=2, homogeneous=False)
-        self.table.set_row_spacings(6)
-        self.table.set_col_spacings(6)
-        self.watch_options[watch_type] = {}
+        if len(values) > 0:
+            self.table = gtk.Table(rows=len(values), columns=2, homogeneous=False)
+            self.table.set_row_spacings(6)
+            self.table.set_col_spacings(6)
+            self.watch_options[watch_type] = {}
 
-        i = 0
-        for value, widget in values:
-            table, _widget = widget.get_widget()
-            widget.set_value(watch_values[value])
-            self.table.attach(table, 0, 1, i, i + 1)
-            self.watch_options[watch_type].update({value: widget})
-            i += 1
+            i = 0
+            for value, widget in values:
+                table, _widget = widget.get_widget()
+                widget.set_value(watch_values[value])
+                self.table.attach(table, 0, 1, i, i + 1)
+                self.watch_options[watch_type].update({value: widget})
+                i += 1
 
-        self.table.show()
-        vbox_options.pack_start(self.table, False, False, 0)
+            self.table.show()
+            vbox_options.pack_start(self.table, False, False, 0)
 
     def command_toggled(self, widget):
         sensitive = self.wTree.get_widget("check_command").get_active()

@@ -76,8 +76,12 @@ class NotificationToast:
 
         if notifyInitialized:
             sleep(0.5)  # FIXME: issue #43, associate the balloon with the notification icon properly. Currently, this is a hack to leave time for the tray icon to appear before getting its coordinates
-            tray_x = self.notifier.tray.get_x()
-            tray_y = self.notifier.tray.get_y()
+            if self.notifier.tray:
+                tray_x = self.notifier.tray.get_x()
+                tray_y = self.notifier.tray.get_y()
+            else:
+                tray_x = 0
+                tray_y = 0
             self.toast = pynotify.Notification(summary, body)
             if name:
                 # If name is not None and exists in specto.watch_db, a button is added to the notification
