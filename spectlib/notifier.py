@@ -638,7 +638,7 @@ class Notifier:
 
     def delete_event(self, *args):
         """
-        close the notifier window.
+        quit specto
         """
         self.save_size_and_position()
         self.specto.quit()
@@ -647,7 +647,7 @@ class Notifier:
             
     def close_event(self, *args):
         """
-        Return False to destroy the main window.
+        if the trayicon and the indicator or not available then quit specto else hide the notifier window
         """
         if self.specto.specto_gconf.get_entry("always_show_icon") == True or self.indicator:
             self.notifier.hide()

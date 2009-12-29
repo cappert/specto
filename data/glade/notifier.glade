@@ -24,6 +24,7 @@
                       <widget class="GtkImageMenuItem" id="import_watches">
                         <property name="label" translatable="yes">_Import Watches</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_import_watches_activate"/>
                         <child internal-child="image">
@@ -38,6 +39,7 @@
                       <widget class="GtkImageMenuItem" id="export_watches">
                         <property name="label" translatable="yes">_Export Watches</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_export_watches_activate"/>
                         <child internal-child="image">
@@ -112,6 +114,7 @@
                       <widget class="GtkImageMenuItem" id="clear">
                         <property name="label" translatable="yes">Mark as read</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_clear_activate"/>
                         <child internal-child="image">
@@ -192,6 +195,7 @@
                       <widget class="GtkImageMenuItem" id="sorting">
                         <property name="label" translatable="yes">Sorting</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_sorting_activate"/>
                         <child>
