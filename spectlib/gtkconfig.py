@@ -280,8 +280,8 @@ class RemoveDialog():
         #HIG tricks
         dialog.set_has_separator(False)
 
-        dialog.add_button(gtk.STOCK_REMOVE, 3)
         dialog.add_button(gtk.STOCK_CANCEL, -1)
+        dialog.add_button(gtk.STOCK_REMOVE, 3)
 
         dialog.label_hbox = gtk.HBox(spacing=6)
 
