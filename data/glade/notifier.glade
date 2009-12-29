@@ -163,6 +163,7 @@
                       <widget class="GtkImageMenuItem" id="clear_all1">
                         <property name="label" translatable="yes">_Mark all read</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_clear_all_activate"/>
                         <child internal-child="image">
