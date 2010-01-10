@@ -28,6 +28,7 @@ import sys
 import tempfile
 import time
 import calendar
+import locale
 import urllib
 import urllib2
 import urlparse
@@ -258,7 +259,11 @@ class Status(object):
     Returns:
       The time this status message was posted, in seconds since the epoch.
     '''
-    return calendar.timegm(time.strptime(self.created_at, '%a %b %d %H:%M:%S +0000 %Y'))
+    old_locale = locale.getlocale(locale.LC_TIME)
+    locale.setlocale(locale.LC_TIME, 'C')
+    return_value = calendar.timegm(time.strptime(self.created_at, '%a %b %d %H:%M:%S +0000 %Y'))
+    locale.setlocale(locale.LC_TIME, old_locale)
+    return return_value
 
   created_at_in_seconds = property(GetCreatedAtInSeconds,
                                    doc="The time this status message was "
@@ -810,7 +815,12 @@ class DirectMessage(object):
     Returns:
       The time this direct message was posted, in seconds since the epoch.
     '''
-    return calendar.timegm(time.strptime(self.created_at, '%a %b %d %H:%M:%S +0000 %Y'))
+    # Change the locale to C so we don't break on non-english locales
+    old_locale = locale.getlocale(locale.LC_TIME)
+    locale.setlocale(locale.LC_TIME, 'C')
+    return_value = calendar.timegm(time.strptime(self.created_at, '%a %b %d %H:%M:%S +0000 %Y'))
+    locale.setlocale(locale.LC_TIME, old_locale)
+    return return_value
 
   created_at_in_seconds = property(GetCreatedAtInSeconds,
                                    doc="The time this direct message was "
@@ -1688,4 +1698,3 @@ class _FileCache(object):
 
   def _GetPrefix(self,hashed_key):
     return os.path.sep.join(hashed_key[0:_FileCache.DEPTH])
-        
