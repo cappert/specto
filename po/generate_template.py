@@ -9,7 +9,7 @@ import os
 import glob
 from string import replace
 paths = ["../spectlib", "../spectlib/tools",
-         "../spectlib/plugins", "../data/glade"]
+         "../spectlib/plugins", "../data/uis"]
 extensions = [".py", ".h"]
 arguments = ""
 
@@ -17,7 +17,7 @@ arguments = ""
 #before passing them to pygettext
 #intltool-extract --type=gettext/glade pywine.glade
 print "Parsing glade files..."
-for x in glob.glob("../data/glade/*.glade"):
+for x in glob.glob("../data/uis/*.ui"):
     glade_file_to_parse = "intltool-extract --type=gettext/glade " + x
     os.system(glade_file_to_parse)
 print "\tDone.\n"
