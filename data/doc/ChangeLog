@@ -15,6 +15,7 @@ Bug fixes
     * Issue 284: Implement a stopgap measure to handle Google Chrome
     * Issue 289: Sounds do not work (use GStreamer)
     * Issue 303: doesn't close the sound pipelines when done notifying
+    * Issue 259: migrate from libglade to gtkbuilder
 
 Features
     * DBUS watch, including: Pidgin, Mumbles, Rhythmbox, Banshee (untested), Amarok (untested), Evolution (untested)
