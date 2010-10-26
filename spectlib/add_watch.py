@@ -30,7 +30,6 @@ except:
 
 try:
     import gtk
-    import gtk.glade
     import spectlib.gtkutil
 except:
     pass
@@ -44,9 +43,11 @@ class Add_watch:
         self.specto = specto
         self.notifier = notifier
         #create tree
-        gladefile = os.path.join(self.specto.PATH, "glade/add_watch.glade")
+        uifile = os.path.join(self.specto.PATH, "uis/add_watch.ui")
         windowname = "add_watch"
-        self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(uifile)
 
         self.watch_type = watch_type
         #save the option for hiding the table
@@ -62,16 +63,16 @@ class Add_watch:
         "on_refresh_unit_changed": self.set_refresh_values}
 
         #attach the events
-        self.wTree.signal_autoconnect(dic)
+        self.builder.connect_signals(dic)
 
-        self.add_watch = self.wTree.get_widget("add_watch")
+        self.add_watch = self.builder.get_object("add_watch")
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.add_watch.set_icon(icon)
         self.add_watch.set_resizable(False)
 
-        self.name = self.wTree.get_widget("name")
-        self.refresh = self.wTree.get_widget("refresh")
-        self.refresh_unit = self.wTree.get_widget("refresh_unit")
+        self.name = self.builder.get_object("name")
+        self.refresh = self.builder.get_object("refresh")
+        self.refresh_unit = self.builder.get_object("refresh_unit")
 
         #create the gui
         self.plugins_ = {}
@@ -97,7 +98,7 @@ class Add_watch:
             if self.specto.watch_db.plugin_dict[watch_type].dbus_watch == True:
                 self.refresh.hide()
                 self.refresh_unit.hide()
-                self.wTree.get_widget("label_refresh1").hide()
+                self.builder.get_object("label_refresh1").hide()
         except:
             pass
 
@@ -110,13 +111,13 @@ class Add_watch:
 
             i = 0
             for value, widget in values:
-                table, _widget = widget.get_widget()
+                table, _widget = widget.get_object()
                 self.table.attach(table, 0, 1, i, i + 1)
                 self.watch_options[watch_type].update({value: widget})
                 i += 1
 
             self.table.show()
-            vbox = self.wTree.get_widget("vbox_watch_options")
+            vbox = self.builder.get_object("vbox_watch_options")
             vbox.pack_start(self.table, False, False, 0)
 
     def set_refresh_values(self, widget):
@@ -163,11 +164,11 @@ class Add_watch:
             values['active'] = True
             values['last_changed'] = ""
             values['changed'] = False
-            if self.wTree.get_widget("check_command").get_active() == True:
-                values['command'] = self.wTree.get_widget("entry_changed_command").get_text()
+            if self.builder.get_object("check_command").get_active() == True:
+                values['command'] = self.builder.get_object("entry_changed_command").get_text()
 
-            if self.wTree.get_widget("check_open").get_active() == True:
-                values['open_command'] = self.wTree.get_widget("entry_open_command").get_text()
+            if self.builder.get_object("check_open").get_active() == True:
+                values['open_command'] = self.builder.get_object("entry_open_command").get_text()
             else:
                 values['open_command'] = ""
                 open = True
@@ -180,7 +181,7 @@ class Add_watch:
                 values[key] = window_options[key].get_value()
                 window_options[key].set_color(0xFFFF, 0xFFFF, 0xFFFF)
 
-            self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+            self.builder.get_object("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
 
             try:
                 id = self.specto.watch_db.create({0: values})[0] #write the options in the configuration file
@@ -189,8 +190,8 @@ class Add_watch:
                 i = 1
                 for field in fields:
                     if field == " name":
-                        self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                        self.wTree.get_widget("name").grab_focus()
+                        self.builder.get_object("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
+                        self.builder.get_object("name").grab_focus()
                     else:
                         field = window_options[field.strip()]
                         if i == 1:
@@ -222,12 +223,12 @@ class Add_watch:
         return True
 
     def command_toggled(self, widget):
-        sensitive = self.wTree.get_widget("check_command").get_active()
-        self.wTree.get_widget("entry_changed_command").set_sensitive(sensitive)
+        sensitive = self.builder.get_object("check_command").get_active()
+        self.builder.get_object("entry_changed_command").set_sensitive(sensitive)
 
     def open_toggled(self, widget):
-        sensitive = self.wTree.get_widget("check_open").get_active()
-        self.wTree.get_widget("entry_open_command").set_sensitive(sensitive)
+        sensitive = self.builder.get_object("check_open").get_active()
+        self.builder.get_object("entry_open_command").set_sensitive(sensitive)
 
 
 class Unique_Dialog:
@@ -237,13 +238,15 @@ class Unique_Dialog:
 
     def __init__(self, specto):
         self.specto = specto
-        self.gladefile = os.path.join(self.specto.PATH, "glade/add_watch.glade")
+        self.uifile = os.path.join(self.specto.PATH, "uis/add_watch.ui")
         self.dialogname = "dialog"
 
     def run(self):
         """ Show the unique dialog. """
-        self.wTree = gtk.glade.XML(self.gladefile, self.dialogname)
-        self.unique_dialog = self.wTree.get_widget("dialog")
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(self.uifile)
+        self.unique_dialog = self.builder.get_object("dialog")
 
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.unique_dialog.set_icon(icon)

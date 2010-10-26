@@ -32,7 +32,6 @@ except:
 
 try:
     import gtk
-    import gtk.glade
     import gobject
 except:
     pass
@@ -48,13 +47,14 @@ class Export_watch:
         self.notifier = notifier
 
         #create tree
-        gladefile = os.path.join(self.specto.PATH, "glade/import_export.glade")
+        uifile = os.path.join(self.specto.PATH, "uis/import_export.ui")
         windowname = "import_export"
-        self.wTree = gtk.glade.XML(gladefile, windowname, \
-                                   self.specto.glade_gettext)
-        self.export_watch = self.wTree.get_widget("import_export")
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(uifile)
+        self.export_watch = self.builder.get_object("import_export")
         self.export_watch.set_title(_("Export watches"))
-        self.wTree.get_widget("button_action").set_label(_("Export watches"))
+        self.builder.get_object("button_action").set_label(_("Export watches"))
 
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, \
                     gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_STRING)
@@ -67,12 +67,12 @@ class Export_watch:
               "on_button_close_clicked": self.delete_event}
 
         #attach the events
-        self.wTree.signal_autoconnect(dic)
+        self.builder.connect_signals(dic)
 
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.export_watch.set_icon(icon)
 
-        self.treeview = self.wTree.get_widget("treeview")
+        self.treeview = self.builder.get_object("treeview")
         self.treeview.set_model(self.model)
         self.treeview.set_flags(gtk.TREE_MODEL_ITERS_PERSIST)
         self.iter = {}
@@ -190,20 +190,22 @@ class Save_dialog:
         self.specto = specto
         self._export = _import
         #create tree
-        gladefile = os.path.join(self.specto.PATH, "glade/import_export.glade")
+        uifile = os.path.join(self.specto.PATH, "uis/import_export.ui")
         windowname = "filechooser"
-        self.wTree = gtk.glade.XML(gladefile, windowname)
-        self.save_dialog = self.wTree.get_widget("filechooser")
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(uifile)
+        self.save_dialog = self.builder.get_object("filechooser")
         self.action_type = action_type
 
         self.save_dialog.set_action(gtk.FILE_CHOOSER_ACTION_SAVE)
-        self.wTree.get_widget("button_save").set_label("gtk-save")
+        self.builder.get_object("button_save").set_label("gtk-save")
         self.watches_db = watches_db
 
         dic = {"on_button_cancel_clicked": self.cancel,
              "on_button_save_clicked": self.save}
         #attach the events
-        self.wTree.signal_autoconnect(dic)
+        self.builder.connect_signals(dic)
 
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.save_dialog.set_icon(icon)
