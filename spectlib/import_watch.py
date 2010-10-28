@@ -24,6 +24,7 @@ from spectlib.i18n import _
 import os
 from spectlib.watch import Watch_io
 from spectlib.watch import Watch_collection
+from spectlib.gtkconfig import OpenDialog
 
 try:
     import pygtk
@@ -47,7 +48,12 @@ class Import_watch:
         self.specto = specto
         self.notifier = notifier
 
-        self.open = Open_dialog(self.specto, self, None)
+        self.import_open_dialog = ImportOpenDialog(self.specto, self, None)
+        response = self.import_open_dialog.run()
+        if response == gtk.RESPONSE_OK:
+            self.import_open_dialog.open()
+        else:
+            self.import_open_dialog.cancel()
 
     def create_import_window(self):
         #create tree
@@ -203,43 +209,25 @@ class Import_watch:
             model.set_value(iter, 0, 1)
 
 
-class Open_dialog:
+class ImportOpenDialog(OpenDialog):
     """
     Class for displaying the open dialog.
     """
 
     def __init__(self, specto, _import, watches_db):
+        OpenDialog.__init__(self, specto)
         self.specto = specto
         self._import = _import
-        # Create the tree
-        uifile = os.path.join(self.specto.PATH, "uis/import_export.ui")
-        windowname = "filechooser"
-        self.builder = gtk.Builder()
-        self.builder.set_translation_domain("specto")
-        self.builder.add_from_file(uifile)
-        self.open_dialog = self.builder.get_object("filechooser")
-
-        dic = {"on_button_cancel_clicked": self.cancel,
-            "on_button_save_clicked": self.open}
-        # Attach the events
-        self.builder.signal_autoconnect(dic)
-
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.open_dialog.set_icon(icon)
-        self.open_dialog.set_filename(os.environ['HOME'] + "/ ")
-
-    def cancel(self, *args):
-        """ Close the save as dialog. """
-        self.open_dialog.destroy()
+        windowname = "import_file_chooser"
 
     def open(self, *args):
         """ Save the file. """
-        self.open_dialog.hide_all()
+        self.hide_all()
         self._import.create_import_window()
-        file_name = self.open_dialog.get_filename()
+        file_name = self.get_filename()
         self.read_options(file_name)
         self._import.import_watch.show()
-        self.open_dialog.destroy()
+        self.destroy()
 
     def read_options(self, file_name):
         watch_io = Watch_io(self.specto, file_name)

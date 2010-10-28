@@ -58,7 +58,6 @@
                               <object class="GtkEntry" id="name">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <signal name="changed" handler="on_name_changed"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -432,7 +431,7 @@
   </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
-      <!-- column-name item text -->
+      <!-- column-name item -->
       <column type="gchararray"/>
     </columns>
     <data>

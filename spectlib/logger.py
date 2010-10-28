@@ -39,6 +39,8 @@ try:
 except:
     pass
 
+from spectlib.gtkconfig import SaveDialog
+
 
 class Log_dialog:
     """
@@ -97,7 +99,13 @@ class Log_dialog:
         """ Save the text in the logwindow. """
         text = self.log_buffer.get_text(self.log_buffer.get_start_iter(), \
                                             self.log_buffer.get_end_iter())
-        self.save = Save_dialog(self.specto, text)
+        logger_save_dialog = LoggerSaveDialog(self.specto, text)
+        response = logger_save_dialog.run()
+        if response == gtk.RESPONSE_OK:
+            logger_save_dialog.save()
+        else:
+            logger_save_dialog.cancel()
+		
 
     def clear(self, widget):
         """ Clear the text in the log window and from the log file. """
@@ -175,39 +183,20 @@ class Log_dialog:
         return True
 
 
-class Save_dialog:
+class LoggerSaveDialog(SaveDialog):
     """
     Class for displaying the save as dialog.
     """
 
     def __init__(self, specto, *args):
-        self.specto = specto
-        #create tree
-        uifile = os.path.join(self.specto.PATH, "uis/log_dialog.ui")
-        windowname = "file_chooser"
-        self.builder = gtk.Builder()
-        self.builder.set_translation_domain("specto")
-        self.builder.add_from_file(uifile)
-        self.save_dialog = self.builder.get_object("file_chooser")
-
-        dic = {"on_button_cancel_clicked": self.cancel,
-               "on_button_save_clicked": self.save}
-        #attach the events
-        self.builder.connect_signals(dic)
-
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.save_dialog.set_icon(icon)
-        self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
+        SaveDialog.__init__(self, specto)
+        windowname = "logger_file_chooser"
 
         self.text = args[0]
 
-    def cancel(self, *args):
-        """ Close the save as dialog. """
-        self.save_dialog.destroy()
-
     def save(self, *args):
         """ Save the file. """
-        file_name = self.save_dialog.get_filename()
+        file_name = self.get_filename()
 
         if not os.path.exists(file_name):
             f = open(file_name, "w")
@@ -218,7 +207,7 @@ class Save_dialog:
         f.write(self.text)
         f.close()
 
-        self.save_dialog.destroy()
+        self.destroy()
 
 
 class Logger:

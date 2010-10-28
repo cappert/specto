@@ -324,10 +324,8 @@ class ErrorDialog():
         self.builder.set_translation_domain("specto")
         self.builder.add_from_file(uifile)
 
-        dic = {"on_send_clicked": self.send,
-        "on_ok_clicked": self.delete_event}
-        #attach the events
-        self.builder.connect_signals(dic)
+        self.builder.get_object("ok").connect("clicked", self.delete_event)
+        self.builder.get_object("send").connect("clicked", self.send)
 
         self.error_dialog = self.builder.get_object("error_dialog")
         self.error_dialog.show()
@@ -352,6 +350,54 @@ class ErrorDialog():
         """ Destroy the window. """
         self.error_dialog.destroy()
         return True
+
+
+class SaveDialog(gtk.FileChooserDialog):
+    """
+    Class for displaying a generic save dialog for Specto.
+    """
+
+    def __init__(self, specto):
+        gtk.FileChooserDialog.__init__(self, _("Save file as"), None,
+                gtk.FILE_CHOOSER_ACTION_SAVE,
+                (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                 gtk.STOCK_SAVE,   gtk.RESPONSE_OK))
+        self.specto = specto
+        windowname = "filechooser"
+
+        self.set_icon(gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png")))
+        self.set_filename(os.environ['HOME'] + "/ ")
+
+    def cancel(self, *args):
+        """ Close the dialog. """
+        self.destroy()
+
+    def save(self, *args):
+        raise NotImplementedError
+
+class OpenDialog(gtk.FileChooserDialog):
+    """
+    Class for displaying a generic open dialog for Specto.
+    """
+
+    def __init__(self, specto):
+        gtk.FileChooserDialog.__init__(self, _("Open file"), None,
+                gtk.FILE_CHOOSER_ACTION_OPEN,
+                (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                 gtk.STOCK_OPEN,   gtk.RESPONSE_OK))
+        self.specto = specto
+        windowname = "open_file_chooser"
+
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
+        self.set_icon(icon)
+        self.set_filename(os.environ['HOME'] + "/ ")
+
+    def cancel(self, *args):
+        """ Close the save as dialog. """
+        self.destroy()
+
+    def open(self, *args):
+        raise NotImplementedError
 
 
 def create_widget(table, widget_type, value, label, position):

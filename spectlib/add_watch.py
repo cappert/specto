@@ -238,24 +238,23 @@ class Unique_Dialog:
 
     def __init__(self, specto):
         self.specto = specto
-        self.uifile = os.path.join(self.specto.PATH, "uis/add_watch.ui")
+        self.uifile = os.path.join(self.specto.PATH, "uis/dialog_add_watch.ui")
         self.dialogname = "dialog"
-
-    def run(self):
-        """ Show the unique dialog. """
         self.builder = gtk.Builder()
         self.builder.set_translation_domain("specto")
         self.builder.add_from_file(self.uifile)
         self.unique_dialog = self.builder.get_object("dialog")
 
+    def run(self):
+        """ Show the unique dialog. """
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.unique_dialog.set_icon(icon)
         self.unique_dialog.set_resizable(False)
-        self.result = self.unique_dialog.run()
+        result = self.unique_dialog.run()
 
         self.unique_dialog.destroy()
 
-        return self.result
+        return result
 
 
 if __name__ == "__main__":
