@@ -168,9 +168,10 @@ class Add_watch:
 
             if self.wTree.get_widget("check_open").get_active() == True:
                 values['open_command'] = self.wTree.get_widget("entry_open_command").get_text()
+                use_standard_command = False
             else:
                 values['open_command'] = ""
-                open = True
+                use_standard_command = True
             
             if hasattr(self.specto.watch_db.plugin_dict[values['type']], 'get_add_gui_info'):
                 gui_values = self.specto.watch_db.plugin_dict[values['type']].get_add_gui_info()
@@ -199,7 +200,7 @@ class Add_watch:
                         field.set_color(65535, 0, 0)
             else:
                 self.add_watch.destroy()
-                if open == True:
+                if use_standard_command:
                     try:
                         self.specto.watch_db[id].open_command = self.specto.watch_db[id].standard_open_command
                     except:
