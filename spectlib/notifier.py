@@ -35,19 +35,17 @@ from spectlib.import_watch import Import_watch
 from spectlib.export_watch import Export_watch
 from spectlib.trayicon import Tray
     
+INDICATOR = True
 try:
     from spectlib.tools.indicator import Indicator
 except:
     INDICATOR = False
-else:
-    INDICATOR = True
-    
+
+SOUND = True
 try:
     from spectlib.tools.sound import Sound
 except:
     SOUND = False
-else:
-    SOUND = True
 
 
 import spectlib.util
