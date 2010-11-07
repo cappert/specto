@@ -45,12 +45,7 @@ from spectlib.tools import networkmanager as conmgr
 #create a gconf object
 specto_gconf = Specto_gconf("/apps/specto")
 
-if specto_gconf.get_entry("debug_mode")==True:
-    DEBUG = True
-elif specto_gconf.get_entry("debug_mode")==False:
-    DEBUG = False
-else:
-    DEBUG = False
+DEBUG = specto_gconf.get_entry("debug_mode")
 
 try:
     import pygtk
