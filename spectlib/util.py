@@ -23,6 +23,8 @@
 
 import os
 import sys
+from subprocess import call
+
 from spectlib.tools.specto_gconf import Specto_gconf
 
 
@@ -38,7 +40,7 @@ def return_webpage(webpage):
 
 
 def show_webpage(webpage):
-    os.system(return_webpage(webpage) + " &")
+    call(return_webpage(webpage).split(" "))
 
 
 def open_gconf_application(key):
