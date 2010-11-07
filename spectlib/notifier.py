@@ -515,40 +515,37 @@ class Notifier:
         id = int(model.get_value(iter, 3))
         watch = self.specto.watch_db[id]
         menu = gtk.Menu()
+        menuItem = None
 
-        menuItem = gtk.ImageMenuItem(_("Refresh"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate', self.refresh_watch)
-        if watch.active == False:
+        def create_menu_item(label, callback, icon=None):
+            menuItem = gtk.ImageMenuItem(label)
+            if icon:
+                image = gtk.Image()
+                image.set_from_stock(icon, gtk.ICON_SIZE_MENU)
+                menuItem.set_image(image)
+            menuItem.connect('activate', callback)
+            return menuItem
+
+        menuItem = create_menu_item(_("Refresh"), self.refresh_watch,
+            gtk.STOCK_REFRESH)
+        if not watch.active:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
 
-        menuItem = gtk.ImageMenuItem(_("Mark as read"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate', self._mark_watch_as_read)
-        if watch.changed == False:
+        menuItem = create_menu_item(_("Mark as read"), self._mark_watch_as_read,
+            gtk.STOCK_CLEAR)
+        if not watch.changed:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
 
         separator = gtk.SeparatorMenuItem()
         menu.append(separator)
 
-        menuItem = gtk.ImageMenuItem(_("Edit"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate', self.edit_watch)
+        menuItem = create_menu_item(_("Edit"), self.edit_watch, gtk.STOCK_EDIT)
         menu.append(menuItem)
 
-        menuItem = gtk.ImageMenuItem(_("Remove"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate', self.remove_watch)
+        menuItem = create_menu_item(_("Remove"), self.remove_watch,
+            gtk.STOCK_REMOVE)
         menu.append(menuItem)
 
         menu.show_all()
