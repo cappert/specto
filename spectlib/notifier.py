@@ -48,7 +48,7 @@ except:
     SOUND = False
 
 
-import spectlib.util
+from spectlib.util import show_webpage
 from spectlib.gtkconfig import ErrorDialog
 from spectlib.i18n import _
 
@@ -1036,7 +1036,7 @@ class Notifier:
 
     def show_help(self, *args):
         """ Call the main function to show the help. """
-        self.specto.util.show_webpage("http://code.google.com/p/specto/w/list")
+        show_webpage("http://code.google.com/p/specto/w/list")
 
     def show_about(self, *args):
         """ Call the main function to show the about window. """
