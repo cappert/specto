@@ -693,10 +693,7 @@ class Notifier:
 
     def get_state(self):
         """ Return True if the notifier window is visible. """
-        if self.notifier.flags() & gtk.VISIBLE:
-            return True
-        else:
-            return False
+        return self.notifier.flags() & gtk.VISIBLE
 
     def create_notifier_gui(self):
         """ Create the gui from the notifier. """
