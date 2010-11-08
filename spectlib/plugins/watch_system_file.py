@@ -21,11 +21,13 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from spectlib.watch import Watch
-import spectlib.config
-from spectlib.i18n import _
-
 import os
+
+from spectlib.config import String
+from spectlib.gtkconfig import FileChooser
+from spectlib.i18n import _
+from spectlib.watch import Watch
+
 
 type = "Watch_system_file"
 type_desc = _("File")
@@ -34,7 +36,7 @@ category = _("System")
 
 
 def get_add_gui_info():
-    return [("file", spectlib.gtkconfig.FileChooser(_("File")))]
+    return [("file", FileChooser(_("File")))]
 
 
 class Watch_system_file(Watch):
@@ -43,7 +45,7 @@ class Watch_system_file(Watch):
     """
 
     def __init__(self, specto, id, values):
-        watch_values = [("file", spectlib.config.String(True))]
+        watch_values = [("file", String(True))]
 
         self.icon = icon
         self.open_command = ''
