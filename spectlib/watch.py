@@ -42,9 +42,9 @@ from spectlib.i18n import _
 
 from datetime import datetime
 
+keyring = True
 try:
     from spectlib.tools.keyringmanager import Keyring
-    keyring = True
 except:
     keyring = False
 
