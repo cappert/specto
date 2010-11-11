@@ -167,8 +167,8 @@ class Add_watch:
             if self.builder.get_object("check_command").get_active() == True:
                 values['command'] = self.builder.get_object("entry_changed_command").get_text()
 
-            if self.wTree.get_widget("check_open").get_active() == True:
-                values['open_command'] = self.wTree.get_widget("entry_open_command").get_text()
+            if self.builder.get_object("check_open").get_active() == True:
+                values['open_command'] = self.builder.get_object("entry_open_command").get_text()
                 use_standard_command = False
             else:
                 values['open_command'] = ""
