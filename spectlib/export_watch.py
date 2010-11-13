@@ -23,6 +23,7 @@
 from spectlib.i18n import _
 import os
 from spectlib.watch import Watch_io
+from spectlib.gtkconfig import SaveDialog
 
 try:
     import pygtk
@@ -32,7 +33,6 @@ except:
 
 try:
     import gtk
-    import gtk.glade
     import gobject
 except:
     pass
@@ -48,13 +48,14 @@ class Export_watch:
         self.notifier = notifier
 
         #create tree
-        gladefile = os.path.join(self.specto.PATH, "glade/import_export.glade")
+        uifile = os.path.join(self.specto.PATH, "uis/import_export.ui")
         windowname = "import_export"
-        self.wTree = gtk.glade.XML(gladefile, windowname, \
-                                   self.specto.glade_gettext)
-        self.export_watch = self.wTree.get_widget("import_export")
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(uifile)
+        self.export_watch = self.builder.get_object("import_export")
         self.export_watch.set_title(_("Export watches"))
-        self.wTree.get_widget("button_action").set_label(_("Export watches"))
+        self.builder.get_object("button_action").set_label(_("Export watches"))
 
         self.model = gtk.ListStore(gobject.TYPE_BOOLEAN, gtk.gdk.Pixbuf, \
                     gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_STRING)
@@ -67,12 +68,12 @@ class Export_watch:
               "on_button_close_clicked": self.delete_event}
 
         #attach the events
-        self.wTree.signal_autoconnect(dic)
+        self.builder.connect_signals(dic)
 
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.export_watch.set_icon(icon)
 
-        self.treeview = self.wTree.get_widget("treeview")
+        self.treeview = self.builder.get_object("treeview")
         self.treeview.set_model(self.model)
         self.treeview.set_flags(gtk.TREE_MODEL_ITERS_PERSIST)
         self.iter = {}
@@ -134,8 +135,13 @@ class Export_watch:
 
     def do_action(self, widget):
         self.export_watch.hide_all()
-        self.save = Save_dialog(self.specto, None, False, \
-                            self.get_selected_watches())
+        export_save_dialog = ExportSaveDialog(self.specto, None, False, \
+                self.get_selected_watches())
+        response = export_save_dialog.run()
+        if response == gtk.RESPONSE_OK:
+            export_save_dialog.save()
+        else:
+            export_save_dialog.cancel()
 
     def delete_event(self, widget, *args):
         """ Destroy the window. """
@@ -181,41 +187,22 @@ class Export_watch:
             model.set_value(iter, 0, 1)
 
 
-class Save_dialog:
+class ExportSaveDialog(SaveDialog):
     """
     Class for displaying the save as dialog.
     """
 
     def __init__(self, specto, _import, action_type, watches_db):
+        SaveDialog.__init__(self, specto)
         self.specto = specto
         self._export = _import
-        #create tree
-        gladefile = os.path.join(self.specto.PATH, "glade/import_export.glade")
-        windowname = "filechooser"
-        self.wTree = gtk.glade.XML(gladefile, windowname)
-        self.save_dialog = self.wTree.get_widget("filechooser")
+        windowname = "export_file_chooser"
         self.action_type = action_type
-
-        self.save_dialog.set_action(gtk.FILE_CHOOSER_ACTION_SAVE)
-        self.wTree.get_widget("button_save").set_label("gtk-save")
         self.watches_db = watches_db
-
-        dic = {"on_button_cancel_clicked": self.cancel,
-             "on_button_save_clicked": self.save}
-        #attach the events
-        self.wTree.signal_autoconnect(dic)
-
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.save_dialog.set_icon(icon)
-        self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
-
-    def cancel(self, *args):
-        """ Close the save as dialog. """
-        self.save_dialog.destroy()
 
     def save(self, *args):
         """ Save the file. """
-        file_name = self.save_dialog.get_filename()
+        file_name = self.get_filename()
 
         for i in self.watches_db.keys():
             values = {}
@@ -225,7 +212,7 @@ class Save_dialog:
             values.update(self.watches_db[i].get_values())
             self.write_options(file_name, values)
 
-        self.save_dialog.destroy()
+        self.destroy()
 
     def write_options(self, file_name, values):
         """

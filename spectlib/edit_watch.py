@@ -31,7 +31,6 @@ except:
 
 try:
     import gtk
-    import gtk.glade
     import spectlib.gtkconfig
 except:
     pass
@@ -46,9 +45,11 @@ class Edit_watch:
         self.notifier = notifier
         self.watch = self.specto.watch_db[id]
         # Create the tree
-        gladefile = os.path.join(self.specto.PATH, "glade/edit_watch.glade")
+        uifile = os.path.join(self.specto.PATH, "uis/edit_watch.ui")
         windowname = "edit_watch"
-        self.wTree = gtk.glade.XML(gladefile, windowname, self.specto.glade_gettext)
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(uifile)
 
         # Catch some events
         dic = {"on_button_cancel_clicked": self.cancel_clicked,
@@ -62,31 +63,31 @@ class Edit_watch:
             "on_refresh_unit_changed": self.set_refresh_values}
 
         # Attach the events
-        self.wTree.signal_autoconnect(dic)
+        self.builder.connect_signals(dic)
 
         # Set the info from the watch
-        self.edit_watch = self.wTree.get_widget("edit_watch")
+        self.edit_watch = self.builder.get_object("edit_watch")
         self.edit_watch.set_title(_("Edit watch: ") + self.watch.name)
-        self.wTree.get_widget("name").set_text(self.watch.name)
+        self.builder.get_object("name").set_text(self.watch.name)
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.edit_watch.set_icon(icon)
         self.edit_watch.set_resizable(False)
 
         refresh, refresh_unit = self.specto.watch_db.get_interval(self.watch.refresh)
-        self.wTree.get_widget("refresh_unit").set_active(refresh_unit)
-        self.wTree.get_widget("refresh").set_value(refresh)
+        self.builder.get_object("refresh_unit").set_active(refresh_unit)
+        self.builder.get_object("refresh").set_value(refresh)
 
         # Create the gui
         self.watch_options = {}
         self.create_edit_gui()
 
         if not self.specto.DEBUG:
-            self.wTree.get_widget("notebook1").remove_page(2)
+            self.builder.get_object("notebook1").remove_page(2)
         else:
-            if self.wTree.get_widget("notebook1").get_n_pages() == 3:
+            if self.builder.get_object("notebook1").get_n_pages() == 3:
                 # Put the logfile in the textview
                 log_text = self.specto.logger.watch_log(self.watch.name)
-                self.log_buffer = self.wTree.get_widget("error_log").get_buffer()
+                self.log_buffer = self.builder.get_object("error_log").get_buffer()
                 self.log_buffer.create_tag("ERROR", foreground="#a40000")
                 self.log_buffer.create_tag("INFO", foreground="#4e9a06")
                 self.log_buffer.create_tag("WARNING", foreground="#c4a000")
@@ -102,7 +103,7 @@ class Edit_watch:
         """ Set the max and min values for the refresh unit. """
         digits = 0
         climb_rate = 1.0
-        refresh_unit = self.wTree.get_widget("refresh_unit").get_active()
+        refresh_unit = self.builder.get_object("refresh_unit").get_active()
 
         if refresh_unit == 0 or refresh_unit == 1:
             adjustment = gtk.Adjustment(value=1, lower=1, upper=60, step_incr=1, page_incr=10, page_size=0)
@@ -111,26 +112,26 @@ class Edit_watch:
         if refresh_unit == 3:
             adjustment = gtk.Adjustment(value=1, lower=1, upper=365, step_incr=1, page_incr=30, page_size=0)
 
-        self.wTree.get_widget("refresh").configure(adjustment, climb_rate, digits)
+        self.builder.get_object("refresh").configure(adjustment, climb_rate, digits)
 
     def save_clicked(self, widget):
         """ Save the new options from the edited watch. """
         values = {}
         #get the standard options from a watch
-        values['name'] = self.wTree.get_widget("name").get_text()#FIXME: cfgparse cannot have single quotes (') it seems. We must watch out for the watch name or arguments not to have them.
+        values['name'] = self.builder.get_object("name").get_text()#FIXME: cfgparse cannot have single quotes (') it seems. We must watch out for the watch name or arguments not to have them.
 
         values['type'] = self.watch.type
-        refresh_value = self.wTree.get_widget("refresh").get_value_as_int()
-        refresh_unit = self.wTree.get_widget("refresh_unit").get_active()
+        refresh_value = self.builder.get_object("refresh").get_value_as_int()
+        refresh_unit = self.builder.get_object("refresh_unit").get_active()
         values['refresh'] = self.specto.watch_db.set_interval(refresh_value, refresh_unit)
         values['active'] = self.watch.active
         values['last_changed'] = self.watch.last_changed
 
-        if self.wTree.get_widget("check_command").get_active() == True:
-            values['command'] = self.wTree.get_widget("entry_changed_command").get_text()
+        if self.builder.get_object("check_command").get_active() == True:
+            values['command'] = self.builder.get_object("entry_changed_command").get_text()
 
-        if self.wTree.get_widget("check_open").get_active() == True:
-            values['open_command'] = self.wTree.get_widget("entry_open_command").get_text()
+        if self.builder.get_object("check_open").get_active() == True:
+            values['open_command'] = self.builder.get_object("entry_open_command").get_text()
         else:
             values['open_command'] = ""
 
@@ -142,7 +143,7 @@ class Edit_watch:
             values[key] = window_options[key].get_value()
             window_options[key].set_color(0xFFFF, 0xFFFF, 0xFFFF)
 
-        self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
+        self.builder.get_object("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0xFFFF, 0xFFFF, 0xFFFF))
 
         try:
             self.specto.watch_db[self.watch.id].set_values(values, True)
@@ -151,8 +152,8 @@ class Edit_watch:
             i = 1
             for field in fields:
                 if field == " name":
-                    self.wTree.get_widget("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
-                    self.wTree.get_widget("name").grab_focus()
+                    self.builder.get_object("name").modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(65535, 0, 0))
+                    self.builder.get_object("name").grab_focus()
                 else:
                     field = window_options[field.strip()]
                     if i == 1:
@@ -204,7 +205,7 @@ class Edit_watch:
 
     def create_edit_gui(self):
         """ Create the gui for the different kinds of watches. """
-        vbox_options = self.wTree.get_widget("vbox_watch_options")
+        vbox_options = self.builder.get_object("vbox_watch_options")
         watch_type = self.watch.type
         self.watch_options[watch_type] = []
         try:
@@ -214,9 +215,9 @@ class Edit_watch:
         
         try:
             if self.specto.watch_db.plugin_dict[watch_type].dbus_watch == True:
-                self.wTree.get_widget("refresh").hide()
-                self.wTree.get_widget("refresh_unit").hide()
-                self.wTree.get_widget("label_refresh1").hide()
+                self.builder.get_object("refresh").hide()
+                self.builder.get_object("refresh_unit").hide()
+                self.builder.get_object("label_refresh1").hide()
         except:
             pass
         
@@ -228,18 +229,18 @@ class Edit_watch:
         watch_values = self.watch.get_values()
 
         if watch_values['command'] != "":
-            self.wTree.get_widget("entry_changed_command").set_text(watch_values['command'])
-            self.wTree.get_widget("check_command").set_active(True)
+            self.builder.get_object("entry_changed_command").set_text(watch_values['command'])
+            self.builder.get_object("check_command").set_active(True)
         else:
-            self.wTree.get_widget("entry_changed_command").set_text("")
-            self.wTree.get_widget("check_command").set_active(False)
+            self.builder.get_object("entry_changed_command").set_text("")
+            self.builder.get_object("check_command").set_active(False)
 
         if watch_values['open_command'] != "":
-            self.wTree.get_widget("entry_open_command").set_text(watch_values['open_command'])
-            self.wTree.get_widget("check_open").set_active(True)
+            self.builder.get_object("entry_open_command").set_text(watch_values['open_command'])
+            self.builder.get_object("check_open").set_active(True)
         else:
-            self.wTree.get_widget("entry_open_command").set_text("")
-            self.wTree.get_widget("check_open").set_active(False)
+            self.builder.get_object("entry_open_command").set_text("")
+            self.builder.get_object("check_open").set_active(False)
 
 
         # Create the options gui
@@ -251,7 +252,7 @@ class Edit_watch:
 
             i = 0
             for value, widget in values:
-                table, _widget = widget.get_widget()
+                table, _widget = widget.get_object()
                 widget.set_value(watch_values[value])
                 self.table.attach(table, 0, 1, i, i + 1)
                 self.watch_options[watch_type].update({value: widget})
@@ -261,12 +262,12 @@ class Edit_watch:
             vbox_options.pack_start(self.table, False, False, 0)
 
     def command_toggled(self, widget):
-        sensitive = self.wTree.get_widget("check_command").get_active()
-        self.wTree.get_widget("entry_changed_command").set_sensitive(sensitive)
+        sensitive = self.builder.get_object("check_command").get_active()
+        self.builder.get_object("entry_changed_command").set_sensitive(sensitive)
 
     def open_toggled(self, widget):
-        sensitive = self.wTree.get_widget("check_open").get_active()
-        self.wTree.get_widget("entry_open_command").set_sensitive(sensitive)
+        sensitive = self.builder.get_object("check_open").get_active()
+        self.builder.get_object("entry_open_command").set_sensitive(sensitive)
 
 
 class Save_dialog:
@@ -279,15 +280,17 @@ class Save_dialog:
         self.specto = specto
         self.text = args[0]
         # Create the tree
-        gladefile = os.path.join(self.specto.PATH, "glade/edit_watch.glade")
+        uifile = os.path.join(self.specto.PATH, "uis/edit_watch.ui")
         windowname = "file_chooser"
-        self.wTree = gtk.glade.XML(gladefile, windowname)
-        self.save_dialog = self.wTree.get_widget("file_chooser")
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(uifile)
+        self.save_dialog = self.builder.get_object("file_chooser")
 
         dic = {"on_button_cancel_clicked": self.cancel,
             "on_button_save_clicked": self.save}
         # Attach the events
-        self.wTree.signal_autoconnect(dic)
+        self.builder.connect_signals(dic)
 
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.save_dialog.set_icon(icon)

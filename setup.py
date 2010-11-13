@@ -43,7 +43,7 @@ temp_files = [
     ('share/icons/hicolor/scalable/apps', ['data/icons/hicolor/scalable/specto.svg']),
     ('share/applications', ['specto.desktop']),
     ('share/specto/icons', give_files('data/icons/', '.png', '.svg')),
-    ('share/specto/glade', give_files('data/glade/', '.glade')),
+    ('share/specto/uis', give_files('data/uis/', '.ui')),
     ('share/indicators/messages/applications', ['data/indicator/specto'])]
 
 for lang_tuple in give_mo_tuples(i18n_languages):

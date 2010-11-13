@@ -48,7 +48,7 @@ class Entry():
     def get_value(self):
         return self.entry.get_text()
 
-    def get_widget(self):
+    def get_object(self):
         return self.table, self.entry
 
     def set_color(self, red, blue, green):
@@ -82,7 +82,7 @@ class PasswordEntry():
     def get_value(self):
         return self.entry.get_text()
 
-    def get_widget(self):
+    def get_object(self):
         return self.table, self.entry
 
     def set_color(self, red, blue, green):
@@ -116,7 +116,7 @@ class Spinbutton():
     def get_value(self):
         return self.spinbutton.get_value()
 
-    def get_widget(self):
+    def get_object(self):
         return self.table, self.spinbutton
 
     def set_color(self, red, blue, green):
@@ -149,7 +149,7 @@ class CheckButton():
     def get_value(self):
         return self.checkbutton.get_active()
 
-    def get_widget(self):
+    def get_object(self):
         return self.table, self.checkbutton
 
     def set_color(self, red, blue, green):
@@ -182,7 +182,7 @@ class FileChooser():
     def get_value(self):
         return self.filechooser.get_filename()
 
-    def get_widget(self):
+    def get_object(self):
         return self.table, self.filechooser
 
     def set_color(self, red, blue, green):
@@ -215,7 +215,7 @@ class FolderChooser():
     def get_value(self):
         return self.dirchooser.get_filename()
 
-    def get_widget(self):
+    def get_object(self):
         return self.table, self.dirchooser
 
     def set_color(self, red, blue, green):
@@ -261,7 +261,7 @@ class Scale():
     def get_value(self):
         return self.scale.get_value()
 
-    def get_widget(self):
+    def get_object(self):
         return self.table, self.scale
 
     def set_color(self, red, blue, green):
@@ -318,30 +318,29 @@ class ErrorDialog():
 
     def __init__(self, specto, error_message):
         self.specto = specto
-        gladefile = os.path.join(self.specto.PATH, "glade/notifier.glade")
+        uifile = os.path.join(self.specto.PATH, "uis/notifier.ui")
         windowname = "error_dialog"
-        self.wTree = gtk.glade.XML(gladefile, windowname, \
-                                self.specto.glade_gettext)
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(uifile)
 
-        dic = {"on_send_clicked": self.send,
-        "on_ok_clicked": self.delete_event}
-        #attach the events
-        self.wTree.signal_autoconnect(dic)
+        self.builder.get_object("ok").connect("clicked", self.delete_event)
+        self.builder.get_object("send").connect("clicked", self.send)
 
-        self.error_dialog = self.wTree.get_widget("error_dialog")
+        self.error_dialog = self.builder.get_object("error_dialog")
         self.error_dialog.show()
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.error_dialog.set_icon(icon)
 
         self.errorwindow = gtk.TextBuffer(None)
-        self.wTree.get_widget("error_message").set_buffer(self.errorwindow)
+        self.builder.get_object("error_message").set_buffer(self.errorwindow)
         self.errorwindow.set_text(error_message)
 
-        self.wTree.get_widget("image").set_from_stock(gtk.STOCK_DIALOG_ERROR, \
+        self.builder.get_object("image").set_from_stock(gtk.STOCK_DIALOG_ERROR, \
                                                          gtk.ICON_SIZE_DIALOG)
 
-        self.wTree.get_widget("label4").set_use_markup(True)
-        self.wTree.get_widget("label4").set_label(_("<b>Specto encountered an error</b>\nPlease verify if this bug has been entered in our issue tracker, and if not, file a bug report so we can fix it."))
+        self.builder.get_object("label4").set_use_markup(True)
+        self.builder.get_object("label4").set_label(_("<b>Specto encountered an error</b>\nPlease verify if this bug has been entered in our issue tracker, and if not, file a bug report so we can fix it."))
 
     def send(self, *args):
         url = "http://code.google.com/p/specto/issues/list"
@@ -351,6 +350,54 @@ class ErrorDialog():
         """ Destroy the window. """
         self.error_dialog.destroy()
         return True
+
+
+class SaveDialog(gtk.FileChooserDialog):
+    """
+    Class for displaying a generic save dialog for Specto.
+    """
+
+    def __init__(self, specto):
+        gtk.FileChooserDialog.__init__(self, _("Save file as"), None,
+                gtk.FILE_CHOOSER_ACTION_SAVE,
+                (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                 gtk.STOCK_SAVE,   gtk.RESPONSE_OK))
+        self.specto = specto
+        windowname = "filechooser"
+
+        self.set_icon(gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png")))
+        self.set_filename(os.environ['HOME'] + "/ ")
+
+    def cancel(self, *args):
+        """ Close the dialog. """
+        self.destroy()
+
+    def save(self, *args):
+        raise NotImplementedError
+
+class OpenDialog(gtk.FileChooserDialog):
+    """
+    Class for displaying a generic open dialog for Specto.
+    """
+
+    def __init__(self, specto):
+        gtk.FileChooserDialog.__init__(self, _("Open file"), None,
+                gtk.FILE_CHOOSER_ACTION_OPEN,
+                (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                 gtk.STOCK_OPEN,   gtk.RESPONSE_OK))
+        self.specto = specto
+        windowname = "open_file_chooser"
+
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
+        self.set_icon(icon)
+        self.set_filename(os.environ['HOME'] + "/ ")
+
+    def cancel(self, *args):
+        """ Close the save as dialog. """
+        self.destroy()
+
+    def open(self, *args):
+        raise NotImplementedError
 
 
 def create_widget(table, widget_type, value, label, position):
@@ -462,7 +509,7 @@ def set_widget_value(widget_type, widget, value):
         widget[1].set_value(int(value[1]))
 
 
-def get_widget_value(widget_type, value):
+def get_object_value(widget_type, value):
     result = ""
     if widget_type == "entry" or widget_type == "password":
         result = value.values()[0].get_text()

@@ -56,7 +56,6 @@ try:
     import pygtk
     pygtk.require("2.0")
     import gtk
-    import gtk.glade
 except:
     print _("no GTK, activating console mode")
     GTK = False
@@ -78,7 +77,7 @@ class Specto:
         self.CACHE_DIR = self.util.get_path("tmp")
         self.FILE = self.util.get_file()
 
-        self.glade_gettext = gettext.textdomain("specto")
+        self.gettext = gettext.textdomain("specto")
         self.logger = Logger(self)
 
         self.VERSION = self.get_version_number()  # The Specto version number

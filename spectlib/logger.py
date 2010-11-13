@@ -36,9 +36,10 @@ except:
 
 try:
     import gtk
-    import gtk.glade
 except:
     pass
+
+from spectlib.gtkconfig import SaveDialog
 
 
 class Log_dialog:
@@ -50,10 +51,11 @@ class Log_dialog:
         self.specto = specto
         self.notifier = notifier
         #create tree
-        gladefile = os.path.join(self.specto.PATH, "glade/log_dialog.glade")
+        uifile = os.path.join(self.specto.PATH, "uis/log_dialog.ui")
         windowname = "log_dialog"
-        self.wTree = gtk.glade.XML(gladefile, windowname, \
-                                    self.specto.glade_gettext)
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain("specto")
+        self.builder.add_from_file(uifile)
 
         dic = {"on_button_help_clicked": self.show_help,
                "on_button_save_clicked": self.save,
@@ -62,19 +64,19 @@ class Log_dialog:
                "on_button_find_clicked": self.find}
 
         #attach the events
-        self.wTree.signal_autoconnect(dic)
+        self.builder.connect_signals(dic)
 
-        self.log_dialog = self.wTree.get_widget("log_dialog")
+        self.log_dialog = self.builder.get_object("log_dialog")
         icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
         self.log_dialog.set_icon(icon)
 
-        self.wTree.get_widget("combo_level").set_active(0)
+        self.builder.get_object("combo_level").set_active(0)
 
         #read the log file
         self.read_log()
 
         self.logwindow = gtk.TextBuffer(None)
-        self.log_buffer = self.wTree.get_widget("log_field").get_buffer()
+        self.log_buffer = self.builder.get_object("log_field").get_buffer()
         self.log_buffer.create_tag("ERROR", foreground="#a40000")
         self.log_buffer.create_tag("INFO", foreground="#4e9a06")
         self.log_buffer.create_tag("WARNING", foreground="#c4a000")
@@ -97,7 +99,13 @@ class Log_dialog:
         """ Save the text in the logwindow. """
         text = self.log_buffer.get_text(self.log_buffer.get_start_iter(), \
                                             self.log_buffer.get_end_iter())
-        self.save = Save_dialog(self.specto, text)
+        logger_save_dialog = LoggerSaveDialog(self.specto, text)
+        response = logger_save_dialog.run()
+        if response == gtk.RESPONSE_OK:
+            logger_save_dialog.save()
+        else:
+            logger_save_dialog.cancel()
+		
 
     def clear(self, widget):
         """ Clear the text in the log window and from the log file. """
@@ -112,7 +120,7 @@ class Log_dialog:
     def find(self, widget):
         """ Find the lines in the log file that contain the filter word. """
         self.read_log()
-        level = self.wTree.get_widget("combo_level").get_active()
+        level = self.builder.get_object("combo_level").get_active()
         buffer_log = self.log.split("\n")
         filtered_log = ""
 
@@ -127,7 +135,7 @@ class Log_dialog:
         elif level == 5:
             pattern = ("CRITICAL")
         elif level == -1:
-            pattern = self.wTree.get_widget("combo_level").child.get_text()
+            pattern = self.builder.get_object("combo_level").child.get_text()
 
         start = self.log_buffer.get_start_iter()
         end = self.log_buffer.get_end_iter()
@@ -175,37 +183,20 @@ class Log_dialog:
         return True
 
 
-class Save_dialog:
+class LoggerSaveDialog(SaveDialog):
     """
     Class for displaying the save as dialog.
     """
 
     def __init__(self, specto, *args):
-        self.specto = specto
-        #create tree
-        gladefile = os.path.join(self.specto.PATH, "glade/log_dialog.glade")
-        windowname = "file_chooser"
-        self.wTree = gtk.glade.XML(gladefile, windowname)
-        self.save_dialog = self.wTree.get_widget("file_chooser")
-
-        dic = {"on_button_cancel_clicked": self.cancel,
-               "on_button_save_clicked": self.save}
-        #attach the events
-        self.wTree.signal_autoconnect(dic)
-
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.save_dialog.set_icon(icon)
-        self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
+        SaveDialog.__init__(self, specto)
+        windowname = "logger_file_chooser"
 
         self.text = args[0]
 
-    def cancel(self, *args):
-        """ Close the save as dialog. """
-        self.save_dialog.destroy()
-
     def save(self, *args):
         """ Save the file. """
-        file_name = self.save_dialog.get_filename()
+        file_name = self.get_filename()
 
         if not os.path.exists(file_name):
             f = open(file_name, "w")
@@ -216,7 +207,7 @@ class Save_dialog:
         f.write(self.text)
         f.close()
 
-        self.save_dialog.destroy()
+        self.destroy()
 
 
 class Logger:

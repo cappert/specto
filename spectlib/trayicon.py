@@ -48,10 +48,10 @@ class Tray:
         self.tray.connect("popup-menu", self.show_popup)
         if self.specto.specto_gconf.get_entry("always_show_icon") == True:
             self.tray.set_visible(True)
-            self.notifier.wTree.get_widget("close").set_sensitive(True)
+            self.notifier.builder.get_object("close").set_sensitive(True)
         else:
             self.tray.set_visible(False)
-            self.notifier.wTree.get_widget("close").set_sensitive(False)
+            self.notifier.builder.get_object("close").set_sensitive(False)
             self.specto.specto_gconf.set_entry("show_notifier", True)
             self.notifier.restore_size_and_position()            
             self.notifier.notifier.show()
