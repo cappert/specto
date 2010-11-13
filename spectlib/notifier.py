@@ -49,7 +49,7 @@ except:
 
 
 from spectlib.util import show_webpage
-from spectlib.gtkconfig import ErrorDialog
+from spectlib.gtkconfig import ErrorDialog, RemoveDialog
 from spectlib.i18n import _
 
 try:
@@ -622,7 +622,7 @@ class Notifier:
         except:
             pass
         else:
-            dialog = spectlib.gtkconfig.RemoveDialog(_("Remove a watch"),
+            dialog = RemoveDialog(_("Remove a watch"),
             (_('<big>Remove the watch "%s"?</big>\nThis operation cannot be undone.') % self.specto.watch_db[id].name))
             answer = dialog.show()
             if answer == True:
