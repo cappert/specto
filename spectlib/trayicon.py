@@ -134,8 +134,9 @@ class Tray:
 
         # Create menu items
         def create_menu_item(label, callback=None, icon=None):
-            menuItem = gtk.ImageMenuItem(label)
+            menuItem = gtk.MenuItem(label, True)
             if icon:
+                menuItem = gtk.ImageMenuItem(label)
                 image = gtk.Image()
                 image.set_from_stock(icon, gtk.ICON_SIZE_MENU)
                 menuItem.set_image(image)
