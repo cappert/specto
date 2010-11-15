@@ -76,8 +76,8 @@ class Watch_web_greader(Watch):
             self.newMsg = 0
             self.unreadMsg = 0
             greader = Greader(self.username, self.password, "specto")
-            SID = greader.login()
-            feed_db = greader.get_unread_items(SID)
+            auth = greader.login()
+            feed_db = greader.get_unread_items(auth)
             for feed in feed_db:
                 self.unreadMsg += feed.messages
                 if feed.messages > 0 and self.news_info.add(feed):
@@ -255,12 +255,12 @@ class Greader:
         except:  
             raise Exception('Error logging in')
               
-        return re.search('SID=(\S*)', result).group(1)  
+        return re.search('Auth=(\S*)', result).group(1)  
   
-    def get_results(self, SID, url):
+    def get_results(self, auth, url):
         #get results from url  
         header = {'User-agent' : self.source}  
-        header['Cookie']='Name=SID;SID=%s;Domain=.google.com;Path=/;Expires=160000000000' % SID  
+        header['Authorization']='GoogleLogin auth=%s' % auth  
       
         request = urllib2.Request(url, None, header)  
           
@@ -274,10 +274,10 @@ class Greader:
         return result  
   
     #get a feed of the users read items      
-    def get_unread_items(self, SID):
+    def get_unread_items(self, auth):
         feed_db = []  
-        data = self.get_results(SID, self.read_items_url)
-        feed_data = self.list_feeds(SID)
+        data = self.get_results(auth, self.read_items_url)
+        feed_data = self.list_feeds(auth)
         node = ET.XML(data)
         feed_node = ET.XML(feed_data)
         
@@ -307,5 +307,5 @@ class Greader:
                     feed_db.append(f)
         return feed_db
     
-    def list_feeds(self, SID):
-        return self.get_results(SID, self.list_feeds_url)
+    def list_feeds(self, auth):
+        return self.get_results(auth, self.list_feeds_url)
