@@ -216,7 +216,7 @@ class Specto:
         os.chmod(pidfile, 0600)
 
         #see if specto is already running
-	with open(pidfile, "r") as f:
+        with open(pidfile, "r") as f:
             pid = f.readline()
         if pid:
             p = os.system("ps --no-heading --pid " + pid)
@@ -260,7 +260,7 @@ class Specto:
                     sys.exit(0)
 
         #write the pid file
-	with open(pidfile, "w") as f:
+        with open(pidfile, "w") as f:
             f.write(str(os.getpid()))
 
     def mark_watch_status(self, status, id):
