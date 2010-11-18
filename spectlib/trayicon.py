@@ -23,6 +23,8 @@
 
 import gtk
 import os
+
+from spectlib.gtkconfig import create_menu_item
 from spectlib.i18n import _
 
 
@@ -133,18 +135,6 @@ class Tray:
         # activate_time :       the timestamp of the event that triggered the signal emission
 
         # Create menu items
-        def create_menu_item(label, callback=None, icon=None):
-            menuItem = gtk.MenuItem(label, True)
-            if icon:
-                menuItem = gtk.ImageMenuItem(label)
-                image = gtk.Image()
-                image.set_from_stock(icon, gtk.ICON_SIZE_MENU)
-                menuItem.set_image(image)
-                image.show()
-            if callback:
-                menuItem.connect('activate', callback)
-            return menuItem
-
         if self.specto.specto_gconf.get_entry("always_show_icon") \
                 and self.specto.notifier.get_state():
             self.item_show = create_menu_item(_("Hide window"), self.show_notifier, None)

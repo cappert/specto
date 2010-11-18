@@ -49,7 +49,7 @@ except:
 
 
 from spectlib.util import show_webpage
-from spectlib.gtkconfig import ErrorDialog, RemoveDialog
+from spectlib.gtkconfig import ErrorDialog, RemoveDialog, create_menu_item
 from spectlib.i18n import _
 
 try:
@@ -516,16 +516,6 @@ class Notifier:
         watch = self.specto.watch_db[id]
         menu = gtk.Menu()
         menuItem = None
-
-        def create_menu_item(label, callback, icon=None):
-            menuItem = gtk.MenuItem(label, True)
-            if icon:
-                menuItem = gtk.ImageMenuItem(label)
-                image = gtk.Image()
-                image.set_from_stock(icon, gtk.ICON_SIZE_MENU)
-                menuItem.set_image(image)
-            menuItem.connect('activate', callback)
-            return menuItem
 
         menuItem = create_menu_item(_("Refresh"), self.refresh_watch,
             gtk.STOCK_REFRESH)
