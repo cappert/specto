@@ -25,7 +25,8 @@ import os
 import pygtk
 pygtk.require("2.0")
 import gtk
-import spectlib.util
+
+from spectlib.util import show_webpage, get_path
 from spectlib.i18n import _
 
 
@@ -38,17 +39,14 @@ class About:
     def __init__(self, specto):
         self.specto = specto
 
-        license_file_path = (os.path.join(spectlib.util.get_path(category="doc"), "COPYING"))
-        license_file = open(license_file_path, "r")
-        license = license_file.read()
-        license_file.close()
-        license = str(license)
+        license_file_path = (os.path.join(get_path(category="doc"), "COPYING"))
+        with open(license_file_path, "r") as license_file:
+            license = license_file.read()
 
-        authors_file_path = (os.path.join(spectlib.util.get_path(category="doc"), "AUTHORS"))
-        authors_file = open(authors_file_path, "r")
-        # this is a hack, because gtk.AboutDialog expects a list, not a file
-        authors = authors_file.readlines()
-        authors_file.close()
+        authors_file_path = (os.path.join(get_path(category="doc"), "AUTHORS"))
+        with open(authors_file_path, "r") as authors_file:
+            # this is a hack, because gtk.AboutDialog expects a list, not a file
+            authors = authors_file.readlines()
 
         logo = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_about.png"))
 
@@ -65,7 +63,7 @@ class About:
         #self.wTree.set_comments(comments)
         self.about.set_license(license)
         #self.wTree.set_wrap_license(license)
-        gtk.about_dialog_set_url_hook(lambda about, url: self.url_show(url))
+        gtk.about_dialog_set_url_hook(lambda about, url: show_webpage(url))
         self.about.set_website("http://specto.sourceforge.net")
         self.about.set_website_label(_("Specto's Website"))
         self.about.set_authors(authors)
@@ -80,9 +78,6 @@ class About:
         self.about.connect("response", lambda d, r: self.close())
 
         self.about.show_all()
-
-    def url_show(self, url):
-        os.system(spectlib.util.return_webpage(url) + " &")
 
     def close(self):
         self.about.destroy()

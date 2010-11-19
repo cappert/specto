@@ -45,12 +45,7 @@ from spectlib.tools import networkmanager as conmgr
 #create a gconf object
 specto_gconf = Specto_gconf("/apps/specto")
 
-if specto_gconf.get_entry("debug_mode")==True:
-    DEBUG = True
-elif specto_gconf.get_entry("debug_mode")==False:
-    DEBUG = False
-else:
-    DEBUG = False
+DEBUG = specto_gconf.get_entry("debug_mode")
 
 try:
     import pygtk
@@ -208,9 +203,8 @@ class Specto:
     def get_version_number(self):
         """Return the Specto version number"""
         version_file_path = (os.path.join(self.util.get_path(category="doc"), "VERSION"))
-        version_file = open(version_file_path, 'r')
-        version = str(version_file.readline()[:-1])
-        version_file.close
+        with open(version_file_path, 'r') as version_file:
+            version = str(version_file.readline()[:-1])
         return version
 
     def check_instance(self):
@@ -222,9 +216,8 @@ class Specto:
         os.chmod(pidfile, 0600)
 
         #see if specto is already running
-        f = open(pidfile, "r")
-        pid = f.readline()
-        f.close()
+        with open(pidfile, "r") as f:
+            pid = f.readline()
         if pid:
             p = os.system("ps --no-heading --pid " + pid)
             p_name = os.popen("ps -f --pid " + pid).read()
@@ -267,9 +260,8 @@ class Specto:
                     sys.exit(0)
 
         #write the pid file
-        f = open(pidfile, "w")
-        f.write(str(os.getpid()))
-        f.close()
+        with open(pidfile, "w") as f:
+            f.write(str(os.getpid()))
 
     def mark_watch_status(self, status, id):
         """ get the watch status (checking, changed, idle) """

@@ -526,3 +526,20 @@ def get_object_value(widget_type, value):
                     value.values()[0][1].get_value())
 
     return result
+
+def create_menu_item(label, callback=None, icon=None):
+    menuItem = gtk.MenuItem(label, True)
+    if icon:
+        menuItem = gtk.ImageMenuItem(label)
+        image = gtk.Image()
+        # handle the icon as a stock icon.
+        try:
+            image.set_from_stock(icon, gtk.ICON_SIZE_MENU)
+        except TypeError:
+            # err, icon is a string, do nothing.
+            image = icon
+        menuItem.set_image(image)
+        image.show()
+    if callback:
+        menuItem.connect('activate', callback)
+    return menuItem

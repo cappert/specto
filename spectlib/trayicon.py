@@ -23,6 +23,8 @@
 
 import gtk
 import os
+
+from spectlib.gtkconfig import create_menu_item
 from spectlib.i18n import _
 
 
@@ -131,54 +133,39 @@ class Tray:
         # status_icon : the object which received the signal
         # button :      the button that was pressed, or 0 if the signal is not emitted in response to a button press event
         # activate_time :       the timestamp of the event that triggered the signal emission
-        if self.specto.specto_gconf.get_entry("always_show_icon") == True and self.specto.notifier.get_state() == True:
-            text = _("Hide window")
-        else:
-            text = _("Show window")
 
         # Create menu items
-        self.item_show = gtk.MenuItem(text, True)
-        self.item_pref = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
-        self.item_help = gtk.ImageMenuItem(gtk.STOCK_HELP)
-        self.item_about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-        self.item_quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-        self.item_clear = gtk.MenuItem(_("Mark as read"), True)
-        self.item_refresh = gtk.ImageMenuItem(_("Refresh All"))
-        image = gtk.image_new_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
-        self.item_refresh.set_image(image)
-        image.show()
+        if self.specto.specto_gconf.get_entry("always_show_icon") \
+                and self.specto.notifier.get_state():
+            self.item_show = create_menu_item(_("Hide window"), self.show_notifier, None)
+        else:
+            self.item_show = create_menu_item(_("Show window"), self.show_notifier, None)
+
+        self.item_pref = create_menu_item(gtk.STOCK_PREFERENCES, self.show_preferences, gtk.STOCK_PREFERENCES)
+        self.item_help = create_menu_item(gtk.STOCK_HELP, self.show_help, gtk.STOCK_HELP)
+        self.item_about = create_menu_item(gtk.STOCK_ABOUT, self.show_about, gtk.STOCK_ABOUT)
+        self.item_quit = create_menu_item(gtk.STOCK_QUIT, self.quit, gtk.STOCK_QUIT)
+        self.item_clear = create_menu_item(_("Mark as read"), None, None)
+        self.item_refresh = create_menu_item(_("Refresh All"), self.refresh, gtk.STOCK_REFRESH)
 
         #create submenu for changed watches
         self.sub_menu = gtk.Menu()
 
-        self.sub_item_clear = gtk.ImageMenuItem(_("_Mark all read"), True)
-        image = gtk.image_new_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
-        self.sub_item_clear.set_image(image)
-        image.show()
-
-        self.sub_item_clear.connect('activate', self.specto.notifier.mark_all_as_read)
+        self.sub_item_clear = create_menu_item(_("_Mark all read"),
+                self.specto.notifier.mark_all_as_read, gtk.STOCK_CLEAR)
         self.sub_menu.append(self.sub_item_clear)
 
         self.sub_menu.append(gtk.SeparatorMenuItem())
 
         for watch in self.specto.watch_db:
             if watch.changed == True:
-                self.sub_item_clear = gtk.ImageMenuItem(watch.name, True)
                 image = gtk.image_new_from_pixbuf(self.notifier.get_icon(watch.icon, 0, False))
-                self.sub_item_clear.set_image(image)
+                self.sub_item_clear = create_menu_item(watch.name, None, image)
                 self.sub_item_clear.connect('activate', self.specto.notifier.mark_watch_as_read, watch.id)
                 self.sub_menu.append(self.sub_item_clear)
 
         self.sub_menu.show_all()
         self.item_clear.set_submenu(self.sub_menu)
-
-        # Connect the events
-        self.item_show.connect('activate', self.show_notifier)
-        self.item_refresh.connect('activate', self.refresh)
-        self.item_pref.connect('activate', self.show_preferences)
-        self.item_help.connect('activate', self.show_help)
-        self.item_about.connect('activate', self.show_about)
-        self.item_quit.connect('activate', self.quit)
 
         # Create the menu
         self.menu = gtk.Menu()

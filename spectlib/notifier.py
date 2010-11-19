@@ -35,23 +35,21 @@ from spectlib.import_watch import Import_watch
 from spectlib.export_watch import Export_watch
 from spectlib.trayicon import Tray
     
+INDICATOR = True
 try:
     from spectlib.tools.indicator import Indicator
 except:
     INDICATOR = False
-else:
-    INDICATOR = True
-    
+
+SOUND = True
 try:
     from spectlib.tools.sound import Sound
 except:
     SOUND = False
-else:
-    SOUND = True
 
 
-import spectlib.util
-from spectlib.gtkconfig import ErrorDialog
+from spectlib.util import show_webpage
+from spectlib.gtkconfig import ErrorDialog, RemoveDialog, create_menu_item
 from spectlib.i18n import _
 
 try:
@@ -517,40 +515,28 @@ class Notifier:
         id = int(model.get_value(iter, 3))
         watch = self.specto.watch_db[id]
         menu = gtk.Menu()
+        menuItem = None
 
-        menuItem = gtk.ImageMenuItem(_("Refresh"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_REFRESH, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate', self.refresh_watch)
-        if watch.active == False:
+        menuItem = create_menu_item(_("Refresh"), self.refresh_watch,
+            gtk.STOCK_REFRESH)
+        if not watch.active:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
 
-        menuItem = gtk.ImageMenuItem(_("Mark as read"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate', self._mark_watch_as_read)
-        if watch.changed == False:
+        menuItem = create_menu_item(_("Mark as read"), self._mark_watch_as_read,
+            gtk.STOCK_CLEAR)
+        if not watch.changed:
             menuItem.set_sensitive(False)
         menu.append(menuItem)
 
         separator = gtk.SeparatorMenuItem()
         menu.append(separator)
 
-        menuItem = gtk.ImageMenuItem(_("Edit"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_EDIT, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate', self.edit_watch)
+        menuItem = create_menu_item(_("Edit"), self.edit_watch, gtk.STOCK_EDIT)
         menu.append(menuItem)
 
-        menuItem = gtk.ImageMenuItem(_("Remove"))
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU)
-        menuItem.set_image(image)
-        menuItem.connect('activate', self.remove_watch)
+        menuItem = create_menu_item(_("Remove"), self.remove_watch,
+            gtk.STOCK_REMOVE)
         menu.append(menuItem)
 
         menu.show_all()
@@ -627,7 +613,7 @@ class Notifier:
         except:
             pass
         else:
-            dialog = spectlib.gtkconfig.RemoveDialog(_("Remove a watch"),
+            dialog = RemoveDialog(_("Remove a watch"),
             (_('<big>Remove the watch "%s"?</big>\nThis operation cannot be undone.') % self.specto.watch_db[id].name))
             answer = dialog.show()
             if answer == True:
@@ -695,10 +681,7 @@ class Notifier:
 
     def get_state(self):
         """ Return True if the notifier window is visible. """
-        if self.notifier.flags() & gtk.VISIBLE:
-            return True
-        else:
-            return False
+        return bool(self.notifier.flags() & gtk.VISIBLE)
 
     def create_notifier_gui(self):
         """ Create the gui from the notifier. """
@@ -1038,7 +1021,7 @@ class Notifier:
 
     def show_help(self, *args):
         """ Call the main function to show the help. """
-        self.specto.util.show_webpage("http://code.google.com/p/specto/w/list")
+        show_webpage("http://code.google.com/p/specto/w/list")
 
     def show_about(self, *args):
         """ Call the main function to show the about window. """

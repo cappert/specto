@@ -44,7 +44,7 @@ def get_add_gui_info():
 
 class Watch_mail_imap(Watch):
     """
-    Watch class that will check if you recevied a new mail on your pop3 account.
+    Watch class that will check if you recevied a new mail on your IMAP account.
     """
 
     def __init__(self, specto, id, values):
