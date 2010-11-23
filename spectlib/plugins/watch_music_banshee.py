@@ -24,7 +24,7 @@
 # Plugin based on the mumbles plugin written by Steven
 
 from spectlib.watch import Watch
-from spectlib.i18n import _
+
 import dbus
 
 type = "Watch_music_banshee"

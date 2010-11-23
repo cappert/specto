@@ -27,7 +27,6 @@ import spectlib.tools.web_proxy as web_proxy
 from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
-from spectlib.i18n import _
 import spectlib.util
 
 type = "Watch_mail_gmail"

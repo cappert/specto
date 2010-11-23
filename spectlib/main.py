@@ -27,6 +27,9 @@
 global GTK
 global DEBUG #the DEBUG constant which controls how much info is output
 
+# Setup locale and gettext
+import spectlib.i18n
+
 import os
 import sys
 import signal
@@ -39,8 +42,8 @@ from spectlib.watch import Watch_io
 from spectlib.console import Console
 from spectlib.logger import Logger
 from spectlib.tools.specto_gconf import Specto_gconf
-from spectlib.i18n import _
 from spectlib.tools import networkmanager as conmgr
+
 
 VERSION = "undefined"
 try:
@@ -79,7 +82,6 @@ class Specto:
         self.CACHE_DIR = self.util.get_path("tmp")
         self.FILE = self.util.get_file()
 
-        self.gettext = gettext.textdomain("specto")
         self.logger = Logger(self)
 
         self.VERSION = VERSION # The Specto version number

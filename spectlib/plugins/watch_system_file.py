@@ -25,7 +25,6 @@ import os
 
 from spectlib.config import String
 from spectlib.gtkconfig import FileChooser
-from spectlib.i18n import _
 from spectlib.watch import Watch
 
 

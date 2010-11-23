@@ -24,7 +24,7 @@
 from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
-from spectlib.i18n import _
+
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop

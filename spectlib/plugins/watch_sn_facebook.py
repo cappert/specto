@@ -25,7 +25,6 @@ from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
 import spectlib.tools.web_proxy as web_proxy
-from spectlib.i18n import _
 
 import os
 import formatter

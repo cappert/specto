@@ -27,7 +27,6 @@ pygtk.require("2.0")
 import gtk
 
 from spectlib.util import show_webpage, get_path
-from spectlib.i18n import _
 
 
 class About:

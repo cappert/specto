@@ -28,7 +28,6 @@ import poplib
 import email
 import os
 from socket import error
-from spectlib.i18n import _
 import string
 
 type = "Watch_mail_pop3"

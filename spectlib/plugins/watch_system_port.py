@@ -23,7 +23,6 @@
 
 from spectlib.watch import Watch
 import spectlib.config
-from spectlib.i18n import _
 
 import os
 

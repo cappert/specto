@@ -25,7 +25,6 @@ import gtk
 import os
 
 from spectlib.gtkconfig import create_menu_item
-from spectlib.i18n import _
 
 
 def gettext_noop(s):

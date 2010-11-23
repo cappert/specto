@@ -36,7 +36,6 @@ import urlparse
 from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
-from spectlib.i18n import _
 
 type = "Watch_sn_twitter"
 type_desc = _("Twitter")

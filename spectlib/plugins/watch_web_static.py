@@ -35,7 +35,6 @@ from httplib import HTTPMessage, BadStatusLine
 from math import fabs
 from re import compile #this is the regex compile module to parse some stuff such as <link> tags in feeds
 from urllib2 import URLError
-from spectlib.i18n import _
 import formatter
 import htmllib
 import cStringIO
