@@ -197,6 +197,7 @@ setup(name = "specto",
 
 os.remove ("spectlib/constants.py")
 os.remove ("data/indicator/specto")
+os.remove ("specto.desktop")
 
 if sys.argv[1] == "install":
     gtk_update_icon_cache = '''gtk-update-icon-cache -f -t \
