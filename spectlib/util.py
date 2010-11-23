@@ -22,11 +22,15 @@
 # Boston, MA 02111-1307, USA.
 
 import os
-import sys
 from subprocess import call
 
 from spectlib.tools.specto_gconf import Specto_gconf
 
+PREFIX = ''
+try:
+    from spectlib.constants import PREFIX
+except ImportError:
+    pass
 
 def return_webpage(webpage):
     """ Open the webpage in the default browser. """
@@ -56,16 +60,16 @@ def get_path(category=None):
     """ Return the correct path. """
     if not os.path.exists('data') or not os.path.exists('spectlib'):
         if not category:
-            PATH = "%s/share/specto/" % sys.prefix
+            PATH = "%s/share/specto/" % PREFIX
         elif category=="doc":
-            PATH = "%s/share/doc/specto/" % sys.prefix
+            PATH = "%s/share/" % PREFIX
         elif category=="src":
             PATH = os.path.dirname(os.path.abspath(__file__))
     else:
         if not category:
             PATH =os.path.join(os.getcwd(), "data/")
         elif category=="doc":
-            PATH = os.path.join(os.getcwd(), "data/doc/")
+            PATH = os.path.join(os.getcwd(), "")
         elif category=="src":
             PATH = os.path.dirname(os.path.abspath(__file__))
 
