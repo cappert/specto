@@ -1,7 +1,6 @@
 [Desktop Entry]
-Name=Specto
-Comment=Be notified of everything
-Comment[fr]=Soyez alerte
+_Name=Specto
+_Comment=Be notified of everything
 Categories=GTK;GNOME;Utility;
 Exec=specto
 Icon=specto
