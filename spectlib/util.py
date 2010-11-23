@@ -62,7 +62,7 @@ def get_path(category=None):
         if not category:
             PATH = "%s/share/specto/" % PREFIX
         elif category=="doc":
-            PATH = "%s/share/" % PREFIX
+            PATH = "%s/share/doc/specto/" % PREFIX
         elif category=="src":
             PATH = os.path.dirname(os.path.abspath(__file__))
     else:
