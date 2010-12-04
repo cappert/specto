@@ -144,7 +144,7 @@ Now to create a patch out of the latest change::
     bzr send lp:specto -o short_description.patch
 
 Otherwise you can send the patch, or the whole file in case of
-translations, to the address TODO: add a proper email address.
+translations, to the address: nekohayo _at_ gmail.com
 
 Tools of the Trade
 ------------------
