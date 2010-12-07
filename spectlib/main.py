@@ -56,7 +56,7 @@ except:
     GTK = False
 else:
     GTK = True
-    from spectlib.notifier import Notifier
+    from spectlib.notifier import Notifier, INDICATOR
 
 
 class Specto:
@@ -103,17 +103,21 @@ class Specto:
                 self.GTK = True
                 self.CONSOLE = False
                 self.icon_theme = gtk.icon_theme_get_default()
-                self.notifier = Notifier(self)
 
-                if self.specto_gconf.get_entry("always_show_icon") == False:
+                #allow users to hide the window on startup
+                if sys.argv[1:] and "--no-window" in sys.argv[1:][0]:
+                    self.notifier_hide = True
+                #always show if there's no icon and no indicator support
+                elif self.specto_gconf.get_entry("always_show_icon") == False and not INDICATOR:
                     self.notifier_hide = False
                 elif self.specto_gconf.get_entry("show_notifier")==True:
                     self.notifier_hide = False
-                    self.toggle_notifier()
                 elif self.specto_gconf.get_entry("show_notifier")==False:
                     self.notifier_hide = True
                 else:#just in case the entry was never created in gconf
                     self.notifier_keep_hidden = False
+                    
+                self.notifier = Notifier(self)
             else:
                 sys.exit(0)
 
