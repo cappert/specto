@@ -295,8 +295,8 @@ class Watch:
     def set_error(self, message=""):
         self.error = True
         if message != "":
-            self.error_message = str(message)
-            self.specto.logger.log(('%s') % str(message), "error", self.name)
+            self.error_message = str(message).replace('\n',' ')
+            self.specto.logger.log(('%s') % self.error_message, "error", self.name)
         else:
             self.error_message = _("Unexpected error:") + " " + str(sys.exc_info()[1])
             self.specto.logger.log(self.error_message, "error", self.name)
