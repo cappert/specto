@@ -716,7 +716,7 @@ class Notifier:
             self.builder.get_object("display_all_watches").set_active(False)
         self.startup = False
 
-        if self.specto.specto_gconf.get_entry("show_notifier") == True:
+        if not self.specto.notifier_hide:
             self.notifier.show()
 
         ### Checkbox
