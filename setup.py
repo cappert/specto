@@ -133,6 +133,7 @@ custom_images = []
 
 data_files = [
     ("share/applications", ["specto.desktop"]),
+    ("share/doc/specto", ["AUTHORS", "COPYING"]),
     ('share/specto/uis', give_files('data/uis/', '.ui')),
     ('share/indicators/messages/applications', ['data/indicator/specto'])
 ]
