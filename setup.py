@@ -203,7 +203,7 @@ os.remove ("specto.desktop")
 
 if sys.argv[1] == "install":
     gtk_update_icon_cache = '''gtk-update-icon-cache -f -t \
-%s/share/specto/icons/hicolor''' % prefix
+%s/share/icons/hicolor''' % prefix
     root_specified = len (filter (lambda s: s.startswith ("--root"),
                                   sys.argv)) > 0
     if not root_specified:
