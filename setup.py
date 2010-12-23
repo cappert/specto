@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, os, glob
+import sys
+import os
+import glob
 import subprocess
 from stat import *
 from distutils.core import setup
