@@ -1,21 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Brazilian Portuguese translation for specto
+# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# This file is distributed under the same license as the specto package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: specto\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 15:38+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2010-12-24 15:37+0100\n"
+"PO-Revision-Date: 2007-07-03 23:52-0500\n"
+"Last-Translator: Jeff Fortin <nekohayo ~at~ gmail.com>\n"
+"Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-06-21 18:38:08+0000\n"
 
 #: ../specto.desktop.in.h:1
 msgid "Be notified of everything"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: ../data/uis/add_watch.ui.h:2
 msgid "Add a Watch"
-msgstr ""
+msgstr "Adicionar um Observador"
 
 #: ../data/uis/add_watch.ui.h:3 ../data/uis/edit_watch.ui.h:4
 msgid "Advanced options"
@@ -42,8 +42,9 @@ msgid "Days"
 msgstr ""
 
 #: ../data/uis/add_watch.ui.h:5 ../data/uis/edit_watch.ui.h:7
+#, fuzzy
 msgid "General options"
-msgstr ""
+msgstr "<b>Configurações Gerais</b>"
 
 #: ../data/uis/add_watch.ui.h:6 ../data/uis/edit_watch.ui.h:8
 msgid "Hours"
@@ -55,11 +56,11 @@ msgstr ""
 
 #: ../data/uis/add_watch.ui.h:8 ../data/uis/edit_watch.ui.h:10
 msgid "Name:"
-msgstr ""
+msgstr "Nome:"
 
 #: ../data/uis/add_watch.ui.h:9 ../data/uis/edit_watch.ui.h:11
 msgid "Refresh Interval:"
-msgstr ""
+msgstr "Intervalo de Atualização:"
 
 #: ../data/uis/add_watch.ui.h:10 ../data/uis/edit_watch.ui.h:12
 msgid "Seconds"
@@ -75,15 +76,17 @@ msgstr ""
 
 #: ../data/uis/edit_watch.ui.h:1
 msgid "<b>General settings</b>"
-msgstr ""
+msgstr "<b>Configurações Gerais</b>"
 
 #: ../data/uis/edit_watch.ui.h:3
+#, fuzzy
 msgid "<b>Watch options</b>"
-msgstr ""
+msgstr "<b>Nome do Observador</b>"
 
 #: ../data/uis/edit_watch.ui.h:6 ../spectlib/notifier.py:821
+#, fuzzy
 msgid "Error log"
-msgstr ""
+msgstr "Registro de Erros"
 
 #: ../data/uis/edit_watch.ui.h:13
 msgid "Watch $WATCH_NAME"
@@ -91,11 +94,11 @@ msgstr ""
 
 #: ../data/uis/import_export.ui.h:1
 msgid "Deselect all"
-msgstr ""
+msgstr "Remover Seleção total"
 
 #: ../data/uis/import_export.ui.h:2
 msgid "Select all"
-msgstr ""
+msgstr "Selecionar tudo"
 
 #: ../data/uis/log_dialog.ui.h:1
 msgid "All"
@@ -112,12 +115,13 @@ msgstr ""
 #. create a dialog
 #: ../data/uis/log_dialog.ui.h:4 ../data/uis/notifier.ui.h:7
 #: ../spectlib/main.py:354
+#, fuzzy
 msgid "Error"
-msgstr ""
+msgstr "Registro de Erros"
 
 #: ../data/uis/log_dialog.ui.h:5
 msgid "Filter:"
-msgstr ""
+msgstr "Filtro:"
 
 #: ../data/uis/log_dialog.ui.h:6
 msgid "Info"
@@ -125,7 +129,7 @@ msgstr ""
 
 #: ../data/uis/log_dialog.ui.h:7
 msgid "Logs"
-msgstr ""
+msgstr "Registros"
 
 #: ../data/uis/log_dialog.ui.h:8
 msgid "Warning"
@@ -133,15 +137,15 @@ msgstr ""
 
 #: ../data/uis/notifier.ui.h:1
 msgid "By Active"
-msgstr ""
+msgstr "Por Observador Ativo"
 
 #: ../data/uis/notifier.ui.h:2
 msgid "By Name"
-msgstr ""
+msgstr "Pelo Nome"
 
 #: ../data/uis/notifier.ui.h:3
 msgid "By Watch Type"
-msgstr ""
+msgstr "Por Tipo de Observador"
 
 #: ../data/uis/notifier.ui.h:4
 msgid "Debug information"
@@ -149,11 +153,11 @@ msgstr ""
 
 #: ../data/uis/notifier.ui.h:5
 msgid "Display _All Watches"
-msgstr ""
+msgstr "Exibir_Todos os Observadores"
 
 #: ../data/uis/notifier.ui.h:6
 msgid "Display _Toolbar"
-msgstr ""
+msgstr "Exibir_Barra de Ferramentas"
 
 #: ../data/uis/notifier.ui.h:8
 msgid "Extra information"
@@ -170,11 +174,11 @@ msgstr ""
 
 #: ../data/uis/notifier.ui.h:11
 msgid "Notifications"
-msgstr ""
+msgstr "Notificações"
 
 #: ../data/uis/notifier.ui.h:12
 msgid "Sorting"
-msgstr ""
+msgstr "Classificar"
 
 #: ../data/uis/notifier.ui.h:13
 msgid "Visit the issue tracker"
@@ -182,73 +186,77 @@ msgstr ""
 
 #: ../data/uis/notifier.ui.h:14
 msgid "_Edit"
-msgstr ""
+msgstr "_Editar"
 
 #: ../data/uis/notifier.ui.h:15
 msgid "_Error Log"
-msgstr ""
+msgstr "_Registro de Erros"
 
 #: ../data/uis/notifier.ui.h:16
 msgid "_Export Watches"
-msgstr ""
+msgstr "_Exportar Observadores"
 
 #: ../data/uis/notifier.ui.h:17
 msgid "_File"
-msgstr ""
+msgstr "_Arquivo"
 
 #: ../data/uis/notifier.ui.h:18
 msgid "_Help"
-msgstr ""
+msgstr "_Ajuda"
 
 #: ../data/uis/notifier.ui.h:19
 msgid "_Import Watches"
-msgstr ""
+msgstr "_Importar Observadores"
 
 #: ../data/uis/notifier.ui.h:20 ../spectlib/trayicon.py:154
 msgid "_Mark all read"
 msgstr ""
 
 #: ../data/uis/notifier.ui.h:21
+#, fuzzy
 msgid "_Refresh All"
-msgstr ""
+msgstr "_Limpar tudo"
 
 #: ../data/uis/notifier.ui.h:22
 msgid "_View"
-msgstr ""
+msgstr "_Exibir"
 
 #: ../data/uis/preferences.ui.h:1
 msgid "<b>Debugging and Logging</b>"
-msgstr ""
+msgstr "<b>Executando Debugg e registrando</b>"
 
 #: ../data/uis/preferences.ui.h:2
 msgid "<b>Display</b>"
-msgstr ""
+msgstr "<b>Exibir</b>"
 
 #: ../data/uis/preferences.ui.h:3
+#, fuzzy
 msgid "<b>Security</b>"
-msgstr ""
+msgstr "<b>Porta:</b>"
 
 #: ../data/uis/preferences.ui.h:4
 msgid "<b>Sounds</b>"
-msgstr ""
+msgstr "<b>Sons</b>"
 
 #: ../data/uis/preferences.ui.h:5
 msgid "Always show the icon in the notification area"
-msgstr ""
+msgstr "Sempre exibir o ícone na área de notificação"
 
 #: ../data/uis/preferences.ui.h:6
 msgid "Display the notification window in the window list"
-msgstr ""
+msgstr "Exibir a janela de notificação na lista de janelas"
 
 #: ../data/uis/preferences.ui.h:7
 msgid "Enable debug mode and logging"
-msgstr ""
+msgstr "Habilitar modo de debugg e registro"
 
 #: ../data/uis/preferences.ui.h:8
 msgid ""
 "If activated, you will receive more information when running Specto from a "
 "terminal, and more information will be printed to the logs."
 msgstr ""
+"Se ativado, você irá receber mais informações em uma janela de terminal do "
+"Specto e também serão armazenadas de forma adicional nos registros."
 
 #: ../data/uis/preferences.ui.h:9
 msgid ""
@@ -268,11 +276,11 @@ msgstr ""
 
 #: ../data/uis/preferences.ui.h:12
 msgid "Preferences"
-msgstr ""
+msgstr "Preferências"
 
 #: ../data/uis/preferences.ui.h:13
 msgid "Select a File"
-msgstr ""
+msgstr "Selecionar um Arquivo"
 
 #: ../data/uis/preferences.ui.h:14
 msgid "Show notifications when a watch has changed"
@@ -286,7 +294,7 @@ msgstr ""
 #. and hide the tab.
 #: ../spectlib/about.py:55
 msgid "translator-credits"
-msgstr ""
+msgstr "Charles Gratarolli <charlesgtr@yahoo.com.br>"
 
 #: ../spectlib/about.py:68
 msgid "Specto's Website"
@@ -299,20 +307,22 @@ msgid ""
 msgstr ""
 
 #: ../spectlib/console.py:44 ../spectlib/watch.py:170
+#, fuzzy
 msgid "Watch has changed."
-msgstr ""
+msgstr "Observador: \"%s\" tem um erro"
 
 #: ../spectlib/console.py:49 ../spectlib/watch.py:134
 msgid "Watch started checking."
 msgstr ""
 
 #: ../spectlib/console.py:51
+#, fuzzy
 msgid "Watch is idle."
-msgstr ""
+msgstr "Observador : \"%s\" editado."
 
 #: ../spectlib/console.py:53 ../spectlib/watch.py:205
 msgid "No network connection detected"
-msgstr ""
+msgstr "Conexão de rede não detectada"
 
 #: ../spectlib/console.py:55 ../spectlib/watch.py:166 ../spectlib/watch.py:201
 msgid "There was an error checking the watch"
@@ -320,7 +330,7 @@ msgstr ""
 
 #: ../spectlib/edit_watch.py:70
 msgid "Edit watch: "
-msgstr ""
+msgstr "Editar Observador:"
 
 #: ../spectlib/edit_watch.py:180 ../spectlib/notifier.py:616
 msgid "Remove a watch"
@@ -335,16 +345,17 @@ msgstr ""
 
 #: ../spectlib/export_watch.py:57 ../spectlib/export_watch.py:58
 msgid "Export watches"
-msgstr ""
+msgstr "Exportar Observadores"
 
 #: ../spectlib/export_watch.py:85 ../spectlib/import_watch.py:94
+#, fuzzy
 msgid "Select"
-msgstr ""
+msgstr "Selecionar tudo"
 
 #: ../spectlib/export_watch.py:91 ../spectlib/import_watch.py:99
 #: ../spectlib/notifier.py:733
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. self.columnTitle_renderer.set_property("editable", True)
 #. self.columnTitle_renderer.connect('edited', self.change_entry_name)
@@ -370,25 +381,27 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:101
 #: ../spectlib/plugins/watch_web_static.py:270
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: ../spectlib/export_watch.py:105 ../spectlib/import_watch.py:111
 #: ../spectlib/notifier.py:751
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../spectlib/export_watch.py:112 ../spectlib/import_watch.py:118
 #: ../spectlib/notifier.py:758
 msgid "TYPE"
-msgstr ""
+msgstr "TIPO"
 
 #: ../spectlib/gtkconfig.py:172 ../spectlib/gtkconfig.py:449
+#, fuzzy
 msgid "Choose a file"
-msgstr ""
+msgstr "Selecione um arquivo ou pasta"
 
 #: ../spectlib/gtkconfig.py:205 ../spectlib/gtkconfig.py:455
+#, fuzzy
 msgid "Choose a directory"
-msgstr ""
+msgstr "Selecione um arquivo ou pasta"
 
 #: ../spectlib/gtkconfig.py:343
 msgid ""
@@ -398,20 +411,22 @@ msgid ""
 msgstr ""
 
 #: ../spectlib/gtkconfig.py:361
+#, fuzzy
 msgid "Save file as"
-msgstr ""
+msgstr "Salvar como"
 
 #: ../spectlib/gtkconfig.py:384
+#, fuzzy
 msgid "Open file"
-msgstr ""
+msgstr "arquivo"
 
 #: ../spectlib/import_watch.py:67 ../spectlib/import_watch.py:68
 msgid "Import watches"
-msgstr ""
+msgstr "Importar Observadores"
 
 #: ../spectlib/main.py:62
 msgid "no GTK, activating console mode"
-msgstr ""
+msgstr "GTK desabilitado, ativando modo console"
 
 #: ../spectlib/main.py:100
 msgid "Console mode enabled."
@@ -423,24 +438,30 @@ msgstr ""
 
 #: ../spectlib/main.py:260 ../spectlib/main.py:263 ../spectlib/main.py:370
 msgid "Specto is already running!"
-msgstr ""
+msgstr "O Specto já está sendo executado!"
 
 #. create a close dialog
 #: ../spectlib/main.py:308
 msgid "Cannot quit yet"
-msgstr ""
+msgstr "O programa ainda não pode ser finalizado "
 
 #: ../spectlib/main.py:314
 msgid "Murder!"
-msgstr ""
+msgstr "Finalizado!"
 
 #: ../spectlib/main.py:325
+#, fuzzy
 msgid ""
 "<b><big>Specto is currently busy and cannot quit yet.</big></b>\n"
 "\n"
 "This may be because it is checking for watch changes.\n"
 "However, you can try forcing it to quit by clicking the murder button."
 msgstr ""
+"<b><big>O Specto está ocupado e ainda não pode ser finalizado.</big></b>\n"
+"\n"
+"Isto ocorre devido a verificação de atualizações para os Observadores.\n"
+"Entretanto, você pode forçar a terminar o programa, apertando o botão "
+"Finalizar."
 
 #. menu item, does not allow changing label
 #: ../spectlib/notifier.py:184
@@ -449,8 +470,9 @@ msgstr ""
 
 #. menu item, does not allow changing label
 #: ../spectlib/notifier.py:205 ../spectlib/trayicon.py:149
+#, fuzzy
 msgid "Refresh All"
-msgstr ""
+msgstr "Intervalo de Atualização:"
 
 #: ../spectlib/notifier.py:223
 #, python-format
@@ -458,15 +480,18 @@ msgid "The watch \"%s\" is checking."
 msgstr ""
 
 #: ../spectlib/notifier.py:240 ../spectlib/notifier.py:387
+#, fuzzy
 msgid ""
 "The network connection seems to be down, networked watches will not check "
 "until then."
 msgstr ""
+"A conexão de rede parece estar desativada. Os Observadores não serão "
+"atualizados até nova conexão."
 
 #: ../spectlib/notifier.py:246
-#, python-format
+#, fuzzy, python-format
 msgid "The watch \"%s\" has a problem."
-msgstr ""
+msgstr "Observador: \"%s\" tem um erro"
 
 #: ../spectlib/notifier.py:251
 #, python-format
@@ -474,9 +499,9 @@ msgid "%s encountered a problem"
 msgstr ""
 
 #: ../spectlib/notifier.py:259
-#, python-format
+#, fuzzy, python-format
 msgid "The watch \"%s\" has changed."
-msgstr ""
+msgstr "Observador \"%s\" iniciado"
 
 #: ../spectlib/notifier.py:274
 #, python-format
@@ -500,8 +525,9 @@ msgid "Refresh"
 msgstr ""
 
 #: ../spectlib/notifier.py:535
+#, fuzzy
 msgid "Edit"
-msgstr ""
+msgstr "_Editar"
 
 #: ../spectlib/notifier.py:538
 msgid "Remove"
@@ -512,6 +538,8 @@ msgid ""
 "You can add all kinds of websites as watches. Static pages, RSS or Atom "
 "feeds, etc. Specto will automatically handle them."
 msgstr ""
+"Você pode adicionar todos os tipos de páginas de Internet como Observador. "
+"Páginas estáticas, RSS ou Atom. O Specto irá observa-las automaticamente."
 
 #: ../spectlib/notifier.py:569
 msgid ""
@@ -519,38 +547,46 @@ msgid ""
 "difference percentage. This allows you to adapt to websites that change "
 "constantly or have lots of advertising."
 msgstr ""
+"Os observadores de Páginas da Internet podem usar uma margem de erro que lhe "
+"permite ajustar uma porcentagem mínima de variação. Isto lhe possibilita se "
+"adaptar a páginas que variam constantemente ou possuem muita propaganda."
 
 #: ../spectlib/notifier.py:570
 msgid ""
 "Single-click an existing watch to display information, and double-click it "
 "to open the content."
 msgstr ""
+"Clique uma vez em um observador para mostrar sua informação e duas vezes "
+"para exibir seu conteúdo."
 
 #: ../spectlib/notifier.py:571
 msgid ""
 "Please set a reasonable refresh interval in order to save bandwidth and "
 "prevent you from being blocked from content providers."
 msgstr ""
+"Favor ajustar um intervalo de atualização razoável a fim de economizar banda "
+"e preveni-lo de ser bloqueado pelos provedores de conteúdo."
 
 #: ../spectlib/notifier.py:726
 msgid "Active"
-msgstr ""
+msgstr "Ativado"
 
 #: ../spectlib/notifier.py:775
 msgid "Tip of the Day:"
-msgstr ""
+msgstr "Dica do Dia:"
 
 #: ../spectlib/trayicon.py:101
+#, fuzzy
 msgid "No changed watches."
-msgstr ""
+msgstr "Nenhum Observador atualizado."
 
 #: ../spectlib/trayicon.py:140
 msgid "Hide window"
-msgstr ""
+msgstr "Fechar Janela"
 
 #: ../spectlib/trayicon.py:142
 msgid "Show window"
-msgstr ""
+msgstr "Exibir janela"
 
 #: ../spectlib/watch.py:94
 msgid "There was an error starting the watch"
@@ -570,8 +606,9 @@ msgstr ""
 
 #. otherwise, it will be saved untranslated in the watch list
 #: ../spectlib/watch.py:247 ../spectlib/watch.py:248
+#, fuzzy
 msgid "No changes yet"
-msgstr ""
+msgstr "Não existem atualizações disponiveis"
 
 #: ../spectlib/watch.py:301
 msgid "Unexpected error:"
@@ -707,8 +744,9 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:41
 #: ../spectlib/plugins/watch_web_greader.py:103
 #: ../spectlib/plugins/watch_web_static.py:278
+#, fuzzy
 msgid "Username"
-msgstr ""
+msgstr "Nome de Usuário:"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:41
 #: ../spectlib/plugins/watch_mail_gwave.py:44
@@ -718,8 +756,9 @@ msgstr ""
 #: ../spectlib/plugins/watch_sn_twitter.py:49
 #: ../spectlib/plugins/watch_web_greader.py:42
 #: ../spectlib/plugins/watch_web_static.py:279
+#, fuzzy
 msgid "Password"
-msgstr ""
+msgstr "Senha:"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:42
 msgid "Label"
@@ -785,17 +824,19 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_mail_imap.py:32
 msgid "IMAP"
-msgstr ""
+msgstr "IMAP"
 
 #: ../spectlib/plugins/watch_mail_imap.py:40
 #: ../spectlib/plugins/watch_mail_pop3.py:43
+#, fuzzy
 msgid "Host"
-msgstr ""
+msgstr "Computador:"
 
 #: ../spectlib/plugins/watch_mail_imap.py:41
 #: ../spectlib/plugins/watch_mail_pop3.py:44
+#, fuzzy
 msgid "Use SSL"
-msgstr ""
+msgstr "Usar SSL:"
 
 #: ../spectlib/plugins/watch_mail_imap.py:42
 msgid "Folder (optional)"
@@ -803,7 +844,7 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_mail_pop3.py:35
 msgid "POP3"
-msgstr ""
+msgstr "POP3"
 
 #: ../spectlib/plugins/watch_music_amarok.py:29
 msgid "Amarok"
@@ -848,12 +889,14 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_sn_facebook.py:43
 #: ../spectlib/plugins/watch_sn_facebook.py:231
+#, fuzzy
 msgid "Email"
-msgstr ""
+msgstr "Gmail"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:118
+#, fuzzy
 msgid "Wrong username/password"
-msgstr ""
+msgstr "O Observador: \"%s\" tem um erro: Nome de Usuário/Senha incorretos"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:126
 msgid "You received"
@@ -869,13 +912,14 @@ msgid "%d new messages"
 msgstr ""
 
 #: ../spectlib/plugins/watch_sn_facebook.py:136
+#, fuzzy
 msgid "a new notification"
-msgstr ""
+msgstr "Notificações"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:138
-#, python-format
+#, fuzzy, python-format
 msgid "%d new notifications"
-msgstr ""
+msgstr "Notificações"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:143
 msgid "a new request"
@@ -920,7 +964,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_file.py:39
 #: ../spectlib/plugins/watch_system_file.py:168
 msgid "File"
-msgstr ""
+msgstr "Arquivo"
 
 #: ../spectlib/plugins/watch_system_file.py:35
 #: ../spectlib/plugins/watch_system_folder.py:35
@@ -965,7 +1009,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_vc_bazaar.py:41
 #: ../spectlib/plugins/watch_vc_bazaar.py:167
 msgid "Folder"
-msgstr ""
+msgstr "Pasta"
 
 #: ../spectlib/plugins/watch_system_folder.py:77
 msgid "The watch is not set to a folder"
@@ -975,11 +1019,12 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_folder.py:139
 #, python-format
 msgid "Skipping %s"
-msgstr ""
+msgstr "Desconsiderando %s"
 
 #: ../spectlib/plugins/watch_system_folder.py:163
+#, fuzzy
 msgid "1 new file was created.\n"
-msgstr ""
+msgstr "Atualização: %s foi criada"
 
 #: ../spectlib/plugins/watch_system_folder.py:165
 msgid " new files were created.\n"
@@ -994,8 +1039,9 @@ msgid " files were removed.\n"
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_folder.py:173
+#, fuzzy
 msgid "1 file was modified.\n"
-msgstr ""
+msgstr "Atualização: %s foi modificada"
 
 #: ../spectlib/plugins/watch_system_folder.py:175
 msgid " files were modified.\n"
@@ -1008,8 +1054,9 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_port.py:31
 #: ../spectlib/plugins/watch_system_port.py:37
 #: ../spectlib/plugins/watch_system_port.py:106
+#, fuzzy
 msgid "Port"
-msgstr ""
+msgstr "Porta:"
 
 #: ../spectlib/plugins/watch_system_port.py:65
 msgid "Closed"
@@ -1030,20 +1077,21 @@ msgid "Status"
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_port.py:113
-#, python-format
+#, fuzzy, python-format
 msgid "The network socket on port %s was established."
-msgstr ""
+msgstr "A conexão, <b>%s</b>, foi estabelecida."
 
 #: ../spectlib/plugins/watch_system_port.py:115
-#, python-format
+#, fuzzy, python-format
 msgid "The network socket on port %s was closed."
-msgstr ""
+msgstr "A conexão, <b>%s</b>, foi fechada."
 
 #: ../spectlib/plugins/watch_system_process.py:32
 #: ../spectlib/plugins/watch_system_process.py:38
 #: ../spectlib/plugins/watch_system_process.py:93
+#, fuzzy
 msgid "Process"
-msgstr ""
+msgstr "Processo:"
 
 #: ../spectlib/plugins/watch_system_process.py:68
 msgid "Not running"
@@ -1054,13 +1102,15 @@ msgid "Running"
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_process.py:99
+#, fuzzy
 msgid "The system process has started."
-msgstr ""
+msgstr "O processo, <b>%s</b>, foi iniciado."
 
 #. the process check returned false, which means the process is not running
 #: ../spectlib/plugins/watch_system_process.py:101
+#, fuzzy
 msgid "The system process has stopped."
-msgstr ""
+msgstr "O processo, <b>%s</b>, foi parado."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:35
 msgid "Bazaar"
@@ -1137,16 +1187,316 @@ msgid "Filesize difference: %.2f"
 msgstr ""
 
 #: ../spectlib/plugins/watch_web_static.py:254
-#, python-format
+#, fuzzy, python-format
 msgid "Difference percentage: %s percent"
-msgstr ""
+msgstr "Porcentagem de Diferença:%s (Observador: \"%s\")"
 
 #: ../spectlib/plugins/watch_web_static.py:272
 #: ../spectlib/plugins/watch_web_static.py:277
+#, fuzzy
 msgid "URL"
-msgstr ""
+msgstr "URL:"
 
 #: ../spectlib/plugins/watch_web_static.py:273
 #: ../spectlib/plugins/watch_web_static.py:280
+#, fuzzy
 msgid "Error margin (%)"
-msgstr ""
+msgstr "Margem de Erro (%):"
+
+#~ msgid ""
+#~ "Choose \n"
+#~ "an other name"
+#~ msgstr ""
+#~ "Escolher \n"
+#~ "an outro nome"
+
+#~ msgid ""
+#~ "Edit existing\n"
+#~ "watch"
+#~ msgstr ""
+#~ "Editar existente\n"
+#~ "observador"
+
+#~ msgid ""
+#~ "Seconds\n"
+#~ "Minutes\n"
+#~ "Hours\n"
+#~ "Days"
+#~ msgstr ""
+#~ "Segundos\n"
+#~ "Minutos\n"
+#~ "Horas\n"
+#~ "Dias"
+
+#~ msgid "The watch name is already in use"
+#~ msgstr "O nome do do observador já está em uso"
+
+#~ msgid ""
+#~ "The watch name you specified already exists! Did you mean to modify that "
+#~ "existing watch, or did you really want to create a new one?\n"
+#~ "\n"
+#~ "If you want to create a new one, you need to choose a different name."
+#~ msgstr ""
+#~ "O nome do Observador especificado já existe! Você quer modificar o "
+#~ "existente ou criar um novo?\n"
+#~ "\n"
+#~ "Se quiser criar um novo, especifique um nome diferente."
+
+#~ msgid "Watch Type:"
+#~ msgstr "Tipo de Observador:"
+
+#~ msgid ""
+#~ "Website\n"
+#~ "Email\n"
+#~ "Files or folders\n"
+#~ "Process\n"
+#~ "Port"
+#~ msgstr ""
+#~ "Página da Internet\n"
+#~ "Email\n"
+#~ "Arquivos ou pastas\n"
+#~ "Processo\n"
+#~ "Porta"
+
+#~ msgid "Watch Settings"
+#~ msgstr "Configurações do Observador"
+
+#~ msgid ""
+#~ "All\n"
+#~ "Debug\n"
+#~ "Info\n"
+#~ "Warning\n"
+#~ "Error\n"
+#~ "Critical"
+#~ msgstr ""
+#~ "Todos\n"
+#~ "Debub\n"
+#~ "Info\n"
+#~ "Aviso\n"
+#~ "Erro\n"
+#~ "Crítico"
+
+#~ msgid "A problem occured"
+#~ msgstr "Ocorreu um problema"
+
+#~ msgid "A watch is updated"
+#~ msgstr "Um Observador está atualizado"
+
+#~ msgid "Duration (in seconds):"
+#~ msgstr "Duração(em segundos):"
+
+#~ msgid "Pop toasts from the tray icon when a watch is updated"
+#~ msgstr ""
+#~ "Um ícone na bandeja irá avisá-lo quando um Observador for atualizado"
+
+#~ msgid ""
+#~ "While in debug mode, Specto will provide more information in order to "
+#~ "help you diagnose problems. Logging will save all this information to a "
+#~ "log file. You can use this to help developers improve Specto."
+#~ msgstr ""
+#~ "Enquanto no modo debug, o Specto irá fornecer mais informações a fim de "
+#~ "auxilia-lo na soluções de problemas. O registro irá armazenar toda esta "
+#~ "informação em um arquivo de registro. Você pode utiliza-la para ajudar os "
+#~ "desenvolvedores a melhorar o Specto. "
+
+#~ msgid "folder"
+#~ msgstr "pasta"
+
+#~ msgid "Protocol:"
+#~ msgstr "Protocolo:"
+
+#~ msgid "User:"
+#~ msgstr "Usuário:"
+
+#~ msgid "File/folder:"
+#~ msgstr "Arquivo/pasta:"
+
+#~ msgid "removed logs from watch: \"%s\""
+#~ msgstr "Registros removidos do Observador: \"%s\""
+
+#~ msgid "Pop3"
+#~ msgstr "Pop3"
+
+#~ msgid "Imap"
+#~ msgstr "Imap"
+
+#~ msgid "watch \"%s\" stopped"
+#~ msgstr "Observador \"%s\" parado"
+
+#~ msgid "notifier: reappear"
+#~ msgstr "Notificador:mostrar novamente"
+
+#~ msgid "notifier: hide"
+#~ msgstr "Notificador:ocultar"
+
+#~ msgid "preferences: create"
+#~ msgstr "preferencias: criar"
+
+#~ msgid "preferences: reappear"
+#~ msgstr "preferências: mostrar novamente"
+
+#~ msgid "error log: create"
+#~ msgstr "Registro de erros: criar"
+
+#~ msgid "error log: already visible"
+#~ msgstr "Registro de erros: Já visível"
+
+#~ msgid "error log: recreate"
+#~ msgstr "Registro de Erros: recriar"
+
+#~ msgid "add watch: create"
+#~ msgstr "adicionar Observador: criar"
+
+#~ msgid "add watch: already visible"
+#~ msgstr "adicionar Observador: já visível"
+
+#~ msgid "add watch: recreate"
+#~ msgstr "adicionar Observador: recriar"
+
+#~ msgid "edit watch: create"
+#~ msgstr "Editar Observador: criar"
+
+#~ msgid "edit watch: already visible"
+#~ msgstr "Editar Observador: já visível "
+
+#~ msgid "edit watch: recreate"
+#~ msgstr "Editar Observador: recriar"
+
+#~ msgid "gmail <i>(%s unread)</i>"
+#~ msgstr "gmail <i>(%s não lidos)</i>"
+
+#~ msgid "watch \"%s\" opened"
+#~ msgstr "Observador \"%s\" aberto"
+
+#~ msgid "notifier: size set"
+#~ msgstr "Notificador: Tamanho Ajustado"
+
+#~ msgid "notifier: size not set"
+#~ msgstr "Notificador: Tamanho não ajustado"
+
+#~ msgid "notifier: position set"
+#~ msgstr "Notificador: Posição ajustada"
+
+#~ msgid "notifier: position not set"
+#~ msgstr "Notificador: Posição não ajustada"
+
+#~ msgid "<b>Name:</b>"
+#~ msgstr "<b>Nome:</b>"
+
+#~ msgid "<b>Last Updated:</b>"
+#~ msgstr "<b>Última Atualização:</b>"
+
+#~ msgid "<b>Location:</b>"
+#~ msgstr "<b>Localização:</b>"
+
+#~ msgid "<b>Error Margin:</b>"
+#~ msgstr "<b>Margem de erro:</b>"
+
+#~ msgid "<b>Host:</b>"
+#~ msgstr "<b>Computador:</b>"
+
+#~ msgid "<b>Username:</b>"
+#~ msgstr "<b>Nome de Usuário:</b>"
+
+#~ msgid "<b>File/folder:</b>"
+#~ msgstr "<b>Arquivo/pasta:</b>"
+
+#~ msgid "<b>Process:</b>"
+#~ msgstr "<b>Processo:</b>"
+
+#~ msgid "Preferences saved."
+#~ msgstr "Preferências Salvas."
+
+#~ msgid "Updated watches:\n"
+#~ msgstr "Observadores Atualizados:\n"
+
+#~ msgid "website"
+#~ msgstr "Página de Internet"
+
+#~ msgid "websites"
+#~ msgstr "Páginas de Internet"
+
+#~ msgid "mail account"
+#~ msgstr "Conta de email"
+
+#~ msgid "mail accounts"
+#~ msgstr "Contas de email"
+
+#~ msgid "file/folder"
+#~ msgstr "Arquivo/pasta"
+
+#~ msgid "files/folders"
+#~ msgstr "Arquivos/pastas"
+
+#~ msgid "process"
+#~ msgstr "processo"
+
+#~ msgid "processes"
+#~ msgstr "processos"
+
+#~ msgid "port"
+#~ msgstr "porta"
+
+#~ msgid "ports"
+#~ msgstr "portas"
+
+#~ msgid ""
+#~ "The watch, <b>%s</b>, has a problem. You may need to check the error log."
+#~ msgstr ""
+#~ "O Observador, <b>%s</b>, tem um problema. Favor verificar o Registro de "
+#~ "Erros."
+
+#~ msgid "Watch \"%s\" is already marked as updated in the notifier"
+#~ msgstr "O Observador \"%s\" está indicado como atualizado no notificador"
+
+#~ msgid "Watch \"%s\" updated!"
+#~ msgstr "Observador \"%s\" Atualizado!"
+
+#~ msgid "The website, <b>%s</b>, has been updated."
+#~ msgstr "A página de internet, <b>%s</b>, foi atualizada."
+
+#~ msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
+#~ msgstr "Sua conta de email, <b>%s</b>, tem <b>%d</b> nova(s) mensagem(s)."
+
+#~ msgid ""
+#~ "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling "
+#~ "%s"
+#~ msgstr ""
+#~ "Sua conta de email, <b>%s</b>, tem <b>%d</b> novas mensagens não lidas, "
+#~ "totalizando %s"
+
+#~ msgid "Your email account, <b>%s</b>, has new mail."
+#~ msgstr "Sua conta de email, <b>%s</b>, tem nova(s) mensagem(s)."
+
+#~ msgid "The file/folder, <b>%s</b>, has been updated."
+#~ msgstr "O arquivo/pasta, <b>%s</b>, foi atualizado."
+
+#~ msgid "Not implemented yet"
+#~ msgstr "Ainda não foi implementado"
+
+#~ msgid "Unknown File Watch"
+#~ msgstr "Observador de Arquivo Desconhecido"
+
+#~ msgid "Updating watch: \"%s\""
+#~ msgstr "Atualizando Observador: \"%s\""
+
+#~ msgid "update: %s removed"
+#~ msgstr "Atualização: %s removida"
+
+#~ msgid "Unknown Mail Watch"
+#~ msgstr "Observador de email desconhecido"
+
+#~ msgid "Watch: \"%s\" has error: %s"
+#~ msgstr "Observador: \"%s\" tem um erro: %s"
+
+#~ msgid "Mailbox does not exist"
+#~ msgstr "Caixa de correio não existe"
+
+#~ msgid "Watch: \"%s\" has error: "
+#~ msgstr "Observador: \"%s\" tem um erro:"
+
+#~ msgid "Unknown Process Watch"
+#~ msgstr "Observador de Processo Desconhecido"
+
+#~ msgid "Watch: \"%s\" has error: empty url"
+#~ msgstr "Observador: \"%s\" tem um erro: url vazia"

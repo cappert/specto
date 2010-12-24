@@ -1,21 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: specto\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 15:38+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2010-12-24 15:37+0100\n"
+"PO-Revision-Date: 2007-05-29 18:27-0500\n"
+"Last-Translator: Jeff Fortin <nekohayo ~at~ gmail.com>\n"
+"Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Romanian\n"
 
 #: ../specto.desktop.in.h:1
 msgid "Be notified of everything"
@@ -54,8 +49,9 @@ msgid "Minutes"
 msgstr ""
 
 #: ../data/uis/add_watch.ui.h:8 ../data/uis/edit_watch.ui.h:10
+#, fuzzy
 msgid "Name:"
-msgstr ""
+msgstr "Nume"
 
 #: ../data/uis/add_watch.ui.h:9 ../data/uis/edit_watch.ui.h:11
 msgid "Refresh Interval:"
@@ -78,12 +74,14 @@ msgid "<b>General settings</b>"
 msgstr ""
 
 #: ../data/uis/edit_watch.ui.h:3
+#, fuzzy
 msgid "<b>Watch options</b>"
-msgstr ""
+msgstr "<b>Nume:</b>"
 
 #: ../data/uis/edit_watch.ui.h:6 ../spectlib/notifier.py:821
+#, fuzzy
 msgid "Error log"
-msgstr ""
+msgstr "record de eroare: crează"
 
 #: ../data/uis/edit_watch.ui.h:13
 msgid "Watch $WATCH_NAME"
@@ -116,8 +114,9 @@ msgid "Error"
 msgstr ""
 
 #: ../data/uis/log_dialog.ui.h:5
+#, fuzzy
 msgid "Filter:"
-msgstr ""
+msgstr "Fișier"
 
 #: ../data/uis/log_dialog.ui.h:6
 msgid "Info"
@@ -132,12 +131,14 @@ msgid "Warning"
 msgstr ""
 
 #: ../data/uis/notifier.ui.h:1
+#, fuzzy
 msgid "By Active"
-msgstr ""
+msgstr "Activ"
 
 #: ../data/uis/notifier.ui.h:2
+#, fuzzy
 msgid "By Name"
-msgstr ""
+msgstr "Nume"
 
 #: ../data/uis/notifier.ui.h:3
 msgid "By Watch Type"
@@ -193,8 +194,9 @@ msgid "_Export Watches"
 msgstr ""
 
 #: ../data/uis/notifier.ui.h:17
+#, fuzzy
 msgid "_File"
-msgstr ""
+msgstr "Fișier"
 
 #: ../data/uis/notifier.ui.h:18
 msgid "_Help"
@@ -221,16 +223,19 @@ msgid "<b>Debugging and Logging</b>"
 msgstr ""
 
 #: ../data/uis/preferences.ui.h:2
+#, fuzzy
 msgid "<b>Display</b>"
-msgstr ""
+msgstr "<b>Nume:</b>"
 
 #: ../data/uis/preferences.ui.h:3
+#, fuzzy
 msgid "<b>Security</b>"
-msgstr ""
+msgstr "<b>Host:</b>"
 
 #: ../data/uis/preferences.ui.h:4
+#, fuzzy
 msgid "<b>Sounds</b>"
-msgstr ""
+msgstr "<b>Host:</b>"
 
 #: ../data/uis/preferences.ui.h:5
 msgid "Always show the icon in the notification area"
@@ -267,8 +272,9 @@ msgid "Play this sound when a watch has changed:"
 msgstr ""
 
 #: ../data/uis/preferences.ui.h:12
+#, fuzzy
 msgid "Preferences"
-msgstr ""
+msgstr "Preferințe salvate."
 
 #: ../data/uis/preferences.ui.h:13
 msgid "Select a File"
@@ -286,7 +292,7 @@ msgstr ""
 #. and hide the tab.
 #: ../spectlib/about.py:55
 msgid "translator-credits"
-msgstr ""
+msgstr "Adrian Petrescu"
 
 #: ../spectlib/about.py:68
 msgid "Specto's Website"
@@ -299,16 +305,18 @@ msgid ""
 msgstr ""
 
 #: ../spectlib/console.py:44 ../spectlib/watch.py:170
+#, fuzzy
 msgid "Watch has changed."
-msgstr ""
+msgstr "Urmăreala \"%s\" are o eroare"
 
 #: ../spectlib/console.py:49 ../spectlib/watch.py:134
 msgid "Watch started checking."
 msgstr ""
 
 #: ../spectlib/console.py:51
+#, fuzzy
 msgid "Watch is idle."
-msgstr ""
+msgstr "Urmăreala \"%s\" a fost editată."
 
 #: ../spectlib/console.py:53 ../spectlib/watch.py:205
 msgid "No network connection detected"
@@ -320,7 +328,7 @@ msgstr ""
 
 #: ../spectlib/edit_watch.py:70
 msgid "Edit watch: "
-msgstr ""
+msgstr "Editează o urmăreală:"
 
 #: ../spectlib/edit_watch.py:180 ../spectlib/notifier.py:616
 msgid "Remove a watch"
@@ -334,8 +342,9 @@ msgid ""
 msgstr ""
 
 #: ../spectlib/export_watch.py:57 ../spectlib/export_watch.py:58
+#, fuzzy
 msgid "Export watches"
-msgstr ""
+msgstr "Noutăți:\n"
 
 #: ../spectlib/export_watch.py:85 ../spectlib/import_watch.py:94
 msgid "Select"
@@ -344,7 +353,7 @@ msgstr ""
 #: ../spectlib/export_watch.py:91 ../spectlib/import_watch.py:99
 #: ../spectlib/notifier.py:733
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #. self.columnTitle_renderer.set_property("editable", True)
 #. self.columnTitle_renderer.connect('edited', self.change_entry_name)
@@ -370,25 +379,27 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:101
 #: ../spectlib/plugins/watch_web_static.py:270
 msgid "Name"
-msgstr ""
+msgstr "Nume"
 
 #: ../spectlib/export_watch.py:105 ../spectlib/import_watch.py:111
 #: ../spectlib/notifier.py:751
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../spectlib/export_watch.py:112 ../spectlib/import_watch.py:118
 #: ../spectlib/notifier.py:758
 msgid "TYPE"
-msgstr ""
+msgstr "TIP"
 
 #: ../spectlib/gtkconfig.py:172 ../spectlib/gtkconfig.py:449
+#, fuzzy
 msgid "Choose a file"
-msgstr ""
+msgstr "Alegeți un fișier sau dosar"
 
 #: ../spectlib/gtkconfig.py:205 ../spectlib/gtkconfig.py:455
+#, fuzzy
 msgid "Choose a directory"
-msgstr ""
+msgstr "Alegeți un fișier sau dosar"
 
 #: ../spectlib/gtkconfig.py:343
 msgid ""
@@ -402,16 +413,18 @@ msgid "Save file as"
 msgstr ""
 
 #: ../spectlib/gtkconfig.py:384
+#, fuzzy
 msgid "Open file"
-msgstr ""
+msgstr "fișier"
 
 #: ../spectlib/import_watch.py:67 ../spectlib/import_watch.py:68
+#, fuzzy
 msgid "Import watches"
-msgstr ""
+msgstr "Noutăți:\n"
 
 #: ../spectlib/main.py:62
 msgid "no GTK, activating console mode"
-msgstr ""
+msgstr "fără GTK, activez in mod consol"
 
 #: ../spectlib/main.py:100
 msgid "Console mode enabled."
@@ -423,7 +436,7 @@ msgstr ""
 
 #: ../spectlib/main.py:260 ../spectlib/main.py:263 ../spectlib/main.py:370
 msgid "Specto is already running!"
-msgstr ""
+msgstr "Specto e deja lansat!"
 
 #. create a close dialog
 #: ../spectlib/main.py:308
@@ -464,9 +477,9 @@ msgid ""
 msgstr ""
 
 #: ../spectlib/notifier.py:246
-#, python-format
+#, fuzzy, python-format
 msgid "The watch \"%s\" has a problem."
-msgstr ""
+msgstr "Urmăreala \"%s\" are o eroare"
 
 #: ../spectlib/notifier.py:251
 #, python-format
@@ -474,9 +487,9 @@ msgid "%s encountered a problem"
 msgstr ""
 
 #: ../spectlib/notifier.py:259
-#, python-format
+#, fuzzy, python-format
 msgid "The watch \"%s\" has changed."
-msgstr ""
+msgstr "Urmăreala \"%s\" pornit"
 
 #: ../spectlib/notifier.py:274
 #, python-format
@@ -512,6 +525,8 @@ msgid ""
 "You can add all kinds of websites as watches. Static pages, RSS or Atom "
 "feeds, etc. Specto will automatically handle them."
 msgstr ""
+"Puteți adauga multe feluri de website-uri ca urmăreli. Pagini statici, "
+"șiruri RSS sau Atom, etc., vor fi manajate de Specto automat."
 
 #: ../spectlib/notifier.py:569
 msgid ""
@@ -519,38 +534,46 @@ msgid ""
 "difference percentage. This allows you to adapt to websites that change "
 "constantly or have lots of advertising."
 msgstr ""
+"Urmăreli de website pot avea marje de eroare care vă lasă să setați un "
+"procentaj de diferența minimă. Asta vă lasă să adaptați la website-uri care "
+"se schimb constant, sau care au multe reclame."
 
 #: ../spectlib/notifier.py:570
 msgid ""
 "Single-click an existing watch to display information, and double-click it "
 "to open the content."
 msgstr ""
+"Clicați odată pe o urmăreală pentru a verifica informația, sau de doua ori "
+"pentru a deschide conținutul."
 
 #: ../spectlib/notifier.py:571
 msgid ""
 "Please set a reasonable refresh interval in order to save bandwidth and "
 "prevent you from being blocked from content providers."
 msgstr ""
+"Vă rog să setați o intervală de refresh resonabila, ca să salvăm bandwidth "
+"si ca să nu fiim blocați de la content."
 
 #: ../spectlib/notifier.py:726
 msgid "Active"
-msgstr ""
+msgstr "Activ"
 
 #: ../spectlib/notifier.py:775
 msgid "Tip of the Day:"
-msgstr ""
+msgstr "Tipul zilei"
 
 #: ../spectlib/trayicon.py:101
+#, fuzzy
 msgid "No changed watches."
-msgstr ""
+msgstr "Nici o noutate."
 
 #: ../spectlib/trayicon.py:140
 msgid "Hide window"
-msgstr ""
+msgstr "Ascunde jeamul"
 
 #: ../spectlib/trayicon.py:142
 msgid "Show window"
-msgstr ""
+msgstr "Arată jeamul"
 
 #: ../spectlib/watch.py:94
 msgid "There was an error starting the watch"
@@ -570,8 +593,9 @@ msgstr ""
 
 #. otherwise, it will be saved untranslated in the watch list
 #: ../spectlib/watch.py:247 ../spectlib/watch.py:248
+#, fuzzy
 msgid "No changes yet"
-msgstr ""
+msgstr "Nici un update."
 
 #: ../spectlib/watch.py:301
 msgid "Unexpected error:"
@@ -707,8 +731,9 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:41
 #: ../spectlib/plugins/watch_web_greader.py:103
 #: ../spectlib/plugins/watch_web_static.py:278
+#, fuzzy
 msgid "Username"
-msgstr ""
+msgstr "Nume de utilizator:"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:41
 #: ../spectlib/plugins/watch_mail_gwave.py:44
@@ -718,8 +743,9 @@ msgstr ""
 #: ../spectlib/plugins/watch_sn_twitter.py:49
 #: ../spectlib/plugins/watch_web_greader.py:42
 #: ../spectlib/plugins/watch_web_static.py:279
+#, fuzzy
 msgid "Password"
-msgstr ""
+msgstr "Parola:"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:42
 msgid "Label"
@@ -785,17 +811,19 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_mail_imap.py:32
 msgid "IMAP"
-msgstr ""
+msgstr "IMAP"
 
 #: ../spectlib/plugins/watch_mail_imap.py:40
 #: ../spectlib/plugins/watch_mail_pop3.py:43
+#, fuzzy
 msgid "Host"
-msgstr ""
+msgstr "Host:"
 
 #: ../spectlib/plugins/watch_mail_imap.py:41
 #: ../spectlib/plugins/watch_mail_pop3.py:44
+#, fuzzy
 msgid "Use SSL"
-msgstr ""
+msgstr "Utilizator:"
 
 #: ../spectlib/plugins/watch_mail_imap.py:42
 msgid "Folder (optional)"
@@ -803,7 +831,7 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_mail_pop3.py:35
 msgid "POP3"
-msgstr ""
+msgstr "POP3"
 
 #: ../spectlib/plugins/watch_music_amarok.py:29
 msgid "Amarok"
@@ -848,12 +876,14 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_sn_facebook.py:43
 #: ../spectlib/plugins/watch_sn_facebook.py:231
+#, fuzzy
 msgid "Email"
-msgstr ""
+msgstr "Gmail"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:118
+#, fuzzy
 msgid "Wrong username/password"
-msgstr ""
+msgstr "Urmăreala: \"%s\" are o eroare: utilizator/parola incorectă"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:126
 msgid "You received"
@@ -920,7 +950,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_file.py:39
 #: ../spectlib/plugins/watch_system_file.py:168
 msgid "File"
-msgstr ""
+msgstr "Fișier"
 
 #: ../spectlib/plugins/watch_system_file.py:35
 #: ../spectlib/plugins/watch_system_folder.py:35
@@ -965,7 +995,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_vc_bazaar.py:41
 #: ../spectlib/plugins/watch_vc_bazaar.py:167
 msgid "Folder"
-msgstr ""
+msgstr "Dosar"
 
 #: ../spectlib/plugins/watch_system_folder.py:77
 msgid "The watch is not set to a folder"
@@ -975,11 +1005,12 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_folder.py:139
 #, python-format
 msgid "Skipping %s"
-msgstr ""
+msgstr "Sar %s"
 
 #: ../spectlib/plugins/watch_system_folder.py:163
+#, fuzzy
 msgid "1 new file was created.\n"
-msgstr ""
+msgstr "update: %s a fost creat"
 
 #: ../spectlib/plugins/watch_system_folder.py:165
 msgid " new files were created.\n"
@@ -994,8 +1025,9 @@ msgid " files were removed.\n"
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_folder.py:173
+#, fuzzy
 msgid "1 file was modified.\n"
-msgstr ""
+msgstr "Urmăreala %s a fost modificată"
 
 #: ../spectlib/plugins/watch_system_folder.py:175
 msgid " files were modified.\n"
@@ -1008,8 +1040,9 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_port.py:31
 #: ../spectlib/plugins/watch_system_port.py:37
 #: ../spectlib/plugins/watch_system_port.py:106
+#, fuzzy
 msgid "Port"
-msgstr ""
+msgstr "Host:"
 
 #: ../spectlib/plugins/watch_system_port.py:65
 msgid "Closed"
@@ -1030,20 +1063,21 @@ msgid "Status"
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_port.py:113
-#, python-format
+#, fuzzy, python-format
 msgid "The network socket on port %s was established."
-msgstr ""
+msgstr "Website-ul <b>%s</b> a fost updatat."
 
 #: ../spectlib/plugins/watch_system_port.py:115
-#, python-format
+#, fuzzy, python-format
 msgid "The network socket on port %s was closed."
-msgstr ""
+msgstr "Website-ul <b>%s</b> a fost updatat."
 
 #: ../spectlib/plugins/watch_system_process.py:32
 #: ../spectlib/plugins/watch_system_process.py:38
 #: ../spectlib/plugins/watch_system_process.py:93
+#, fuzzy
 msgid "Process"
-msgstr ""
+msgstr "<b>Host:</b>"
 
 #: ../spectlib/plugins/watch_system_process.py:68
 msgid "Not running"
@@ -1054,13 +1088,15 @@ msgid "Running"
 msgstr ""
 
 #: ../spectlib/plugins/watch_system_process.py:99
+#, fuzzy
 msgid "The system process has started."
-msgstr ""
+msgstr "Website-ul <b>%s</b> a fost updatat."
 
 #. the process check returned false, which means the process is not running
 #: ../spectlib/plugins/watch_system_process.py:101
+#, fuzzy
 msgid "The system process has stopped."
-msgstr ""
+msgstr "Website-ul <b>%s</b> a fost updatat."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:35
 msgid "Bazaar"
@@ -1137,16 +1173,204 @@ msgid "Filesize difference: %.2f"
 msgstr ""
 
 #: ../spectlib/plugins/watch_web_static.py:254
-#, python-format
+#, fuzzy, python-format
 msgid "Difference percentage: %s percent"
-msgstr ""
+msgstr "Procentaj de diferență:%s (Urmăreala: \"%s\")"
 
 #: ../spectlib/plugins/watch_web_static.py:272
 #: ../spectlib/plugins/watch_web_static.py:277
+#, fuzzy
 msgid "URL"
-msgstr ""
+msgstr "URL:"
 
 #: ../spectlib/plugins/watch_web_static.py:273
 #: ../spectlib/plugins/watch_web_static.py:280
+#, fuzzy
 msgid "Error margin (%)"
-msgstr ""
+msgstr "Marja de eroare (%)"
+
+#, fuzzy
+#~ msgid ""
+#~ "Edit existing\n"
+#~ "watch"
+#~ msgstr "Editează o urmăreală:"
+
+#, fuzzy
+#~ msgid "The watch name is already in use"
+#~ msgstr "editează o urmăreală: deja visibil"
+
+#, fuzzy
+#~ msgid "A watch is updated"
+#~ msgstr "Urmăreala \"%s\" updatată!"
+
+#~ msgid "folder"
+#~ msgstr "dosar"
+
+#~ msgid "Protocol:"
+#~ msgstr "Protocol:"
+
+#~ msgid "User:"
+#~ msgstr "Utilizator:"
+
+#~ msgid "File/folder:"
+#~ msgstr "Fișier/dosar:"
+
+#~ msgid "removed logs from watch: \"%s\""
+#~ msgstr "recordurile \"%s\" șterse"
+
+#~ msgid "Pop3"
+#~ msgstr "Pop3"
+
+#~ msgid "Imap"
+#~ msgstr "Imap"
+
+#~ msgid "watch \"%s\" stopped"
+#~ msgstr "Urmăreala \"%s\" oprită"
+
+#~ msgid "notifier: reappear"
+#~ msgstr "notificator: redeschide"
+
+#~ msgid "notifier: hide"
+#~ msgstr "notificator: ascunde"
+
+#~ msgid "preferences: create"
+#~ msgstr "preferințe: crează"
+
+#~ msgid "preferences: reappear"
+#~ msgstr "preferințe: redeschide"
+
+#~ msgid "error log: already visible"
+#~ msgstr "record de eroare: deja visibil"
+
+#~ msgid "error log: recreate"
+#~ msgstr "record de eroare: recrează"
+
+#~ msgid "add watch: create"
+#~ msgstr "adaugă o urmăreală: crează"
+
+#~ msgid "add watch: already visible"
+#~ msgstr "adaugă o urmăreală: visibil deja"
+
+#~ msgid "add watch: recreate"
+#~ msgstr "adaugă o urmăreală: recrează"
+
+#~ msgid "edit watch: create"
+#~ msgstr "editează o urmăreală: crează"
+
+#~ msgid "edit watch: already visible"
+#~ msgstr "editează o urmăreală: deja visibil"
+
+#~ msgid "edit watch: recreate"
+#~ msgstr "editează o urmăreală: recrează"
+
+#~ msgid "gmail <i>(%s unread)</i>"
+#~ msgstr "gmail <i>(%s necitit)</i>"
+
+#~ msgid "watch \"%s\" opened"
+#~ msgstr "urmăreala \"%s\" deschisă"
+
+#~ msgid "notifier: size set"
+#~ msgstr "notificator: mărime setat"
+
+#~ msgid "notifier: size not set"
+#~ msgstr "notificator: mărime nu e setată"
+
+#~ msgid "notifier: position set"
+#~ msgstr "notificator: posiție setat"
+
+#~ msgid "notifier: position not set"
+#~ msgstr "notificator: posiția nu e setată"
+
+#~ msgid "<b>Name:</b>"
+#~ msgstr "<b>Nume:</b>"
+
+#~ msgid "<b>Last Updated:</b>"
+#~ msgstr "</b>Ultima schimbare:</b>"
+
+#~ msgid "<b>Location:</b>"
+#~ msgstr "<b>Locație:</b>"
+
+#~ msgid "<b>Error Margin:</b>"
+#~ msgstr "<b>Marja de Eroare:</b>"
+
+#~ msgid "<b>Host:</b>"
+#~ msgstr "<b>Host:</b>"
+
+#~ msgid "<b>Username:</b>"
+#~ msgstr "<b>Nume de Utilizator:</b>"
+
+#~ msgid "<b>File/folder:</b>"
+#~ msgstr "<b>Fișier/dosar:</b>"
+
+#~ msgid "Preferences saved."
+#~ msgstr "Preferințe salvate."
+
+#~ msgid "Updated watches:\n"
+#~ msgstr "Noutăți:\n"
+
+#, fuzzy
+#~ msgid "website"
+#~ msgstr " website"
+
+#, fuzzy
+#~ msgid "websites"
+#~ msgstr " website-uri"
+
+#, fuzzy
+#~ msgid "file/folder"
+#~ msgstr " Fișier/Dosare:"
+
+#, fuzzy
+#~ msgid "files/folders"
+#~ msgstr " Fișiere/Dosare:"
+
+#~ msgid "Watch \"%s\" updated!"
+#~ msgstr "Urmăreala \"%s\" updatată!"
+
+#~ msgid "The website, <b>%s</b>, has been updated."
+#~ msgstr "Website-ul <b>%s</b> a fost updatat."
+
+#~ msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
+#~ msgstr "Contul <b>%s</b> are <b>%d</b> mesaje noi."
+
+#~ msgid ""
+#~ "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling "
+#~ "%s"
+#~ msgstr "Contul <b>%s</b> are <b>%d</b> mesaje noi, cu un total de %s"
+
+#~ msgid "Your email account, <b>%s</b>, has new mail."
+#~ msgstr "Aveți mesaje noi pe contul <b>%s</b>."
+
+#~ msgid "The file/folder, <b>%s</b>, has been updated."
+#~ msgstr "Fișierul/Dosar <b>%s</b> a fost updatat."
+
+#~ msgid "Not implemented yet"
+#~ msgstr "Ne-implementat"
+
+#~ msgid "Unknown File Watch"
+#~ msgstr "Urmăreală de fișier necunoscut."
+
+#~ msgid "Updating watch: \"%s\""
+#~ msgstr "Updatez Urmăreala: \"%s\""
+
+#~ msgid "update: %s removed"
+#~ msgstr "update: %s șters"
+
+#~ msgid "Unknown Mail Watch"
+#~ msgstr "Urmăreală de poștă necunoscută"
+
+#~ msgid "Watch: \"%s\" has error: %s"
+#~ msgstr "Urmăreala: \"%s\" are o eroare: %s"
+
+#~ msgid "Mailbox does not exist"
+#~ msgstr "Cutia de poștă nu există"
+
+#~ msgid "Watch: \"%s\" has error: "
+#~ msgstr "Urmăreala: \"%s\" are o eroare: "
+
+#, fuzzy
+#~ msgid "Unknown Process Watch"
+#~ msgstr "Urmăreală de fișier necunoscut."
+
+#~ msgid "Watch: \"%s\" has error: empty url"
+#~ msgstr "Urmăreala: \"%s\" are o eroare: url gol"

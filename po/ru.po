@@ -1,21 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# translation of specto.po to Russian
+# Copyright (C) 2009 ORGANIZATION
 #
-#, fuzzy
+# Sergey Kuzmin <kdk_mail@mail.ru>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: specto\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 15:38+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2010-12-24 15:37+0100\n"
+"PO-Revision-Date: 2009-04-02 14:34-0500\n"
+"Last-Translator: Jean-François Fortin Tam\n"
+"Language-Team: Russian <kde-rus@kde.ru>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../specto.desktop.in.h:1
 msgid "Be notified of everything"
@@ -27,15 +27,15 @@ msgstr ""
 
 #: ../data/uis/add_watch.ui.h:1 ../data/uis/edit_watch.ui.h:2
 msgid "<b>Run a custom command:</b>"
-msgstr ""
+msgstr "<b>Выполнить пользовательскую команду:</b>"
 
 #: ../data/uis/add_watch.ui.h:2
 msgid "Add a Watch"
-msgstr ""
+msgstr "Добавить Наблюдение"
 
 #: ../data/uis/add_watch.ui.h:3 ../data/uis/edit_watch.ui.h:4
 msgid "Advanced options"
-msgstr ""
+msgstr "Дополнительные параметры"
 
 #: ../data/uis/add_watch.ui.h:4 ../data/uis/edit_watch.ui.h:5
 msgid "Days"
@@ -43,7 +43,7 @@ msgstr ""
 
 #: ../data/uis/add_watch.ui.h:5 ../data/uis/edit_watch.ui.h:7
 msgid "General options"
-msgstr ""
+msgstr "Основные настройки"
 
 #: ../data/uis/add_watch.ui.h:6 ../data/uis/edit_watch.ui.h:8
 msgid "Hours"
@@ -55,11 +55,11 @@ msgstr ""
 
 #: ../data/uis/add_watch.ui.h:8 ../data/uis/edit_watch.ui.h:10
 msgid "Name:"
-msgstr ""
+msgstr "Имя:"
 
 #: ../data/uis/add_watch.ui.h:9 ../data/uis/edit_watch.ui.h:11
 msgid "Refresh Interval:"
-msgstr ""
+msgstr "Интервал обновления:"
 
 #: ../data/uis/add_watch.ui.h:10 ../data/uis/edit_watch.ui.h:12
 msgid "Seconds"
@@ -67,35 +67,35 @@ msgstr ""
 
 #: ../data/uis/add_watch.ui.h:11 ../data/uis/edit_watch.ui.h:14
 msgid "When this watch has changed"
-msgstr ""
+msgstr "Когда это наблюдение изменилось"
 
 #: ../data/uis/add_watch.ui.h:12 ../data/uis/edit_watch.ui.h:15
 msgid "When you open this watch"
-msgstr ""
+msgstr "Когда Вы открыли это наблюдение"
 
 #: ../data/uis/edit_watch.ui.h:1
 msgid "<b>General settings</b>"
-msgstr ""
+msgstr "<b>Основные установки</b>"
 
 #: ../data/uis/edit_watch.ui.h:3
 msgid "<b>Watch options</b>"
-msgstr ""
+msgstr "<b>Настройки наблюдения</b>"
 
 #: ../data/uis/edit_watch.ui.h:6 ../spectlib/notifier.py:821
 msgid "Error log"
-msgstr ""
+msgstr "Журнал ошибок"
 
 #: ../data/uis/edit_watch.ui.h:13
 msgid "Watch $WATCH_NAME"
-msgstr ""
+msgstr "Наблюдение $WATCH_NAME"
 
 #: ../data/uis/import_export.ui.h:1
 msgid "Deselect all"
-msgstr ""
+msgstr "Отменить выбор всех"
 
 #: ../data/uis/import_export.ui.h:2
 msgid "Select all"
-msgstr ""
+msgstr "Выбрать все"
 
 #: ../data/uis/log_dialog.ui.h:1
 msgid "All"
@@ -113,11 +113,11 @@ msgstr ""
 #: ../data/uis/log_dialog.ui.h:4 ../data/uis/notifier.ui.h:7
 #: ../spectlib/main.py:354
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 #: ../data/uis/log_dialog.ui.h:5
 msgid "Filter:"
-msgstr ""
+msgstr "Фильтр:"
 
 #: ../data/uis/log_dialog.ui.h:6
 msgid "Info"
@@ -125,7 +125,7 @@ msgstr ""
 
 #: ../data/uis/log_dialog.ui.h:7
 msgid "Logs"
-msgstr ""
+msgstr "Записи"
 
 #: ../data/uis/log_dialog.ui.h:8
 msgid "Warning"
@@ -133,122 +133,124 @@ msgstr ""
 
 #: ../data/uis/notifier.ui.h:1
 msgid "By Active"
-msgstr ""
+msgstr "По Активному"
 
 #: ../data/uis/notifier.ui.h:2
 msgid "By Name"
-msgstr ""
+msgstr "По Имени"
 
 #: ../data/uis/notifier.ui.h:3
 msgid "By Watch Type"
-msgstr ""
+msgstr "По Типу Наблюдения"
 
 #: ../data/uis/notifier.ui.h:4
 msgid "Debug information"
-msgstr ""
+msgstr "Отладочная информация"
 
 #: ../data/uis/notifier.ui.h:5
 msgid "Display _All Watches"
-msgstr ""
+msgstr "Показать _Все Наблюдения"
 
 #: ../data/uis/notifier.ui.h:6
 msgid "Display _Toolbar"
-msgstr ""
+msgstr "Показать _Панель инструментов"
 
 #: ../data/uis/notifier.ui.h:8
 msgid "Extra information"
-msgstr ""
+msgstr "Дополнительная информация"
 
 #: ../data/uis/notifier.ui.h:9
 msgid "General"
-msgstr ""
+msgstr "Основные"
 
 #: ../data/uis/notifier.ui.h:10 ../spectlib/notifier.py:526
 #: ../spectlib/trayicon.py:148
 msgid "Mark as read"
-msgstr ""
+msgstr "Отметить как прочтенное"
 
 #: ../data/uis/notifier.ui.h:11
 msgid "Notifications"
-msgstr ""
+msgstr "Уведомления"
 
 #: ../data/uis/notifier.ui.h:12
 msgid "Sorting"
-msgstr ""
+msgstr "Сортировка"
 
 #: ../data/uis/notifier.ui.h:13
 msgid "Visit the issue tracker"
-msgstr ""
+msgstr "Посетите issue tracker"
 
 #: ../data/uis/notifier.ui.h:14
 msgid "_Edit"
-msgstr ""
+msgstr "_Правка"
 
 #: ../data/uis/notifier.ui.h:15
 msgid "_Error Log"
-msgstr ""
+msgstr "_Журнал ошибок"
 
 #: ../data/uis/notifier.ui.h:16
 msgid "_Export Watches"
-msgstr ""
+msgstr "_Экспортировать Наблюдения"
 
 #: ../data/uis/notifier.ui.h:17
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #: ../data/uis/notifier.ui.h:18
 msgid "_Help"
-msgstr ""
+msgstr "_Помощь"
 
 #: ../data/uis/notifier.ui.h:19
 msgid "_Import Watches"
-msgstr ""
+msgstr "_Импортировать Наблюдения"
 
 #: ../data/uis/notifier.ui.h:20 ../spectlib/trayicon.py:154
 msgid "_Mark all read"
-msgstr ""
+msgstr "_Отметить все как прочтенные"
 
 #: ../data/uis/notifier.ui.h:21
 msgid "_Refresh All"
-msgstr ""
+msgstr "_Обновить Все"
 
 #: ../data/uis/notifier.ui.h:22
 msgid "_View"
-msgstr ""
+msgstr "_Вид"
 
 #: ../data/uis/preferences.ui.h:1
 msgid "<b>Debugging and Logging</b>"
-msgstr ""
+msgstr "<b>Отладка и журналирование</b>"
 
 #: ../data/uis/preferences.ui.h:2
 msgid "<b>Display</b>"
-msgstr ""
+msgstr "<b>Отображение</b>"
 
 #: ../data/uis/preferences.ui.h:3
 msgid "<b>Security</b>"
-msgstr ""
+msgstr "<b>Безопасность</b>"
 
 #: ../data/uis/preferences.ui.h:4
 msgid "<b>Sounds</b>"
-msgstr ""
+msgstr "<b>Звуки</b>"
 
 #: ../data/uis/preferences.ui.h:5
 msgid "Always show the icon in the notification area"
-msgstr ""
+msgstr "Всегда показывать иконку в области уведомления"
 
 #: ../data/uis/preferences.ui.h:6
 msgid "Display the notification window in the window list"
-msgstr ""
+msgstr "Показывать окно уведомления в списке окон"
 
 #: ../data/uis/preferences.ui.h:7
 msgid "Enable debug mode and logging"
-msgstr ""
+msgstr "Разрешить режим отладки и журналирования"
 
 #: ../data/uis/preferences.ui.h:8
 msgid ""
 "If activated, you will receive more information when running Specto from a "
 "terminal, and more information will be printed to the logs."
 msgstr ""
+"Активировав, Вы будете получать больше информации при запуске Specto из "
+"терминала и больше информации будет печататься в журнал."
 
 #: ../data/uis/preferences.ui.h:9
 msgid ""
@@ -257,74 +259,79 @@ msgid ""
 "unencrypted</b> in your watch list, and could be read by anyone gaining "
 "access to your system user account."
 msgstr ""
+"Рекомендуется использовать шифрование паролей. Если Вы отключите эту опцию, "
+"пароли будут сохранены в виде <b>обычного текста</b> в списке Наблюдений, и "
+"могут быть прочитаны имеющими доступ к Вашей учетной записи."
 
 #: ../data/uis/preferences.ui.h:10
 msgid "Play this sound when a problem occurs:"
-msgstr ""
+msgstr "Проигрывать этот звук при возникновении проблемы:"
 
 #: ../data/uis/preferences.ui.h:11
 msgid "Play this sound when a watch has changed:"
-msgstr ""
+msgstr "Проигрывать этот звук когда наблюдение изменилось:"
 
 #: ../data/uis/preferences.ui.h:12
 msgid "Preferences"
-msgstr ""
+msgstr "Параметры"
 
 #: ../data/uis/preferences.ui.h:13
 msgid "Select a File"
-msgstr ""
+msgstr "Выберите файл"
 
 #: ../data/uis/preferences.ui.h:14
 msgid "Show notifications when a watch has changed"
-msgstr ""
+msgstr "Показывать уведомления при изменении состояния наблюдения"
 
 #: ../data/uis/preferences.ui.h:15
 msgid "Use GNOME keyring to store passwords in encrypted format"
-msgstr ""
+msgstr "Использовать брелок GNOME для хранения паролей в зашифрованном виде"
 
 #. gtk.AboutDialog will detect if "translator-credits" is untranslated,
 #. and hide the tab.
 #: ../spectlib/about.py:55
 msgid "translator-credits"
-msgstr ""
+msgstr "Sergey Kuzmin (kdk_mail@mail.ru)"
 
 #: ../spectlib/about.py:68
 msgid "Specto's Website"
-msgstr ""
+msgstr "Сайт Specto"
 
 #: ../spectlib/balloons.py:103
 msgid ""
 "Cannot display notification message. Make sure that libnotify and D-Bus are "
 "available on your system."
 msgstr ""
+"Невозможно вывести уведомление. Убедитесь, что libnotify и D-Bus установлены "
+"в Вашей системе."
 
 #: ../spectlib/console.py:44 ../spectlib/watch.py:170
 msgid "Watch has changed."
-msgstr ""
+msgstr "Наблюдение изменилось."
 
 #: ../spectlib/console.py:49 ../spectlib/watch.py:134
 msgid "Watch started checking."
-msgstr ""
+msgstr "Наблюдение начало проверку."
 
 #: ../spectlib/console.py:51
 msgid "Watch is idle."
-msgstr ""
+msgstr "Наблюдение простаивает."
 
 #: ../spectlib/console.py:53 ../spectlib/watch.py:205
 msgid "No network connection detected"
-msgstr ""
+msgstr "Нет соединения с сетью"
 
 #: ../spectlib/console.py:55 ../spectlib/watch.py:166 ../spectlib/watch.py:201
 msgid "There was an error checking the watch"
-msgstr ""
+msgstr "При проверке наблюдения произошла ошибка"
 
 #: ../spectlib/edit_watch.py:70
 msgid "Edit watch: "
-msgstr ""
+msgstr "Изменить наблюдение: "
 
 #: ../spectlib/edit_watch.py:180 ../spectlib/notifier.py:616
 msgid "Remove a watch"
-msgstr ""
+msgstr "Удалить наблюдение"
 
 #: ../spectlib/edit_watch.py:181 ../spectlib/notifier.py:617
 #, python-format
@@ -332,19 +339,21 @@ msgid ""
 "<big>Remove the watch \"%s\"?</big>\n"
 "This operation cannot be undone."
 msgstr ""
+"<big>Удалить наблюдение \"%s\"?</big>\n"
+"Это необратимая операция."
 
 #: ../spectlib/export_watch.py:57 ../spectlib/export_watch.py:58
 msgid "Export watches"
-msgstr ""
+msgstr "Экспортировать наблюдения"
 
 #: ../spectlib/export_watch.py:85 ../spectlib/import_watch.py:94
 msgid "Select"
-msgstr ""
+msgstr "Выбрать"
 
 #: ../spectlib/export_watch.py:91 ../spectlib/import_watch.py:99
 #: ../spectlib/notifier.py:733
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #. self.columnTitle_renderer.set_property("editable", True)
 #. self.columnTitle_renderer.connect('edited', self.change_entry_name)
@@ -370,25 +379,25 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:101
 #: ../spectlib/plugins/watch_web_static.py:270
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: ../spectlib/export_watch.py:105 ../spectlib/import_watch.py:111
 #: ../spectlib/notifier.py:751
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: ../spectlib/export_watch.py:112 ../spectlib/import_watch.py:118
 #: ../spectlib/notifier.py:758
 msgid "TYPE"
-msgstr ""
+msgstr "TYPE"
 
 #: ../spectlib/gtkconfig.py:172 ../spectlib/gtkconfig.py:449
 msgid "Choose a file"
-msgstr ""
+msgstr "Выберите файл"
 
 #: ../spectlib/gtkconfig.py:205 ../spectlib/gtkconfig.py:455
 msgid "Choose a directory"
-msgstr ""
+msgstr "Выберите каталог"
 
 #: ../spectlib/gtkconfig.py:343
 msgid ""
@@ -396,43 +405,48 @@ msgid ""
 "Please verify if this bug has been entered in our issue tracker, and if not, "
 "file a bug report so we can fix it."
 msgstr ""
+"<b>Specto столкнулся с ошибкой</b>\n"
+"Пожалуйста проверьте, указана ли данная ошибка в нашем issue tracker, и если "
+"нет, то пошлите отчет об ошибке, чтобы мы могли исправить ее."
 
 #: ../spectlib/gtkconfig.py:361
+#, fuzzy
 msgid "Save file as"
-msgstr ""
+msgstr "Сохранить как"
 
 #: ../spectlib/gtkconfig.py:384
+#, fuzzy
 msgid "Open file"
-msgstr ""
+msgstr "Открыт"
 
 #: ../spectlib/import_watch.py:67 ../spectlib/import_watch.py:68
 msgid "Import watches"
-msgstr ""
+msgstr "Импортировать наблюдения"
 
 #: ../spectlib/main.py:62
 msgid "no GTK, activating console mode"
-msgstr ""
+msgstr "GTK не найден, активирую консольный режим"
 
 #: ../spectlib/main.py:100
 msgid "Console mode enabled."
-msgstr ""
+msgstr "Активирован консольный режим."
 
 #: ../spectlib/main.py:138
 msgid "Could not create a watch, because it is corrupt."
-msgstr ""
+msgstr "Невозможно создать наблюдение потому, что оно испорчено."
 
 #: ../spectlib/main.py:260 ../spectlib/main.py:263 ../spectlib/main.py:370
 msgid "Specto is already running!"
-msgstr ""
+msgstr "Specto уже запущен!"
 
 #. create a close dialog
 #: ../spectlib/main.py:308
 msgid "Cannot quit yet"
-msgstr ""
+msgstr "Пока не могу выйти"
 
 #: ../spectlib/main.py:314
 msgid "Murder!"
-msgstr ""
+msgstr "Убийство!"
 
 #: ../spectlib/main.py:325
 msgid ""
@@ -441,77 +455,86 @@ msgid ""
 "This may be because it is checking for watch changes.\n"
 "However, you can try forcing it to quit by clicking the murder button."
 msgstr ""
+"<b><big>В данный момент Specto занят и пока не может выйти.</big></b>\n"
+"\n"
+"Возможно это связано с тем, что он проверяет изменения наблюдений.\n"
+"Тем не менее, Вы можете принудительно выйти, нажав кнопку Убийство."
 
 #. menu item, does not allow changing label
 #: ../spectlib/notifier.py:184
 msgid "Stop"
-msgstr ""
+msgstr "Стоп"
 
 #. menu item, does not allow changing label
 #: ../spectlib/notifier.py:205 ../spectlib/trayicon.py:149
 msgid "Refresh All"
-msgstr ""
+msgstr "Обновить Все"
 
 #: ../spectlib/notifier.py:223
 #, python-format
 msgid "The watch \"%s\" is checking."
-msgstr ""
+msgstr "Наблюдение \"%s\" проверяется."
 
 #: ../spectlib/notifier.py:240 ../spectlib/notifier.py:387
 msgid ""
 "The network connection seems to be down, networked watches will not check "
 "until then."
 msgstr ""
+"Похоже сетевое соединение отсутствует, проверка сетевых наблюдений "
+"недоступна."
 
 #: ../spectlib/notifier.py:246
 #, python-format
 msgid "The watch \"%s\" has a problem."
-msgstr ""
+msgstr "С наблюдением \"%s\" возникли проблемы."
 
 #: ../spectlib/notifier.py:251
 #, python-format
 msgid "%s encountered a problem"
-msgstr ""
+msgstr "%s столкнулся с проблемой"
 
 #: ../spectlib/notifier.py:259
 #, python-format
 msgid "The watch \"%s\" has changed."
-msgstr ""
+msgstr "Наблюдение \"%s\" изменилось."
 
 #: ../spectlib/notifier.py:274
-#, python-format
+#, fuzzy, python-format
 msgid "%s has changed"
-msgstr ""
+msgstr "Дополнительные параметры"
 
 #: ../spectlib/notifier.py:295
 msgid "There was an error marking the watch status"
-msgstr ""
+msgstr "Возникла ошибка при отметке  состояния наблюдения"
 
 #: ../spectlib/notifier.py:432 ../spectlib/watch.py:263
 msgid "No extra information available."
-msgstr ""
+msgstr "Дополнительная информация недоступна."
 
 #: ../spectlib/notifier.py:442 ../spectlib/notifier.py:444
 msgid "Extra information could not be set"
-msgstr ""
+msgstr "Дополнительная информация не может быть установлена"
 
 #: ../spectlib/notifier.py:520
 msgid "Refresh"
-msgstr ""
+msgstr "Обновить"
 
 #: ../spectlib/notifier.py:535
 msgid "Edit"
-msgstr ""
+msgstr "Изменить"
 
 #: ../spectlib/notifier.py:538
 msgid "Remove"
-msgstr ""
+msgstr "Удалить"
 
 #: ../spectlib/notifier.py:568
 msgid ""
 "You can add all kinds of websites as watches. Static pages, RSS or Atom "
 "feeds, etc. Specto will automatically handle them."
 msgstr ""
+"Вы можете добавлять все возможные веб-сайты в качестве наблюдений. "
+"Статические страницы, ленты RSS и Atom, и т.д. Specto автоматически возьмет "
+"их под контроль."
 
 #: ../spectlib/notifier.py:569
 msgid ""
@@ -519,63 +542,71 @@ msgid ""
 "difference percentage. This allows you to adapt to websites that change "
 "constantly or have lots of advertising."
 msgstr ""
+"Наблюдения за веб-сайтами могут использовать предел ошибки, позволяющий "
+"задать процент минимальных отличий. Это дает возможность подстраиваться к "
+"веб-сайтам, которые постоянно изменяются или имеют большое количество "
+"рекламы."
 
 #: ../spectlib/notifier.py:570
 msgid ""
 "Single-click an existing watch to display information, and double-click it "
 "to open the content."
 msgstr ""
+"Для получения информации щелкните один раз на существующем наблюдении, "
+"щелкните дважды, чтобы открыть его содержимое."
 
 #: ../spectlib/notifier.py:571
 msgid ""
 "Please set a reasonable refresh interval in order to save bandwidth and "
 "prevent you from being blocked from content providers."
 msgstr ""
+"Чтобы сохранить пропускную способность канала и не быть блокированным на "
+"сайтах, пожалуйста, указывайте приемлемый интервал проверки."
 
 #: ../spectlib/notifier.py:726
 msgid "Active"
-msgstr ""
+msgstr "Активно"
 
 #: ../spectlib/notifier.py:775
 msgid "Tip of the Day:"
-msgstr ""
+msgstr "Совет дня:"
 
 #: ../spectlib/trayicon.py:101
 msgid "No changed watches."
-msgstr ""
+msgstr "Нет изменившихся наблюдений."
 
 #: ../spectlib/trayicon.py:140
 msgid "Hide window"
-msgstr ""
+msgstr "Скрыть окно"
 
 #: ../spectlib/trayicon.py:142
 msgid "Show window"
-msgstr ""
+msgstr "Показать окно"
 
 #: ../spectlib/watch.py:94
 msgid "There was an error starting the watch"
-msgstr ""
+msgstr "При запуске наблюдения произошла ошибка"
 
 #: ../spectlib/watch.py:113
 msgid "There was an error stopping the watch"
-msgstr ""
+msgstr "При остановке наблюдения произошла ошибка"
 
 #: ../spectlib/watch.py:124
 msgid "There was an error marking the watch as read"
-msgstr ""
+msgstr "При пометке наблюдения, как прочитанного, произошла ошибка"
 
 #: ../spectlib/watch.py:182
 msgid "There was an error marking the watch as changed"
-msgstr ""
+msgstr "При пометке наблюдения, как изменившегося, произошла ошибка"
 
 #. otherwise, it will be saved untranslated in the watch list
 #: ../spectlib/watch.py:247 ../spectlib/watch.py:248
 msgid "No changes yet"
-msgstr ""
+msgstr "Пока без изменений"
 
 #: ../spectlib/watch.py:301
 msgid "Unexpected error:"
-msgstr ""
+msgstr "Неожиданная ошибка:"
 
 #: ../spectlib/watch.py:339 ../spectlib/plugins/watch_mail_gmail.py:146
 #: ../spectlib/plugins/watch_mail_gmail.py:159
@@ -597,12 +628,13 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_static.py:231
 #, python-format
 msgid "There was an error opening the file %s"
-msgstr ""
+msgstr "Произошла ошибка при открытии файла %s"
 
 #: ../spectlib/watch.py:352
 #, python-format
 msgid "Please enable plugin \"%s\" if you want to use the watch \"%s\"."
 msgstr ""
+"Пожалуйста включите плагин \"%s\" если хотите использовать наблюдение \"%s\"."
 
 #: ../spectlib/watch.py:498 ../spectlib/watch.py:592 ../spectlib/watch.py:620
 #: ../spectlib/watch.py:644 ../spectlib/watch.py:670 ../spectlib/watch.py:684
@@ -612,14 +644,14 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_folder.py:199
 #, python-format
 msgid "There was an error writing to the file %s"
-msgstr ""
+msgstr "Произошла ошибка при записи файла %s"
 
 #: ../spectlib/watch.py:506 ../spectlib/watch.py:519 ../spectlib/watch.py:539
 #: ../spectlib/watch.py:565 ../spectlib/watch.py:581 ../spectlib/watch.py:605
 #: ../spectlib/watch.py:660
 #, python-format
 msgid "There was an error initializing config file %s"
-msgstr ""
+msgstr "Произошла ошибка при инициализации файла конфигурации %s"
 
 #: ../spectlib/plugins/watch_im_pidgin.py:32
 msgid "Pidgin"
@@ -629,7 +661,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_sn_facebook.py:39
 #: ../spectlib/plugins/watch_sn_twitter.py:44
 msgid "Social networks"
-msgstr ""
+msgstr "Социальные сети"
 
 #: ../spectlib/plugins/watch_im_pidgin.py:39
 #: ../spectlib/plugins/watch_im_pidgin.py:40
@@ -669,7 +701,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:102
 #: ../spectlib/plugins/watch_web_static.py:271
 msgid "Last changed"
-msgstr ""
+msgstr "Последние изменения"
 
 #: ../spectlib/plugins/watch_mail_evolution.py:29
 msgid "Evolution"
@@ -681,16 +713,16 @@ msgstr ""
 #: ../spectlib/plugins/watch_mail_imap.py:34
 #: ../spectlib/plugins/watch_mail_pop3.py:37
 msgid "Mail"
-msgstr ""
+msgstr "Почта"
 
 #: ../spectlib/plugins/watch_mail_evolution.py:66
-#, python-format
+#, fuzzy, python-format
 msgid "New message in %s."
-msgstr ""
+msgstr "%d новых сообщений"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:34
 msgid "GMail"
-msgstr ""
+msgstr "GMail"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:40
 #: ../spectlib/plugins/watch_mail_gmail.py:109
@@ -708,7 +740,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:103
 #: ../spectlib/plugins/watch_web_static.py:278
 msgid "Username"
-msgstr ""
+msgstr "Имя пользователя"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:41
 #: ../spectlib/plugins/watch_mail_gwave.py:44
@@ -719,7 +751,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:42
 #: ../spectlib/plugins/watch_web_static.py:279
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:42
 msgid "Label"
@@ -730,7 +762,7 @@ msgstr ""
 #: ../spectlib/plugins/watch_mail_pop3.py:186
 #: ../spectlib/plugins/watch_web_greader.py:104
 msgid "Unread messages"
-msgstr ""
+msgstr "Непрочитанные сообщения"
 
 #: ../spectlib/plugins/watch_mail_gmail.py:116
 #: ../spectlib/plugins/watch_mail_imap.py:154
@@ -741,6 +773,9 @@ msgid ""
 "\n"
 "... <b>totalling %d</b> unread mails."
 msgstr ""
+"Новое сообщение от <b>%s</b>...\n"
+"\n"
+"... <b>всего %d</b> непрочитанных писем."
 
 #: ../spectlib/plugins/watch_mail_gmail.py:126
 #: ../spectlib/plugins/watch_mail_imap.py:166
@@ -751,6 +786,9 @@ msgid ""
 "\n"
 "... <b>totalling %d</b> unread mails."
 msgstr ""
+"%d новых сообщений от <b>%s</b>...\n"
+"\n"
+"... <b>всего %d</b> непрочитанных писем."
 
 #: ../spectlib/plugins/watch_mail_gmail.py:137
 #: ../spectlib/plugins/watch_mail_gwave.py:124
@@ -763,20 +801,22 @@ msgstr ""
 #: ../spectlib/plugins/watch_web_greader.py:117
 #: ../spectlib/plugins/watch_web_greader.py:130
 msgid "and others..."
-msgstr ""
+msgstr "и другие..."
 
 #: ../spectlib/plugins/watch_mail_gwave.py:37
+#, fuzzy
 msgid "Google Wave"
-msgstr ""
+msgstr "Google Reader"
 
 #: ../spectlib/plugins/watch_mail_gwave.py:100
+#, fuzzy
 msgid "Unread waves"
-msgstr ""
+msgstr "Непрочитанные сообщения"
 
 #: ../spectlib/plugins/watch_mail_gwave.py:105
-#, python-format
+#, fuzzy, python-format
 msgid "Unread wave in %s"
-msgstr ""
+msgstr "Непрочитанные сообщения"
 
 #: ../spectlib/plugins/watch_mail_gwave.py:115
 #, python-format
@@ -785,25 +825,25 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_mail_imap.py:32
 msgid "IMAP"
-msgstr ""
+msgstr "IMAP"
 
 #: ../spectlib/plugins/watch_mail_imap.py:40
 #: ../spectlib/plugins/watch_mail_pop3.py:43
 msgid "Host"
-msgstr ""
+msgstr "Узел"
 
 #: ../spectlib/plugins/watch_mail_imap.py:41
 #: ../spectlib/plugins/watch_mail_pop3.py:44
 msgid "Use SSL"
-msgstr ""
+msgstr "Использовать SSL"
 
 #: ../spectlib/plugins/watch_mail_imap.py:42
 msgid "Folder (optional)"
-msgstr ""
+msgstr "Каталог (необязательно)"
 
 #: ../spectlib/plugins/watch_mail_pop3.py:35
 msgid "POP3"
-msgstr ""
+msgstr "POP3"
 
 #: ../spectlib/plugins/watch_music_amarok.py:29
 msgid "Amarok"
@@ -831,8 +871,9 @@ msgid "Last.fm"
 msgstr ""
 
 #: ../spectlib/plugins/watch_music_lastfm.py:74
+#, fuzzy
 msgid "Last song"
-msgstr ""
+msgstr "Последние изменения"
 
 #: ../spectlib/plugins/watch_music_lastfm.py:156
 msgid ": "
@@ -844,56 +885,56 @@ msgstr ""
 
 #: ../spectlib/plugins/watch_sn_facebook.py:37
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:43
 #: ../spectlib/plugins/watch_sn_facebook.py:231
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:118
 msgid "Wrong username/password"
-msgstr ""
+msgstr "Неверное имя пользователя/пароль"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:126
 msgid "You received"
-msgstr ""
+msgstr "Вы получили"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:129
 msgid "a new message"
-msgstr ""
+msgstr "новое сообщение"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:131
 #, python-format
 msgid "%d new messages"
-msgstr ""
+msgstr "%d новых сообщений"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:136
 msgid "a new notification"
-msgstr ""
+msgstr "новое уведомление"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:138
 #, python-format
 msgid "%d new notifications"
-msgstr ""
+msgstr "%d новых уведомлений"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:143
 msgid "a new request"
-msgstr ""
+msgstr "новый запрос"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:145
 #, python-format
 msgid "%d new requests"
-msgstr ""
+msgstr "%d новых запросов"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:150
 msgid "a new wall post"
-msgstr ""
+msgstr "Новая запись на Стене"
 
 #: ../spectlib/plugins/watch_sn_facebook.py:152
 #, python-format
 msgid "%d new wall posts"
-msgstr ""
+msgstr "%d новых записей на Стене"
 
 #: ../spectlib/plugins/watch_sn_twitter.py:42
 msgid "Twitter"
@@ -909,18 +950,21 @@ msgid "New tweet from <b>%s</b>"
 msgstr ""
 
 #: ../spectlib/plugins/watch_sn_twitter.py:128
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "New tweets from <b>%s</b>...\n"
 "\n"
 "... <b>totalling %d</b> new tweets."
 msgstr ""
+"Новое сообщение от <b>%s</b>...\n"
+"\n"
+"... <b>всего %d</b> непрочитанных писем."
 
 #: ../spectlib/plugins/watch_system_file.py:33
 #: ../spectlib/plugins/watch_system_file.py:39
 #: ../spectlib/plugins/watch_system_file.py:168
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: ../spectlib/plugins/watch_system_file.py:35
 #: ../spectlib/plugins/watch_system_folder.py:35
@@ -928,36 +972,36 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_port.py:33
 #: ../spectlib/plugins/watch_system_process.py:34
 msgid "System"
-msgstr ""
+msgstr "Система"
 
 #: ../spectlib/plugins/watch_system_file.py:72
 msgid "The file was removed"
-msgstr ""
+msgstr "Файл был удален"
 
 #: ../spectlib/plugins/watch_system_file.py:99
 msgid "User id of the owner changed"
-msgstr ""
+msgstr "User id владельца изменился"
 
 #: ../spectlib/plugins/watch_system_file.py:102
 msgid "Group id of the owner changed"
-msgstr ""
+msgstr "Group id владельца изменился"
 
 #: ../spectlib/plugins/watch_system_file.py:105
 msgid "File size changed"
-msgstr ""
+msgstr "Размер файла изменился"
 
 #: ../spectlib/plugins/watch_system_file.py:108
 msgid "Time of last access changed"
-msgstr ""
+msgstr "Время последнего доступа изменилось"
 
 #: ../spectlib/plugins/watch_system_file.py:111
 msgid "Time of last modification changed"
-msgstr ""
+msgstr "Время последней правки изменилось "
 
 #: ../spectlib/plugins/watch_system_file.py:158
 #, python-format
 msgid "<b>%s</b> has changed:\n"
-msgstr ""
+msgstr "<b>%s</b> изменился:\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:33
 #: ../spectlib/plugins/watch_system_folder.py:39
@@ -965,41 +1009,41 @@ msgstr ""
 #: ../spectlib/plugins/watch_vc_bazaar.py:41
 #: ../spectlib/plugins/watch_vc_bazaar.py:167
 msgid "Folder"
-msgstr ""
+msgstr "Каталог"
 
 #: ../spectlib/plugins/watch_system_folder.py:77
 msgid "The watch is not set to a folder"
-msgstr ""
+msgstr "За каталогом не установлено наблюдение"
 
 #. Unknown file type
 #: ../spectlib/plugins/watch_system_folder.py:139
 #, python-format
 msgid "Skipping %s"
-msgstr ""
+msgstr "Пропускаю %s"
 
 #: ../spectlib/plugins/watch_system_folder.py:163
 msgid "1 new file was created.\n"
-msgstr ""
+msgstr "1 новый файл был создан.\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:165
 msgid " new files were created.\n"
-msgstr ""
+msgstr "новых файлов было создано.\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:168
 msgid "1 file was removed.\n"
-msgstr ""
+msgstr "1 файл был удален.\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:170
 msgid " files were removed.\n"
-msgstr ""
+msgstr "файлов было удалено.\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:173
 msgid "1 file was modified.\n"
-msgstr ""
+msgstr "1 файл был изменен.\n"
 
 #: ../spectlib/plugins/watch_system_folder.py:175
 msgid " files were modified.\n"
-msgstr ""
+msgstr "файлов было изменено.\n"
 
 #: ../spectlib/plugins/watch_system_mumbles.py:33
 msgid "Mumbles"
@@ -1009,107 +1053,111 @@ msgstr ""
 #: ../spectlib/plugins/watch_system_port.py:37
 #: ../spectlib/plugins/watch_system_port.py:106
 msgid "Port"
-msgstr ""
+msgstr "Порт"
 
 #: ../spectlib/plugins/watch_system_port.py:65
 msgid "Closed"
-msgstr ""
+msgstr "Закрыт"
 
 #: ../spectlib/plugins/watch_system_port.py:69
 msgid "Open"
-msgstr ""
+msgstr "Открыт"
 
 #: ../spectlib/plugins/watch_system_port.py:72
 #: ../spectlib/plugins/watch_system_process.py:75
 msgid "Unknown"
-msgstr ""
+msgstr "Неизвестно"
 
 #: ../spectlib/plugins/watch_system_port.py:107
 #: ../spectlib/plugins/watch_system_process.py:94
 msgid "Status"
-msgstr ""
+msgstr "Состояние"
 
 #: ../spectlib/plugins/watch_system_port.py:113
 #, python-format
 msgid "The network socket on port %s was established."
-msgstr ""
+msgstr "Сокет на порте %s, был открыт."
 
 #: ../spectlib/plugins/watch_system_port.py:115
 #, python-format
 msgid "The network socket on port %s was closed."
-msgstr ""
+msgstr "Сокет на порте %s, был закрыт."
 
 #: ../spectlib/plugins/watch_system_process.py:32
 #: ../spectlib/plugins/watch_system_process.py:38
 #: ../spectlib/plugins/watch_system_process.py:93
 msgid "Process"
-msgstr ""
+msgstr "Процесс"
 
 #: ../spectlib/plugins/watch_system_process.py:68
 msgid "Not running"
-msgstr ""
+msgstr "Не запущен"
 
 #: ../spectlib/plugins/watch_system_process.py:72
 msgid "Running"
-msgstr ""
+msgstr "Запущен"
 
 #: ../spectlib/plugins/watch_system_process.py:99
 msgid "The system process has started."
-msgstr ""
+msgstr "Системный процесс был запущен."
 
 #. the process check returned false, which means the process is not running
 #: ../spectlib/plugins/watch_system_process.py:101
 msgid "The system process has stopped."
-msgstr ""
+msgstr "Системный процесс был остановлен."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:35
 msgid "Bazaar"
-msgstr ""
+msgstr "Bazaar"
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:37
 msgid "Version control"
-msgstr ""
+msgstr "Контроль версий"
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:92
 msgid ""
 "No parent branch available, you will not be notified of differences and "
 "changes."
 msgstr ""
+"Родительская ветвь недоступна, Вы не будете уведомлены о различиях и "
+"изменениях."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:106
 msgid "One new local revision has not yet been merged with its parent branch."
 msgstr ""
+"Одна новая локальная ревизия пока ещё не была слита cо своей родительской "
+"веткой."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:108
 #, python-format
 msgid "%d new local revisions have not yet been merged with its parent branch."
-msgstr ""
+msgstr "%d новых локальных ревизий не были слиты со своей родительской веткой."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:111
 msgid "One new revision on the remote branch."
-msgstr ""
+msgstr "Одна новая ревизия в удаленной ветке."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:113
 #, python-format
 msgid "%d new revisions on the remote branch."
-msgstr ""
+msgstr "%d новых ревизий в удаленной ветке."
 
 #: ../spectlib/plugins/watch_vc_bazaar.py:168
 msgid "Main branch"
-msgstr ""
+msgstr "Основная ветка"
 
 #: ../spectlib/plugins/watch_web_greader.py:35
 msgid "Google Reader"
-msgstr ""
+msgstr "Google Reader"
 
 #: ../spectlib/plugins/watch_web_greader.py:37
 #: ../spectlib/plugins/watch_web_static.py:46
 msgid "Internet"
-msgstr ""
+msgstr "Интернет"
 
 #: ../spectlib/plugins/watch_web_greader.py:91
 msgid " or more"
-msgstr ""
+msgstr "или более"
 
 #: ../spectlib/plugins/watch_web_greader.py:110
 #, python-format
@@ -1118,35 +1166,113 @@ msgid ""
 "\n"
 "... <b>totalling %s</b> unread items."
 msgstr ""
+"Пояились новости  <b>%s</b>...\n"
+"\n"
+"... <b>всего %s</b> непрочитанных новостей."
 
 #: ../spectlib/plugins/watch_web_greader.py:120
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "%d new newsitems in <b>%s</b>...\n"
 "\n"
 "... <b>totalling %s</b> unread items."
 msgstr ""
+"<b>%s</b> имеется новости в <b>%s</b>...\n"
+"\n"
+"... <b>всего %s</b> непрочитанных новостей."
 
 #: ../spectlib/plugins/watch_web_static.py:44
 msgid "Webpage/feed"
-msgstr ""
+msgstr "Веб-страница/лента"
 
 #: ../spectlib/plugins/watch_web_static.py:181
 #, python-format
 msgid "Filesize difference: %.2f"
-msgstr ""
+msgstr "Разница в размере файла:%.2f"
 
 #: ../spectlib/plugins/watch_web_static.py:254
 #, python-format
 msgid "Difference percentage: %s percent"
-msgstr ""
+msgstr "Процентная разница: %s процентов"
 
 #: ../spectlib/plugins/watch_web_static.py:272
 #: ../spectlib/plugins/watch_web_static.py:277
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../spectlib/plugins/watch_web_static.py:273
 #: ../spectlib/plugins/watch_web_static.py:280
 msgid "Error margin (%)"
-msgstr ""
+msgstr "Предел ошибки (%)"
+
+#~ msgid ""
+#~ "Choose \n"
+#~ "an other name"
+#~ msgstr ""
+#~ "Выберите \n"
+#~ "другое имя"
+
+#~ msgid ""
+#~ "Edit existing\n"
+#~ "watch"
+#~ msgstr ""
+#~ "Изменить существующее\n"
+#~ "наблюдение"
+
+#~ msgid ""
+#~ "Seconds\n"
+#~ "Minutes\n"
+#~ "Hours\n"
+#~ "Days"
+#~ msgstr ""
+#~ "Секунд\n"
+#~ "Минут\n"
+#~ "Часов\n"
+#~ "Дней"
+
+#~ msgid "The watch name is already in use"
+#~ msgstr "Имя наблюдения уже используется"
+
+#~ msgid ""
+#~ "The watch name you specified already exists! Did you mean to modify that "
+#~ "existing watch, or did you really want to create a new one?\n"
+#~ "\n"
+#~ "If you want to create a new one, you need to choose a different name."
+#~ msgstr ""
+#~ "Указанное для наблюдения имя уже существует! Вы действительно хотите его "
+#~ "изменить или Вы действительно хотите создать новое?\n"
+#~ "\n"
+#~ "Если Вы хотите создать новое наблюдение, укажите другое имя."
+
+#~ msgid ""
+#~ "All\n"
+#~ "Debug\n"
+#~ "Info\n"
+#~ "Warning\n"
+#~ "Error\n"
+#~ "Critical"
+#~ msgstr ""
+#~ "Все\n"
+#~ "Отладка\n"
+#~ "Информация\n"
+#~ "Предупреждение\n"
+#~ "Ошибка\n"
+#~ "Критическая"
+
+#~ msgid "Watch opened"
+#~ msgstr "Наблюдение открыто"
+
+#~ msgid "Wrong username or password"
+#~ msgstr "Неверное имя пользователя или пароль"
+
+#~ msgid "Could not establish a connection to server"
+#~ msgstr "Невозможно установить соединение с сервером"
+
+#~ msgid "Could not get cookies"
+#~ msgstr "Невозможно получить cookies"
+
+#~ msgid "You are not subscribed to any feeds"
+#~ msgstr "Вы не подписаны ни на одну ленту"
+
+#~ msgid "No unread items"
+#~ msgstr "Нет непрочитанных элементов"
