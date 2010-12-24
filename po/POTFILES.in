@@ -57,6 +57,7 @@ spectlib/plugins/watch_system_mumbles.py
 spectlib/plugins/watch_system_port.py
 spectlib/plugins/watch_system_process.py
 spectlib/plugins/watch_vc_bazaar.py
+spectlib/plugins/watch_vc_subversion.py
 spectlib/plugins/watch_web_greader.py
 spectlib/plugins/watch_web_static.py
 spectlib/plugins/__init__.py
