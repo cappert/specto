@@ -14,11 +14,11 @@ msgstr ""
 
 #: ../specto.desktop.in.h:1
 msgid "Be notified of everything"
-msgstr ""
+msgstr "Soyez alerte"
 
 #: ../specto.desktop.in.h:2
 msgid "Specto"
-msgstr ""
+msgstr "Specto"
 
 #: ../data/uis/add_watch.ui.h:1 ../data/uis/edit_watch.ui.h:2
 msgid "<b>Run a custom command:</b>"
