@@ -1,0 +1,1495 @@
+# Turkish translation for specto
+# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# This file is distributed under the same license as the specto package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: specto\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-24 15:37+0100\n"
+"PO-Revision-Date: 2007-05-29 18:28-0500\n"
+"Last-Translator: Jeff Fortin <nekohayo ~at~ gmail.com>\n"
+"Language-Team: Turkish <tr@li.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-05-10 19:48:11+0000\n"
+
+#: ../specto.desktop.in.h:1
+msgid "Be notified of everything"
+msgstr ""
+
+#: ../specto.desktop.in.h:2
+msgid "Specto"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:1 ../data/uis/edit_watch.ui.h:2
+msgid "<b>Run a custom command:</b>"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:2
+msgid "Add a Watch"
+msgstr "İzleme Ekle"
+
+#: ../data/uis/add_watch.ui.h:3 ../data/uis/edit_watch.ui.h:4
+msgid "Advanced options"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:4 ../data/uis/edit_watch.ui.h:5
+msgid "Days"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:5 ../data/uis/edit_watch.ui.h:7
+#, fuzzy
+msgid "General options"
+msgstr "<b>Genel ayarlar</b>"
+
+#: ../data/uis/add_watch.ui.h:6 ../data/uis/edit_watch.ui.h:8
+msgid "Hours"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:7 ../data/uis/edit_watch.ui.h:9
+msgid "Minutes"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:8 ../data/uis/edit_watch.ui.h:10
+msgid "Name:"
+msgstr "Ad:"
+
+#: ../data/uis/add_watch.ui.h:9 ../data/uis/edit_watch.ui.h:11
+msgid "Refresh Interval:"
+msgstr "Tazeleme aralığı:"
+
+#: ../data/uis/add_watch.ui.h:10 ../data/uis/edit_watch.ui.h:12
+msgid "Seconds"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:11 ../data/uis/edit_watch.ui.h:14
+msgid "When this watch has changed"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:12 ../data/uis/edit_watch.ui.h:15
+msgid "When you open this watch"
+msgstr ""
+
+#: ../data/uis/edit_watch.ui.h:1
+msgid "<b>General settings</b>"
+msgstr "<b>Genel ayarlar</b>"
+
+#: ../data/uis/edit_watch.ui.h:3
+#, fuzzy
+msgid "<b>Watch options</b>"
+msgstr "<b>İzleme adı</b>"
+
+#: ../data/uis/edit_watch.ui.h:6 ../spectlib/notifier.py:821
+#, fuzzy
+msgid "Error log"
+msgstr "Hata Günlüğü"
+
+#: ../data/uis/edit_watch.ui.h:13
+msgid "Watch $WATCH_NAME"
+msgstr ""
+
+#: ../data/uis/import_export.ui.h:1
+msgid "Deselect all"
+msgstr "Tümününün seçimini kaldır"
+
+#: ../data/uis/import_export.ui.h:2
+msgid "Select all"
+msgstr "Tümünü Seç"
+
+#: ../data/uis/log_dialog.ui.h:1
+msgid "All"
+msgstr ""
+
+#: ../data/uis/log_dialog.ui.h:2
+msgid "Critical"
+msgstr ""
+
+#: ../data/uis/log_dialog.ui.h:3
+msgid "Debug"
+msgstr ""
+
+#. create a dialog
+#: ../data/uis/log_dialog.ui.h:4 ../data/uis/notifier.ui.h:7
+#: ../spectlib/main.py:354
+#, fuzzy
+msgid "Error"
+msgstr "Hata Günlüğü"
+
+#: ../data/uis/log_dialog.ui.h:5
+msgid "Filter:"
+msgstr "Fİltre:"
+
+#: ../data/uis/log_dialog.ui.h:6
+msgid "Info"
+msgstr ""
+
+#: ../data/uis/log_dialog.ui.h:7
+msgid "Logs"
+msgstr "Günlükler"
+
+#: ../data/uis/log_dialog.ui.h:8
+msgid "Warning"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:1
+msgid "By Active"
+msgstr "Faaliyet Durumuna Göre"
+
+#: ../data/uis/notifier.ui.h:2
+msgid "By Name"
+msgstr "Ada Göre"
+
+#: ../data/uis/notifier.ui.h:3
+msgid "By Watch Type"
+msgstr "İzleme Türüne Göre"
+
+#: ../data/uis/notifier.ui.h:4
+msgid "Debug information"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:5
+#, fuzzy
+msgid "Display _All Watches"
+msgstr "Tüm _İzlemeleri Göster"
+
+#: ../data/uis/notifier.ui.h:6
+#, fuzzy
+msgid "Display _Toolbar"
+msgstr "Araç _Çubuğunu Göster"
+
+#: ../data/uis/notifier.ui.h:8
+msgid "Extra information"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:9
+msgid "General"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:10 ../spectlib/notifier.py:526
+#: ../spectlib/trayicon.py:148
+msgid "Mark as read"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:11
+msgid "Notifications"
+msgstr "Bildirimler"
+
+#: ../data/uis/notifier.ui.h:12
+msgid "Sorting"
+msgstr "Sıralama"
+
+#: ../data/uis/notifier.ui.h:13
+msgid "Visit the issue tracker"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:14
+msgid "_Edit"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:15
+msgid "_Error Log"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:16
+msgid "_Export Watches"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:17
+msgid "_File"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:18
+msgid "_Help"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:19
+msgid "_Import Watches"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:20 ../spectlib/trayicon.py:154
+msgid "_Mark all read"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:21
+#, fuzzy
+msgid "_Refresh All"
+msgstr "_Tümünü Sil"
+
+#: ../data/uis/notifier.ui.h:22
+msgid "_View"
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:1
+msgid "<b>Debugging and Logging</b>"
+msgstr "<b>Hata ayıklama ve günlükleme</b>"
+
+#: ../data/uis/preferences.ui.h:2
+msgid "<b>Display</b>"
+msgstr "<b>Görüntü</b>"
+
+#: ../data/uis/preferences.ui.h:3
+#, fuzzy
+msgid "<b>Security</b>"
+msgstr "<b>Bağlantı noktası:</b>"
+
+#: ../data/uis/preferences.ui.h:4
+msgid "<b>Sounds</b>"
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:5
+msgid "Always show the icon in the notification area"
+msgstr "Bildirim alanında her zaman ikonu göster"
+
+#: ../data/uis/preferences.ui.h:6
+msgid "Display the notification window in the window list"
+msgstr "Bildirim penceresini pencere listesinde göster"
+
+#: ../data/uis/preferences.ui.h:7
+msgid "Enable debug mode and logging"
+msgstr "Hata ayıklama ve günlükleme modunu etkinleştir"
+
+#: ../data/uis/preferences.ui.h:8
+msgid ""
+"If activated, you will receive more information when running Specto from a "
+"terminal, and more information will be printed to the logs."
+msgstr ""
+"Etkinleştirildiğinde, Specto'yu terminalden çalıştırırken daha fazla bilgi "
+"alacaksınız, ve günlüklere daha fazla bilgi yazılacak."
+
+#: ../data/uis/preferences.ui.h:9
+msgid ""
+"It is strongly recommended to use keyring password encryption. If you "
+"disable this option, your passwords will be saved in <b>plain text, "
+"unencrypted</b> in your watch list, and could be read by anyone gaining "
+"access to your system user account."
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:10
+msgid "Play this sound when a problem occurs:"
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:11
+msgid "Play this sound when a watch has changed:"
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:12
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: ../data/uis/preferences.ui.h:13
+msgid "Select a File"
+msgstr "Bir Dosya Seçin"
+
+#: ../data/uis/preferences.ui.h:14
+msgid "Show notifications when a watch has changed"
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:15
+msgid "Use GNOME keyring to store passwords in encrypted format"
+msgstr ""
+
+#. gtk.AboutDialog will detect if "translator-credits" is untranslated,
+#. and hide the tab.
+#: ../spectlib/about.py:55
+msgid "translator-credits"
+msgstr "Murat Güneş <mgunes@gmx.net>"
+
+#: ../spectlib/about.py:68
+msgid "Specto's Website"
+msgstr ""
+
+#: ../spectlib/balloons.py:103
+msgid ""
+"Cannot display notification message. Make sure that libnotify and D-Bus are "
+"available on your system."
+msgstr ""
+
+#: ../spectlib/console.py:44 ../spectlib/watch.py:170
+#, fuzzy
+msgid "Watch has changed."
+msgstr "\"%s\"  izlemesinde bir hata var"
+
+#: ../spectlib/console.py:49 ../spectlib/watch.py:134
+msgid "Watch started checking."
+msgstr ""
+
+#: ../spectlib/console.py:51
+#, fuzzy
+msgid "Watch is idle."
+msgstr "\"%s\" izlemesi düzenlendi."
+
+#: ../spectlib/console.py:53 ../spectlib/watch.py:205
+msgid "No network connection detected"
+msgstr "Ağ bağlantısı tesbit edilemedi"
+
+#: ../spectlib/console.py:55 ../spectlib/watch.py:166 ../spectlib/watch.py:201
+msgid "There was an error checking the watch"
+msgstr ""
+
+#: ../spectlib/edit_watch.py:70
+msgid "Edit watch: "
+msgstr "İzleme Düzenle "
+
+#: ../spectlib/edit_watch.py:180 ../spectlib/notifier.py:616
+msgid "Remove a watch"
+msgstr ""
+
+#: ../spectlib/edit_watch.py:181 ../spectlib/notifier.py:617
+#, python-format
+msgid ""
+"<big>Remove the watch \"%s\"?</big>\n"
+"This operation cannot be undone."
+msgstr ""
+
+#: ../spectlib/export_watch.py:57 ../spectlib/export_watch.py:58
+msgid "Export watches"
+msgstr "İzlemeleri Dışa Aktar"
+
+#: ../spectlib/export_watch.py:85 ../spectlib/import_watch.py:94
+#, fuzzy
+msgid "Select"
+msgstr "Tümünü Seç"
+
+#: ../spectlib/export_watch.py:91 ../spectlib/import_watch.py:99
+#: ../spectlib/notifier.py:733
+msgid "Type"
+msgstr "Tür"
+
+#. self.columnTitle_renderer.set_property("editable", True)
+#. self.columnTitle_renderer.connect('edited', self.change_entry_name)
+#: ../spectlib/export_watch.py:97 ../spectlib/import_watch.py:104
+#: ../spectlib/notifier.py:742 ../spectlib/plugins/watch_im_pidgin.py:187
+#: ../spectlib/plugins/watch_mail_evolution.py:69
+#: ../spectlib/plugins/watch_mail_gmail.py:107
+#: ../spectlib/plugins/watch_mail_gwave.py:97
+#: ../spectlib/plugins/watch_mail_imap.py:183
+#: ../spectlib/plugins/watch_mail_pop3.py:183
+#: ../spectlib/plugins/watch_music_amarok.py:72
+#: ../spectlib/plugins/watch_music_banshee.py:86
+#: ../spectlib/plugins/watch_music_lastfm.py:71
+#: ../spectlib/plugins/watch_music_rhythmbox.py:83
+#: ../spectlib/plugins/watch_sn_facebook.py:229
+#: ../spectlib/plugins/watch_sn_twitter.py:110
+#: ../spectlib/plugins/watch_system_file.py:166
+#: ../spectlib/plugins/watch_system_folder.py:226
+#: ../spectlib/plugins/watch_system_mumbles.py:109
+#: ../spectlib/plugins/watch_system_port.py:104
+#: ../spectlib/plugins/watch_system_process.py:91
+#: ../spectlib/plugins/watch_vc_bazaar.py:165
+#: ../spectlib/plugins/watch_web_greader.py:101
+#: ../spectlib/plugins/watch_web_static.py:270
+msgid "Name"
+msgstr "İsim"
+
+#: ../spectlib/export_watch.py:105 ../spectlib/import_watch.py:111
+#: ../spectlib/notifier.py:751
+msgid "ID"
+msgstr "No (ID)"
+
+#: ../spectlib/export_watch.py:112 ../spectlib/import_watch.py:118
+#: ../spectlib/notifier.py:758
+msgid "TYPE"
+msgstr "TÜR"
+
+#: ../spectlib/gtkconfig.py:172 ../spectlib/gtkconfig.py:449
+#, fuzzy
+msgid "Choose a file"
+msgstr "Bir dosya ya da dizin seçiniz"
+
+#: ../spectlib/gtkconfig.py:205 ../spectlib/gtkconfig.py:455
+#, fuzzy
+msgid "Choose a directory"
+msgstr "Bir dosya ya da dizin seçiniz"
+
+#: ../spectlib/gtkconfig.py:343
+msgid ""
+"<b>Specto encountered an error</b>\n"
+"Please verify if this bug has been entered in our issue tracker, and if not, "
+"file a bug report so we can fix it."
+msgstr ""
+
+#: ../spectlib/gtkconfig.py:361
+#, fuzzy
+msgid "Save file as"
+msgstr "Farklı İsimle Kaydet"
+
+#: ../spectlib/gtkconfig.py:384
+#, fuzzy
+msgid "Open file"
+msgstr "dosya"
+
+#: ../spectlib/import_watch.py:67 ../spectlib/import_watch.py:68
+msgid "Import watches"
+msgstr "İzlemeleri İçe Aktar"
+
+#: ../spectlib/main.py:62
+msgid "no GTK, activating console mode"
+msgstr "GTK bulunamadı, konsol modu etkinleştiriliyor"
+
+#: ../spectlib/main.py:100
+msgid "Console mode enabled."
+msgstr ""
+
+#: ../spectlib/main.py:138
+msgid "Could not create a watch, because it is corrupt."
+msgstr ""
+
+#: ../spectlib/main.py:260 ../spectlib/main.py:263 ../spectlib/main.py:370
+msgid "Specto is already running!"
+msgstr "Specto zaten çalışmakta!"
+
+#. create a close dialog
+#: ../spectlib/main.py:308
+msgid "Cannot quit yet"
+msgstr "Henüz çıkmak mümkün değil"
+
+#: ../spectlib/main.py:314
+msgid "Murder!"
+msgstr "Cinayet!"
+
+#: ../spectlib/main.py:325
+#, fuzzy
+msgid ""
+"<b><big>Specto is currently busy and cannot quit yet.</big></b>\n"
+"\n"
+"This may be because it is checking for watch changes.\n"
+"However, you can try forcing it to quit by clicking the murder button."
+msgstr ""
+"<b><big>Specto şu anda meşgul ve henüz sonlandırılamaz.</big></b>\n"
+"\n"
+"Bunun nedeni izleme güncellemelerini kontrol etmekte olması olabilir.\n"
+"Yine de \"Cinayet!\" düğmesine basarak programı sonlanmaya zorlayabilirsiniz."
+
+#. menu item, does not allow changing label
+#: ../spectlib/notifier.py:184
+msgid "Stop"
+msgstr ""
+
+#. menu item, does not allow changing label
+#: ../spectlib/notifier.py:205 ../spectlib/trayicon.py:149
+#, fuzzy
+msgid "Refresh All"
+msgstr "Tazeleme aralığı:"
+
+#: ../spectlib/notifier.py:223
+#, python-format
+msgid "The watch \"%s\" is checking."
+msgstr ""
+
+#: ../spectlib/notifier.py:240 ../spectlib/notifier.py:387
+msgid ""
+"The network connection seems to be down, networked watches will not check "
+"until then."
+msgstr ""
+
+#: ../spectlib/notifier.py:246
+#, fuzzy, python-format
+msgid "The watch \"%s\" has a problem."
+msgstr "\"%s\"  izlemesinde bir hata var"
+
+#: ../spectlib/notifier.py:251
+#, python-format
+msgid "%s encountered a problem"
+msgstr ""
+
+#: ../spectlib/notifier.py:259
+#, fuzzy, python-format
+msgid "The watch \"%s\" has changed."
+msgstr "\"%s\" izlemesi başladı"
+
+#: ../spectlib/notifier.py:274
+#, python-format
+msgid "%s has changed"
+msgstr ""
+
+#: ../spectlib/notifier.py:295
+msgid "There was an error marking the watch status"
+msgstr ""
+
+#: ../spectlib/notifier.py:432 ../spectlib/watch.py:263
+msgid "No extra information available."
+msgstr ""
+
+#: ../spectlib/notifier.py:442 ../spectlib/notifier.py:444
+msgid "Extra information could not be set"
+msgstr ""
+
+#: ../spectlib/notifier.py:520
+msgid "Refresh"
+msgstr ""
+
+#: ../spectlib/notifier.py:535
+msgid "Edit"
+msgstr ""
+
+#: ../spectlib/notifier.py:538
+msgid "Remove"
+msgstr ""
+
+#: ../spectlib/notifier.py:568
+msgid ""
+"You can add all kinds of websites as watches. Static pages, RSS or Atom "
+"feeds, etc. Specto will automatically handle them."
+msgstr ""
+"Her tür web sitesini izleme olarak ekleyebilirsiniz. Statik sayfalar, RSS ve "
+"Atom kaynakları, vs. Specto bunları otomatik olarak tanıyacaktır."
+
+#: ../spectlib/notifier.py:569
+msgid ""
+"Website watches can use an error margin that allows you to set a minimum "
+"difference percentage. This allows you to adapt to websites that change "
+"constantly or have lots of advertising."
+msgstr ""
+"Web sitesi izlemelerinde asgari bir fark yüzdesi belirtmenize imkan sağlayan "
+"bir \"hata payı\" kullanabilirsiniz. Bu, sürekli değişen veya fazlaca reklam "
+"içeren web sitelerine uyumluluğu sağlayabilir."
+
+#: ../spectlib/notifier.py:570
+msgid ""
+"Single-click an existing watch to display information, and double-click it "
+"to open the content."
+msgstr ""
+"Varolan bir izlemeye tek tıklayarak bilgi görüntüleyebilir, ve çift "
+"tıklayarak içeriğini açabilirsiniz."
+
+#: ../spectlib/notifier.py:571
+msgid ""
+"Please set a reasonable refresh interval in order to save bandwidth and "
+"prevent you from being blocked from content providers."
+msgstr ""
+"Lütfen bant genişliğinden tasarruf etmek ve içerik sağlayıcılar tarafından "
+"engellenmeyi önlemek için makul bir tazeleme aralığı seçiniz."
+
+#: ../spectlib/notifier.py:726
+msgid "Active"
+msgstr "Etkin"
+
+#: ../spectlib/notifier.py:775
+msgid "Tip of the Day:"
+msgstr "Günün Püf Noktası:"
+
+#: ../spectlib/trayicon.py:101
+#, fuzzy
+msgid "No changed watches."
+msgstr "Güncellenmiş bir izleme yok."
+
+#: ../spectlib/trayicon.py:140
+msgid "Hide window"
+msgstr "Pencereyi gizle"
+
+#: ../spectlib/trayicon.py:142
+msgid "Show window"
+msgstr "Pencereyi göster"
+
+#: ../spectlib/watch.py:94
+msgid "There was an error starting the watch"
+msgstr ""
+
+#: ../spectlib/watch.py:113
+msgid "There was an error stopping the watch"
+msgstr ""
+
+#: ../spectlib/watch.py:124
+msgid "There was an error marking the watch as read"
+msgstr ""
+
+#: ../spectlib/watch.py:182
+msgid "There was an error marking the watch as changed"
+msgstr ""
+
+#. otherwise, it will be saved untranslated in the watch list
+#: ../spectlib/watch.py:247 ../spectlib/watch.py:248
+#, fuzzy
+msgid "No changes yet"
+msgstr "Henüz güncelleme yok."
+
+#: ../spectlib/watch.py:301
+msgid "Unexpected error:"
+msgstr ""
+
+#: ../spectlib/watch.py:339 ../spectlib/plugins/watch_mail_gmail.py:146
+#: ../spectlib/plugins/watch_mail_gmail.py:159
+#: ../spectlib/plugins/watch_mail_gwave.py:133
+#: ../spectlib/plugins/watch_mail_gwave.py:146
+#: ../spectlib/plugins/watch_mail_imap.py:193
+#: ../spectlib/plugins/watch_mail_pop3.py:193
+#: ../spectlib/plugins/watch_sn_facebook.py:183
+#: ../spectlib/plugins/watch_sn_facebook.py:201
+#: ../spectlib/plugins/watch_sn_twitter.py:159
+#: ../spectlib/plugins/watch_sn_twitter.py:174
+#: ../spectlib/plugins/watch_system_file.py:144
+#: ../spectlib/plugins/watch_system_folder.py:219
+#: ../spectlib/plugins/watch_vc_bazaar.py:138
+#: ../spectlib/plugins/watch_vc_bazaar.py:152
+#: ../spectlib/plugins/watch_web_greader.py:139
+#: ../spectlib/plugins/watch_web_greader.py:154
+#: ../spectlib/plugins/watch_web_static.py:219
+#: ../spectlib/plugins/watch_web_static.py:231
+#, python-format
+msgid "There was an error opening the file %s"
+msgstr ""
+
+#: ../spectlib/watch.py:352
+#, python-format
+msgid "Please enable plugin \"%s\" if you want to use the watch \"%s\"."
+msgstr ""
+
+#: ../spectlib/watch.py:498 ../spectlib/watch.py:592 ../spectlib/watch.py:620
+#: ../spectlib/watch.py:644 ../spectlib/watch.py:670 ../spectlib/watch.py:684
+#: ../spectlib/plugins/watch_mail_imap.py:206
+#: ../spectlib/plugins/watch_mail_pop3.py:206
+#: ../spectlib/plugins/watch_system_file.py:129
+#: ../spectlib/plugins/watch_system_folder.py:199
+#, python-format
+msgid "There was an error writing to the file %s"
+msgstr ""
+
+#: ../spectlib/watch.py:506 ../spectlib/watch.py:519 ../spectlib/watch.py:539
+#: ../spectlib/watch.py:565 ../spectlib/watch.py:581 ../spectlib/watch.py:605
+#: ../spectlib/watch.py:660
+#, python-format
+msgid "There was an error initializing config file %s"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:32
+msgid "Pidgin"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:34
+#: ../spectlib/plugins/watch_sn_facebook.py:39
+#: ../spectlib/plugins/watch_sn_twitter.py:44
+msgid "Social networks"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:39
+#: ../spectlib/plugins/watch_im_pidgin.py:40
+msgid "Notify if you receive a IM message"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:41
+msgid "Notify if a user changes status"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:42
+msgid "Notify if a user signs on"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:43
+msgid "Notify if a user signs off"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:188
+#: ../spectlib/plugins/watch_mail_evolution.py:70
+#: ../spectlib/plugins/watch_mail_gmail.py:108
+#: ../spectlib/plugins/watch_mail_gwave.py:98
+#: ../spectlib/plugins/watch_mail_imap.py:184
+#: ../spectlib/plugins/watch_mail_pop3.py:184
+#: ../spectlib/plugins/watch_music_amarok.py:73
+#: ../spectlib/plugins/watch_music_banshee.py:87
+#: ../spectlib/plugins/watch_music_lastfm.py:72
+#: ../spectlib/plugins/watch_music_rhythmbox.py:84
+#: ../spectlib/plugins/watch_sn_facebook.py:230
+#: ../spectlib/plugins/watch_sn_twitter.py:111
+#: ../spectlib/plugins/watch_system_file.py:167
+#: ../spectlib/plugins/watch_system_folder.py:227
+#: ../spectlib/plugins/watch_system_mumbles.py:110
+#: ../spectlib/plugins/watch_system_port.py:105
+#: ../spectlib/plugins/watch_system_process.py:92
+#: ../spectlib/plugins/watch_vc_bazaar.py:166
+#: ../spectlib/plugins/watch_web_greader.py:102
+#: ../spectlib/plugins/watch_web_static.py:271
+msgid "Last changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_evolution.py:29
+msgid "Evolution"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_evolution.py:31
+#: ../spectlib/plugins/watch_mail_gmail.py:36
+#: ../spectlib/plugins/watch_mail_gwave.py:39
+#: ../spectlib/plugins/watch_mail_imap.py:34
+#: ../spectlib/plugins/watch_mail_pop3.py:37
+msgid "Mail"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_evolution.py:66
+#, python-format
+msgid "New message in %s."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:34
+msgid "GMail"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:40
+#: ../spectlib/plugins/watch_mail_gmail.py:109
+#: ../spectlib/plugins/watch_mail_gwave.py:43
+#: ../spectlib/plugins/watch_mail_gwave.py:99
+#: ../spectlib/plugins/watch_mail_imap.py:38
+#: ../spectlib/plugins/watch_mail_imap.py:185
+#: ../spectlib/plugins/watch_mail_pop3.py:41
+#: ../spectlib/plugins/watch_mail_pop3.py:185
+#: ../spectlib/plugins/watch_music_lastfm.py:38
+#: ../spectlib/plugins/watch_music_lastfm.py:73
+#: ../spectlib/plugins/watch_sn_twitter.py:48
+#: ../spectlib/plugins/watch_sn_twitter.py:112
+#: ../spectlib/plugins/watch_web_greader.py:41
+#: ../spectlib/plugins/watch_web_greader.py:103
+#: ../spectlib/plugins/watch_web_static.py:278
+#, fuzzy
+msgid "Username"
+msgstr "Kulanıcı Adı:"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:41
+#: ../spectlib/plugins/watch_mail_gwave.py:44
+#: ../spectlib/plugins/watch_mail_imap.py:39
+#: ../spectlib/plugins/watch_mail_pop3.py:42
+#: ../spectlib/plugins/watch_sn_facebook.py:44
+#: ../spectlib/plugins/watch_sn_twitter.py:49
+#: ../spectlib/plugins/watch_web_greader.py:42
+#: ../spectlib/plugins/watch_web_static.py:279
+#, fuzzy
+msgid "Password"
+msgstr "Parola :"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:42
+msgid "Label"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:110
+#: ../spectlib/plugins/watch_mail_imap.py:186
+#: ../spectlib/plugins/watch_mail_pop3.py:186
+#: ../spectlib/plugins/watch_web_greader.py:104
+msgid "Unread messages"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:116
+#: ../spectlib/plugins/watch_mail_imap.py:154
+#: ../spectlib/plugins/watch_mail_pop3.py:155
+#, python-format
+msgid ""
+"New message from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> unread mails."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:126
+#: ../spectlib/plugins/watch_mail_imap.py:166
+#: ../spectlib/plugins/watch_mail_pop3.py:167
+#, python-format
+msgid ""
+"%d new messages from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> unread mails."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:137
+#: ../spectlib/plugins/watch_mail_gwave.py:124
+#: ../spectlib/plugins/watch_mail_imap.py:177
+#: ../spectlib/plugins/watch_mail_pop3.py:162
+#: ../spectlib/plugins/watch_mail_pop3.py:178
+#: ../spectlib/plugins/watch_sn_twitter.py:139
+#: ../spectlib/plugins/watch_vc_bazaar.py:123
+#: ../spectlib/plugins/watch_vc_bazaar.py:129
+#: ../spectlib/plugins/watch_web_greader.py:117
+#: ../spectlib/plugins/watch_web_greader.py:130
+msgid "and others..."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gwave.py:37
+msgid "Google Wave"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gwave.py:100
+msgid "Unread waves"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gwave.py:105
+#, python-format
+msgid "Unread wave in %s"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gwave.py:115
+#, python-format
+msgid "%d new waves in <b>%s</b>."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_imap.py:32
+msgid "IMAP"
+msgstr "IMAP"
+
+#: ../spectlib/plugins/watch_mail_imap.py:40
+#: ../spectlib/plugins/watch_mail_pop3.py:43
+#, fuzzy
+msgid "Host"
+msgstr "Bilgisayar Adı:"
+
+#: ../spectlib/plugins/watch_mail_imap.py:41
+#: ../spectlib/plugins/watch_mail_pop3.py:44
+#, fuzzy
+msgid "Use SSL"
+msgstr "SSL Kullan:"
+
+#: ../spectlib/plugins/watch_mail_imap.py:42
+msgid "Folder (optional)"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_pop3.py:35
+msgid "POP3"
+msgstr "POP3"
+
+#: ../spectlib/plugins/watch_music_amarok.py:29
+msgid "Amarok"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_amarok.py:31
+#: ../spectlib/plugins/watch_music_banshee.py:33
+#: ../spectlib/plugins/watch_music_lastfm.py:34
+#: ../spectlib/plugins/watch_music_rhythmbox.py:31
+msgid "Music"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_amarok.py:74
+#: ../spectlib/plugins/watch_music_banshee.py:88
+#: ../spectlib/plugins/watch_music_rhythmbox.py:85
+msgid "Current track"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_banshee.py:31
+msgid "Banshee"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_lastfm.py:32
+msgid "Last.fm"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_lastfm.py:74
+msgid "Last song"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_lastfm.py:156
+msgid ": "
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_rhythmbox.py:29
+msgid "Rhythmbox"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:37
+msgid "Facebook"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:43
+#: ../spectlib/plugins/watch_sn_facebook.py:231
+#, fuzzy
+msgid "Email"
+msgstr "GMail"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:118
+#, fuzzy
+msgid "Wrong username/password"
+msgstr "\"%s\" izlemesinde bir hata var: yanlış kullanıcı adı / şifre"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:126
+msgid "You received"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:129
+msgid "a new message"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:131
+#, python-format
+msgid "%d new messages"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:136
+#, fuzzy
+msgid "a new notification"
+msgstr "Bildirimler"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:138
+#, fuzzy, python-format
+msgid "%d new notifications"
+msgstr "Bildirimler"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:143
+msgid "a new request"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:145
+#, python-format
+msgid "%d new requests"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:150
+msgid "a new wall post"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:152
+#, python-format
+msgid "%d new wall posts"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_twitter.py:42
+msgid "Twitter"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_twitter.py:113
+msgid "New tweets"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_twitter.py:118
+#, python-format
+msgid "New tweet from <b>%s</b>"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_twitter.py:128
+#, python-format
+msgid ""
+"New tweets from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> new tweets."
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:33
+#: ../spectlib/plugins/watch_system_file.py:39
+#: ../spectlib/plugins/watch_system_file.py:168
+msgid "File"
+msgstr "Dosya"
+
+#: ../spectlib/plugins/watch_system_file.py:35
+#: ../spectlib/plugins/watch_system_folder.py:35
+#: ../spectlib/plugins/watch_system_mumbles.py:35
+#: ../spectlib/plugins/watch_system_port.py:33
+#: ../spectlib/plugins/watch_system_process.py:34
+msgid "System"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:72
+msgid "The file was removed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:99
+msgid "User id of the owner changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:102
+msgid "Group id of the owner changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:105
+msgid "File size changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:108
+msgid "Time of last access changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:111
+msgid "Time of last modification changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:158
+#, python-format
+msgid "<b>%s</b> has changed:\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_folder.py:33
+#: ../spectlib/plugins/watch_system_folder.py:39
+#: ../spectlib/plugins/watch_system_folder.py:228
+#: ../spectlib/plugins/watch_vc_bazaar.py:41
+#: ../spectlib/plugins/watch_vc_bazaar.py:167
+msgid "Folder"
+msgstr "Dizin"
+
+#: ../spectlib/plugins/watch_system_folder.py:77
+msgid "The watch is not set to a folder"
+msgstr ""
+
+#. Unknown file type
+#: ../spectlib/plugins/watch_system_folder.py:139
+#, python-format
+msgid "Skipping %s"
+msgstr "%s atlanıyor"
+
+#: ../spectlib/plugins/watch_system_folder.py:163
+#, fuzzy
+msgid "1 new file was created.\n"
+msgstr "%s yaratıldı"
+
+#: ../spectlib/plugins/watch_system_folder.py:165
+msgid " new files were created.\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_folder.py:168
+msgid "1 file was removed.\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_folder.py:170
+msgid " files were removed.\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_folder.py:173
+#, fuzzy
+msgid "1 file was modified.\n"
+msgstr "%s değiştirildi"
+
+#: ../spectlib/plugins/watch_system_folder.py:175
+msgid " files were modified.\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_mumbles.py:33
+msgid "Mumbles"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:31
+#: ../spectlib/plugins/watch_system_port.py:37
+#: ../spectlib/plugins/watch_system_port.py:106
+#, fuzzy
+msgid "Port"
+msgstr "Bağlantı Noktası:"
+
+#: ../spectlib/plugins/watch_system_port.py:65
+msgid "Closed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:69
+msgid "Open"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:72
+#: ../spectlib/plugins/watch_system_process.py:75
+msgid "Unknown"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:107
+#: ../spectlib/plugins/watch_system_process.py:94
+msgid "Status"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:113
+#, fuzzy, python-format
+msgid "The network socket on port %s was established."
+msgstr "<b>%s</b> bağlantısı sağlandı"
+
+#: ../spectlib/plugins/watch_system_port.py:115
+#, fuzzy, python-format
+msgid "The network socket on port %s was closed."
+msgstr "<b>%s</b> bağlantısı kapandı"
+
+#: ../spectlib/plugins/watch_system_process.py:32
+#: ../spectlib/plugins/watch_system_process.py:38
+#: ../spectlib/plugins/watch_system_process.py:93
+#, fuzzy
+msgid "Process"
+msgstr "İşlem:"
+
+#: ../spectlib/plugins/watch_system_process.py:68
+msgid "Not running"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_process.py:72
+msgid "Running"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_process.py:99
+msgid "The system process has started."
+msgstr ""
+
+#. the process check returned false, which means the process is not running
+#: ../spectlib/plugins/watch_system_process.py:101
+msgid "The system process has stopped."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:35
+msgid "Bazaar"
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:37
+msgid "Version control"
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:92
+msgid ""
+"No parent branch available, you will not be notified of differences and "
+"changes."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:106
+msgid "One new local revision has not yet been merged with its parent branch."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:108
+#, python-format
+msgid "%d new local revisions have not yet been merged with its parent branch."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:111
+msgid "One new revision on the remote branch."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:113
+#, python-format
+msgid "%d new revisions on the remote branch."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:168
+msgid "Main branch"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:35
+msgid "Google Reader"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:37
+#: ../spectlib/plugins/watch_web_static.py:46
+msgid "Internet"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:91
+msgid " or more"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:110
+#, python-format
+msgid ""
+"New newsitems in <b>%s</b>...\n"
+"\n"
+"... <b>totalling %s</b> unread items."
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:120
+#, python-format
+msgid ""
+"%d new newsitems in <b>%s</b>...\n"
+"\n"
+"... <b>totalling %s</b> unread items."
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_static.py:44
+msgid "Webpage/feed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_static.py:181
+#, python-format
+msgid "Filesize difference: %.2f"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_static.py:254
+#, fuzzy, python-format
+msgid "Difference percentage: %s percent"
+msgstr "Fark yüzdesi:s% (İzleme: \"%s\")"
+
+#: ../spectlib/plugins/watch_web_static.py:272
+#: ../spectlib/plugins/watch_web_static.py:277
+#, fuzzy
+msgid "URL"
+msgstr "Adres (URL):"
+
+#: ../spectlib/plugins/watch_web_static.py:273
+#: ../spectlib/plugins/watch_web_static.py:280
+#, fuzzy
+msgid "Error margin (%)"
+msgstr "Hata Payı (%):"
+
+#, fuzzy
+#~ msgid ""
+#~ "Choose \n"
+#~ "an other name"
+#~ msgstr "Seç"
+
+#~ msgid ""
+#~ "Edit existing\n"
+#~ "watch"
+#~ msgstr ""
+#~ "Varolan izlemeyi\n"
+#~ "düzenle"
+
+#~ msgid ""
+#~ "Seconds\n"
+#~ "Minutes\n"
+#~ "Hours\n"
+#~ "Days"
+#~ msgstr ""
+#~ "Saniye\n"
+#~ "Dakika\n"
+#~ "Saat\n"
+#~ "Gün"
+
+#~ msgid "The watch name is already in use"
+#~ msgstr "İzleme adı zaten kullanımda"
+
+#~ msgid ""
+#~ "The watch name you specified already exists! Did you mean to modify that "
+#~ "existing watch, or did you really want to create a new one?\n"
+#~ "\n"
+#~ "If you want to create a new one, you need to choose a different name."
+#~ msgstr ""
+#~ "Belirttiğiniz izleme adı zaten kullanımda! Varolan izlemeyi düzenlemek "
+#~ "mi, yoksa yeni bir izleme yaratmak mı istiyorsunuz?\n"
+#~ "\n"
+#~ "Eğer yeni bir izleme yaratmak istiyorsanız, farklı bir isim seçmelisiniz."
+
+#~ msgid "Watch Type:"
+#~ msgstr "İzleme Türü:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Website\n"
+#~ "Email\n"
+#~ "Files or folders\n"
+#~ "Process\n"
+#~ "Port"
+#~ msgstr ""
+#~ "Web Sitesi\n"
+#~ "E-Posta\n"
+#~ "Dosyalar veya Klasörler\n"
+#~ "İşlem\n"
+#~ "Port"
+
+#~ msgid "Watch Settings"
+#~ msgstr "İzleme Ayarları"
+
+#~ msgid ""
+#~ "All\n"
+#~ "Debug\n"
+#~ "Info\n"
+#~ "Warning\n"
+#~ "Error\n"
+#~ "Critical"
+#~ msgstr ""
+#~ "Tüm\n"
+#~ "Hata Ayıklama\n"
+#~ "Bilgi\n"
+#~ "Uyarı\n"
+#~ "Hata\n"
+#~ "Kritik"
+
+#~ msgid "A problem occured"
+#~ msgstr "Bir sorun ortaya çıktı"
+
+#~ msgid "A watch is updated"
+#~ msgstr "Bir izleme güncellendi"
+
+#~ msgid "Duration (in seconds):"
+#~ msgstr "Süre (saniye)"
+
+#~ msgid "Pop toasts from the tray icon when a watch is updated"
+#~ msgstr "Bir izleme güncellendiğinde bildirim alaını ikonundan uyarı ver"
+
+#~ msgid ""
+#~ "While in debug mode, Specto will provide more information in order to "
+#~ "help you diagnose problems. Logging will save all this information to a "
+#~ "log file. You can use this to help developers improve Specto."
+#~ msgstr ""
+#~ "Hata ayıklama modunda, Specto sorunları çözmenize yardımcı olmak için "
+#~ "daha fazla bilgi temin edecektir. Günlükleme tüm bu bilgiyi bir günlük "
+#~ "dosyasına yazacaktır. Bunu programcıların Specto'yu geliştirmesine yardım "
+#~ "etmek için kullanabilirsiniz."
+
+#~ msgid "folder"
+#~ msgstr "dizin"
+
+#~ msgid "Protocol:"
+#~ msgstr "Protokol:"
+
+#~ msgid "User:"
+#~ msgstr "Kullanıcı:"
+
+#~ msgid "File/folder:"
+#~ msgstr "Dosya/Klasör:"
+
+#~ msgid "removed logs from watch: \"%s\""
+#~ msgstr "\"%s\" izlemesinden günlükler çıkarıldı"
+
+#~ msgid "Pop3"
+#~ msgstr "POP3"
+
+#~ msgid "Imap"
+#~ msgstr "IMAP"
+
+#~ msgid "watch \"%s\" stopped"
+#~ msgstr "\"%s\" izlemesi durduruldu"
+
+#~ msgid "notifier: reappear"
+#~ msgstr "hatırlatıcı: yeniden görünür"
+
+#~ msgid "notifier: hide"
+#~ msgstr "hatırlatıcı: sakla"
+
+#~ msgid "preferences: create"
+#~ msgstr "Tercihler: yarat"
+
+#~ msgid "preferences: reappear"
+#~ msgstr "tercihler: yeinden görünür"
+
+#~ msgid "error log: create"
+#~ msgstr "hata günlüğü: yarat"
+
+#~ msgid "error log: already visible"
+#~ msgstr "hata günlüğü: zaten görünür"
+
+#~ msgid "error log: recreate"
+#~ msgstr "hata günlüğü: yeniden yarat"
+
+#~ msgid "add watch: create"
+#~ msgstr "izleme ekle: yarat"
+
+#~ msgid "add watch: already visible"
+#~ msgstr "izleme ekle: zaten görünür"
+
+#~ msgid "add watch: recreate"
+#~ msgstr "izleme ekle: yeniden yarat"
+
+#~ msgid "edit watch: create"
+#~ msgstr "izleme düzenle: yarat"
+
+#~ msgid "edit watch: already visible"
+#~ msgstr "izleme düzenle: zaten görünür"
+
+#~ msgid "edit watch: recreate"
+#~ msgstr "izleme düzenle: yeniden yarat"
+
+#~ msgid "gmail <i>(%s unread)</i>"
+#~ msgstr "gmail <i>(%s adet okunmamış)</i>"
+
+#~ msgid "watch \"%s\" opened"
+#~ msgstr "izleme \"%s\" açıldı"
+
+#~ msgid "notifier: size set"
+#~ msgstr "hatırlatma: ebat ayarlandı"
+
+#~ msgid "notifier: size not set"
+#~ msgstr "hatırlatma: ebat ayarlanmadı"
+
+#~ msgid "notifier: position set"
+#~ msgstr "hatırlatma: yer ayarlı"
+
+#~ msgid "notifier: position not set"
+#~ msgstr "hatırlatma: yer ayarlanmadı"
+
+#~ msgid "<b>Name:</b>"
+#~ msgstr "<b>Ad::</b>"
+
+#~ msgid "<b>Last Updated:</b>"
+#~ msgstr "<b>Son Güncelleme:</b>"
+
+#~ msgid "<b>Location:</b>"
+#~ msgstr "<b>Yer:</b>"
+
+#~ msgid "<b>Error Margin:</b>"
+#~ msgstr "<b>Hata Payı:</b>"
+
+#~ msgid "<b>Host:</b>"
+#~ msgstr "<b>Makine:</b>"
+
+#~ msgid "<b>Username:</b>"
+#~ msgstr "<b>Kullanıcı Adı:</b>"
+
+#~ msgid "<b>File/folder:</b>"
+#~ msgstr "<b>Dosya/klasör:</b>"
+
+#~ msgid "<b>Process:</b>"
+#~ msgstr "<b>İşlem:</b>"
+
+#~ msgid "Preferences saved."
+#~ msgstr "Tercihler kaydedildi."
+
+#~ msgid "Updated watches:\n"
+#~ msgstr "Güncellenmiş izlemeler:\n"
+
+#~ msgid "website"
+#~ msgstr "web sitesi"
+
+#~ msgid "websites"
+#~ msgstr "web siteleri"
+
+#~ msgid "mail account"
+#~ msgstr "posta hesabı"
+
+#~ msgid "mail accounts"
+#~ msgstr "posta hesapları"
+
+#~ msgid "file/folder"
+#~ msgstr "dosya/klasör"
+
+#~ msgid "files/folders"
+#~ msgstr "dosyalar/klasörler"
+
+#~ msgid "process"
+#~ msgstr "işlem"
+
+#~ msgid "processes"
+#~ msgstr "işlemler"
+
+#, fuzzy
+#~ msgid "port"
+#~ msgstr "Bağlantı Noktası:"
+
+#, fuzzy
+#~ msgid "ports"
+#~ msgstr "Bağlantı Noktası:"
+
+#~ msgid ""
+#~ "The watch, <b>%s</b>, has a problem. You may need to check the error log."
+#~ msgstr ""
+#~ "<b>%s</b> izlemesinde bir sorun var. Daha fazla bilgi için hata günlüğüne "
+#~ "bakınız."
+
+#~ msgid "Watch \"%s\" is already marked as updated in the notifier"
+#~ msgstr "\"%s\" izlemesi zaten güncellenmiş olarak işaretli"
+
+#~ msgid "Watch \"%s\" updated!"
+#~ msgstr "\"%s\" izlemesi güncellendi!"
+
+#~ msgid "The website, <b>%s</b>, has been updated."
+#~ msgstr "<b>%s</b> web sitesi güncellendi."
+
+#~ msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
+#~ msgstr "<b>%s</b> adlı posta hesabınızda <b>%d</b> adet yeni posta var."
+
+#~ msgid ""
+#~ "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling "
+#~ "%s"
+#~ msgstr ""
+#~ "<b>%s</b> adlı posta hesabınızda <b>%d</b> okunmamış, ve toplamda %s "
+#~ "posta var."
+
+#~ msgid "Your email account, <b>%s</b>, has new mail."
+#~ msgstr "<b>%s</b> adlı posta hesabınızda yeni posta var."
+
+#~ msgid "Not implemented yet"
+#~ msgstr "Henüz kullanımda değil"
+
+#~ msgid "Unknown File Watch"
+#~ msgstr "Bilinmeyen Dosya İzlemesi"
+
+#~ msgid "Updating watch: \"%s\""
+#~ msgstr "\"%s\" izlemesi güncelleniyor"
+
+#~ msgid "update: %s removed"
+#~ msgstr "%s kaldırıldı"
+
+#~ msgid "Unknown Mail Watch"
+#~ msgstr "Bilinmeyen Posta İzlemesi"
+
+#~ msgid "Watch: \"%s\" has error: %s"
+#~ msgstr "\"%s\" izlemesinde hata: %s"
+
+#~ msgid "Mailbox does not exist"
+#~ msgstr "Böyle bir posta kutusu yok"
+
+#~ msgid "Watch: \"%s\" has error: "
+#~ msgstr "\"%s\" izlemesinde hata: "
+
+#~ msgid "Unknown Process Watch"
+#~ msgstr "Bilinmeyen İşlem İzlemesi"
+
+#~ msgid "Watch: \"%s\" has error: empty url"
+#~ msgstr "\"%s\" izlemesinde hata: boş adres (URL)"

@@ -1,0 +1,1502 @@
+# Swedish translation for specto
+# Copyright (c) 2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the specto package.
+# Daniel Nylander <po@danielnylander.se>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: specto\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-24 15:37+0100\n"
+"PO-Revision-Date: 2007-05-29 18:17-0500\n"
+"Last-Translator: Jeff Fortin <nekohayo ~at~ gmail.com>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Export-Date: 2007-05-29 19:38:10+0000\n"
+
+#: ../specto.desktop.in.h:1
+msgid "Be notified of everything"
+msgstr ""
+
+#: ../specto.desktop.in.h:2
+msgid "Specto"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:1 ../data/uis/edit_watch.ui.h:2
+msgid "<b>Run a custom command:</b>"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:2
+msgid "Add a Watch"
+msgstr "Lägg till en bevakning"
+
+#: ../data/uis/add_watch.ui.h:3 ../data/uis/edit_watch.ui.h:4
+msgid "Advanced options"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:4 ../data/uis/edit_watch.ui.h:5
+msgid "Days"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:5 ../data/uis/edit_watch.ui.h:7
+#, fuzzy
+msgid "General options"
+msgstr "<b>Allmänna inställningar</b>"
+
+#: ../data/uis/add_watch.ui.h:6 ../data/uis/edit_watch.ui.h:8
+msgid "Hours"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:7 ../data/uis/edit_watch.ui.h:9
+msgid "Minutes"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:8 ../data/uis/edit_watch.ui.h:10
+msgid "Name:"
+msgstr "Namn:"
+
+#: ../data/uis/add_watch.ui.h:9 ../data/uis/edit_watch.ui.h:11
+msgid "Refresh Interval:"
+msgstr "Uppdateringsintervall:"
+
+#: ../data/uis/add_watch.ui.h:10 ../data/uis/edit_watch.ui.h:12
+msgid "Seconds"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:11 ../data/uis/edit_watch.ui.h:14
+msgid "When this watch has changed"
+msgstr ""
+
+#: ../data/uis/add_watch.ui.h:12 ../data/uis/edit_watch.ui.h:15
+msgid "When you open this watch"
+msgstr ""
+
+#: ../data/uis/edit_watch.ui.h:1
+msgid "<b>General settings</b>"
+msgstr "<b>Allmänna inställningar</b>"
+
+#: ../data/uis/edit_watch.ui.h:3
+#, fuzzy
+msgid "<b>Watch options</b>"
+msgstr "<b>Bevakningsnamn</b>"
+
+#: ../data/uis/edit_watch.ui.h:6 ../spectlib/notifier.py:821
+#, fuzzy
+msgid "Error log"
+msgstr "Fellogg"
+
+#: ../data/uis/edit_watch.ui.h:13
+msgid "Watch $WATCH_NAME"
+msgstr ""
+
+#: ../data/uis/import_export.ui.h:1
+msgid "Deselect all"
+msgstr "Avmarkera allt"
+
+#: ../data/uis/import_export.ui.h:2
+msgid "Select all"
+msgstr "Markera allt"
+
+#: ../data/uis/log_dialog.ui.h:1
+msgid "All"
+msgstr ""
+
+#: ../data/uis/log_dialog.ui.h:2
+msgid "Critical"
+msgstr ""
+
+#: ../data/uis/log_dialog.ui.h:3
+msgid "Debug"
+msgstr ""
+
+#. create a dialog
+#: ../data/uis/log_dialog.ui.h:4 ../data/uis/notifier.ui.h:7
+#: ../spectlib/main.py:354
+#, fuzzy
+msgid "Error"
+msgstr "Fellogg"
+
+#: ../data/uis/log_dialog.ui.h:5
+msgid "Filter:"
+msgstr "Filter:"
+
+#: ../data/uis/log_dialog.ui.h:6
+msgid "Info"
+msgstr ""
+
+#: ../data/uis/log_dialog.ui.h:7
+msgid "Logs"
+msgstr "Loggar"
+
+#: ../data/uis/log_dialog.ui.h:8
+msgid "Warning"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:1
+msgid "By Active"
+msgstr "Efter aktiv"
+
+#: ../data/uis/notifier.ui.h:2
+msgid "By Name"
+msgstr "Efter namn"
+
+#: ../data/uis/notifier.ui.h:3
+msgid "By Watch Type"
+msgstr "Efter bevakningstyp"
+
+#: ../data/uis/notifier.ui.h:4
+msgid "Debug information"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:5
+msgid "Display _All Watches"
+msgstr "Visa _alla bevakningar"
+
+#: ../data/uis/notifier.ui.h:6
+msgid "Display _Toolbar"
+msgstr "Visa _verktygsrad"
+
+#: ../data/uis/notifier.ui.h:8
+msgid "Extra information"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:9
+msgid "General"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:10 ../spectlib/notifier.py:526
+#: ../spectlib/trayicon.py:148
+msgid "Mark as read"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:11
+msgid "Notifications"
+msgstr "Notifieringar"
+
+#: ../data/uis/notifier.ui.h:12
+msgid "Sorting"
+msgstr "Sortering"
+
+#: ../data/uis/notifier.ui.h:13
+msgid "Visit the issue tracker"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:14
+msgid "_Edit"
+msgstr "R_edigera"
+
+#: ../data/uis/notifier.ui.h:15
+msgid "_Error Log"
+msgstr "Fel_logg"
+
+#: ../data/uis/notifier.ui.h:16
+msgid "_Export Watches"
+msgstr "_Exportera bevakningar"
+
+#: ../data/uis/notifier.ui.h:17
+msgid "_File"
+msgstr "_Arkiv"
+
+#: ../data/uis/notifier.ui.h:18
+msgid "_Help"
+msgstr "_Hjälp"
+
+#: ../data/uis/notifier.ui.h:19
+msgid "_Import Watches"
+msgstr "_Importera bevakningar"
+
+#: ../data/uis/notifier.ui.h:20 ../spectlib/trayicon.py:154
+msgid "_Mark all read"
+msgstr ""
+
+#: ../data/uis/notifier.ui.h:21
+#, fuzzy
+msgid "_Refresh All"
+msgstr "_Töm allt"
+
+#: ../data/uis/notifier.ui.h:22
+msgid "_View"
+msgstr "_Visa"
+
+#: ../data/uis/preferences.ui.h:1
+msgid "<b>Debugging and Logging</b>"
+msgstr "<b>Felsökning och loggning</b>"
+
+#: ../data/uis/preferences.ui.h:2
+msgid "<b>Display</b>"
+msgstr "<b>Visning</b>"
+
+#: ../data/uis/preferences.ui.h:3
+#, fuzzy
+msgid "<b>Security</b>"
+msgstr "<b>Port:</b>"
+
+#: ../data/uis/preferences.ui.h:4
+msgid "<b>Sounds</b>"
+msgstr "<b>Ljud</b>"
+
+#: ../data/uis/preferences.ui.h:5
+msgid "Always show the icon in the notification area"
+msgstr "Visa alltid ikonen i notifieringsytan"
+
+#: ../data/uis/preferences.ui.h:6
+msgid "Display the notification window in the window list"
+msgstr "Visa notifieringsfönstret i fönsterlistan"
+
+#: ../data/uis/preferences.ui.h:7
+msgid "Enable debug mode and logging"
+msgstr "Aktivera felsökningsläget och loggning"
+
+#: ../data/uis/preferences.ui.h:8
+msgid ""
+"If activated, you will receive more information when running Specto from a "
+"terminal, and more information will be printed to the logs."
+msgstr ""
+"Om aktiverat, kommer du att ta emot mer information när Specto kör från en "
+"terminal, och mer information kommer att skrivas till loggarna."
+
+#: ../data/uis/preferences.ui.h:9
+msgid ""
+"It is strongly recommended to use keyring password encryption. If you "
+"disable this option, your passwords will be saved in <b>plain text, "
+"unencrypted</b> in your watch list, and could be read by anyone gaining "
+"access to your system user account."
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:10
+msgid "Play this sound when a problem occurs:"
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:11
+msgid "Play this sound when a watch has changed:"
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:12
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: ../data/uis/preferences.ui.h:13
+msgid "Select a File"
+msgstr "Välj en fil"
+
+#: ../data/uis/preferences.ui.h:14
+msgid "Show notifications when a watch has changed"
+msgstr ""
+
+#: ../data/uis/preferences.ui.h:15
+msgid "Use GNOME keyring to store passwords in encrypted format"
+msgstr ""
+
+#. gtk.AboutDialog will detect if "translator-credits" is untranslated,
+#. and hide the tab.
+#: ../spectlib/about.py:55
+msgid "translator-credits"
+msgstr ""
+"Daniel Nylander <yeager@ubuntu.com>\n"
+"Umut"
+
+#: ../spectlib/about.py:68
+msgid "Specto's Website"
+msgstr ""
+
+#: ../spectlib/balloons.py:103
+msgid ""
+"Cannot display notification message. Make sure that libnotify and D-Bus are "
+"available on your system."
+msgstr ""
+
+#: ../spectlib/console.py:44 ../spectlib/watch.py:170
+#, fuzzy
+msgid "Watch has changed."
+msgstr "Bevakning: \"%s\" innehåller ett fel"
+
+#: ../spectlib/console.py:49 ../spectlib/watch.py:134
+msgid "Watch started checking."
+msgstr ""
+
+#: ../spectlib/console.py:51
+#, fuzzy
+msgid "Watch is idle."
+msgstr "Bevakning: \"%s\" redigerad."
+
+#: ../spectlib/console.py:53 ../spectlib/watch.py:205
+msgid "No network connection detected"
+msgstr "Ingen nätverksanslutning har upptäckts"
+
+#: ../spectlib/console.py:55 ../spectlib/watch.py:166 ../spectlib/watch.py:201
+msgid "There was an error checking the watch"
+msgstr ""
+
+#: ../spectlib/edit_watch.py:70
+msgid "Edit watch: "
+msgstr "Redigera bevakning: "
+
+#: ../spectlib/edit_watch.py:180 ../spectlib/notifier.py:616
+msgid "Remove a watch"
+msgstr ""
+
+#: ../spectlib/edit_watch.py:181 ../spectlib/notifier.py:617
+#, python-format
+msgid ""
+"<big>Remove the watch \"%s\"?</big>\n"
+"This operation cannot be undone."
+msgstr ""
+
+#: ../spectlib/export_watch.py:57 ../spectlib/export_watch.py:58
+msgid "Export watches"
+msgstr "Exportera bevakningar"
+
+#: ../spectlib/export_watch.py:85 ../spectlib/import_watch.py:94
+#, fuzzy
+msgid "Select"
+msgstr "Markera allt"
+
+#: ../spectlib/export_watch.py:91 ../spectlib/import_watch.py:99
+#: ../spectlib/notifier.py:733
+msgid "Type"
+msgstr "Typ"
+
+#. self.columnTitle_renderer.set_property("editable", True)
+#. self.columnTitle_renderer.connect('edited', self.change_entry_name)
+#: ../spectlib/export_watch.py:97 ../spectlib/import_watch.py:104
+#: ../spectlib/notifier.py:742 ../spectlib/plugins/watch_im_pidgin.py:187
+#: ../spectlib/plugins/watch_mail_evolution.py:69
+#: ../spectlib/plugins/watch_mail_gmail.py:107
+#: ../spectlib/plugins/watch_mail_gwave.py:97
+#: ../spectlib/plugins/watch_mail_imap.py:183
+#: ../spectlib/plugins/watch_mail_pop3.py:183
+#: ../spectlib/plugins/watch_music_amarok.py:72
+#: ../spectlib/plugins/watch_music_banshee.py:86
+#: ../spectlib/plugins/watch_music_lastfm.py:71
+#: ../spectlib/plugins/watch_music_rhythmbox.py:83
+#: ../spectlib/plugins/watch_sn_facebook.py:229
+#: ../spectlib/plugins/watch_sn_twitter.py:110
+#: ../spectlib/plugins/watch_system_file.py:166
+#: ../spectlib/plugins/watch_system_folder.py:226
+#: ../spectlib/plugins/watch_system_mumbles.py:109
+#: ../spectlib/plugins/watch_system_port.py:104
+#: ../spectlib/plugins/watch_system_process.py:91
+#: ../spectlib/plugins/watch_vc_bazaar.py:165
+#: ../spectlib/plugins/watch_web_greader.py:101
+#: ../spectlib/plugins/watch_web_static.py:270
+msgid "Name"
+msgstr "Namn"
+
+#: ../spectlib/export_watch.py:105 ../spectlib/import_watch.py:111
+#: ../spectlib/notifier.py:751
+msgid "ID"
+msgstr "Id"
+
+#: ../spectlib/export_watch.py:112 ../spectlib/import_watch.py:118
+#: ../spectlib/notifier.py:758
+msgid "TYPE"
+msgstr "TYP"
+
+#: ../spectlib/gtkconfig.py:172 ../spectlib/gtkconfig.py:449
+#, fuzzy
+msgid "Choose a file"
+msgstr "Välj en fil eller mapp"
+
+#: ../spectlib/gtkconfig.py:205 ../spectlib/gtkconfig.py:455
+#, fuzzy
+msgid "Choose a directory"
+msgstr "Välj en fil eller mapp"
+
+#: ../spectlib/gtkconfig.py:343
+msgid ""
+"<b>Specto encountered an error</b>\n"
+"Please verify if this bug has been entered in our issue tracker, and if not, "
+"file a bug report so we can fix it."
+msgstr ""
+
+#: ../spectlib/gtkconfig.py:361
+#, fuzzy
+msgid "Save file as"
+msgstr "Spara som"
+
+#: ../spectlib/gtkconfig.py:384
+#, fuzzy
+msgid "Open file"
+msgstr "fil"
+
+#: ../spectlib/import_watch.py:67 ../spectlib/import_watch.py:68
+msgid "Import watches"
+msgstr "Importera bevakningar"
+
+#: ../spectlib/main.py:62
+msgid "no GTK, activating console mode"
+msgstr "inget GTK, aktiverar konsolläge"
+
+#: ../spectlib/main.py:100
+msgid "Console mode enabled."
+msgstr ""
+
+#: ../spectlib/main.py:138
+msgid "Could not create a watch, because it is corrupt."
+msgstr ""
+
+#: ../spectlib/main.py:260 ../spectlib/main.py:263 ../spectlib/main.py:370
+msgid "Specto is already running!"
+msgstr "Specto kör redan!"
+
+#. create a close dialog
+#: ../spectlib/main.py:308
+msgid "Cannot quit yet"
+msgstr "Kan inte avsluta än"
+
+#: ../spectlib/main.py:314
+msgid "Murder!"
+msgstr "Mörda!"
+
+#: ../spectlib/main.py:325
+#, fuzzy
+msgid ""
+"<b><big>Specto is currently busy and cannot quit yet.</big></b>\n"
+"\n"
+"This may be because it is checking for watch changes.\n"
+"However, you can try forcing it to quit by clicking the murder button."
+msgstr ""
+"<b><big>Specto är för närvarande upptagen och kan inte avslutas än.</big></"
+"b>\n"
+"\n"
+"Det här kan bero på att den kontrollerar bevakningar.\n"
+"Dock kan du prova att tvinga igenom en avslutning genom att klicka på "
+"mordknappen."
+
+#. menu item, does not allow changing label
+#: ../spectlib/notifier.py:184
+msgid "Stop"
+msgstr ""
+
+#. menu item, does not allow changing label
+#: ../spectlib/notifier.py:205 ../spectlib/trayicon.py:149
+#, fuzzy
+msgid "Refresh All"
+msgstr "Uppdateringsintervall:"
+
+#: ../spectlib/notifier.py:223
+#, python-format
+msgid "The watch \"%s\" is checking."
+msgstr ""
+
+#: ../spectlib/notifier.py:240 ../spectlib/notifier.py:387
+#, fuzzy
+msgid ""
+"The network connection seems to be down, networked watches will not check "
+"until then."
+msgstr ""
+"Nätverksanslutningen verkar vara nere, bevakningar kommer inte att "
+"uppdateras."
+
+#: ../spectlib/notifier.py:246
+#, fuzzy, python-format
+msgid "The watch \"%s\" has a problem."
+msgstr "Bevakning: \"%s\" innehåller ett fel"
+
+#: ../spectlib/notifier.py:251
+#, python-format
+msgid "%s encountered a problem"
+msgstr ""
+
+#: ../spectlib/notifier.py:259
+#, fuzzy, python-format
+msgid "The watch \"%s\" has changed."
+msgstr "bevakning av \"%s\" startades"
+
+#: ../spectlib/notifier.py:274
+#, python-format
+msgid "%s has changed"
+msgstr ""
+
+#: ../spectlib/notifier.py:295
+msgid "There was an error marking the watch status"
+msgstr ""
+
+#: ../spectlib/notifier.py:432 ../spectlib/watch.py:263
+msgid "No extra information available."
+msgstr ""
+
+#: ../spectlib/notifier.py:442 ../spectlib/notifier.py:444
+msgid "Extra information could not be set"
+msgstr ""
+
+#: ../spectlib/notifier.py:520
+msgid "Refresh"
+msgstr ""
+
+#: ../spectlib/notifier.py:535
+#, fuzzy
+msgid "Edit"
+msgstr "R_edigera"
+
+#: ../spectlib/notifier.py:538
+msgid "Remove"
+msgstr ""
+
+#: ../spectlib/notifier.py:568
+msgid ""
+"You can add all kinds of websites as watches. Static pages, RSS or Atom "
+"feeds, etc. Specto will automatically handle them."
+msgstr ""
+"Du kan lägga till alla typer av webbplatser för bevakning. Statiska sidor, "
+"RSS- eller Atom-kanaler etc. Specto kommer automatiskt att hantera dem."
+
+#: ../spectlib/notifier.py:569
+msgid ""
+"Website watches can use an error margin that allows you to set a minimum "
+"difference percentage. This allows you to adapt to websites that change "
+"constantly or have lots of advertising."
+msgstr ""
+"Bevakningar av webbplatser kan använda en felmarginal som låter dig ställa "
+"in en minimum procentandel som får skilja sig. Detta låter dig att anpassa "
+"webbplatser som ändras ofta eller innehåller mycket reklam."
+
+#: ../spectlib/notifier.py:570
+msgid ""
+"Single-click an existing watch to display information, and double-click it "
+"to open the content."
+msgstr ""
+"Enkelklicka på befintlig bevakning för att visa information, och "
+"dubbelklicka på den för att öppna innehållet."
+
+#: ../spectlib/notifier.py:571
+msgid ""
+"Please set a reasonable refresh interval in order to save bandwidth and "
+"prevent you from being blocked from content providers."
+msgstr ""
+"Ställ in ett rimligt uppdateringsintervall för att spara bandbredd och "
+"förhindra dig från att bli blockerad från innehållsleverantörer."
+
+#: ../spectlib/notifier.py:726
+msgid "Active"
+msgstr "Aktiv"
+
+#: ../spectlib/notifier.py:775
+msgid "Tip of the Day:"
+msgstr "Dagens tips:"
+
+#: ../spectlib/trayicon.py:101
+#, fuzzy
+msgid "No changed watches."
+msgstr "Inga uppdaterade bevakningar."
+
+#: ../spectlib/trayicon.py:140
+msgid "Hide window"
+msgstr "Dölj fönster"
+
+#: ../spectlib/trayicon.py:142
+msgid "Show window"
+msgstr "Visa fönster"
+
+#: ../spectlib/watch.py:94
+msgid "There was an error starting the watch"
+msgstr ""
+
+#: ../spectlib/watch.py:113
+msgid "There was an error stopping the watch"
+msgstr ""
+
+#: ../spectlib/watch.py:124
+msgid "There was an error marking the watch as read"
+msgstr ""
+
+#: ../spectlib/watch.py:182
+msgid "There was an error marking the watch as changed"
+msgstr ""
+
+#. otherwise, it will be saved untranslated in the watch list
+#: ../spectlib/watch.py:247 ../spectlib/watch.py:248
+#, fuzzy
+msgid "No changes yet"
+msgstr "Inga uppdateringar ännu."
+
+#: ../spectlib/watch.py:301
+msgid "Unexpected error:"
+msgstr ""
+
+#: ../spectlib/watch.py:339 ../spectlib/plugins/watch_mail_gmail.py:146
+#: ../spectlib/plugins/watch_mail_gmail.py:159
+#: ../spectlib/plugins/watch_mail_gwave.py:133
+#: ../spectlib/plugins/watch_mail_gwave.py:146
+#: ../spectlib/plugins/watch_mail_imap.py:193
+#: ../spectlib/plugins/watch_mail_pop3.py:193
+#: ../spectlib/plugins/watch_sn_facebook.py:183
+#: ../spectlib/plugins/watch_sn_facebook.py:201
+#: ../spectlib/plugins/watch_sn_twitter.py:159
+#: ../spectlib/plugins/watch_sn_twitter.py:174
+#: ../spectlib/plugins/watch_system_file.py:144
+#: ../spectlib/plugins/watch_system_folder.py:219
+#: ../spectlib/plugins/watch_vc_bazaar.py:138
+#: ../spectlib/plugins/watch_vc_bazaar.py:152
+#: ../spectlib/plugins/watch_web_greader.py:139
+#: ../spectlib/plugins/watch_web_greader.py:154
+#: ../spectlib/plugins/watch_web_static.py:219
+#: ../spectlib/plugins/watch_web_static.py:231
+#, python-format
+msgid "There was an error opening the file %s"
+msgstr ""
+
+#: ../spectlib/watch.py:352
+#, python-format
+msgid "Please enable plugin \"%s\" if you want to use the watch \"%s\"."
+msgstr ""
+
+#: ../spectlib/watch.py:498 ../spectlib/watch.py:592 ../spectlib/watch.py:620
+#: ../spectlib/watch.py:644 ../spectlib/watch.py:670 ../spectlib/watch.py:684
+#: ../spectlib/plugins/watch_mail_imap.py:206
+#: ../spectlib/plugins/watch_mail_pop3.py:206
+#: ../spectlib/plugins/watch_system_file.py:129
+#: ../spectlib/plugins/watch_system_folder.py:199
+#, python-format
+msgid "There was an error writing to the file %s"
+msgstr ""
+
+#: ../spectlib/watch.py:506 ../spectlib/watch.py:519 ../spectlib/watch.py:539
+#: ../spectlib/watch.py:565 ../spectlib/watch.py:581 ../spectlib/watch.py:605
+#: ../spectlib/watch.py:660
+#, python-format
+msgid "There was an error initializing config file %s"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:32
+msgid "Pidgin"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:34
+#: ../spectlib/plugins/watch_sn_facebook.py:39
+#: ../spectlib/plugins/watch_sn_twitter.py:44
+msgid "Social networks"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:39
+#: ../spectlib/plugins/watch_im_pidgin.py:40
+msgid "Notify if you receive a IM message"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:41
+msgid "Notify if a user changes status"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:42
+msgid "Notify if a user signs on"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:43
+msgid "Notify if a user signs off"
+msgstr ""
+
+#: ../spectlib/plugins/watch_im_pidgin.py:188
+#: ../spectlib/plugins/watch_mail_evolution.py:70
+#: ../spectlib/plugins/watch_mail_gmail.py:108
+#: ../spectlib/plugins/watch_mail_gwave.py:98
+#: ../spectlib/plugins/watch_mail_imap.py:184
+#: ../spectlib/plugins/watch_mail_pop3.py:184
+#: ../spectlib/plugins/watch_music_amarok.py:73
+#: ../spectlib/plugins/watch_music_banshee.py:87
+#: ../spectlib/plugins/watch_music_lastfm.py:72
+#: ../spectlib/plugins/watch_music_rhythmbox.py:84
+#: ../spectlib/plugins/watch_sn_facebook.py:230
+#: ../spectlib/plugins/watch_sn_twitter.py:111
+#: ../spectlib/plugins/watch_system_file.py:167
+#: ../spectlib/plugins/watch_system_folder.py:227
+#: ../spectlib/plugins/watch_system_mumbles.py:110
+#: ../spectlib/plugins/watch_system_port.py:105
+#: ../spectlib/plugins/watch_system_process.py:92
+#: ../spectlib/plugins/watch_vc_bazaar.py:166
+#: ../spectlib/plugins/watch_web_greader.py:102
+#: ../spectlib/plugins/watch_web_static.py:271
+msgid "Last changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_evolution.py:29
+msgid "Evolution"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_evolution.py:31
+#: ../spectlib/plugins/watch_mail_gmail.py:36
+#: ../spectlib/plugins/watch_mail_gwave.py:39
+#: ../spectlib/plugins/watch_mail_imap.py:34
+#: ../spectlib/plugins/watch_mail_pop3.py:37
+msgid "Mail"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_evolution.py:66
+#, python-format
+msgid "New message in %s."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:34
+msgid "GMail"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:40
+#: ../spectlib/plugins/watch_mail_gmail.py:109
+#: ../spectlib/plugins/watch_mail_gwave.py:43
+#: ../spectlib/plugins/watch_mail_gwave.py:99
+#: ../spectlib/plugins/watch_mail_imap.py:38
+#: ../spectlib/plugins/watch_mail_imap.py:185
+#: ../spectlib/plugins/watch_mail_pop3.py:41
+#: ../spectlib/plugins/watch_mail_pop3.py:185
+#: ../spectlib/plugins/watch_music_lastfm.py:38
+#: ../spectlib/plugins/watch_music_lastfm.py:73
+#: ../spectlib/plugins/watch_sn_twitter.py:48
+#: ../spectlib/plugins/watch_sn_twitter.py:112
+#: ../spectlib/plugins/watch_web_greader.py:41
+#: ../spectlib/plugins/watch_web_greader.py:103
+#: ../spectlib/plugins/watch_web_static.py:278
+#, fuzzy
+msgid "Username"
+msgstr "Användarnamn:"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:41
+#: ../spectlib/plugins/watch_mail_gwave.py:44
+#: ../spectlib/plugins/watch_mail_imap.py:39
+#: ../spectlib/plugins/watch_mail_pop3.py:42
+#: ../spectlib/plugins/watch_sn_facebook.py:44
+#: ../spectlib/plugins/watch_sn_twitter.py:49
+#: ../spectlib/plugins/watch_web_greader.py:42
+#: ../spectlib/plugins/watch_web_static.py:279
+#, fuzzy
+msgid "Password"
+msgstr "Lösenord:"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:42
+msgid "Label"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:110
+#: ../spectlib/plugins/watch_mail_imap.py:186
+#: ../spectlib/plugins/watch_mail_pop3.py:186
+#: ../spectlib/plugins/watch_web_greader.py:104
+msgid "Unread messages"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:116
+#: ../spectlib/plugins/watch_mail_imap.py:154
+#: ../spectlib/plugins/watch_mail_pop3.py:155
+#, python-format
+msgid ""
+"New message from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> unread mails."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:126
+#: ../spectlib/plugins/watch_mail_imap.py:166
+#: ../spectlib/plugins/watch_mail_pop3.py:167
+#, python-format
+msgid ""
+"%d new messages from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> unread mails."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gmail.py:137
+#: ../spectlib/plugins/watch_mail_gwave.py:124
+#: ../spectlib/plugins/watch_mail_imap.py:177
+#: ../spectlib/plugins/watch_mail_pop3.py:162
+#: ../spectlib/plugins/watch_mail_pop3.py:178
+#: ../spectlib/plugins/watch_sn_twitter.py:139
+#: ../spectlib/plugins/watch_vc_bazaar.py:123
+#: ../spectlib/plugins/watch_vc_bazaar.py:129
+#: ../spectlib/plugins/watch_web_greader.py:117
+#: ../spectlib/plugins/watch_web_greader.py:130
+msgid "and others..."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gwave.py:37
+msgid "Google Wave"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gwave.py:100
+msgid "Unread waves"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gwave.py:105
+#, python-format
+msgid "Unread wave in %s"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_gwave.py:115
+#, python-format
+msgid "%d new waves in <b>%s</b>."
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_imap.py:32
+msgid "IMAP"
+msgstr "IMAP"
+
+#: ../spectlib/plugins/watch_mail_imap.py:40
+#: ../spectlib/plugins/watch_mail_pop3.py:43
+#, fuzzy
+msgid "Host"
+msgstr "Värd:"
+
+#: ../spectlib/plugins/watch_mail_imap.py:41
+#: ../spectlib/plugins/watch_mail_pop3.py:44
+#, fuzzy
+msgid "Use SSL"
+msgstr "Använd SSL:"
+
+#: ../spectlib/plugins/watch_mail_imap.py:42
+msgid "Folder (optional)"
+msgstr ""
+
+#: ../spectlib/plugins/watch_mail_pop3.py:35
+msgid "POP3"
+msgstr "POP3"
+
+#: ../spectlib/plugins/watch_music_amarok.py:29
+msgid "Amarok"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_amarok.py:31
+#: ../spectlib/plugins/watch_music_banshee.py:33
+#: ../spectlib/plugins/watch_music_lastfm.py:34
+#: ../spectlib/plugins/watch_music_rhythmbox.py:31
+msgid "Music"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_amarok.py:74
+#: ../spectlib/plugins/watch_music_banshee.py:88
+#: ../spectlib/plugins/watch_music_rhythmbox.py:85
+msgid "Current track"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_banshee.py:31
+msgid "Banshee"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_lastfm.py:32
+msgid "Last.fm"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_lastfm.py:74
+msgid "Last song"
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_lastfm.py:156
+msgid ": "
+msgstr ""
+
+#: ../spectlib/plugins/watch_music_rhythmbox.py:29
+msgid "Rhythmbox"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:37
+msgid "Facebook"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:43
+#: ../spectlib/plugins/watch_sn_facebook.py:231
+#, fuzzy
+msgid "Email"
+msgstr "Gmail"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:118
+#, fuzzy
+msgid "Wrong username/password"
+msgstr "Bevakning: \"%s\" innehåller fel: felaktigt användarnamn/lösenord"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:126
+msgid "You received"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:129
+msgid "a new message"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:131
+#, python-format
+msgid "%d new messages"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:136
+#, fuzzy
+msgid "a new notification"
+msgstr "Notifieringar"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:138
+#, fuzzy, python-format
+msgid "%d new notifications"
+msgstr "Notifieringar"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:143
+msgid "a new request"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:145
+#, python-format
+msgid "%d new requests"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:150
+msgid "a new wall post"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_facebook.py:152
+#, python-format
+msgid "%d new wall posts"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_twitter.py:42
+msgid "Twitter"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_twitter.py:113
+msgid "New tweets"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_twitter.py:118
+#, python-format
+msgid "New tweet from <b>%s</b>"
+msgstr ""
+
+#: ../spectlib/plugins/watch_sn_twitter.py:128
+#, python-format
+msgid ""
+"New tweets from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> new tweets."
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:33
+#: ../spectlib/plugins/watch_system_file.py:39
+#: ../spectlib/plugins/watch_system_file.py:168
+msgid "File"
+msgstr "Fil"
+
+#: ../spectlib/plugins/watch_system_file.py:35
+#: ../spectlib/plugins/watch_system_folder.py:35
+#: ../spectlib/plugins/watch_system_mumbles.py:35
+#: ../spectlib/plugins/watch_system_port.py:33
+#: ../spectlib/plugins/watch_system_process.py:34
+msgid "System"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:72
+msgid "The file was removed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:99
+msgid "User id of the owner changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:102
+msgid "Group id of the owner changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:105
+msgid "File size changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:108
+msgid "Time of last access changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:111
+msgid "Time of last modification changed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_file.py:158
+#, python-format
+msgid "<b>%s</b> has changed:\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_folder.py:33
+#: ../spectlib/plugins/watch_system_folder.py:39
+#: ../spectlib/plugins/watch_system_folder.py:228
+#: ../spectlib/plugins/watch_vc_bazaar.py:41
+#: ../spectlib/plugins/watch_vc_bazaar.py:167
+msgid "Folder"
+msgstr "Mapp"
+
+#: ../spectlib/plugins/watch_system_folder.py:77
+msgid "The watch is not set to a folder"
+msgstr ""
+
+#. Unknown file type
+#: ../spectlib/plugins/watch_system_folder.py:139
+#, python-format
+msgid "Skipping %s"
+msgstr "Hoppar över %s"
+
+#: ../spectlib/plugins/watch_system_folder.py:163
+#, fuzzy
+msgid "1 new file was created.\n"
+msgstr "uppdatering: %s skapades"
+
+#: ../spectlib/plugins/watch_system_folder.py:165
+msgid " new files were created.\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_folder.py:168
+msgid "1 file was removed.\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_folder.py:170
+msgid " files were removed.\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_folder.py:173
+#, fuzzy
+msgid "1 file was modified.\n"
+msgstr "uppdatering: %s har ändrats"
+
+#: ../spectlib/plugins/watch_system_folder.py:175
+msgid " files were modified.\n"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_mumbles.py:33
+msgid "Mumbles"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:31
+#: ../spectlib/plugins/watch_system_port.py:37
+#: ../spectlib/plugins/watch_system_port.py:106
+#, fuzzy
+msgid "Port"
+msgstr "Port:"
+
+#: ../spectlib/plugins/watch_system_port.py:65
+msgid "Closed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:69
+msgid "Open"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:72
+#: ../spectlib/plugins/watch_system_process.py:75
+msgid "Unknown"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:107
+#: ../spectlib/plugins/watch_system_process.py:94
+msgid "Status"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_port.py:113
+#, fuzzy, python-format
+msgid "The network socket on port %s was established."
+msgstr "Anslutningen, <b>%s</b>, etablerades."
+
+#: ../spectlib/plugins/watch_system_port.py:115
+#, fuzzy, python-format
+msgid "The network socket on port %s was closed."
+msgstr "Anslutningen, <b>%s</b>, stängdes."
+
+#: ../spectlib/plugins/watch_system_process.py:32
+#: ../spectlib/plugins/watch_system_process.py:38
+#: ../spectlib/plugins/watch_system_process.py:93
+#, fuzzy
+msgid "Process"
+msgstr "Process:"
+
+#: ../spectlib/plugins/watch_system_process.py:68
+msgid "Not running"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_process.py:72
+msgid "Running"
+msgstr ""
+
+#: ../spectlib/plugins/watch_system_process.py:99
+#, fuzzy
+msgid "The system process has started."
+msgstr "Processen, <b>%s</b>, har startat."
+
+#. the process check returned false, which means the process is not running
+#: ../spectlib/plugins/watch_system_process.py:101
+#, fuzzy
+msgid "The system process has stopped."
+msgstr "Processen, <b>%s</b>, har stoppats."
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:35
+msgid "Bazaar"
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:37
+msgid "Version control"
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:92
+msgid ""
+"No parent branch available, you will not be notified of differences and "
+"changes."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:106
+msgid "One new local revision has not yet been merged with its parent branch."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:108
+#, python-format
+msgid "%d new local revisions have not yet been merged with its parent branch."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:111
+msgid "One new revision on the remote branch."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:113
+#, python-format
+msgid "%d new revisions on the remote branch."
+msgstr ""
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:168
+msgid "Main branch"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:35
+msgid "Google Reader"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:37
+#: ../spectlib/plugins/watch_web_static.py:46
+msgid "Internet"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:91
+msgid " or more"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:110
+#, python-format
+msgid ""
+"New newsitems in <b>%s</b>...\n"
+"\n"
+"... <b>totalling %s</b> unread items."
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_greader.py:120
+#, python-format
+msgid ""
+"%d new newsitems in <b>%s</b>...\n"
+"\n"
+"... <b>totalling %s</b> unread items."
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_static.py:44
+msgid "Webpage/feed"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_static.py:181
+#, python-format
+msgid "Filesize difference: %.2f"
+msgstr ""
+
+#: ../spectlib/plugins/watch_web_static.py:254
+#, fuzzy, python-format
+msgid "Difference percentage: %s percent"
+msgstr "Skillnad i procent: %s (Bevakning: \"%s\")"
+
+#: ../spectlib/plugins/watch_web_static.py:272
+#: ../spectlib/plugins/watch_web_static.py:277
+#, fuzzy
+msgid "URL"
+msgstr "url:"
+
+#: ../spectlib/plugins/watch_web_static.py:273
+#: ../spectlib/plugins/watch_web_static.py:280
+#, fuzzy
+msgid "Error margin (%)"
+msgstr "Felmarginal (%):"
+
+#~ msgid ""
+#~ "Choose \n"
+#~ "an other name"
+#~ msgstr ""
+#~ "Välj ett\n"
+#~ "annat namn"
+
+#~ msgid ""
+#~ "Edit existing\n"
+#~ "watch"
+#~ msgstr ""
+#~ "Redigera befintlig\n"
+#~ "bevakning"
+
+#~ msgid ""
+#~ "Seconds\n"
+#~ "Minutes\n"
+#~ "Hours\n"
+#~ "Days"
+#~ msgstr ""
+#~ "Sekunder\n"
+#~ "Minuter\n"
+#~ "Timmar\n"
+#~ "Dygn"
+
+#~ msgid "The watch name is already in use"
+#~ msgstr "Bevakningsnamnet används redan"
+
+#~ msgid ""
+#~ "The watch name you specified already exists! Did you mean to modify that "
+#~ "existing watch, or did you really want to create a new one?\n"
+#~ "\n"
+#~ "If you want to create a new one, you need to choose a different name."
+#~ msgstr ""
+#~ "Bevakningsnamnet du angav finns redan! Menade du att ändra den befintliga "
+#~ "bevakningen eller ville du skapa en ny?\n"
+#~ "\n"
+#~ "Om du vill skapa en ny bevakning behöver du välja ett annat namn."
+
+#~ msgid "Watch Type:"
+#~ msgstr "Bevakningstyp:"
+
+#~ msgid ""
+#~ "Website\n"
+#~ "Email\n"
+#~ "Files or folders\n"
+#~ "Process\n"
+#~ "Port"
+#~ msgstr ""
+#~ "Webbplats\n"
+#~ "E-post\n"
+#~ "Filer eller mappar\n"
+#~ "Process\n"
+#~ "Port"
+
+#~ msgid "Watch Settings"
+#~ msgstr "Bevakningsinställningar"
+
+#~ msgid ""
+#~ "All\n"
+#~ "Debug\n"
+#~ "Info\n"
+#~ "Warning\n"
+#~ "Error\n"
+#~ "Critical"
+#~ msgstr ""
+#~ "Alla\n"
+#~ "Felsökning\n"
+#~ "Info\n"
+#~ "Varning\n"
+#~ "Fel\n"
+#~ "Kritisk"
+
+#~ msgid "A problem occured"
+#~ msgstr "Ett problem inträffade"
+
+#~ msgid "A watch is updated"
+#~ msgstr "En bevakning är uppdaterad"
+
+#~ msgid "Duration (in seconds):"
+#~ msgstr "Varaktighet (i sekunder):"
+
+#~ msgid "Pop toasts from the tray icon when a watch is updated"
+#~ msgstr "Visa meddelanden från aktivitetsfältet när en bevakning uppdateras"
+
+#~ msgid ""
+#~ "While in debug mode, Specto will provide more information in order to "
+#~ "help you diagnose problems. Logging will save all this information to a "
+#~ "log file. You can use this to help developers improve Specto."
+#~ msgstr ""
+#~ "När Specto kör i felsökningsläge kommer mer information att "
+#~ "tillhandahållas för att hjälpa dig att felsöka problem. Loggning kommer "
+#~ "att spara all denna information till en loggfil. Du kan använda den här "
+#~ "funktionen för att hjälpa utvecklarna att förbättra Specto."
+
+#~ msgid "folder"
+#~ msgstr "mapp"
+
+#~ msgid "Protocol:"
+#~ msgstr "Protokoll:"
+
+#~ msgid "User:"
+#~ msgstr "Användare:"
+
+#~ msgid "File/folder:"
+#~ msgstr "Fil/mapp:"
+
+#~ msgid "removed logs from watch: \"%s\""
+#~ msgstr "tog bort loggar från bevakning: \"%s\""
+
+#~ msgid "Pop3"
+#~ msgstr "Pop3"
+
+#~ msgid "Imap"
+#~ msgstr "Imap"
+
+#~ msgid "watch \"%s\" stopped"
+#~ msgstr "bevakning av \"%s\" stoppades"
+
+#~ msgid "notifier: reappear"
+#~ msgstr "notifierare: visas igen"
+
+#~ msgid "notifier: hide"
+#~ msgstr "notifierare: dölj"
+
+#~ msgid "preferences: create"
+#~ msgstr "inställningar: skapa"
+
+#~ msgid "preferences: reappear"
+#~ msgstr "inställningar: visas igen"
+
+#~ msgid "error log: create"
+#~ msgstr "fellogg: skapa"
+
+#~ msgid "error log: already visible"
+#~ msgstr "fellogg: redan synlig"
+
+#~ msgid "error log: recreate"
+#~ msgstr "fellogg: återskapa"
+
+#~ msgid "add watch: create"
+#~ msgstr "lägg till bevakning: skapa"
+
+#~ msgid "add watch: already visible"
+#~ msgstr "lägg till bevakning: redan synlig"
+
+#~ msgid "add watch: recreate"
+#~ msgstr "lägg till bevakning: återskapa"
+
+#~ msgid "edit watch: create"
+#~ msgstr "redigera bevakning: skapa"
+
+#~ msgid "edit watch: already visible"
+#~ msgstr "redigera bevakning: redan synlig"
+
+#~ msgid "edit watch: recreate"
+#~ msgstr "redigera bevakning: återskapa"
+
+#~ msgid "gmail <i>(%s unread)</i>"
+#~ msgstr "gmail <i>(%s olästa)</i>"
+
+#~ msgid "watch \"%s\" opened"
+#~ msgstr "bevakning av \"%s\" öppnades"
+
+#~ msgid "notifier: size set"
+#~ msgstr "notifierare: storlek inställd"
+
+#~ msgid "notifier: size not set"
+#~ msgstr "notifierare: storlek inte inställd"
+
+#~ msgid "notifier: position set"
+#~ msgstr "notifierare: position inställd"
+
+#~ msgid "notifier: position not set"
+#~ msgstr "notifierare: position inte inställd"
+
+#~ msgid "<b>Name:</b>"
+#~ msgstr "<b>Namn:</b>"
+
+#~ msgid "<b>Last Updated:</b>"
+#~ msgstr "<b>Senast uppdaterad:</b>"
+
+#~ msgid "<b>Location:</b>"
+#~ msgstr "<b>Plats:</b>"
+
+#~ msgid "<b>Error Margin:</b>"
+#~ msgstr "<b>Felmarginal:</b>"
+
+#~ msgid "<b>Host:</b>"
+#~ msgstr "<b>Värd:</b>"
+
+#~ msgid "<b>Username:</b>"
+#~ msgstr "<b>Användarnamn:</b>"
+
+#~ msgid "<b>File/folder:</b>"
+#~ msgstr "<b>Fil/mapp:</b>"
+
+#~ msgid "<b>Process:</b>"
+#~ msgstr "<b>Process:</b>"
+
+#~ msgid "Preferences saved."
+#~ msgstr "Inställningarna sparades."
+
+#~ msgid "Updated watches:\n"
+#~ msgstr "Uppdaterade bevakningar:\n"
+
+#~ msgid "website"
+#~ msgstr "webbplats"
+
+#~ msgid "websites"
+#~ msgstr "webbplatser"
+
+#~ msgid "mail account"
+#~ msgstr "e-postkonto"
+
+#~ msgid "mail accounts"
+#~ msgstr "e-postkonton"
+
+#~ msgid "file/folder"
+#~ msgstr "fil/mapp"
+
+#~ msgid "files/folders"
+#~ msgstr "filer/mappar"
+
+#~ msgid "process"
+#~ msgstr "process"
+
+#~ msgid "processes"
+#~ msgstr "processer"
+
+#~ msgid "port"
+#~ msgstr "port"
+
+#~ msgid "ports"
+#~ msgstr "portar"
+
+#~ msgid ""
+#~ "The watch, <b>%s</b>, has a problem. You may need to check the error log."
+#~ msgstr ""
+#~ "Bevakningen, <b>%s</b>, har ett problem. Du kanske behöver kontrollera "
+#~ "felloggen."
+
+#~ msgid "Watch \"%s\" is already marked as updated in the notifier"
+#~ msgstr "Bevakningen \"%s\" är redan markerad som uppdaterad i notifieraren"
+
+#~ msgid "Watch \"%s\" updated!"
+#~ msgstr "Bevakning av \"%s\" uppdaterad!"
+
+#~ msgid "The website, <b>%s</b>, has been updated."
+#~ msgstr "Webbplatsen <b>%s</b> har uppdaterats."
+
+#~ msgid "Your email account, <b>%s</b>, has <b>%d</b> new mail."
+#~ msgstr "Ditt e-postkonto <b>%s</b> har <b>%d</b> nytt e-postmeddelande."
+
+#~ msgid ""
+#~ "Your email account, <b>%s</b>, has <b>%d</b> new unread mails, totalling "
+#~ "%s"
+#~ msgstr "Ditt e-postkonto <b>%s</b> har <b>%d</b> nya e-postmeddelanden."
+
+#~ msgid "Your email account, <b>%s</b>, has new mail."
+#~ msgstr "Ditt e-postkonto <b>%s</b> har ny e-post."
+
+#~ msgid "The file/folder, <b>%s</b>, has been updated."
+#~ msgstr "Filen/mappen <b>%s</b> har uppdaterats."
+
+#~ msgid "Not implemented yet"
+#~ msgstr "Ännu inte implementerad"
+
+#~ msgid "Unknown File Watch"
+#~ msgstr "Okänd filbevakning"
+
+#~ msgid "Updating watch: \"%s\""
+#~ msgstr "Uppdaterar bevakning: \"%s\""
+
+#~ msgid "update: %s removed"
+#~ msgstr "uppdatering: %s togs bort"
+
+#~ msgid "Unknown Mail Watch"
+#~ msgstr "Okänd e-postbevakning"
+
+#~ msgid "Watch: \"%s\" has error: %s"
+#~ msgstr "Bevakning: \"%s\" innehåller fel: %s"
+
+#~ msgid "Mailbox does not exist"
+#~ msgstr "Postlådan finns inte"
+
+#~ msgid "Watch: \"%s\" has error: "
+#~ msgstr "Bevakning: \"%s\" innehåller fel: "
+
+#~ msgid "Unknown Process Watch"
+#~ msgstr "Okänd processbevakning"
+
+#~ msgid "Watch: \"%s\" has error: empty url"
+#~ msgstr "Bevakning: \"%s\" innehåller fel: blank url"

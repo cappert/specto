@@ -50,7 +50,6 @@ except:
 
 from spectlib.util import show_webpage
 from spectlib.gtkconfig import ErrorDialog, RemoveDialog, create_menu_item
-from spectlib.i18n import _
 
 try:
     import pygtk

@@ -38,7 +38,6 @@ except:
 import spectlib.config
 from spectlib.tools.iniparser import ini_namespace
 from ConfigParser import ConfigParser
-from spectlib.i18n import _
 
 from datetime import datetime
 

@@ -27,6 +27,9 @@
 global GTK
 global DEBUG #the DEBUG constant which controls how much info is output
 
+# Setup locale and gettext
+import spectlib.i18n
+
 import os
 import sys
 import signal
@@ -39,8 +42,15 @@ from spectlib.watch import Watch_io
 from spectlib.console import Console
 from spectlib.logger import Logger
 from spectlib.tools.specto_gconf import Specto_gconf
-from spectlib.i18n import _
 from spectlib.tools import networkmanager as conmgr
+
+
+VERSION = "undefined"
+try:
+    from spectlib.constants import VERSION
+except ImportError:
+    with open("VERSION", 'r') as version_file:
+        VERSION = version_file.read().strip()
 
 #create a gconf object
 specto_gconf = Specto_gconf("/apps/specto")
@@ -72,10 +82,9 @@ class Specto:
         self.CACHE_DIR = self.util.get_path("tmp")
         self.FILE = self.util.get_file()
 
-        self.gettext = gettext.textdomain("specto")
         self.logger = Logger(self)
 
-        self.VERSION = self.get_version_number()  # The Specto version number
+        self.VERSION = VERSION # The Specto version number
 
         self.GTK = GTK
         if not self.check_instance(): #see if specto is already running
@@ -203,13 +212,6 @@ class Specto:
             if self.specto_gconf.get_entry(default_setting[0]) == None:
                 self.specto_gconf.set_entry(default_setting[0], \
                                                     default_setting[1])
-
-    def get_version_number(self):
-        """Return the Specto version number"""
-        version_file_path = (os.path.join(self.util.get_path(category="doc"), "VERSION"))
-        with open(version_file_path, 'r') as version_file:
-            version = str(version_file.readline()[:-1])
-        return version
 
     def check_instance(self):
         """ Check if specto is already running. """

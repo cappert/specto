@@ -24,7 +24,6 @@
 from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
-from spectlib.i18n import _
 import sys
 import os
 

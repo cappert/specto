@@ -27,7 +27,6 @@ pygtk.require("2.0")
 import gtk
 
 from spectlib.util import show_webpage, get_path
-from spectlib.i18n import _
 
 
 class About:
@@ -60,7 +59,7 @@ class About:
         self.about.set_name("Specto")
         self.about.set_version(self.specto.VERSION)
         self.about.set_copyright("Copyright © Jean-François Fortin Tam & Wout Clymans")
-        #self.wTree.set_comments(comments)
+        self.about.set_comments(_("Be notified of everything"))
         self.about.set_license(license)
         #self.wTree.set_wrap_license(license)
         gtk.about_dialog_set_url_hook(lambda about, url: show_webpage(url))

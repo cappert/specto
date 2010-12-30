@@ -1,0 +1,65 @@
+# encoding: UTF-8
+
+# order: data files, modules, plugins
+specto.desktop.in
+[type: gettext/glade] data/uis/add_watch.ui
+[type: gettext/glade] data/uis/edit_watch.ui
+[type: gettext/glade] data/uis/import_export.ui
+[type: gettext/glade] data/uis/log_dialog.ui
+[type: gettext/glade] data/uis/notifier.ui
+[type: gettext/glade] data/uis/preferences.ui
+
+spectlib/about.py
+spectlib/add_watch.py
+spectlib/balloons.py
+spectlib/config.py
+spectlib/console.py
+spectlib/constants.py.in
+spectlib/edit_watch.py
+spectlib/export_watch.py
+spectlib/gtkconfig.py
+spectlib/i18n.py
+spectlib/i18n_safedict.py
+spectlib/import_watch.py
+spectlib/logger.py
+spectlib/main.py
+spectlib/notifier.py
+spectlib/preferences.py
+spectlib/trayicon.py
+spectlib/util.py
+spectlib/watch.py
+spectlib/__init__.py
+
+spectlib/tools/indicator.py
+spectlib/tools/iniparser.py
+spectlib/tools/keyringmanager.py
+spectlib/tools/networkmanager.py
+spectlib/tools/sound.py
+spectlib/tools/specto_gconf.py
+spectlib/tools/web_proxy.py
+spectlib/tools/__init__.py
+
+spectlib/plugins/watch_im_pidgin.py
+spectlib/plugins/watch_mail_evolution.py
+spectlib/plugins/watch_mail_gmail.py
+spectlib/plugins/watch_mail_gwave.py
+spectlib/plugins/watch_mail_imap.py
+spectlib/plugins/watch_mail_pop3.py
+spectlib/plugins/watch_music_amarok.py
+spectlib/plugins/watch_music_banshee.py
+spectlib/plugins/watch_music_lastfm.py
+spectlib/plugins/watch_music_rhythmbox.py
+spectlib/plugins/watch_sn_facebook.py
+spectlib/plugins/watch_sn_twitter.py
+spectlib/plugins/watch_system_file.py
+spectlib/plugins/watch_system_folder.py
+spectlib/plugins/watch_system_mumbles.py
+spectlib/plugins/watch_system_port.py
+spectlib/plugins/watch_system_process.py
+spectlib/plugins/watch_vc_bazaar.py
+spectlib/plugins/watch_vc_subversion.py
+spectlib/plugins/watch_web_greader.py
+spectlib/plugins/watch_web_static.py
+spectlib/plugins/__init__.py
+
+specto

@@ -28,7 +28,6 @@ import sys
 import gtk
 import spectlib.util
 from time import sleep
-from spectlib.i18n import _
 
 notifyInitialized = False
 

@@ -24,7 +24,7 @@
 from spectlib.watch import Watch
 import spectlib.config
 import spectlib.gtkconfig
-from spectlib.i18n import _
+
 from urllib import urlopen
 from xml.dom import minidom
 

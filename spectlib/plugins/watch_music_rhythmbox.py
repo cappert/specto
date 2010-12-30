@@ -22,7 +22,7 @@
 # Boston, MA 02111-1307, USA.
 
 from spectlib.watch import Watch
-from spectlib.i18n import _
+
 import dbus
 
 type = "Watch_music_rhythmbox"

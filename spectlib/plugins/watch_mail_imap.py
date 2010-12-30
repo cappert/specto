@@ -26,7 +26,6 @@ import spectlib.util
 
 import imaplib
 import os
-from spectlib.i18n import _
 
 type = "Watch_mail_imap"
 type_desc = _("IMAP")
