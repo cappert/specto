@@ -117,8 +117,12 @@ with open(os.path.join("data/indicator/specto.in"), "rt") as file_in:
         file_out.write(data)
 
 cmd = "intltool-merge -d -u po/ specto.desktop.in specto.desktop".split(" ")
-proc = subprocess.Popen(cmd)
-proc.wait()
+try:
+    proc = subprocess.Popen(cmd)
+    proc.wait()
+except:
+    print "Error: intltool-merge not found, please install the intltool package."
+    raise SystemExit
 
 def give_files(dir, *extension):
     files=[]
@@ -138,7 +142,7 @@ data_files = [
     ('share/indicators/messages/applications', ['data/indicator/specto'])
 ]
 
-global_icon_path = "share/icons/hicolor/"
+global_icon_path = "share/icons/hicolor"
 local_icon_path = "share/specto/icons/hicolor/"
 
 for dir, subdirs, files in os.walk("data/icons/"):
