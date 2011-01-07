@@ -1,0 +1,38 @@
+Specto
+++++++
+
+Installing
+==========
+
+You could run
+
+ $ python setup.py build
+ $ sudo python setup.py install
+
+to build and install specto on your computer if you have administrative privileges.
+
+You can use ``--prefix=$PREFIX`` when configuring to assign an
+installation spot. By default, Specto is installed only for your user.
+
+
+Requirements
+------------
+
+Specto requires Python 2.6 or later, and the following libraries:
+
+* gtk python bindings, GTK+ version 2.16
+* glib python bindings (pygobject) 2.18
+* intltool
+* python-numpy
+
+
+Optional dependencies
+
+* python-indicate for Ubuntu messaging menu support
+
+
+NOTE: Some plugins might require additional python modules.
+
+TODO: remove this?
+However,  simply running Specto from the folder you extracted or 
+grabbed from our repository. To do that, just run launch.sh
