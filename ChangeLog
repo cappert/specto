@@ -18,6 +18,7 @@ Bug fixes
     * Issue 259: migrate from libglade to gtkbuilder
     * Issue 206: put the documentation at the root
     * Issue 318: no indicator, no way to configure
+    * Issue 293: Need hotkeys
 
 Features
     * DBUS watch, including: Pidgin, Mumbles, Rhythmbox, Banshee (untested), Amarok (untested), Evolution (untested)
