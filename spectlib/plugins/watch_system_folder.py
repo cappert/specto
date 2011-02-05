@@ -158,20 +158,14 @@ class Watch_system_folder(Watch):
         modified = self.info['modified'][0]
         text = ""
         if created > 0:
-            if created == 1:
-                text += _("1 new file was created.\n")
-            else:
-                text += str(created) + _(" new files were created.\n")
+            text += ngettext("%s new file was created.\n",
+                             "%s new files were created.\n", created) % created
         if removed > 0:
-            if removed == 1:
-                text += _("1 file was removed.\n")
-            else:
-                text += str(removed) + _(" files were removed.\n")
+            text += ngettext("%s file was removed.\n",
+                      "%s files were removed.\n", removed) % removed
         if modified > 0:
-            if modified == 1:
-                text += _("1 file was modified.\n")
-            else:
-                text += str(modified) + _(" files were modified.\n")
+            text += ngettext("%s file was modified.\n",
+                      "%s files were modified.\n", modified) % modified
 
         return text
 
