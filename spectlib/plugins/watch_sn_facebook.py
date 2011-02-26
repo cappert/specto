@@ -124,31 +124,23 @@ class Watch_sn_facebook(Watch):
         """ create the text for the balloon """
         text = _("You received") + " "
         count = len(self.updates['message'])
-        if count == 1:
-            text += _("a new message") + ", "
-        elif count > 1:
-            text += _("%d new messages") % (count)
+        if count > 0:
+            text += ngettext("%d new message", "%d new messages", count) % (count)
             text += ", "
 
         count = len(self.updates['notification'])
-        if count == 1:
-            text += _("a new notification") + ", "
-        elif count > 1:
-            text += _("%d new notifications") % (count)
+        if count > 0:
+            text += ngettext("%d new notification", "%d new notifications", count) % (count)
             text += ", "
 
         count = len(self.updates['request'])
-        if count == 1:
-            text += _("a new request") + ", "
-        elif count > 1:
-            text += _("%d new requests") % (count)
+        if count > 0:
+            text += ngettext("%d new request", "%d new requests", count) % count
             text += ", "
 
         count = len(self.updates['wall'])
-        if count == 1:
-            text += _("a new wall post") + ", "
-        elif count > 1:
-            text += _("%d new wall posts") % (count)
+        if count > 0:
+            text += ngettext("%d new wall post", "%d new wall posts", count) % count
             text += ", "
 
         return text.rstrip(", ")
