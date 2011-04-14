@@ -4,7 +4,7 @@
 #
 #       networkmanager.py
 #
-# Copyright (c) 2006-2007 Christopher Halse Rogers
+# See the AUTHORS file for copyright ownership information
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public
@@ -29,10 +29,12 @@ import time
 
 
 def get_net_listener():
+    """
+    Try to connect to the DBus service for NetworkManager.
+    If it fails, fallback to a prehistoric method of checking net connectivity.
+    """
     try:
         listener = NMListener(dbus.SystemBus())
-        if not listener.has_networkmanager():
-            listener = FallbackListener()
     except dbus.DBusException:
         listener = FallbackListener()
     return listener
@@ -47,6 +49,9 @@ class CallbackRunner(object):
         self.callbacks[callback] = (args, kwargs)
 
     def _run_callbacks(self):
+        """
+        Network is now up, allow Specto's watches to check for updates.
+        """
         # We can't delete items from a dict we're iterating over
         # so we must make a copy first
         cb = dict(self.callbacks)
@@ -56,6 +61,14 @@ class CallbackRunner(object):
 
 
 class NMListener(CallbackRunner):
+
+    """
+    A class to interact with NetworkManager, check the connection status,
+    and listen for signals indicating changes in connectivity.
+    """
+
+    # Currently, the status tables below are not actually used in the code.
+    # They simply make it easier to know what the status codes mean.
     statusTable_nm8 = {0: u'Unknown',
                         1: u'Asleep',
                         2: u'Connecting',
@@ -72,64 +85,57 @@ class NMListener(CallbackRunner):
                         70: u'Global connectivity'}
 
     def __init__(self, bus):
+        """
+        Set up the connection to DBus and NetworkManager
+        """
         super(NMListener, self).__init__()
-        self.nm_7 = False
         nmProxy = bus.get_object('org.freedesktop.NetworkManager',
                                  '/org/freedesktop/NetworkManager')
 
+        self.nmIface = dbus.Interface(nmProxy, "org.freedesktop.DBus.Properties")
+        bus.add_signal_receiver(self.on_nm_event,
+                                  'StateChanged',
+                                  'org.freedesktop.NetworkManager',
+                                  'org.freedesktop.NetworkManager',
+                                  '/org/freedesktop/NetworkManager')
+
+        # Now that we have DBus connected, the only way to truly ensure we have
+        # NetworkManager is to try to use it.
         try:
-            self.nmIface = dbus.Interface(nmProxy, "org.freedesktop.DBus.Properties")
-            bus.add_signal_receiver(self.on_nm_event,
-                                      'StateChanged',
-                                      'org.freedesktop.NetworkManager',
-                                      'org.freedesktop.NetworkManager',
-                                      '/org/freedesktop/NetworkManager')
             self.lastStatus = self.nmIface.Get("org.freedesktop.NetworkManager", "State")
-            self.nm_7 = True
-            try:
-                if self.nmIface.Get("org.freedesktop.NetworkManager", "Version") > "0.8.9":
-                    self.nmConnectedStatus = 70
-                else:
-                    self.nmConnectedStatus = 3
-            except dbus.DBusException:
-                self.nmConnectedStatus = 3
-        except:
-            self.nmIface = dbus.Interface(nmProxy, 'org.freedesktop.NetworkManager')
-            self.nmIface.connect_to_signal('DeviceNoLongerActive',
-                                           self.on_nm_event,
-                                           'org.freedesktop.NetworkManager')
-            self.nmIface.connect_to_signal('DeviceNowActive',
-                                           self.on_nm_event,
-                                           'org.freedesktop.NetworkManager')
-            self.lastStatus = self.nmIface.state()
+        except dbus.DBusException:
+            raise # tell get_new_listener() to use FallbackListener()
+
+        try:
+            # If the line below fails, we are using NM 0.8.x instead of 0.9.x
+            self.nmIface.Get("org.freedesktop.NetworkManager", "Version") > "0.8.9"
+            self.nmConnectedStatus = 70
+        except dbus.DBusException: # TODO: catch the exact exception for missing dbus props
+            # We are running NM 0.8.x:
             self.nmConnectedStatus = 3
 
     def on_nm_event(self, *args, **kwargs):
+        """
+        When a NetworkManager event occurs, check if we were previously offline
+        and are now online. If so, run the callbacks to update Specto's watches
+        """
         wasConnected = self.connected()
-        if self.nm_7:
-            self.lastStatus = self.nmIface.Get("org.freedesktop.NetworkManager", "State")
-        else:
-            self.lastStatus = self.nmIface.state()
+        self.lastStatus = self.nmIface.Get("org.freedesktop.NetworkManager", "State")
         if (not wasConnected) and self.connected():
             self._run_callbacks()
 
     def connected(self):
+        """
+        Return whether or not NetworkManager was connected at the latest event
+        """
         return self.lastStatus == self.nmConnectedStatus
-
-    def has_networkmanager(self):
-        ### It seems that the only way of being sure the service exists
-        ### is to actually try to use it!
-        try:
-            if self.nm_7:
-                self.nmIface.Get("org.freedesktop.NetworkManager", "State")
-            else:
-                self.nmIface.state()
-        except dbus.DBusException:
-            return False
-        return True
 
 
 class FallbackListener(CallbackRunner):
+
+    """
+    A primitive method of checking if an Internet connection is available.
+    """
 
     def __init__(self):
         self.last_checked = 0
