@@ -56,11 +56,20 @@ class CallbackRunner(object):
 
 
 class NMListener(CallbackRunner):
-    statusTable = {0: u'Unknown',
-                   1: u'Asleep',
-                   2: u'Connecting',
-                   3: u'Connected',
-                   4: u'Disconnected'}
+    statusTable_nm8 = {0: u'Unknown',
+                        1: u'Asleep',
+                        2: u'Connecting',
+                        3: u'Connected',
+                        4: u'Disconnected'}
+    
+    statusTable_nm9 = {0:  u'Unknown',
+                        10: u'Asleep',
+                        20: u'Disconnected',
+                        30: u'Disconnecting',
+                        40: u'Connecting',
+                        50: u'Local connectivity',
+                        60: u'Site connectivity',
+                        70: u'Global connectivity'}
 
     def __init__(self, bus):
         super(NMListener, self).__init__()
@@ -77,6 +86,13 @@ class NMListener(CallbackRunner):
                                       '/org/freedesktop/NetworkManager')
             self.lastStatus = self.nmIface.Get("org.freedesktop.NetworkManager", "State")
             self.nm_7 = True
+            try:
+                if self.nmIface.Get("org.freedesktop.NetworkManager", "Version") > "0.8.9":
+                    self.nmConnectedStatus = 70
+                else:
+                    self.nmConnectedStatus = 3
+            except dbus.DBusException:
+                self.nmConnectedStatus = 3
         except:
             self.nmIface = dbus.Interface(nmProxy, 'org.freedesktop.NetworkManager')
             self.nmIface.connect_to_signal('DeviceNoLongerActive',
@@ -86,6 +102,7 @@ class NMListener(CallbackRunner):
                                            self.on_nm_event,
                                            'org.freedesktop.NetworkManager')
             self.lastStatus = self.nmIface.state()
+            self.nmConnectedStatus = 3
 
     def on_nm_event(self, *args, **kwargs):
         wasConnected = self.connected()
@@ -97,7 +114,7 @@ class NMListener(CallbackRunner):
             self._run_callbacks()
 
     def connected(self):
-        return self.lastStatus == 3
+        return self.lastStatus == self.nmConnectedStatus
 
     def has_networkmanager(self):
         ### It seems that the only way of being sure the service exists
