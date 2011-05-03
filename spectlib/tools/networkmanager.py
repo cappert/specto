@@ -108,8 +108,10 @@ class NMListener(CallbackRunner):
 
         try:
             # If the line below fails, we are using NM 0.8.x instead of 0.9.x
-            self.nmIface.Get("org.freedesktop.NetworkManager", "Version") > "0.8.9"
-            self.nmConnectedStatus = 70
+            if self.nmIface.Get("org.freedesktop.NetworkManager", "Version") > "0.8.9":
+                self.nmConnectedStatus = 70
+            else:
+                self.nmConnectedStatus = 3
         except dbus.DBusException: # TODO: catch the exact exception for missing dbus props
             # We are running NM 0.8.x:
             self.nmConnectedStatus = 3
