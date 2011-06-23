@@ -651,8 +651,6 @@ class Notifier:
         saved_window_height = self.specto.specto_gconf.get_entry("window_notifier_height")
         saved_window_x = self.specto.specto_gconf.get_entry("window_notifier_x")
         saved_window_y = self.specto.specto_gconf.get_entry("window_notifier_y")
-        if self.specto.specto_gconf.get_entry("hide_from_windowlist")==True:
-            self.notifier.set_skip_taskbar_hint(True)  # Hide from the window list applet
 
         if saved_window_width != None and saved_window_height != None:  # Check if the size is not 0
             self.builder.get_object("notifier").resize(saved_window_width, saved_window_height)
@@ -693,10 +691,6 @@ class Notifier:
         
         if self.specto.specto_gconf.get_entry("always_show_icon") == False and not self.indicator:
             self.builder.get_object("close").set_sensitive(False)
-
-        if self.specto.specto_gconf.get_entry("show_in_windowlist") == False:
-            self.notifier.set_skip_taskbar_hint(True)
-
 
         ### Initiate the window
         self.restore_size_and_position()

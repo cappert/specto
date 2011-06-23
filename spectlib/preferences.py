@@ -113,14 +113,6 @@ class Preferences:
         else:
             self.specto.specto_gconf.set_entry("pop_toast", False)
 
-        #see if windowlist has to be saved
-        if self.builder.get_object("chk_windowlist").get_active():
-            self.specto.specto_gconf.set_entry("show_in_windowlist", True)
-            self.notifier.notifier.set_skip_taskbar_hint(False)
-        else:
-            self.specto.specto_gconf.set_entry("show_in_windowlist", False)
-            self.notifier.notifier.set_skip_taskbar_hint(True)
-
         #see if tray has to be saved
         if self.builder.get_object("chk_tray").get_active():
             self.specto.specto_gconf.set_entry("always_show_icon", True)
@@ -152,12 +144,6 @@ class Preferences:
             self.builder.get_object("chk_libnotify").set_active(True)
         else:
             self.builder.get_object("chk_libnotify").set_active(False)
-
-        #check windowlist
-        if self.specto.specto_gconf.get_entry("show_in_windowlist") == True:
-            self.builder.get_object("chk_windowlist").set_active(True)
-        else:
-            self.builder.get_object("chk_windowlist").set_active(False)
 
         #check tray
         if self.specto.specto_gconf.get_entry("always_show_icon") == True:

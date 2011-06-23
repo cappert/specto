@@ -198,7 +198,6 @@ class Specto:
             ["follow_website_redirects", True],
             ["pop_toast", True],
             ["show_deactivated_watches", True],
-            ["show_in_windowlist", True],
             ["show_notifier", True],
             ["show_toolbar", True],
             ["sort_function", "name"],
