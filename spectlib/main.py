@@ -77,6 +77,7 @@ class Specto:
         self.util = util
 
         self.PATH = self.util.get_path()
+        self.LOGO_PATH = os.path.join(self.PATH, "icons/specto.svg")
         self.SRC_PATH = self.util.get_path("src")
         self.SPECTO_DIR = self.util.get_path("specto")
         self.CACHE_DIR = self.util.get_path("tmp")
@@ -330,10 +331,7 @@ class Specto:
 
             self.dialog.vbox.pack_start(self.dialog.label_hbox, True, True, 12)
             self.dialog.label_hbox.show()
-
-            icon = gtk.gdk.pixbuf_new_from_file(self.PATH + \
-                                'icons/specto_window_icon.svg')
-            self.dialog.set_icon(icon)
+            self.dialog.set_icon_from_file(self.LOGO_PATH)
             self.dialog.connect("delete_event", self.quit_dialog_response)
             self.dialog.connect("response", self.quit_dialog_response)
             self.dialog.show_all()
@@ -375,9 +373,7 @@ class Specto:
 
         self.dialog.vbox.pack_start(self.dialog.label_hbox, True, True, 12)
         self.dialog.label_hbox.show()
-
-        icon = gtk.gdk.pixbuf_new_from_file(self.PATH + 'icons/specto_window_icon.svg')
-        self.dialog.set_icon(icon)
+        self.dialog.set_icon_from_file(self.LOGO_PATH)
         self.dialog.connect("delete_event", self.running_dialog_response)
         self.dialog.connect("response", self.running_dialog_response)
         self.dialog.show_all()

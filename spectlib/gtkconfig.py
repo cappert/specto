@@ -299,10 +299,7 @@ class RemoveDialog():
 
         dialog.vbox.pack_start(dialog.label_hbox, True, True, 12)
         dialog.label_hbox.show()
-
-        icon = gtk.gdk.pixbuf_new_from_file(spectlib.util.get_path() \
-                                        + 'icons/specto_window_icon.svg')
-        dialog.set_icon(icon)
+        dialog.set_icon_from_file(self.specto.LOGO_PATH)
         self.dialog = dialog
 
     def show(self):
@@ -330,8 +327,7 @@ class ErrorDialog():
 
         self.error_dialog = self.builder.get_object("error_dialog")
         self.error_dialog.show()
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.error_dialog.set_icon(icon)
+        self.error_dialog.set_icon_from_file(self.specto.LOGO_PATH)
 
         self.errorwindow = gtk.TextBuffer(None)
         self.builder.get_object("error_message").set_buffer(self.errorwindow)
@@ -366,7 +362,7 @@ class SaveDialog(gtk.FileChooserDialog):
         self.specto = specto
         windowname = "filechooser"
 
-        self.set_icon(gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png")))
+        self.set_icon(gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto.svg")))
         self.set_filename(os.environ['HOME'] + "/ ")
 
     def cancel(self, *args):
@@ -389,7 +385,7 @@ class OpenDialog(gtk.FileChooserDialog):
         self.specto = specto
         windowname = "open_file_chooser"
 
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
+        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto.svg"))
         self.set_icon(icon)
         self.set_filename(os.environ['HOME'] + "/ ")
 

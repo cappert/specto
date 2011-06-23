@@ -79,8 +79,7 @@ class Import_watch:
         #attach the events
         self.builder.connect_signals(dic)
 
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.import_watch.set_icon(icon)
+        self.import_watch.set_icon_from_file(self.specto.LOGO_PATH)
 
         self.treeview = self.builder.get_object("treeview")
         self.treeview.set_model(self.model)

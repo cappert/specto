@@ -71,8 +71,7 @@ class About:
         self.about.set_translator_credits(translator_credits)
         self.about.set_logo(logo)
 
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.about.set_icon(icon)
+        self.about.set_icon_from_file(self.specto.LOGO_PATH)
 
         self.about.connect("response", lambda d, r: self.close())
 

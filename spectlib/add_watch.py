@@ -66,8 +66,7 @@ class Add_watch:
         self.builder.connect_signals(dic)
 
         self.add_watch = self.builder.get_object("add_watch")
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.add_watch.set_icon(icon)
+        self.add_watch.set_icon_from_file(self.specto.LOGO_PATH)
         self.add_watch.set_resizable(False)
 
         self.name = self.builder.get_object("name")
@@ -248,8 +247,7 @@ class Unique_Dialog:
 
     def run(self):
         """ Show the unique dialog. """
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.unique_dialog.set_icon(icon)
+        self.unique_dialog.set_icon_from_file(self.specto.LOGO_PATH)
         self.unique_dialog.set_resizable(False)
         result = self.unique_dialog.run()
 

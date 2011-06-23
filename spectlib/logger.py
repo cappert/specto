@@ -67,8 +67,7 @@ class Log_dialog:
         self.builder.connect_signals(dic)
 
         self.log_dialog = self.builder.get_object("log_dialog")
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.log_dialog.set_icon(icon)
+        self.log_dialog.set_icon_from_file(self.specto.LOGO_PATH)
 
         self.builder.get_object("combo_level").set_active(0)
 

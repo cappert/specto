@@ -40,8 +40,8 @@ class Tray:
         self.specto = specto
         self.notifier = notifier
 
-        self.ICON_PATH = os.path.join(self.specto.PATH, "icons/specto_tray_1.svg")
-        self.ICON2_PATH = os.path.join(self.specto.PATH, "icons/specto_tray_2.svg")
+        self.ICON_PATH = os.path.join(self.specto.PATH, "icons/specto.svg")
+        self.ICON2_PATH = os.path.join(self.specto.PATH, "icons/specto_orange.svg")
         # Create the tray icon object
         self.tray = gtk.StatusIcon()
         self.tray.set_from_file(self.ICON_PATH)

@@ -68,8 +68,7 @@ class Edit_watch:
         self.edit_watch = self.builder.get_object("edit_watch")
         self.edit_watch.set_title(_("Edit watch: ") + self.watch.name)
         self.builder.get_object("name").set_text(self.watch.name)
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.edit_watch.set_icon(icon)
+        self.edit_watch.set_icon_from_file(self.specto.LOGO_PATH)
         self.edit_watch.set_resizable(False)
 
         refresh, refresh_unit = self.specto.watch_db.get_interval(self.watch.refresh)
@@ -291,8 +290,7 @@ class Save_dialog:
         # Attach the events
         self.builder.connect_signals(dic)
 
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.png"))
-        self.save_dialog.set_icon(icon)
+        self.save_dialog.set_icon_from_file(self.specto.LOGO_PATH)
         self.save_dialog.set_filename(os.environ['HOME'] + "/ ")
 
     def cancel(self, *args):

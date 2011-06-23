@@ -133,8 +133,7 @@ class Notifier:
         "on_remove_activate": self.remove_watch}
         self.builder.connect_signals(dic)
 
-        icon = gtk.gdk.pixbuf_new_from_file(os.path.join(self.specto.PATH, "icons/specto_window_icon.svg"))
-        self.notifier.set_icon(icon)
+        self.notifier.set_icon_from_file(self.specto.LOGO_PATH)
         self.specto.notifier_initialized = True
         self.create_notifier_gui()
         self.stop_refresh = False
