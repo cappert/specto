@@ -146,12 +146,12 @@ class Add_watch:
         #get the standard options from a watch
         values['name'] = self.name.get_text()
 
-        #check if the watch is unique
-        if self.specto.watch_io.is_unique_watch(values['name']):
+        # Check if there already is a watch with the same name
+        if self.specto.watch_io.already_exists(values['name']):
             unique_dialog = Unique_Dialog(self.specto)
             result = unique_dialog.run()
 
-            if result ==1:
+            if result == 1:
                 self.name.grab_focus()
             else: #edit the existing watch
                 self.add_watch.hide_all()
@@ -239,7 +239,7 @@ class Unique_Dialog:
 
     def __init__(self, specto):
         self.specto = specto
-        self.uifile = os.path.join(self.specto.PATH, "uis/dialog_add_watch.ui")
+        self.uifile = os.path.join(self.specto.PATH, "uis/add_watch_conflict.ui")
         self.dialogname = "dialog"
         self.builder = gtk.Builder()
         self.builder.set_translation_domain("specto")

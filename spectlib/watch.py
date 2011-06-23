@@ -645,13 +645,13 @@ class Watch_io:
         finally:
             f.close()
 
-    def is_unique_watch(self, name):
+    def already_exists(self, name):
         """
-        Returns True if the watch is found in the file.
+        Returns True if the watch is found in the watches.list file.
         """
         try:
             self.cfg = ini_namespace(file(self.file_name))
-            if not (self.hide_brackets(name)) in self.cfg._sections:
+            if not self.hide_brackets(name) in self.cfg._sections:
                 return False
             else:
                 return True

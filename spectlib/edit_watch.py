@@ -160,7 +160,7 @@ class Edit_watch:
                         i = 0
                     field.set_color(65535, 0, 0)
         else:
-            if not self.specto.watch_io.is_unique_watch(values['name']):
+            if not self.specto.watch_io.already_exists(values['name']):
                 self.specto.watch_io.replace_name(self.watch.name, values['name'])
                 # Change the name in the notifier window
                 self.specto.notifier.change_name(values['name'], self.watch.id)

@@ -143,9 +143,9 @@ class Import_watch:
             values.update(self.new_watch_db[watches[i].id].get_values())
 
             values['name'] = watch.name
-            if self.specto.watch_io.is_unique_watch(values['name']):
+            if self.specto.watch_io.already_exists(values['name']):
                 y = 1
-                while self.specto.watch_io.is_unique_watch(values['name'] + str(y)):
+                while self.specto.watch_io.already_exists(values['name'] + str(y)):
                     y += 1
                 values['name'] = values['name'] + str(y)
 
