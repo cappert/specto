@@ -175,7 +175,7 @@ class Edit_watch:
 
     def remove_clicked(self, widget):
         """ Remove the watch. """
-        dialog = spectlib.gtkconfig.RemoveDialog(_("Remove a watch"),
+        dialog = spectlib.gtkconfig.RemoveDialog(self.specto, _("Remove a watch"),
         (_('<big>Remove the watch "%s"?</big>\nThis operation cannot be undone.') % self.watch.name))
         answer = dialog.show()
         if answer == True:

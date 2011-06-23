@@ -275,7 +275,8 @@ class Scale():
 
 class RemoveDialog():
 
-    def __init__(self, title, text):
+    def __init__(self, specto, title, text):
+        self.specto = specto
         dialog = gtk.Dialog(title, None, gtk.DIALOG_MODAL | \
             gtk.DIALOG_NO_SEPARATOR | gtk.DIALOG_DESTROY_WITH_PARENT, None)
         #HIG tricks
