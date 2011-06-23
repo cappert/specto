@@ -3,38 +3,55 @@ Individual entries in these release notes are alphabetical, not chronological.
 This file is updated at "release time" or when merging branches.
 
 Upcoming release
-==============
+================
+    * Nothing yet
+
+Specto 0.4: 2011 06 23
+======================
+Upgrading to this release is strongly recommended, as it solves many issues reported in the 0.3.1 release, implements new features, drops some dependencies and is easier to maintain.
+
 Bug fixes
     * Fix a critical bug in the process watch, which prevented Specto from starting if there was a system process with whitespaces in its name
+    * Issue 206: Put the documentation at the root
     * Issue 242: Reverse the button ordering in the "remove watch" dialog
-    * Issue 242: Reverse the button ordering in the "remove watch" dialog
+    * Issue 243: Sort order is reset on startup
+    * Issue 259: Migrate from libglade to gtkbuilder
     * Issue 267: Specto should provide its name in user agent
     * Issue 270: Changing the units in the Refresh Interval option resets any previously entered value to "1".
-    * Issue 272: show a graphical dialog when "Specto is already running"
+    * Issue 271: Remove the ability to hide the notifier from the taskbar
+    * Issue 272: Show a graphical dialog when "Specto is already running"
     * Issue 283: Google Reader watch no longer works
     * Issue 284: Implement a stopgap measure to handle Google Chrome
     * Issue 289: Sounds do not work (use GStreamer)
-    * Issue 303: doesn't close the sound pipelines when done notifying
-    * Issue 259: migrate from libglade to gtkbuilder
-    * Issue 206: put the documentation at the root
-    * Issue 318: no indicator, no way to configure
-    * Issue 293: Need hotkeys
+    * Issue 293: Add the F5 hotkey to refresh watches
+    * Issue 299: Try raising the window if already running
+    * Issue 303: Doesn't close the sound pipelines when done notifying
+    * Issue 318: No indicator, no way to configure
+    * Issue 319: Ampersand (&) in url's
 
 Features
     * DBUS watch, including: Pidgin, Mumbles, Rhythmbox, Banshee (untested), Amarok (untested), Evolution (untested)
     * Integration with Ubuntu's indicator applet
-    * Issue 269: allow parameters to be passed to custom commands
+    * Issue 253: Subversion watch
+    * Issue 269: Allow parameters to be passed to custom commands
+    * Issue 280: Startup parameter to hide the notifier
     * Issue 299: Try raising the window when Specto is already running
     * Twitter, Last.FM and Google Wave watches
 
 Maintainability
     * Add a "Quit" button in addition to the "Close" button to reduce confusion
+    * Drop the GNOME dependency for playing sounds
     * Facebook and Google Reader icons re-added
     * Issue 216: Python 2.6 support
-    * Remove the GNOME dependency for playing sounds
+    * Issue 259: Migrate from libglade to GtkBuilder
+    * Many code beautifications and cleanup
+    * PEP-8 compliance
+    * Refactor the NetworkManager code, add 0.9.x compatibility and drop <0.8.x
+    * Use a constant path for the logo icon for all windows, remove old icons
+    * Use ngettext for plurals in translations
 
 Specto 0.3.1: 2009 07 12
-======================
+========================
 This is a small bug-fixing release, solving the following problems.
 
 Bug fixes
