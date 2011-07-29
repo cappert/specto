@@ -108,6 +108,8 @@ if sys.argv[1] in ("build", "install"):
     if not prefix and "PREFIX" in os.environ:
         prefix = os.environ["PREFIX"]
     if not prefix or not len (prefix):
+        prefix = sys.prefix
+    if not prefix or not len (prefix):
         prefix = "/usr/local"
 
     if sys.argv[1] in ("install", "uninstall") and len (prefix):
