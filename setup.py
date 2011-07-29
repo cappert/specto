@@ -111,7 +111,6 @@ if sys.argv[1] in ("build", "install"):
         prefix = "/usr/local"
 
     if sys.argv[1] in ("install", "uninstall") and len (prefix):
-#    if len (prefix):
         sys.argv += ["--prefix", prefix]
 
     if sys.argv[1] == "build":
@@ -184,18 +183,6 @@ if sys.argv[1] in ("build", "install"):
                     os.system (buildcmd % (name, name))
                 data_files.append ((destpath % name, [mopath % name]))
 
-    if sys.argv[1] == "install":
-        gtk_update_icon_cache = "gtk-update-icon-cache -f -t \
-    %s/share/icons/hicolor" % prefix
-        root_specified = len (filter (lambda s: s.startswith ("--root"),
-                                      sys.argv)) > 0
-        if not root_specified:
-            print "Updating Gtk icon cache."
-            os.system (gtk_update_icon_cache)
-        else:
-            print '''*** Icon cache not updated. After install, run this:
-    ***     %s''' % gtk_update_icon_cache
-
 if sys.argv[1] == "clean":
     try:
         os.remove ("data/indicator/specto")
@@ -217,3 +204,15 @@ setup(name = "specto",
                 "install" : install,
                 "install_data" : install_data}
     )
+
+if sys.argv[1] == "install":
+    gtk_update_icon_cache = "gtk-update-icon-cache -f -t \
+%s/share/icons/hicolor" % prefix
+    root_specified = len (filter (lambda s: s.startswith ("--root"),
+                                  sys.argv)) > 0
+    if not root_specified:
+        print "Updating Gtk icon cache."
+        os.system (gtk_update_icon_cache)
+    else:
+        print '''*** Icon cache not updated. After install, run this:
+***     %s''' % gtk_update_icon_cache
