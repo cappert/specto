@@ -12,6 +12,8 @@ from distutils.command.install_data import install_data as _install_data
 
 INSTALLED_FILES = "installed_files"
 
+from spectlib import __pkg_version__ as version
+
 class install (_install):
 
     def run (self):
@@ -99,9 +101,6 @@ if not prefix or not len (prefix):
 
 if sys.argv[1] in ("install", "uninstall") and len (prefix):
     sys.argv += ["--prefix", prefix]
-
-with open("VERSION", "r") as version_file:
-    version = version_file.read().strip()
 
 with open(os.path.join ("spectlib/constants.py.in"), "rt") as file_in:
     data = file_in.read ()
