@@ -25,13 +25,13 @@ import os
 import gettext
 import locale
 
-# If Specto is installed read prefix from constants module
+
 MESSAGES_DIR = ''
-try:
-    from spectlib.constants import PREFIX
-    MESSAGES_DIR = "%s/share/locale" % PREFIX
-except ImportError:
-    pass
+if os.path.exists("/usr/share/locale") and os.path.isdir("/usr/share/locale"):
+    MESSAGES_DIR = "/usr/share/locale"
+elif os.path.exists("/usr/local/share/locale") and \
+        os.path.isdir("/usr/local/share/locale"):
+    MESSAGES_DIR = "/usr/local/share/locale"
 
 def setup_locale_and_gettext():
     package_name = 'specto'
