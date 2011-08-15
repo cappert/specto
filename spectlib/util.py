@@ -26,11 +26,12 @@ from subprocess import call
 
 from spectlib.tools.specto_gconf import Specto_gconf
 
+
 PREFIX = ''
-try:
-    from spectlib.constants import PREFIX
-except ImportError:
-    pass
+if os.path.exists("/usr") and os.path.isdir("/usr"):
+    PREFIX = "/usr"
+elif os.path.exists("/usr/local") and os.path.isdir("/usr/local"):
+    PREFIX = "/usr/local"
 
 def return_webpage(webpage):
     """ Open the webpage in the default browser. """

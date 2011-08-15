@@ -45,12 +45,7 @@ from spectlib.tools.specto_gconf import Specto_gconf
 from spectlib.tools import networkmanager as conmgr
 
 
-VERSION = "undefined"
-try:
-    from spectlib.constants import VERSION
-except ImportError:
-    with open("VERSION", 'r') as version_file:
-        VERSION = version_file.read().strip()
+from spectlib import __pkg_version__ as VERSION
 
 #create a gconf object
 specto_gconf = Specto_gconf("/apps/specto")
