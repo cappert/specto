@@ -1,0 +1,1230 @@
+# Slovak translations for specto package
+# Slovenské preklady pre balík specto.
+# Copyright (C) 2011 THE specto'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the specto package.
+# Slavko <linux@slavino.sk>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: specto 0.4.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-24 16:29+0100\n"
+"PO-Revision-Date: 2011-09-24 10:11+0200\n"
+"Last-Translator: Slavko <linux@slavino.sk>\n"
+"Language-Team: Slovak <debian-l10n-slovak@lists.debian.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../specto.desktop.in.h:1 ../spectlib/about.py:62
+msgid "Be notified of everything"
+msgstr "Buďte upozornený na všetko"
+
+#: ../specto.desktop.in.h:2
+msgid "Specto"
+msgstr "Specto"
+
+#: ../data/uis/add_watch.ui.h:1 ../data/uis/edit_watch.ui.h:2
+msgid "<b>Run a custom command:</b>"
+msgstr "<b>Spustiť zvolený príkaz:</b>"
+
+#: ../data/uis/add_watch.ui.h:2
+msgid "Add a Watch"
+msgstr "Pridať sledovanie"
+
+#: ../data/uis/add_watch.ui.h:3 ../data/uis/edit_watch.ui.h:4
+msgid "Advanced options"
+msgstr "Pokročilé voľby"
+
+#: ../data/uis/add_watch.ui.h:4 ../data/uis/edit_watch.ui.h:5
+msgid "Days"
+msgstr "Dni"
+
+#: ../data/uis/add_watch.ui.h:5 ../data/uis/edit_watch.ui.h:7
+msgid "General options"
+msgstr "Všeobecné voľby"
+
+#: ../data/uis/add_watch.ui.h:6 ../data/uis/edit_watch.ui.h:8
+msgid "Hours"
+msgstr "Hodiny"
+
+#: ../data/uis/add_watch.ui.h:7 ../data/uis/edit_watch.ui.h:9
+msgid "Minutes"
+msgstr "Minúty"
+
+#: ../data/uis/add_watch.ui.h:8 ../data/uis/edit_watch.ui.h:10
+msgid "Name:"
+msgstr "Meno:"
+
+#: ../data/uis/add_watch.ui.h:9 ../data/uis/edit_watch.ui.h:11
+msgid "Refresh Interval:"
+msgstr "Obnovovanie:"
+
+#: ../data/uis/add_watch.ui.h:10 ../data/uis/edit_watch.ui.h:12
+msgid "Seconds"
+msgstr "Sekundy"
+
+#: ../data/uis/add_watch.ui.h:11 ../data/uis/edit_watch.ui.h:14
+msgid "When this watch has changed"
+msgstr "Keď bolo toto sledovanie zmenené"
+
+#: ../data/uis/add_watch.ui.h:12 ../data/uis/edit_watch.ui.h:15
+msgid "When you open this watch"
+msgstr "Keď bolo toto sledovanie otvorené"
+
+#: ../data/uis/edit_watch.ui.h:1
+msgid "<b>General settings</b>"
+msgstr "<b>Všeobecné nastavenia</b>"
+
+#: ../data/uis/edit_watch.ui.h:3
+msgid "<b>Watch options</b>"
+msgstr "<b>Voľby sledovania</b>"
+
+#: ../data/uis/edit_watch.ui.h:6 ../spectlib/notifier.py:820
+msgid "Error log"
+msgstr "Záznam chýb"
+
+#: ../data/uis/edit_watch.ui.h:13
+msgid "Watch $WATCH_NAME"
+msgstr "Sledovanie $WATCH_NAME"
+
+#: ../data/uis/import_export.ui.h:1
+msgid "Deselect all"
+msgstr "Zrušiť všetky"
+
+#: ../data/uis/import_export.ui.h:2
+msgid "Select all"
+msgstr "Vybrať všetky"
+
+#: ../data/uis/log_dialog.ui.h:1
+msgid "All"
+msgstr "Všetky"
+
+#: ../data/uis/log_dialog.ui.h:2
+msgid "Critical"
+msgstr "Kritcká"
+
+#: ../data/uis/log_dialog.ui.h:3
+msgid "Debug"
+msgstr "Ladiaca"
+
+#. create a dialog
+#: ../data/uis/log_dialog.ui.h:4 ../data/uis/notifier.ui.h:7
+#: ../spectlib/main.py:356
+msgid "Error"
+msgstr "Chyba"
+
+#: ../data/uis/log_dialog.ui.h:5
+msgid "Filter:"
+msgstr "Filter:"
+
+#: ../data/uis/log_dialog.ui.h:6
+msgid "Info"
+msgstr "Info"
+
+#: ../data/uis/log_dialog.ui.h:7
+msgid "Logs"
+msgstr "Záznamy"
+
+#: ../data/uis/log_dialog.ui.h:8
+msgid "Warning"
+msgstr "Upozornenie"
+
+#: ../data/uis/notifier.ui.h:1
+msgid "By Active"
+msgstr "Podľa aktívnosti"
+
+#: ../data/uis/notifier.ui.h:2
+msgid "By Name"
+msgstr "Podľa mena"
+
+#: ../data/uis/notifier.ui.h:3
+msgid "By Watch Type"
+msgstr "Podľa typu"
+
+#: ../data/uis/notifier.ui.h:4
+msgid "Debug information"
+msgstr "Ladiace informácie"
+
+#: ../data/uis/notifier.ui.h:5
+msgid "Display _All Watches"
+msgstr "Zob_aziť všetky sledovania"
+
+#: ../data/uis/notifier.ui.h:6
+msgid "Display _Toolbar"
+msgstr "Zobraziť panel nás_trojov"
+
+#: ../data/uis/notifier.ui.h:8
+msgid "Extra information"
+msgstr "Ďalšie informácie"
+
+#: ../data/uis/notifier.ui.h:9
+msgid "General"
+msgstr "Všeobecné"
+
+#: ../data/uis/notifier.ui.h:10 ../spectlib/notifier.py:525
+#: ../spectlib/trayicon.py:147
+msgid "Mark as read"
+msgstr "Označiť ako prečítané"
+
+#: ../data/uis/notifier.ui.h:11
+msgid "Notifications"
+msgstr "Upozornenia"
+
+#: ../data/uis/notifier.ui.h:12
+msgid "Sorting"
+msgstr "Radenie"
+
+#: ../data/uis/notifier.ui.h:13
+msgid "Visit the issue tracker"
+msgstr "Navštíviť sledovanie problémov"
+
+#: ../data/uis/notifier.ui.h:14
+msgid "_Edit"
+msgstr "_Upraviť"
+
+#: ../data/uis/notifier.ui.h:15
+msgid "_Error Log"
+msgstr "_Záznam chýb"
+
+#: ../data/uis/notifier.ui.h:16
+msgid "_Export Watches"
+msgstr "_Exportovať sledovania"
+
+#: ../data/uis/notifier.ui.h:17
+msgid "_File"
+msgstr "_Súbor"
+
+#: ../data/uis/notifier.ui.h:18
+msgid "_Help"
+msgstr "_Pomocník"
+
+#: ../data/uis/notifier.ui.h:19
+msgid "_Import Watches"
+msgstr "_Importovať sledovania"
+
+#: ../data/uis/notifier.ui.h:20 ../spectlib/trayicon.py:153
+msgid "_Mark all read"
+msgstr "_Označiť všetky ako prečítané"
+
+#: ../data/uis/notifier.ui.h:21
+msgid "_Refresh All"
+msgstr "O_bnoviť všetky"
+
+#: ../data/uis/notifier.ui.h:22
+msgid "_View"
+msgstr "_Zobraziť"
+
+#: ../data/uis/preferences.ui.h:1
+msgid "<b>Debugging and Logging</b>"
+msgstr "<b>Ladenie a záznam</b>"
+
+#: ../data/uis/preferences.ui.h:2
+msgid "<b>Display</b>"
+msgstr "<b>Zobrazenie</b>"
+
+#: ../data/uis/preferences.ui.h:3
+msgid "<b>Security</b>"
+msgstr "<b>Bezpečnosť</b>"
+
+#: ../data/uis/preferences.ui.h:4
+msgid "<b>Sounds</b>"
+msgstr "<b>Zvuky</b>"
+
+#: ../data/uis/preferences.ui.h:5
+msgid "Always show the icon in the notification area"
+msgstr "Vždy zobraziť ikonu oznamovacej oblasti"
+
+#: ../data/uis/preferences.ui.h:6
+msgid "Display the notification window in the window list"
+msgstr "Zobraziť okno upozornenia v zozname okien"
+
+#: ../data/uis/preferences.ui.h:7
+msgid "Enable debug mode and logging"
+msgstr "Povoliť ladiaci režim a zaznamenávanie"
+
+#: ../data/uis/preferences.ui.h:8
+msgid ""
+"If activated, you will receive more information when running Specto from a "
+"terminal, and more information will be printed to the logs."
+msgstr ""
+"Ak je aktivované, budete dostávať viac informácií, keď spustíte Specto z "
+"terminálu a tiež bude viac informácií zapísaných do záznamu."
+
+#: ../data/uis/preferences.ui.h:9
+msgid ""
+"It is strongly recommended to use keyring password encryption. If you "
+"disable this option, your passwords will be saved in <b>plain text, "
+"unencrypted</b> in your watch list, and could be read by anyone gaining "
+"access to your system user account."
+msgstr ""
+"Dôrazne odporúčame používať šifrovanie hesiel kľúčenky. Ak vypnete túto "
+"voľbu, budú vaše heslá uložené ako <b>prostý, nešifrovaný text</b> vo vašom "
+"zozname sledovaní a môžu byť čítané kýmkoľvek, kto získa prístup do vášho "
+"systému alebo k vášmu účtu."
+
+#: ../data/uis/preferences.ui.h:10
+msgid "Play this sound when a problem occurs:"
+msgstr "Prehrať tento zvuk, keď nastane problém:"
+
+#: ../data/uis/preferences.ui.h:11
+msgid "Play this sound when a watch has changed:"
+msgstr "Prehrať tento zvuk, keď sa sledovanie zmenilo:"
+
+#: ../data/uis/preferences.ui.h:12
+msgid "Preferences"
+msgstr "Nastavenia"
+
+#: ../data/uis/preferences.ui.h:13
+msgid "Select a File"
+msgstr "Vyberte súbor"
+
+#: ../data/uis/preferences.ui.h:14
+msgid "Show notifications when a watch has changed"
+msgstr "Zobraziť upozornenie, keď sa sledovanie zmenilo"
+
+#: ../data/uis/preferences.ui.h:15
+msgid "Use GNOME keyring to store passwords in encrypted format"
+msgstr "Použiť kľúčenku GNOME na ukladanie hesiel v šifrovanom formáte"
+
+#. gtk.AboutDialog will detect if "translator-credits" is untranslated,
+#. and hide the tab.
+#: ../spectlib/about.py:54
+msgid "translator-credits"
+msgstr "Slavko <linux@slavino.sk>"
+
+#: ../spectlib/about.py:67
+msgid "Specto's Website"
+msgstr "Webová stránka Specto"
+
+#: ../spectlib/balloons.py:102
+msgid ""
+"Cannot display notification message. Make sure that libnotify and D-Bus are "
+"available on your system."
+msgstr ""
+"Nemožno zobraziť správu upozornenia. Preverte, že sú vo vašom systéme "
+"dostupné libnotify a D-Bus."
+
+#: ../spectlib/console.py:43 ../spectlib/watch.py:169
+msgid "Watch has changed."
+msgstr "Sledovanie zmenené."
+
+#: ../spectlib/console.py:48 ../spectlib/watch.py:133
+msgid "Watch started checking."
+msgstr "Sledovanie začalo kontrolu."
+
+#: ../spectlib/console.py:50
+msgid "Watch is idle."
+msgstr "Sledovanie je nečinné."
+
+#: ../spectlib/console.py:52 ../spectlib/watch.py:204
+msgid "No network connection detected"
+msgstr "Sieťové pripojenie nebolo zistené"
+
+#: ../spectlib/console.py:54 ../spectlib/watch.py:165 ../spectlib/watch.py:200
+msgid "There was an error checking the watch"
+msgstr "Nastala chyba pri kontrole sledovania"
+
+#: ../spectlib/edit_watch.py:69
+msgid "Edit watch: "
+msgstr "Upraviť sledovanie: "
+
+#: ../spectlib/edit_watch.py:179 ../spectlib/notifier.py:615
+msgid "Remove a watch"
+msgstr "Odstrániť sledovanie"
+
+#: ../spectlib/edit_watch.py:180 ../spectlib/notifier.py:616
+#, python-format
+msgid ""
+"<big>Remove the watch \"%s\"?</big>\n"
+"This operation cannot be undone."
+msgstr ""
+"<big>Odstrániť sledovanie „%s”?</big>\n"
+"Túto operáciu nemožno vrátiť."
+
+#: ../spectlib/export_watch.py:57 ../spectlib/export_watch.py:58
+msgid "Export watches"
+msgstr "Exportovať sledovania"
+
+#: ../spectlib/export_watch.py:85 ../spectlib/import_watch.py:94
+msgid "Select"
+msgstr "Vybrať"
+
+#: ../spectlib/export_watch.py:91 ../spectlib/import_watch.py:99
+#: ../spectlib/notifier.py:732
+msgid "Type"
+msgstr "Typ"
+
+#. self.columnTitle_renderer.set_property("editable", True)
+#. self.columnTitle_renderer.connect('edited', self.change_entry_name)
+#: ../spectlib/export_watch.py:97 ../spectlib/import_watch.py:104
+#: ../spectlib/notifier.py:741 ../spectlib/plugins/watch_im_pidgin.py:187
+#: ../spectlib/plugins/watch_mail_evolution.py:69
+#: ../spectlib/plugins/watch_mail_gmail.py:106
+#: ../spectlib/plugins/watch_mail_gwave.py:96
+#: ../spectlib/plugins/watch_mail_imap.py:182
+#: ../spectlib/plugins/watch_mail_pop3.py:182
+#: ../spectlib/plugins/watch_music_amarok.py:72
+#: ../spectlib/plugins/watch_music_banshee.py:86
+#: ../spectlib/plugins/watch_music_lastfm.py:71
+#: ../spectlib/plugins/watch_music_rhythmbox.py:83
+#: ../spectlib/plugins/watch_sn_facebook.py:228
+#: ../spectlib/plugins/watch_sn_twitter.py:109
+#: ../spectlib/plugins/watch_system_file.py:165
+#: ../spectlib/plugins/watch_system_folder.py:225
+#: ../spectlib/plugins/watch_system_mumbles.py:109
+#: ../spectlib/plugins/watch_system_port.py:103
+#: ../spectlib/plugins/watch_system_process.py:91
+#: ../spectlib/plugins/watch_vc_bazaar.py:165
+#: ../spectlib/plugins/watch_vc_subversion.py:142
+#: ../spectlib/plugins/watch_web_greader.py:102
+#: ../spectlib/plugins/watch_web_static.py:269
+msgid "Name"
+msgstr "Meno"
+
+#: ../spectlib/export_watch.py:105 ../spectlib/import_watch.py:111
+#: ../spectlib/notifier.py:750
+msgid "ID"
+msgstr "ID"
+
+#: ../spectlib/export_watch.py:112 ../spectlib/import_watch.py:118
+#: ../spectlib/notifier.py:757
+msgid "TYPE"
+msgstr "TYP"
+
+#: ../spectlib/gtkconfig.py:173 ../spectlib/gtkconfig.py:450
+msgid "Choose a file"
+msgstr "Vyberte súbor"
+
+#: ../spectlib/gtkconfig.py:206 ../spectlib/gtkconfig.py:456
+msgid "Choose a directory"
+msgstr "Vyberte adresár"
+
+#: ../spectlib/gtkconfig.py:344
+msgid ""
+"<b>Specto encountered an error</b>\n"
+"Please verify if this bug has been entered in our issue tracker, and if not, "
+"file a bug report so we can fix it."
+msgstr ""
+"<b>Specto zistil problém</b>\n"
+"Prosím, overte, či je tento problém v našom sledovaní problémov a ak nie, "
+"vyplňte hlásenie o probléme, aby sme ho mohli opraviť."
+
+#: ../spectlib/gtkconfig.py:362
+msgid "Save file as"
+msgstr "Uložiť súbor ako"
+
+#: ../spectlib/gtkconfig.py:385
+msgid "Open file"
+msgstr "Otvoriť súbor"
+
+#: ../spectlib/import_watch.py:67 ../spectlib/import_watch.py:68
+msgid "Import watches"
+msgstr "Importovať sledovania"
+
+#: ../spectlib/main.py:65
+msgid "no GTK, activating console mode"
+msgstr "nie je GTK, aktivácia režimu konzoly"
+
+#: ../spectlib/main.py:102
+msgid "Console mode enabled."
+msgstr "Režim konzoly zapnutý."
+
+#: ../spectlib/main.py:140
+msgid "Could not create a watch, because it is corrupt."
+msgstr "Nemožno vytvoriť sledovanie, pretože je poškodené."
+
+#: ../spectlib/main.py:262 ../spectlib/main.py:265 ../spectlib/main.py:372
+msgid "Specto is already running!"
+msgstr "Specto už je spustené!"
+
+#. create a close dialog
+#: ../spectlib/main.py:310
+msgid "Cannot quit yet"
+msgstr "Ešte nemožno skončiť"
+
+#: ../spectlib/main.py:316
+msgid "Murder!"
+msgstr "Zabiť!"
+
+#: ../spectlib/main.py:327
+msgid ""
+"<b><big>Specto is currently busy and cannot quit yet.</big></b>\n"
+"\n"
+"This may be because it is checking for watch changes.\n"
+"However, you can try forcing it to quit by clicking the murder button."
+msgstr ""
+"<b><big>Specto je momentálne zaneprázdnený a nemožno ho ešte skončiť.</big></"
+"b>\n"
+"\n"
+"Môže to byť preto, že kontroluje zmeny sledovaní.\n"
+"Avšak, môžete skúsiť vynútenie jeho ukončenia kliknutím na tlačidlo zabitia."
+
+#. menu item, does not allow changing label
+#: ../spectlib/notifier.py:183
+msgid "Stop"
+msgstr "Zastaviť"
+
+#. menu item, does not allow changing label
+#: ../spectlib/notifier.py:204 ../spectlib/trayicon.py:148
+msgid "Refresh All"
+msgstr "Obnoviť všetky"
+
+#: ../spectlib/notifier.py:222
+#, python-format
+msgid "The watch \"%s\" is checking."
+msgstr "Sledovanie „%s” je kontrolované."
+
+#: ../spectlib/notifier.py:239 ../spectlib/notifier.py:386
+msgid ""
+"The network connection seems to be down, networked watches will not check "
+"until then."
+msgstr ""
+"Sieťové spojenie vyzerá byť odpojené, sieťové sledovania nebudú kontrolované "
+"do jeho obnovenia."
+
+#: ../spectlib/notifier.py:245
+#, python-format
+msgid "The watch \"%s\" has a problem."
+msgstr "Sledovanie „%s” má problém."
+
+#: ../spectlib/notifier.py:250
+#, python-format
+msgid "%s encountered a problem"
+msgstr "%s narazil na problém"
+
+#: ../spectlib/notifier.py:258
+#, python-format
+msgid "The watch \"%s\" has changed."
+msgstr "Sledovanie „%s” zmenené."
+
+#: ../spectlib/notifier.py:273
+#, python-format
+msgid "%s has changed"
+msgstr "%s zmenené"
+
+#: ../spectlib/notifier.py:294
+msgid "There was an error marking the watch status"
+msgstr "nastala chyba pri označovaní stavu sledovania"
+
+#: ../spectlib/notifier.py:431 ../spectlib/watch.py:262
+msgid "No extra information available."
+msgstr "Nie sú dostupné ďalšie informácie."
+
+#: ../spectlib/notifier.py:441 ../spectlib/notifier.py:443
+msgid "Extra information could not be set"
+msgstr "Ďalšie informácie nemožno nastaviť"
+
+#: ../spectlib/notifier.py:519
+msgid "Refresh"
+msgstr "Obnoviť"
+
+#: ../spectlib/notifier.py:534
+msgid "Edit"
+msgstr "Upraviť"
+
+#: ../spectlib/notifier.py:537
+msgid "Remove"
+msgstr "Odstrániť"
+
+#: ../spectlib/notifier.py:567
+msgid ""
+"You can add all kinds of websites as watches. Static pages, RSS or Atom "
+"feeds, etc. Specto will automatically handle them."
+msgstr ""
+"Ako sledovanie môžete pridať akýkoľvek typ webovej stránky. Statické "
+"stránky, kanály RSS alebo Atom, atď. Specto ich automaticky spracuje."
+
+#: ../spectlib/notifier.py:568
+msgid ""
+"Website watches can use an error margin that allows you to set a minimum "
+"difference percentage. This allows you to adapt to websites that change "
+"constantly or have lots of advertising."
+msgstr ""
+"Webové sledovania môžu použiť chybovú hranicu, pomocou ktorej môžete "
+"nastaviť minimálny rozdiel v percentách. Takto sa môžete prispôsobiť "
+"stránkam, ktoré sa často menia alebo obsahujú veľa reklamy."
+
+#: ../spectlib/notifier.py:569
+msgid ""
+"Single-click an existing watch to display information, and double-click it "
+"to open the content."
+msgstr ""
+"Jednoduché kliknutie na existujúce sledovanie zobrazí informácie, dvojité "
+"kliknutie otvorí jeho obsah."
+
+#: ../spectlib/notifier.py:570
+msgid ""
+"Please set a reasonable refresh interval in order to save bandwidth and "
+"prevent you from being blocked from content providers."
+msgstr ""
+"Prosím, nastavte prijateľný interval obnovovania, tak aby ste šetrili šírku "
+"pásma a predišli tak zablokovaniu zo strany poskytovateľa obsahu."
+
+#: ../spectlib/notifier.py:725
+msgid "Active"
+msgstr "Aktívne"
+
+#: ../spectlib/notifier.py:774
+msgid "Tip of the Day:"
+msgstr "Tip dňa:"
+
+#: ../spectlib/trayicon.py:100
+msgid "No changed watches."
+msgstr "Žiadne zmenené sledovania."
+
+#: ../spectlib/trayicon.py:139
+msgid "Hide window"
+msgstr "Skryť okno"
+
+#: ../spectlib/trayicon.py:141
+msgid "Show window"
+msgstr "Zobraziť okno"
+
+#: ../spectlib/watch.py:93
+msgid "There was an error starting the watch"
+msgstr "Nastala chyba pri spúšťaní sledovania"
+
+#: ../spectlib/watch.py:112
+msgid "There was an error stopping the watch"
+msgstr "Nastala chyba pri zastavovaní sledovania"
+
+#: ../spectlib/watch.py:123
+msgid "There was an error marking the watch as read"
+msgstr "Nastala chyba pri označovaní sledovania ako prečítaného"
+
+#: ../spectlib/watch.py:181
+msgid "There was an error marking the watch as changed"
+msgstr "Nastala chyba pri označení sledovania ako zmeneného"
+
+#. otherwise, it will be saved untranslated in the watch list
+#: ../spectlib/watch.py:246 ../spectlib/watch.py:247
+msgid "No changes yet"
+msgstr "Ešte nezmenené"
+
+#: ../spectlib/watch.py:300
+msgid "Unexpected error:"
+msgstr "Neočakávaná chyba:"
+
+#: ../spectlib/watch.py:338 ../spectlib/plugins/watch_mail_gmail.py:145
+#: ../spectlib/plugins/watch_mail_gmail.py:158
+#: ../spectlib/plugins/watch_mail_gwave.py:132
+#: ../spectlib/plugins/watch_mail_gwave.py:145
+#: ../spectlib/plugins/watch_mail_imap.py:192
+#: ../spectlib/plugins/watch_mail_pop3.py:192
+#: ../spectlib/plugins/watch_sn_facebook.py:182
+#: ../spectlib/plugins/watch_sn_facebook.py:200
+#: ../spectlib/plugins/watch_sn_twitter.py:158
+#: ../spectlib/plugins/watch_sn_twitter.py:173
+#: ../spectlib/plugins/watch_system_file.py:143
+#: ../spectlib/plugins/watch_system_folder.py:218
+#: ../spectlib/plugins/watch_vc_bazaar.py:138
+#: ../spectlib/plugins/watch_vc_bazaar.py:152
+#: ../spectlib/plugins/watch_web_greader.py:140
+#: ../spectlib/plugins/watch_web_greader.py:155
+#: ../spectlib/plugins/watch_web_static.py:218
+#: ../spectlib/plugins/watch_web_static.py:230
+#, python-format
+msgid "There was an error opening the file %s"
+msgstr "nastala chyba pri otváraní súboru %s"
+
+#: ../spectlib/watch.py:351
+#, python-format
+msgid "Please enable plugin \"%s\" if you want to use the watch \"%s\"."
+msgstr "Prosím, povoľte zásuvný modul „%s”, ak chcete použiť sledovanie „%s”."
+
+#: ../spectlib/watch.py:497 ../spectlib/watch.py:591 ../spectlib/watch.py:619
+#: ../spectlib/watch.py:643 ../spectlib/watch.py:669 ../spectlib/watch.py:683
+#: ../spectlib/plugins/watch_mail_imap.py:205
+#: ../spectlib/plugins/watch_mail_pop3.py:205
+#: ../spectlib/plugins/watch_system_file.py:128
+#: ../spectlib/plugins/watch_system_folder.py:198
+#, python-format
+msgid "There was an error writing to the file %s"
+msgstr "Nastala chyba pri zápise do súboru %s"
+
+#: ../spectlib/watch.py:505 ../spectlib/watch.py:518 ../spectlib/watch.py:538
+#: ../spectlib/watch.py:564 ../spectlib/watch.py:580 ../spectlib/watch.py:604
+#: ../spectlib/watch.py:659
+#, python-format
+msgid "There was an error initializing config file %s"
+msgstr "Nastala chyba pri inicializácii konfiguračného súboru %s"
+
+#: ../spectlib/plugins/watch_im_pidgin.py:32
+msgid "Pidgin"
+msgstr "Pidgin"
+
+#: ../spectlib/plugins/watch_im_pidgin.py:34
+#: ../spectlib/plugins/watch_sn_facebook.py:38
+#: ../spectlib/plugins/watch_sn_twitter.py:43
+msgid "Social networks"
+msgstr "Sociálne siete"
+
+#: ../spectlib/plugins/watch_im_pidgin.py:39
+#: ../spectlib/plugins/watch_im_pidgin.py:40
+msgid "Notify if you receive a IM message"
+msgstr "Upozorniť na prijatie okamžitej správy (IM)"
+
+#: ../spectlib/plugins/watch_im_pidgin.py:41
+msgid "Notify if a user changes status"
+msgstr "Upozorniť na zmenu stavu používateľa"
+
+#: ../spectlib/plugins/watch_im_pidgin.py:42
+msgid "Notify if a user signs on"
+msgstr "Upozorniť, keď sa používateľ prihlási"
+
+#: ../spectlib/plugins/watch_im_pidgin.py:43
+msgid "Notify if a user signs off"
+msgstr "Upozorniť, keď sa používateľ odhlási"
+
+#: ../spectlib/plugins/watch_im_pidgin.py:188
+#: ../spectlib/plugins/watch_mail_evolution.py:70
+#: ../spectlib/plugins/watch_mail_gmail.py:107
+#: ../spectlib/plugins/watch_mail_gwave.py:97
+#: ../spectlib/plugins/watch_mail_imap.py:183
+#: ../spectlib/plugins/watch_mail_pop3.py:183
+#: ../spectlib/plugins/watch_music_amarok.py:73
+#: ../spectlib/plugins/watch_music_banshee.py:87
+#: ../spectlib/plugins/watch_music_lastfm.py:72
+#: ../spectlib/plugins/watch_music_rhythmbox.py:84
+#: ../spectlib/plugins/watch_sn_facebook.py:229
+#: ../spectlib/plugins/watch_sn_twitter.py:110
+#: ../spectlib/plugins/watch_system_file.py:166
+#: ../spectlib/plugins/watch_system_folder.py:226
+#: ../spectlib/plugins/watch_system_mumbles.py:110
+#: ../spectlib/plugins/watch_system_port.py:104
+#: ../spectlib/plugins/watch_system_process.py:92
+#: ../spectlib/plugins/watch_vc_bazaar.py:166
+#: ../spectlib/plugins/watch_vc_subversion.py:143
+#: ../spectlib/plugins/watch_web_greader.py:103
+#: ../spectlib/plugins/watch_web_static.py:270
+msgid "Last changed"
+msgstr "Posledná zmena"
+
+#: ../spectlib/plugins/watch_mail_evolution.py:29
+msgid "Evolution"
+msgstr "Evolution"
+
+#: ../spectlib/plugins/watch_mail_evolution.py:31
+#: ../spectlib/plugins/watch_mail_gmail.py:35
+#: ../spectlib/plugins/watch_mail_gwave.py:38
+#: ../spectlib/plugins/watch_mail_imap.py:33
+#: ../spectlib/plugins/watch_mail_pop3.py:36
+msgid "Mail"
+msgstr "Email"
+
+#: ../spectlib/plugins/watch_mail_evolution.py:66
+#, python-format
+msgid "New message in %s."
+msgstr "Nová správa v %s."
+
+#: ../spectlib/plugins/watch_mail_gmail.py:33
+msgid "GMail"
+msgstr "GMail"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:39
+#: ../spectlib/plugins/watch_mail_gmail.py:108
+#: ../spectlib/plugins/watch_mail_gwave.py:42
+#: ../spectlib/plugins/watch_mail_gwave.py:98
+#: ../spectlib/plugins/watch_mail_imap.py:37
+#: ../spectlib/plugins/watch_mail_imap.py:184
+#: ../spectlib/plugins/watch_mail_pop3.py:40
+#: ../spectlib/plugins/watch_mail_pop3.py:184
+#: ../spectlib/plugins/watch_music_lastfm.py:38
+#: ../spectlib/plugins/watch_music_lastfm.py:73
+#: ../spectlib/plugins/watch_sn_twitter.py:47
+#: ../spectlib/plugins/watch_sn_twitter.py:111
+#: ../spectlib/plugins/watch_web_greader.py:42
+#: ../spectlib/plugins/watch_web_greader.py:104
+#: ../spectlib/plugins/watch_web_static.py:277
+msgid "Username"
+msgstr "Prihl. meno"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:40
+#: ../spectlib/plugins/watch_mail_gwave.py:43
+#: ../spectlib/plugins/watch_mail_imap.py:38
+#: ../spectlib/plugins/watch_mail_pop3.py:41
+#: ../spectlib/plugins/watch_sn_facebook.py:43
+#: ../spectlib/plugins/watch_sn_twitter.py:48
+#: ../spectlib/plugins/watch_web_greader.py:43
+#: ../spectlib/plugins/watch_web_static.py:278
+msgid "Password"
+msgstr "Heslo"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:41
+msgid "Label"
+msgstr "Menovka"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:109
+#: ../spectlib/plugins/watch_mail_imap.py:185
+#: ../spectlib/plugins/watch_mail_pop3.py:185
+#: ../spectlib/plugins/watch_web_greader.py:105
+msgid "Unread messages"
+msgstr "Neprečítané správy"
+
+#: ../spectlib/plugins/watch_mail_gmail.py:115
+#: ../spectlib/plugins/watch_mail_imap.py:153
+#: ../spectlib/plugins/watch_mail_pop3.py:154
+#, python-format
+msgid ""
+"New message from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> unread mails."
+msgstr ""
+"Nová správa od <b>%s</b>...\n"
+"\n"
+"... <b>celkom %d</b> neprečítaných emailov."
+
+#: ../spectlib/plugins/watch_mail_gmail.py:125
+#: ../spectlib/plugins/watch_mail_imap.py:165
+#: ../spectlib/plugins/watch_mail_pop3.py:166
+#, python-format
+msgid ""
+"%d new messages from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> unread mails."
+msgstr ""
+"%d nové správy od <b>%s</b>...\n"
+"\n"
+"... <b>celkom %d</b> neprečítaných emailov."
+
+#: ../spectlib/plugins/watch_mail_gmail.py:136
+#: ../spectlib/plugins/watch_mail_gwave.py:123
+#: ../spectlib/plugins/watch_mail_imap.py:176
+#: ../spectlib/plugins/watch_mail_pop3.py:161
+#: ../spectlib/plugins/watch_mail_pop3.py:177
+#: ../spectlib/plugins/watch_sn_twitter.py:138
+#: ../spectlib/plugins/watch_vc_bazaar.py:123
+#: ../spectlib/plugins/watch_vc_bazaar.py:129
+#: ../spectlib/plugins/watch_vc_subversion.py:137
+#: ../spectlib/plugins/watch_web_greader.py:118
+#: ../spectlib/plugins/watch_web_greader.py:131
+msgid "and others..."
+msgstr "a ďalší..."
+
+#: ../spectlib/plugins/watch_mail_gwave.py:36
+msgid "Google Wave"
+msgstr "Google Wave"
+
+#: ../spectlib/plugins/watch_mail_gwave.py:99
+msgid "Unread waves"
+msgstr "Neprečítané vlny"
+
+#: ../spectlib/plugins/watch_mail_gwave.py:104
+#, python-format
+msgid "Unread wave in %s"
+msgstr "Neprečítaná vlna v %s"
+
+#: ../spectlib/plugins/watch_mail_gwave.py:114
+#, python-format
+msgid "%d new waves in <b>%s</b>."
+msgstr "%d nových vĺn v <b>%s</b>."
+
+#: ../spectlib/plugins/watch_mail_imap.py:31
+msgid "IMAP"
+msgstr "IMAP"
+
+#: ../spectlib/plugins/watch_mail_imap.py:39
+#: ../spectlib/plugins/watch_mail_pop3.py:42
+msgid "Host"
+msgstr "Hostiteľ"
+
+#: ../spectlib/plugins/watch_mail_imap.py:40
+#: ../spectlib/plugins/watch_mail_pop3.py:43
+msgid "Use SSL"
+msgstr "Použiť SSL"
+
+#: ../spectlib/plugins/watch_mail_imap.py:41
+msgid "Folder (optional)"
+msgstr "Adresár (voliteľné)"
+
+#: ../spectlib/plugins/watch_mail_pop3.py:34
+msgid "POP3"
+msgstr "POP3"
+
+#: ../spectlib/plugins/watch_music_amarok.py:29
+msgid "Amarok"
+msgstr "Amarok"
+
+#: ../spectlib/plugins/watch_music_amarok.py:31
+#: ../spectlib/plugins/watch_music_banshee.py:33
+#: ../spectlib/plugins/watch_music_lastfm.py:34
+#: ../spectlib/plugins/watch_music_rhythmbox.py:31
+msgid "Music"
+msgstr "Hudba"
+
+#: ../spectlib/plugins/watch_music_amarok.py:74
+#: ../spectlib/plugins/watch_music_banshee.py:88
+#: ../spectlib/plugins/watch_music_rhythmbox.py:85
+msgid "Current track"
+msgstr "Aktuálna stopa"
+
+#: ../spectlib/plugins/watch_music_banshee.py:31
+msgid "Banshee"
+msgstr "Banshee"
+
+#: ../spectlib/plugins/watch_music_lastfm.py:32
+msgid "Last.fm"
+msgstr "Last.fm"
+
+#: ../spectlib/plugins/watch_music_lastfm.py:74
+msgid "Last song"
+msgstr "Posledná pesnička"
+
+#: ../spectlib/plugins/watch_music_lastfm.py:156
+msgid ": "
+msgstr ": "
+
+#: ../spectlib/plugins/watch_music_rhythmbox.py:29
+msgid "Rhythmbox"
+msgstr "Rhythmbox"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:36
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:42
+#: ../spectlib/plugins/watch_sn_facebook.py:230
+msgid "Email"
+msgstr "Email"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:117
+msgid "Wrong username/password"
+msgstr "Zlé prihlasovacie meno/heslo"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:125
+msgid "You received"
+msgstr "Dostali ste"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:128
+msgid "a new message"
+msgstr "novú správu"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:130
+#, python-format
+msgid "%d new messages"
+msgstr "%d nové správy"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:135
+msgid "a new notification"
+msgstr "nové upozornenie"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:137
+#, python-format
+msgid "%d new notifications"
+msgstr "%d nové upozornenia"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:142
+msgid "a new request"
+msgstr "nový požiadavok"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:144
+#, python-format
+msgid "%d new requests"
+msgstr "%d nové požiadavky"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:149
+msgid "a new wall post"
+msgstr "nová správa wall"
+
+#: ../spectlib/plugins/watch_sn_facebook.py:151
+#, python-format
+msgid "%d new wall posts"
+msgstr "%d nové správy wall"
+
+#: ../spectlib/plugins/watch_sn_twitter.py:41
+msgid "Twitter"
+msgstr "Twitter"
+
+#: ../spectlib/plugins/watch_sn_twitter.py:112
+msgid "New tweets"
+msgstr "Nové tweety"
+
+#: ../spectlib/plugins/watch_sn_twitter.py:117
+#, python-format
+msgid "New tweet from <b>%s</b>"
+msgstr "Nový tweet od <b>%s</b>"
+
+#: ../spectlib/plugins/watch_sn_twitter.py:127
+#, python-format
+msgid ""
+"New tweets from <b>%s</b>...\n"
+"\n"
+"... <b>totalling %d</b> new tweets."
+msgstr ""
+"Nové tweety od <b>%s</b>...\n"
+"\n"
+"... <b>celkom %d</b> nových tweetov."
+
+#: ../spectlib/plugins/watch_system_file.py:32
+#: ../spectlib/plugins/watch_system_file.py:38
+#: ../spectlib/plugins/watch_system_file.py:167
+msgid "File"
+msgstr "Súbor"
+
+#: ../spectlib/plugins/watch_system_file.py:34
+#: ../spectlib/plugins/watch_system_folder.py:34
+#: ../spectlib/plugins/watch_system_mumbles.py:35
+#: ../spectlib/plugins/watch_system_port.py:32
+#: ../spectlib/plugins/watch_system_process.py:34
+msgid "System"
+msgstr "Systém"
+
+#: ../spectlib/plugins/watch_system_file.py:71
+msgid "The file was removed"
+msgstr "Súbor bol odstránený"
+
+#: ../spectlib/plugins/watch_system_file.py:98
+msgid "User id of the owner changed"
+msgstr "ID vlastníka bolo zmenené"
+
+#: ../spectlib/plugins/watch_system_file.py:101
+msgid "Group id of the owner changed"
+msgstr "ID skupiny bolo zmenené"
+
+#: ../spectlib/plugins/watch_system_file.py:104
+msgid "File size changed"
+msgstr "Zmenená veľkosť súboru"
+
+#: ../spectlib/plugins/watch_system_file.py:107
+msgid "Time of last access changed"
+msgstr "Zmenený čas posledného prístupu"
+
+#: ../spectlib/plugins/watch_system_file.py:110
+msgid "Time of last modification changed"
+msgstr "Zmenený čas poslednej úpravy"
+
+#: ../spectlib/plugins/watch_system_file.py:157
+#, python-format
+msgid "<b>%s</b> has changed:\n"
+msgstr "<b>%s</b> bol zmenený:\n"
+
+#: ../spectlib/plugins/watch_system_folder.py:32
+#: ../spectlib/plugins/watch_system_folder.py:38
+#: ../spectlib/plugins/watch_system_folder.py:227
+#: ../spectlib/plugins/watch_vc_bazaar.py:41
+#: ../spectlib/plugins/watch_vc_bazaar.py:167
+#: ../spectlib/plugins/watch_vc_subversion.py:39
+#: ../spectlib/plugins/watch_vc_subversion.py:144
+msgid "Folder"
+msgstr "Adresár"
+
+#: ../spectlib/plugins/watch_system_folder.py:76
+msgid "The watch is not set to a folder"
+msgstr "Sledovanie nie je nastavené na adresár"
+
+#. Unknown file type
+#: ../spectlib/plugins/watch_system_folder.py:138
+#, python-format
+msgid "Skipping %s"
+msgstr "Preskakujem %s"
+
+#: ../spectlib/plugins/watch_system_folder.py:162
+msgid "1 new file was created.\n"
+msgstr "1 nový súbor bol vytvorený.\n"
+
+#: ../spectlib/plugins/watch_system_folder.py:164
+msgid " new files were created.\n"
+msgstr "nové súbory boli vytvorené.\n"
+
+#: ../spectlib/plugins/watch_system_folder.py:167
+msgid "1 file was removed.\n"
+msgstr "1 súbor bol odstránený.\n"
+
+#: ../spectlib/plugins/watch_system_folder.py:169
+msgid " files were removed.\n"
+msgstr "súbory boli odstránené.\n"
+
+#: ../spectlib/plugins/watch_system_folder.py:172
+msgid "1 file was modified.\n"
+msgstr "1 súbor bol zmenený.\n"
+
+#: ../spectlib/plugins/watch_system_folder.py:174
+msgid " files were modified.\n"
+msgstr "súbory boli zmenené.\n"
+
+#: ../spectlib/plugins/watch_system_mumbles.py:33
+msgid "Mumbles"
+msgstr "Mumbles"
+
+#: ../spectlib/plugins/watch_system_port.py:30
+#: ../spectlib/plugins/watch_system_port.py:36
+#: ../spectlib/plugins/watch_system_port.py:105
+msgid "Port"
+msgstr "Port"
+
+#: ../spectlib/plugins/watch_system_port.py:64
+msgid "Closed"
+msgstr "Zatvorený"
+
+#: ../spectlib/plugins/watch_system_port.py:68
+msgid "Open"
+msgstr "Otvorený"
+
+#: ../spectlib/plugins/watch_system_port.py:71
+#: ../spectlib/plugins/watch_system_process.py:75
+msgid "Unknown"
+msgstr "Neznámy"
+
+#: ../spectlib/plugins/watch_system_port.py:106
+#: ../spectlib/plugins/watch_system_process.py:94
+msgid "Status"
+msgstr "Stav"
+
+#: ../spectlib/plugins/watch_system_port.py:112
+#, python-format
+msgid "The network socket on port %s was established."
+msgstr "Sieťový soket na porte %s bol vytvorený."
+
+#: ../spectlib/plugins/watch_system_port.py:114
+#, python-format
+msgid "The network socket on port %s was closed."
+msgstr "Sieťový soket na porte %s bol zatvorený."
+
+#: ../spectlib/plugins/watch_system_process.py:32
+#: ../spectlib/plugins/watch_system_process.py:38
+#: ../spectlib/plugins/watch_system_process.py:93
+msgid "Process"
+msgstr "Proces"
+
+#: ../spectlib/plugins/watch_system_process.py:68
+msgid "Not running"
+msgstr "Bežiaci"
+
+#: ../spectlib/plugins/watch_system_process.py:72
+msgid "Running"
+msgstr "Nebežiaci"
+
+#: ../spectlib/plugins/watch_system_process.py:99
+msgid "The system process has started."
+msgstr "Systémový proces bol spustený"
+
+#. the process check returned false, which means the process is not running
+#: ../spectlib/plugins/watch_system_process.py:101
+msgid "The system process has stopped."
+msgstr "Systémový proces bol zastavený"
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:35
+msgid "Bazaar"
+msgstr "Bazaar"
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:37
+#: ../spectlib/plugins/watch_vc_subversion.py:35
+msgid "Version control"
+msgstr "Správa verzií"
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:92
+msgid ""
+"No parent branch available, you will not be notified of differences and "
+"changes."
+msgstr ""
+"Nie je dostupná vetva rodiča, nebudete upozorňovaný o rozdieloch a zmenách."
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:106
+msgid "One new local revision has not yet been merged with its parent branch."
+msgstr "Jedna nová lokálna revízia zatiaľ nebola zlúčená s vetvou rodiča."
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:108
+#, python-format
+msgid "%d new local revisions have not yet been merged with its parent branch."
+msgstr "%d nové lokálne revízie zatiaľ neboli zlúčené s vetvou rodiča"
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:111
+msgid "One new revision on the remote branch."
+msgstr "Jena nová revízia vzdialenej vetvy."
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:113
+#, python-format
+msgid "%d new revisions on the remote branch."
+msgstr "%d nové revízie vzdialenej vetvy."
+
+#: ../spectlib/plugins/watch_vc_bazaar.py:168
+msgid "Main branch"
+msgstr "Hlavná vetva"
+
+#: ../spectlib/plugins/watch_vc_subversion.py:33
+msgid "Subversion"
+msgstr "Subversion"
+
+#: ../spectlib/plugins/watch_vc_subversion.py:116
+msgid "One new local change has not yet been commited to the server."
+msgstr "Jedna nová lokálna zmena zatiaľ nebola odoslaná na server."
+
+#: ../spectlib/plugins/watch_vc_subversion.py:118
+#, python-format
+msgid "%d new local changes have not yet been commited to the server."
+msgstr "%d nové lokálne zmeny zatiaľ neboli odoslané na server."
+
+#: ../spectlib/plugins/watch_vc_subversion.py:123
+msgid "One new change on the server."
+msgstr "Jedna nová zmena na serveri."
+
+#: ../spectlib/plugins/watch_vc_subversion.py:125
+#, python-format
+msgid "%d new changes on the server."
+msgstr "%d nových zmien na serveri."
+
+#: ../spectlib/plugins/watch_vc_subversion.py:145
+msgid "Svn Url"
+msgstr "SVN URL"
+
+#: ../spectlib/plugins/watch_web_greader.py:36
+msgid "Google Reader"
+msgstr "Google Reader"
+
+#: ../spectlib/plugins/watch_web_greader.py:38
+#: ../spectlib/plugins/watch_web_static.py:45
+msgid "Internet"
+msgstr "Internet"
+
+#: ../spectlib/plugins/watch_web_greader.py:92
+msgid " or more"
+msgstr " alebo viac"
+
+#: ../spectlib/plugins/watch_web_greader.py:111
+#, python-format
+msgid ""
+"New newsitems in <b>%s</b>...\n"
+"\n"
+"... <b>totalling %s</b> unread items."
+msgstr ""
+"Nové novinky v <b>%s</b>...\n"
+"\n"
+"... <b>celkom %s</b> neprečítaných položiek."
+
+#: ../spectlib/plugins/watch_web_greader.py:121
+#, python-format
+msgid ""
+"%d new newsitems in <b>%s</b>...\n"
+"\n"
+"... <b>totalling %s</b> unread items."
+msgstr ""
+"%d nových noviniek v <b>%s</b>...\n"
+"\n"
+"... <b>celkom %s</b> neprečítaných položiek."
+
+#: ../spectlib/plugins/watch_web_static.py:43
+msgid "Webpage/feed"
+msgstr "Web. stránka/kanál"
+
+#: ../spectlib/plugins/watch_web_static.py:180
+#, python-format
+msgid "Filesize difference: %.2f"
+msgstr "Rozdiel veľkosti súboru: %.2f"
+
+#: ../spectlib/plugins/watch_web_static.py:253
+#, python-format
+msgid "Difference percentage: %s percent"
+msgstr "Percentuálny rozdiel: %s %%"
+
+#: ../spectlib/plugins/watch_web_static.py:271
+#: ../spectlib/plugins/watch_web_static.py:276
+msgid "URL"
+msgstr "URL"
+
+#: ../spectlib/plugins/watch_web_static.py:272
+#: ../spectlib/plugins/watch_web_static.py:279
+msgid "Error margin (%)"
+msgstr "Chybová hranica (%)"
